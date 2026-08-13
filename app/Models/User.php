@@ -236,14 +236,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $settings = Utility::settings();
 
-        return (($settings['currency_symbol_position'] == "pre") ? $settings['currency_symbol_position'] : '') . number_format($price, Utility::getValByName('decimal_number')) . (($settings['currency_symbol_position'] == "post") ? $settings['currency_symbol_position'] : '');
+        return (($settings['currency_symbol_position'] == "pre") ? $settings['currency_symbol'] : '') . number_format($price, Utility::getValByName('decimal_number')) . (($settings['currency_symbol_position'] == "post") ? $settings['currency_symbol'] : '');
     }
 
     public function currencySymbol()
     {
         $settings = Utility::settings();
 
-        return $settings['site_currency_symbol'];
+        return $settings['currency_symbol'];
     }
 
     public function countStoreUsers($storeID)
