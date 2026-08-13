@@ -1,3 +1,48 @@
+<style>
+.sg-nav-link, .sg-nav-link.w-full { width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s;
+    color: #464554 !important;
+    background: transparent !important;
+    border: none;
+    cursor: pointer;
+}
+.sg-nav-link:hover, .sg-nav-link.w-full:hover {
+    background-color: #dce9ff !important;
+    color: #0b1c30 !important;
+}
+.sg-nav-link.sg-active, .sg-nav-link.w-full.sg-active {
+    background-color: #6063ee !important;
+    color: #ffffff !important;
+    font-weight: 500 !important;
+}
+
+.sg-dropdown-link {
+    display: block;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: Inter, sans-serif;
+    font-size: 13px;
+    text-decoration: none;
+    transition: all 0.2s;
+    color: #464554 !important;
+    background: transparent !important;
+}
+.sg-dropdown-link:hover {
+    background-color: #dce9ff !important;
+    color: #0b1c30 !important;
+}
+.sg-dropdown-link.sg-active {
+    background-color: #6063ee !important;
+    color: #ffffff !important;
+    font-weight: 500 !important;
+}
+</style>
 {{-- Mobile sidebar backdrop --}}
 <div x-show="sidebarOpen" class="fixed inset-0 z-40 bg-on-surface/50 lg:hidden" @click="sidebarOpen = false" style="display:none;"></div>
 
@@ -31,9 +76,7 @@
 
         {{-- Dashboard --}}
         <a href="{{ route('dashboard') }}"
-            style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: all 0.2s; {{ request()->is('dashboard') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #464554;' }}"
-            onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background='#dce9ff'; this.style.color='#0b1c30'; }"
-            onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background=''; this.style.color='#464554'; }">
+            class="sg-nav-link {{ request()->is('dashboard') ? 'sg-active' : '' }}">
             <span class="material-symbols-outlined" style="font-size: 20px;">grid_view</span>
             <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Dashboard') }}</span>
         </a>
@@ -45,17 +88,13 @@
             </div>
 
             <a href="{{ route('store-resource.index') }}"
-                style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: all 0.2s; {{ request()->is('store-resource*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #464554;' }}"
-                onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background='#dce9ff'; this.style.color='#0b1c30'; }"
-                onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background=''; this.style.color='#464554'; }">
+                class="sg-nav-link {{ request()->is('store-resource*') ? 'sg-active' : '' }}">
                 <span class="material-symbols-outlined" style="font-size: 20px;">domain</span>
-                <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Companies') }}</span>
+                <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Stores') }}</span>
             </a>
 
             <a href="{{ route('coupons.index') }}"
-                style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: all 0.2s; {{ request()->is('coupons*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #464554;' }}"
-                onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background='#dce9ff'; this.style.color='#0b1c30'; }"
-                onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background=''; this.style.color='#464554'; }">
+                class="sg-nav-link {{ request()->is('coupons*') ? 'sg-active' : '' }}">
                 <span class="material-symbols-outlined" style="font-size: 20px;">sell</span>
                 <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Coupons') }}</span>
             </a>
@@ -65,33 +104,25 @@
             </div>
 
             <a href="{{ route('plans.index') }}"
-                style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: all 0.2s; {{ request()->is('plans*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #464554;' }}"
-                onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background='#dce9ff'; this.style.color='#0b1c30'; }"
-                onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background=''; this.style.color='#464554'; }">
+                class="sg-nav-link {{ request()->is('plans*') ? 'sg-active' : '' }}">
                 <span class="material-symbols-outlined" style="font-size: 20px;">workspace_premium</span>
                 <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Plans') }}</span>
             </a>
 
             <a href="{{ route('plan_request.index') }}"
-                style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: all 0.2s; {{ request()->is('plan_request*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #464554;' }}"
-                onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background='#dce9ff'; this.style.color='#0b1c30'; }"
-                onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background=''; this.style.color='#464554'; }">
+                class="sg-nav-link {{ request()->is('plan_request*') ? 'sg-active' : '' }}">
                 <span class="material-symbols-outlined" style="font-size: 20px;">hourglass_empty</span>
                 <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Plan Requests') }}</span>
             </a>
 
             <a href="{{ route('referral-program.index') }}"
-                style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: all 0.2s; {{ request()->is('referral-program*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #464554;' }}"
-                onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background='#dce9ff'; this.style.color='#0b1c30'; }"
-                onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background=''; this.style.color='#464554'; }">
+                class="sg-nav-link {{ request()->is('referral-program*') ? 'sg-active' : '' }}">
                 <span class="material-symbols-outlined" style="font-size: 20px;">share</span>
                 <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Referral Program') }}</span>
             </a>
 
             <a href="{{ route('custom_domain_request.index') }}"
-                style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: all 0.2s; {{ request()->is('custom_domain_request*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #464554;' }}"
-                onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background='#dce9ff'; this.style.color='#0b1c30'; }"
-                onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background=''; this.style.color='#464554'; }">
+                class="sg-nav-link {{ request()->is('custom_domain_request*') ? 'sg-active' : '' }}">
                 <span class="material-symbols-outlined" style="font-size: 20px;">public</span>
                 <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Domain Requests') }}</span>
             </a>
@@ -101,27 +132,21 @@
             </div>
 
             <a href="{{ route('email_templates.index') }}"
-                style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: all 0.2s; {{ request()->is('email_template*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #464554;' }}"
-                onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background='#dce9ff'; this.style.color='#0b1c30'; }"
-                onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background=''; this.style.color='#464554'; }">
+                class="sg-nav-link {{ request()->is('email_template*') ? 'sg-active' : '' }}">
                 <span class="material-symbols-outlined" style="font-size: 20px;">mail</span>
                 <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Email Templates') }}</span>
             </a>
 
             @if(Route::has('landingpage.index'))
             <a href="{{ route('landingpage.index') }}"
-                style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: all 0.2s; {{ request()->is('landingpage*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #464554;' }}"
-                onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background='#dce9ff'; this.style.color='#0b1c30'; }"
-                onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background=''; this.style.color='#464554'; }">
+                class="sg-nav-link {{ request()->is('landingpage*') ? 'sg-active' : '' }}">
                 <span class="material-symbols-outlined" style="font-size: 20px;">web</span>
                 <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Landing Page') }}</span>
             </a>
             @endif
 
             <a href="{{ route('settings') }}"
-                style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: all 0.2s; {{ request()->is('settings*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #464554;' }}"
-                onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background='#dce9ff'; this.style.color='#0b1c30'; }"
-                onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background=''; this.style.color='#464554'; }">
+                class="sg-nav-link {{ request()->is('settings*') ? 'sg-active' : '' }}">
                 <span class="material-symbols-outlined" style="font-size: 20px;">settings</span>
                 <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Settings') }}</span>
             </a>
@@ -130,9 +155,7 @@
             {{-- Store Owner Section --}}
             @can('Manage Store Analytics')
             <a href="{{ route('storeanalytic') }}"
-                style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: all 0.2s; {{ request()->is('storeanalytic') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #464554;' }}"
-                onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background='#dce9ff'; this.style.color='#0b1c30'; }"
-                onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background=''; this.style.color='#464554'; }">
+                class="sg-nav-link {{ request()->is('storeanalytic') ? 'sg-active' : '' }}">
                 <span class="material-symbols-outlined" style="font-size: 20px;">monitoring</span>
                 <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Analytics') }}</span>
             </a>
@@ -140,9 +163,7 @@
 
             @can('Manage Orders')
             <a href="{{ route('orders.index') }}"
-                style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: all 0.2s; {{ request()->is('orders*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #464554;' }}"
-                onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background='#dce9ff'; this.style.color='#0b1c30'; }"
-                onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background=''; this.style.color='#464554'; }">
+                class="sg-nav-link {{ request()->is('orders*') ? 'sg-active' : '' }}">
                 <span class="material-symbols-outlined" style="font-size: 20px;">shopping_bag</span>
                 <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Orders') }}</span>
             </a>
@@ -151,9 +172,7 @@
             {{-- Product Dropdown --}}
             <div x-data="{ open: {{ in_array(Request::segment(1), ['product', 'product_categorie', 'product_tax', 'subscriptions', 'products']) ? 'true' : 'false' }} }">
                 <button @click="open = !open"
-                    style="width: 100%; display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; color: #464554; background: none; border: none; cursor: pointer; transition: all 0.2s; {{ in_array(Request::segment(1), ['product', 'product_categorie', 'product_tax', 'subscriptions']) ? 'background: #6063ee; color: #fff;' : '' }}"
-                    onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background='#dce9ff'; this.style.color='#0b1c30'; }"
-                    onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background=''; this.style.color='#464554'; }">
+                    class="sg-nav-link w-full {{ in_array(Request::segment(1), ['product', 'product_categorie', 'product_tax', 'subscriptions']) ? 'sg-active' : '' }}">
                     <span class="material-symbols-outlined" style="font-size: 20px;">inventory_2</span>
                     <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px; flex: 1; text-align: left;">{{ __('Products') }}</span>
                     <span class="material-symbols-outlined" :style="open ? 'transform: rotate(90deg);' : ''" style="font-size: 16px; transition: transform 0.2s;">chevron_right</span>
@@ -161,33 +180,25 @@
                 <div x-show="open" x-collapse style="padding-left: 44px; padding-right: 12px; display: flex; flex-direction: column; gap: 2px; margin-top: 2px;">
                     @can('Manage Products')
                     <a href="{{ route('product.index') }}"
-                        style="display: block; padding: 8px 12px; border-radius: 6px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; transition: all 0.2s; {{ request()->is('product*') && !request()->is('product_categorie*') && !request()->is('product_tax*') && !request()->is('product-coupon*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #767586;' }}"
-                        onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.color='#0b1c30'; this.style.background='#dce9ff'; }"
-                        onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.color='#767586'; this.style.background=''; }">
+                        class="sg-dropdown-link {{ request()->is('product*') && !request()->is('product_categorie*') && !request()->is('product_tax*') && !request()->is('product-coupon*') ? 'sg-active' : '' }}">
                         {{ __('All Products') }}
                     </a>
                     @endcan
                     @can('Manage Product category')
                     <a href="{{ route('product_categorie.index') }}"
-                        style="display: block; padding: 8px 12px; border-radius: 6px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; transition: all 0.2s; {{ request()->is('product_categorie*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #767586;' }}"
-                        onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.color='#0b1c30'; this.style.background='#dce9ff'; }"
-                        onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.color='#767586'; this.style.background=''; }">
+                        class="sg-dropdown-link {{ request()->is('product_categorie*') ? 'sg-active' : '' }}">
                         {{ __('Categories') }}
                     </a>
                     @endcan
                     @can('Manage Product Tax')
                     <a href="{{ route('product_tax.index') }}"
-                        style="display: block; padding: 8px 12px; border-radius: 6px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; transition: all 0.2s; {{ request()->is('product_tax*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #767586;' }}"
-                        onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.color='#0b1c30'; this.style.background='#dce9ff'; }"
-                        onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.color='#767586'; this.style.background=''; }">
+                        class="sg-dropdown-link {{ request()->is('product_tax*') ? 'sg-active' : '' }}">
                         {{ __('Taxes') }}
                     </a>
                     @endcan
                     @can('Manage Subscriber')
                     <a href="{{ route('subscriptions.index') }}"
-                        style="display: block; padding: 8px 12px; border-radius: 6px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; transition: all 0.2s; {{ request()->is('subscriptions*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #767586;' }}"
-                        onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.color='#0b1c30'; this.style.background='#dce9ff'; }"
-                        onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.color='#767586'; this.style.background=''; }">
+                        class="sg-dropdown-link {{ request()->is('subscriptions*') ? 'sg-active' : '' }}">
                         {{ __('Subscribers') }}
                     </a>
                     @endcan
@@ -196,9 +207,7 @@
 
             @can('Manage Product Coupan')
             <a href="{{ route('product-coupon.index') }}"
-                style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: all 0.2s; {{ request()->is('product-coupon*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #464554;' }}"
-                onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background='#dce9ff'; this.style.color='#0b1c30'; }"
-                onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background=''; this.style.color='#464554'; }">
+                class="sg-nav-link {{ request()->is('product-coupon*') ? 'sg-active' : '' }}">
                 <span class="material-symbols-outlined" style="font-size: 20px;">sell</span>
                 <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Coupons') }}</span>
             </a>
@@ -207,9 +216,7 @@
             @if (isset(\Auth::user()->currentPlan->shipping_method) && \Auth::user()->currentPlan->shipping_method == 'on')
                 @can('Manage Shipping')
                 <a href="{{ route('shipping.index') }}"
-                    style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: all 0.2s; {{ request()->is('shipping*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #464554;' }}"
-                    onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background='#dce9ff'; this.style.color='#0b1c30'; }"
-                    onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background=''; this.style.color='#464554'; }">
+                    class="sg-nav-link {{ request()->is('shipping*') ? 'sg-active' : '' }}">
                     <span class="material-symbols-outlined" style="font-size: 20px;">local_shipping</span>
                     <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Shipping') }}</span>
                 </a>
@@ -219,9 +226,7 @@
             {{-- Appearance Dropdown --}}
             <div x-data="{ open: {{ in_array(Request::segment(1), ['themes', 'custom-page', 'blog']) ? 'true' : 'false' }} }">
                 <button @click="open = !open"
-                    style="width: 100%; display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; color: #464554; background: none; border: none; cursor: pointer; transition: all 0.2s; {{ in_array(Request::segment(1), ['themes', 'custom-page', 'blog']) ? 'background: #6063ee; color: #fff;' : '' }}"
-                    onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background='#dce9ff'; this.style.color='#0b1c30'; }"
-                    onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background=''; this.style.color='#464554'; }">
+                    class="sg-nav-link w-full {{ in_array(Request::segment(1), ['themes', 'custom-page', 'blog']) ? 'sg-active' : '' }}">
                     <span class="material-symbols-outlined" style="font-size: 20px;">palette</span>
                     <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px; flex: 1; text-align: left;">{{ __('Appearance') }}</span>
                     <span class="material-symbols-outlined" :style="open ? 'transform: rotate(90deg);' : ''" style="font-size: 16px; transition: transform 0.2s;">chevron_right</span>
@@ -229,18 +234,14 @@
                 <div x-show="open" x-collapse style="padding-left: 44px; padding-right: 12px; display: flex; flex-direction: column; gap: 2px; margin-top: 2px;">
                     @can('Manage Themes')
                     <a href="{{ route('themes.theme') }}"
-                        style="display: block; padding: 8px 12px; border-radius: 6px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; transition: all 0.2s; {{ request()->is('themes*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #767586;' }}"
-                        onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.color='#0b1c30'; this.style.background='#dce9ff'; }"
-                        onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.color='#767586'; this.style.background=''; }">
+                        class="sg-dropdown-link {{ request()->is('themes*') ? 'sg-active' : '' }}">
                         {{ __('Themes') }}
                     </a>
                     @endcan
                     @if (isset(\Auth::user()->currentPlan->additional_page) && \Auth::user()->currentPlan->additional_page == 'on')
                         @can('Manage Custom Page')
                         <a href="{{ route('custom-page.index') }}"
-                            style="display: block; padding: 8px 12px; border-radius: 6px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; transition: all 0.2s; {{ request()->is('custom-page*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #767586;' }}"
-                            onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.color='#0b1c30'; this.style.background='#dce9ff'; }"
-                            onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.color='#767586'; this.style.background=''; }">
+                            class="sg-dropdown-link {{ request()->is('custom-page*') ? 'sg-active' : '' }}">
                             {{ __('Custom Pages') }}
                         </a>
                         @endcan
@@ -248,9 +249,7 @@
                     @if (isset(\Auth::user()->currentPlan->blog) && \Auth::user()->currentPlan->blog == 'on')
                         @can('Manage Blog')
                         <a href="{{ route('blog.index') }}"
-                            style="display: block; padding: 8px 12px; border-radius: 6px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; transition: all 0.2s; {{ request()->is('blog*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #767586;' }}"
-                            onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.color='#0b1c30'; this.style.background='#dce9ff'; }"
-                            onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.color='#767586'; this.style.background=''; }">
+                            class="sg-dropdown-link {{ request()->is('blog*') ? 'sg-active' : '' }}">
                             {{ __('Blog') }}
                         </a>
                         @endcan
@@ -260,9 +259,7 @@
 
             @can('Manage Pos')
             <a href="{{ route('pos.index') }}"
-                style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: all 0.2s; {{ request()->is('pos*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #464554;' }}"
-                onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background='#dce9ff'; this.style.color='#0b1c30'; }"
-                onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background=''; this.style.color='#464554'; }">
+                class="sg-nav-link {{ request()->is('pos*') ? 'sg-active' : '' }}">
                 <span class="material-symbols-outlined" style="font-size: 20px;">point_of_sale</span>
                 <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('POS') }}</span>
             </a>
@@ -270,9 +267,7 @@
 
             @can('Manage Customers')
             <a href="{{ route('customer.index') }}"
-                style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: all 0.2s; {{ request()->is('customer*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #464554;' }}"
-                onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background='#dce9ff'; this.style.color='#0b1c30'; }"
-                onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background=''; this.style.color='#464554'; }">
+                class="sg-nav-link {{ request()->is('customer*') ? 'sg-active' : '' }}">
                 <span class="material-symbols-outlined" style="font-size: 20px;">group</span>
                 <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Customers') }}</span>
             </a>
@@ -280,9 +275,7 @@
 
             @can('Manage Plans')
             <a href="{{ route('plans.index') }}"
-                style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: all 0.2s; {{ request()->is('plans*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #464554;' }}"
-                onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background='#dce9ff'; this.style.color='#0b1c30'; }"
-                onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background=''; this.style.color='#464554'; }">
+                class="sg-nav-link {{ request()->is('plans*') ? 'sg-active' : '' }}">
                 <span class="material-symbols-outlined" style="font-size: 20px;">workspace_premium</span>
                 <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Plans') }}</span>
             </a>
@@ -290,9 +283,7 @@
 
             @if (Auth::user()->type == 'Owner')
             <a href="{{ route('referral-program.company') }}"
-                style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: all 0.2s; {{ request()->is('referral-program*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #464554;' }}"
-                onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background='#dce9ff'; this.style.color='#0b1c30'; }"
-                onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background=''; this.style.color='#464554'; }">
+                class="sg-nav-link {{ request()->is('referral-program*') ? 'sg-active' : '' }}">
                 <span class="material-symbols-outlined" style="font-size: 20px;">share</span>
                 <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Referral Program') }}</span>
             </a>
@@ -301,9 +292,7 @@
             {{-- Staff Dropdown --}}
             <div x-data="{ open: {{ Request::segment(1) == 'users' || Request::segment(1) == 'roles' ? 'true' : 'false' }} }">
                 <button @click="open = !open"
-                    style="width: 100%; display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; color: #464554; background: none; border: none; cursor: pointer; transition: all 0.2s; {{ in_array(Request::segment(1), ['users', 'roles']) ? 'background: #6063ee; color: #fff;' : '' }}"
-                    onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background='#dce9ff'; this.style.color='#0b1c30'; }"
-                    onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background=''; this.style.color='#464554'; }">
+                    class="sg-nav-link w-full {{ in_array(Request::segment(1), ['users', 'roles']) ? 'sg-active' : '' }}">
                     <span class="material-symbols-outlined" style="font-size: 20px;">manage_accounts</span>
                     <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px; flex: 1; text-align: left;">{{ __('Staff') }}</span>
                     <span class="material-symbols-outlined" :style="open ? 'transform: rotate(90deg);' : ''" style="font-size: 16px; transition: transform 0.2s;">chevron_right</span>
@@ -311,17 +300,13 @@
                 <div x-show="open" x-collapse style="padding-left: 44px; padding-right: 12px; display: flex; flex-direction: column; gap: 2px; margin-top: 2px;">
                     @can('Manage Role')
                     <a href="{{ route('roles.index') }}"
-                        style="display: block; padding: 8px 12px; border-radius: 6px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; transition: all 0.2s; {{ request()->is('roles*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #767586;' }}"
-                        onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.color='#0b1c30'; this.style.background='#dce9ff'; }"
-                        onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.color='#767586'; this.style.background=''; }">
+                        class="sg-dropdown-link {{ request()->is('roles*') ? 'sg-active' : '' }}">
                         {{ __('Roles') }}
                     </a>
                     @endcan
                     @can('Manage User')
                     <a href="{{ route('users.index') }}"
-                        style="display: block; padding: 8px 12px; border-radius: 6px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; transition: all 0.2s; {{ request()->is('users*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #767586;' }}"
-                        onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.color='#0b1c30'; this.style.background='#dce9ff'; }"
-                        onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.color='#767586'; this.style.background=''; }">
+                        class="sg-dropdown-link {{ request()->is('users*') ? 'sg-active' : '' }}">
                         {{ __('Users') }}
                     </a>
                     @endcan
@@ -330,9 +315,7 @@
 
             @can('Manage Settings')
             <a href="{{ route('settings') }}"
-                style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; transition: all 0.2s; {{ request()->is('settings*') ? 'background: #6063ee; color: #fff; font-weight: 500;' : 'color: #464554;' }}"
-                onmouseover="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background='#dce9ff'; this.style.color='#0b1c30'; }"
-                onmouseout="if(this.style.background !== 'rgb(96, 99, 238)' && this.style.background !== '#6063ee') { this.style.background=''; this.style.color='#464554'; }">
+                class="sg-nav-link {{ request()->is('settings*') ? 'sg-active' : '' }}">
                 <span class="material-symbols-outlined" style="font-size: 20px;">settings</span>
                 <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Store Settings') }}</span>
             </a>

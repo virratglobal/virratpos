@@ -170,8 +170,8 @@ $company_logo = \App\Models\Utility::getValByName('company_logo');
                     <span class="material-symbols-outlined text-[24px]">business</span>
                 </div>
                 <div>
-                    <h3 style="font-family: 'Geist', sans-serif; font-size: 16px; font-weight: 600; color: #0b1c30; margin: 0 0 4px;">{{ __('Company Management') }}</h3>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #767586; margin: 0;">{{ __('View and edit registered companies') }}</p>
+                    <h3 style="font-family: 'Geist', sans-serif; font-size: 16px; font-weight: 600; color: #0b1c30; margin: 0 0 4px;">{{ __('Store Management') }}</h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #767586; margin: 0;">{{ __('View and edit registered stores') }}</p>
                 </div>
             </a>
             <a class="card mb-0 hover:bg-surface-container-high transition-colors group flex-row items-center gap-4 p-6" href="{{ route('plans.index') }}" style="border-radius: 12px; cursor: pointer; text-decoration: none;">
