@@ -86,8 +86,8 @@ $company_logo = \App\Models\Utility::getValByName('company_logo');
             </div>
 
             <!-- Pending Requests -->
-            <div style="background: #fef3c7; border-radius: 12px; padding: 24px; position: relative; overflow: hidden;" class="group">
-                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(245,158,11,0.05);"></div>
+            <div style="background: #e5eeff; border-radius: 12px; padding: 24px; position: relative; overflow: hidden;" class="group">
+                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(70,72,212,0.05);"></div>
                 <div class="flex justify-between items-start mb-6">
                     <div style="width: 48px; height: 48px; border-radius: 12px; background: #f59e0b; color: #fffbff; display: flex; align-items: center; justify-content: center;">
                         <span class="material-symbols-outlined">pending_actions</span>
@@ -125,8 +125,8 @@ $company_logo = \App\Models\Utility::getValByName('company_logo');
             </div>
 
             <!-- Total Stores -->
-            <div style="background: #d1fae5; border-radius: 12px; padding: 24px; position: relative; overflow: hidden;" class="group">
-                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(16,185,129,0.05);"></div>
+            <div style="background: #e5eeff; border-radius: 12px; padding: 24px; position: relative; overflow: hidden;" class="group">
+                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(70,72,212,0.05);"></div>
                 <div class="flex justify-between items-start mb-6">
                     <div style="width: 48px; height: 48px; border-radius: 12px; background: #10b981; color: #fffbff; display: flex; align-items: center; justify-content: center;">
                         <span class="material-symbols-outlined">storefront</span>
