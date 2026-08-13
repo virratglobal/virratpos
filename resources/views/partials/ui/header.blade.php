@@ -179,32 +179,63 @@
         {{-- User Profile --}}
         <div x-data="{ open: false }" class="relative">
             <button @click="open = !open" @click.away="open = false" type="button"
-                style="width: 32px; height: 32px; border-radius: 50%; background: #4648d4; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; overflow: hidden; transition: opacity 0.2s;"
-                onmouseover="this.style.opacity='0.85';" onmouseout="this.style.opacity='1';">
+                style="width: 36px; height: 36px; border-radius: 50%; background: #4648d4; display: flex; align-items: center; justify-content: center; border: 2px solid transparent; cursor: pointer; overflow: hidden; transition: all 0.2s;"
+                onmouseover="this.style.borderColor='#e5eeff';" onmouseout="this.style.borderColor='transparent';">
                 @if(!empty($users->avatar))
                     <img src="{{ $profile . '/' . $users->avatar }}" alt="" style="width: 100%; height: 100%; object-fit: cover;">
                 @else
-                    <span class="material-symbols-outlined" style="color: #ffffff; font-size: 18px;">person</span>
+                    <img src="{{ asset('assets/images/user/avatar-2.jpg') }}" alt="Placeholder" style="width: 100%; height: 100%; object-fit: cover;">
                 @endif
             </button>
-            <div x-show="open" style="display: none; position: absolute; right: 0; z-index: 50; margin-top: 8px; width: 200px; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.1); border: 1px solid rgba(199,196,215,0.2); padding: 6px;">
-                <div style="padding: 8px 12px 12px; border-bottom: 1px solid rgba(199,196,215,0.2); margin-bottom: 4px;">
-                    <p style="font-family: Inter, sans-serif; font-size: 13px; font-weight: 500; color: #0b1c30; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $users->name }}</p>
-                    <p style="font-family: Inter, sans-serif; font-size: 12px; color: #767586; margin: 2px 0 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $users->email }}</p>
+            <div x-show="open" style="display: none; position: absolute; right: 0; z-index: 50; margin-top: 12px; width: 280px; background: #ffffff; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border: 1px solid rgba(199,196,215,0.2); overflow: hidden;">
+                
+                {{-- Profile Context --}}
+                <div style="padding: 20px; background: #f8f9ff; border-bottom: 1px solid rgba(199,196,215,0.2); display: flex; align-items: center; gap: 16px;">
+                    <div style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden; background: #e5eeff; flex-shrink: 0;">
+                        @if(!empty($users->avatar))
+                            <img src="{{ $profile . '/' . $users->avatar }}" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                        @else
+                            <img src="{{ asset('assets/images/user/avatar-2.jpg') }}" alt="Placeholder" style="width: 100%; height: 100%; object-fit: cover;">
+                        @endif
+                    </div>
+                    <div style="overflow: hidden;">
+                        <h4 style="font-family: Geist, sans-serif; font-size: 15px; font-weight: 600; color: #0b1c30; margin: 0 0 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ $users->name }}</h4>
+                        <p style="font-family: Inter, sans-serif; font-size: 13px; color: #767586; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ $users->email }}</p>
+                    </div>
                 </div>
-                <a href="{{ route('profile') }}"
-                    style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; color: #464554; transition: background 0.2s;"
-                    onmouseover="this.style.background='#eff4ff'; this.style.color='#0b1c30';" onmouseout="this.style.background=''; this.style.color='#464554';">
-                    <span class="material-symbols-outlined" style="font-size: 16px;">person</span>
-                    {{ __('My Profile') }}
-                </a>
-                <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('frm-logout').submit();"
-                    style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; color: #ba1a1a; transition: background 0.2s;"
-                    onmouseover="this.style.background='#ffdad6';" onmouseout="this.style.background='';">
-                    <span class="material-symbols-outlined" style="font-size: 16px;">logout</span>
-                    {{ __('Logout') }}
-                </a>
-                <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
+
+                {{-- Quick Actions Hub --}}
+                <div style="padding: 8px;">
+                    <a href="{{ route('profile') }}"
+                        style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; font-weight: 500; text-decoration: none; color: #464554; transition: all 0.2s;"
+                        onmouseover="this.style.background='#eff4ff'; this.style.color='#4648d4';" onmouseout="this.style.background=''; this.style.color='#464554';">
+                        <span class="material-symbols-outlined" style="font-size: 18px;">account_circle</span>
+                        {{ __('My Profile') }}
+                    </a>
+                    <a href="{{ route('settings') }}"
+                        style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; font-weight: 500; text-decoration: none; color: #464554; transition: all 0.2s;"
+                        onmouseover="this.style.background='#eff4ff'; this.style.color='#4648d4';" onmouseout="this.style.background=''; this.style.color='#464554';">
+                        <span class="material-symbols-outlined" style="font-size: 18px;">settings</span>
+                        {{ __('Account Settings') }}
+                    </a>
+                    <a href="#"
+                        style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; font-weight: 500; text-decoration: none; color: #464554; transition: all 0.2s;"
+                        onmouseover="this.style.background='#eff4ff'; this.style.color='#4648d4';" onmouseout="this.style.background=''; this.style.color='#464554';">
+                        <span class="material-symbols-outlined" style="font-size: 18px;">history</span>
+                        {{ __('Activity Log') }}
+                    </a>
+                </div>
+
+                {{-- Clear Exit Intent --}}
+                <div style="padding: 8px; border-top: 1px solid rgba(199,196,215,0.2); background: #fafafa;">
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('frm-logout').submit();"
+                        style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; font-weight: 600; text-decoration: none; color: #dc2626; transition: all 0.2s;"
+                        onmouseover="this.style.background='#fef2f2';" onmouseout="this.style.background='';">
+                        <span class="material-symbols-outlined" style="font-size: 18px;">logout</span>
+                        {{ __('Logout') }}
+                    </a>
+                    <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
+                </div>
             </div>
         </div>
 
