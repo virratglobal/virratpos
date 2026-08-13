@@ -229,6 +229,7 @@ Route::group(['middleware' => ['verified']], function () {
 
     Route::middleware(['auth', 'XSS'])->group(function () {
         Route::post('business-setting', [SettingController::class, 'saveBusinessSettings'])->name('business.setting');
+        Route::post('toggle-theme', [SettingController::class, 'toggleTheme'])->name('toggle.theme');
         Route::post('company-setting', [SettingController::class, 'saveCompanySettings'])->name('company.setting');
         Route::post('email-setting', [SettingController::class, 'saveEmailSettings'])->name('email.setting');
         Route::post('system-setting', [SettingController::class, 'saveSystemSettings'])->name('system.setting');

@@ -130,6 +130,16 @@
             </div>
         @endif
 
+        {{-- Theme Button --}}
+        <button id="theme-toggle-btn" type="button"
+            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #464554; background: none; border: none; cursor: pointer; transition: background 0.2s;"
+            onmouseover="this.style.background='#dce9ff';" onmouseout="this.style.background='';"
+            title="{{ __('Toggle Theme') }}">
+            <span class="material-symbols-outlined" id="theme-toggle-icon">
+                {{ isset($settings['cust_darklayout']) && $settings['cust_darklayout'] == 'on' ? 'light_mode' : 'dark_mode' }}
+            </span>
+        </button>
+
         {{-- Language Button --}}
         <div x-data="{ open: false }" class="relative">
             <button @click="open = !open" @click.away="open = false" type="button"
@@ -215,7 +225,7 @@
         </style>
         <div x-data="{ open: false }" class="relative">
             <button @click="open = !open" @click.away="open = false" type="button"
-                style="width: 36px; height: 36px; border-radius: 50%; padding: 0; background: #4648d4; display: flex; align-items: center; justify-content: center; border: 2px solid transparent; cursor: pointer; overflow: hidden; transition: all 0.2s;"
+                style="width: 36px; height: 36px; border-radius: 50%; padding: 0; background: transparent; display: flex; align-items: center; justify-content: center; border: 2px solid transparent; cursor: pointer; overflow: hidden; transition: all 0.2s;"
                 onmouseover="this.style.borderColor='#e5eeff';" onmouseout="this.style.borderColor='transparent';">
                 @if(!empty($users->avatar))
                     <img src="{{ $profile . '/' . $users->avatar }}" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%;">
@@ -265,3 +275,27 @@
 
     </div>
 </header>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var themeBtn = document.getElementById('theme-toggle-btn');
+        if (themeBtn) {
+            themeBtn.addEventListener('click', function () {
+                fetch('{{ route('toggle.theme') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({})
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        window.location.reload();
+                    }
+                })
+                .catch(err => console.error(err));
+            });
+        }
+    });
+</script>

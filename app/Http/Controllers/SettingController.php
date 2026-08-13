@@ -24,6 +24,22 @@ class SettingController extends Controller
             \App::setLocale(isset($store->lang) ? $store->lang : 'en');
         }
     }
+
+    public function toggleTheme(Request $request)
+    {
+        $user = \Auth::user();
+        if ($user) {
+            $current = \DB::table('settings')->where('created_by', $user->creatorId())->where('name', 'cust_darklayout')->first();
+            $newValue = ($current && $current->value == 'on') ? 'off' : 'on';
+            
+            \DB::table('settings')->updateOrInsert(
+                ['created_by' => $user->creatorId(), 'name' => 'cust_darklayout'],
+                ['value' => $newValue, 'store_id' => ($user->type == 'super admin') ? '0' : $user->current_store]
+            );
+            return response()->json(['status' => 'success', 'mode' => $newValue]);
+        }
+        return response()->json(['status' => 'error'], 403);
+    }
     public function index()
     {
         if(\Auth::user()->can('Manage Settings')){

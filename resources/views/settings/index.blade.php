@@ -830,20 +830,6 @@
                                                                     for="cust-theme-bg">{{ __('Transparent layout') }}</label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-4 my-auto mt-2">
-                                                            <h6 class="">
-                                                                <i data-feather="sun"
-                                                                    class="me-2"></i>{{ __('Layout Settings') }}
-                                                            </h6>
-                                                            <hr class="my-2" />
-                                                            <div class="form-check form-switch mt-2">
-                                                                <input type="checkbox" class="form-check-input"
-                                                                    id="cust-darklayout" name="cust_darklayout"
-                                                                    {{ Utility::getValByName('cust_darklayout') == 'on' ? 'checked' : '' }} />
-                                                                <label class="form-check-label f-w-600 pl-1"
-                                                                    for="cust-darklayout">{{ __('Dark Layout') }}</label>
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -3965,20 +3951,6 @@
                                                                     {{ Utility::getValByName('cust_theme_bg') == 'on' ? 'checked' : '' }} />
                                                                 <label class="form-check-label f-w-600 pl-1"
                                                                     for="cust-theme-bg">{{ __('Transparent layout') }}</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4 my-auto mt-2">
-                                                            <h6 class="">
-                                                                <i data-feather="sun"
-                                                                    class="me-2"></i>{{ __('Layout Settings') }}
-                                                            </h6>
-                                                            <hr class="my-2" />
-                                                            <div class="form-check form-switch mt-2">
-                                                                <input type="checkbox" class="form-check-input"
-                                                                    id="cust-darklayout" name="cust_darklayout"
-                                                                    {{ $settings['cust_darklayout'] == 'on' ? 'checked' : '' }} />
-                                                                <label class="form-check-label f-w-600 pl-1"
-                                                                    for="cust-darklayout">{{ __('Dark Layout') }}</label>
                                                             </div>
                                                         </div>
                                                     </div>
