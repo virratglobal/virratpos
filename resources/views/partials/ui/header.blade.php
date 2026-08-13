@@ -177,14 +177,50 @@
         <div style="width: 1px; height: 24px; background: rgba(199,196,215,0.2); margin: 0 4px;"></div>
 
         {{-- User Profile --}}
+        <style>
+            .sg-profile-link {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 10px 16px;
+                border-radius: 8px;
+                font-family: Inter, sans-serif;
+                font-size: 13px;
+                font-weight: 500;
+                text-decoration: none !important;
+                color: #464554 !important;
+                transition: all 0.2s;
+            }
+            .sg-profile-link:hover {
+                background: #4648d4 !important;
+                color: #ffffff !important;
+            }
+            .sg-profile-logout {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 10px 16px;
+                border-radius: 8px;
+                font-family: Inter, sans-serif;
+                font-size: 13px;
+                font-weight: 600;
+                text-decoration: none !important;
+                color: #dc2626 !important;
+                transition: all 0.2s;
+            }
+            .sg-profile-logout:hover {
+                background: #fef2f2 !important;
+                color: #dc2626 !important;
+            }
+        </style>
         <div x-data="{ open: false }" class="relative">
             <button @click="open = !open" @click.away="open = false" type="button"
-                style="width: 36px; height: 36px; border-radius: 50%; background: #4648d4; display: flex; align-items: center; justify-content: center; border: 2px solid transparent; cursor: pointer; overflow: hidden; transition: all 0.2s;"
+                style="width: 36px; height: 36px; border-radius: 50%; padding: 0; background: #4648d4; display: flex; align-items: center; justify-content: center; border: 2px solid transparent; cursor: pointer; overflow: hidden; transition: all 0.2s;"
                 onmouseover="this.style.borderColor='#e5eeff';" onmouseout="this.style.borderColor='transparent';">
                 @if(!empty($users->avatar))
-                    <img src="{{ $profile . '/' . $users->avatar }}" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="{{ $profile . '/' . $users->avatar }}" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%;">
                 @else
-                    <img src="{{ asset('assets/images/user/avatar-2.jpg') }}" alt="Placeholder" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="{{ asset('assets/images/user/avatar-2.jpg') }}" alt="Placeholder" style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%;">
                 @endif
             </button>
             <div x-show="open" style="display: none; position: absolute; right: 0; z-index: 50; margin-top: 12px; width: 280px; background: #ffffff; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border: 1px solid rgba(199,196,215,0.2); overflow: hidden;">
@@ -206,31 +242,19 @@
 
                 {{-- Quick Actions Hub --}}
                 <div style="padding: 8px;">
-                    <a href="{{ route('profile') }}"
-                        style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; font-weight: 500; text-decoration: none; color: #464554; transition: all 0.2s;"
-                        onmouseover="this.style.background='#eff4ff'; this.style.color='#4648d4';" onmouseout="this.style.background=''; this.style.color='#464554';">
+                    <a href="{{ route('profile') }}" class="sg-profile-link">
                         <span class="material-symbols-outlined" style="font-size: 18px;">account_circle</span>
                         {{ __('My Profile') }}
                     </a>
-                    <a href="{{ route('settings') }}"
-                        style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; font-weight: 500; text-decoration: none; color: #464554; transition: all 0.2s;"
-                        onmouseover="this.style.background='#eff4ff'; this.style.color='#4648d4';" onmouseout="this.style.background=''; this.style.color='#464554';">
+                    <a href="{{ route('settings') }}" class="sg-profile-link">
                         <span class="material-symbols-outlined" style="font-size: 18px;">settings</span>
                         {{ __('Account Settings') }}
-                    </a>
-                    <a href="#"
-                        style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; font-weight: 500; text-decoration: none; color: #464554; transition: all 0.2s;"
-                        onmouseover="this.style.background='#eff4ff'; this.style.color='#4648d4';" onmouseout="this.style.background=''; this.style.color='#464554';">
-                        <span class="material-symbols-outlined" style="font-size: 18px;">history</span>
-                        {{ __('Activity Log') }}
                     </a>
                 </div>
 
                 {{-- Clear Exit Intent --}}
                 <div style="padding: 8px; border-top: 1px solid rgba(199,196,215,0.2); background: #fafafa;">
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('frm-logout').submit();"
-                        style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; font-weight: 600; text-decoration: none; color: #dc2626; transition: all 0.2s;"
-                        onmouseover="this.style.background='#fef2f2';" onmouseout="this.style.background='';">
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('frm-logout').submit();" class="sg-profile-logout">
                         <span class="material-symbols-outlined" style="font-size: 18px;">logout</span>
                         {{ __('Logout') }}
                     </a>
