@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.ui-admin')
 @php
     $logo=\App\Models\Utility::get_file('uploads/logo');
     $product_item=\App\Models\Utility::get_file('uploads/is_cover_image/');
@@ -22,6 +22,17 @@
 <li class="breadcrumb-item active" aria-current="page">{{ __('Pos') }}</li>
 @endsection
 @section('content')
+<x-ui.page-container>
+    <x-ui.page-header title="{{ __('Pos') }}">
+        <x-slot name="breadcrumbs">
+            <a href="{{ route('dashboard') }}" class="hover:text-gray-900">{{ __('Home') }}</a>
+            <svg class="flex-shrink-0 mx-2 h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+            <span class="text-gray-900 font-medium">{{ __('Pos') }}</span>
+        </x-slot>
+    </x-ui.page-header>
+
     <div class="mt-4 product-tab-wrp">
         <div class="card-header">
             <div class="row align-items-center">
@@ -307,6 +318,7 @@
             </div>
         </div>
     </div>
+</x-ui.page-container>
 @endsection
 @push('script-page')
 

@@ -56,10 +56,10 @@ $company_logo = \App\Models\Utility::getValByName('company_logo');
         <!-- Header -->
         <div class="flex items-center justify-between mb-8">
             <div>
-                <h1 style="font-family: 'Geist', sans-serif; font-size: 1.5rem; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30; margin: 0;">
+                <h1 style="font-family: 'Geist', sans-serif; font-size: 1.5rem; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30 !important; margin: 0;">
                     {{ __('Overview') }}
                 </h1>
-                <p style="font-family: 'Inter', sans-serif; font-size: 14px; color: #767586; margin-top: 4px;">
+                <p style="font-family: 'Inter', sans-serif; font-size: 14px; color: #767586 !important !important; margin-top: 4px;">
                     {{ __('Super Admin Dashboard') }}
                 </p>
             </div>
@@ -72,38 +72,38 @@ $company_logo = \App\Models\Utility::getValByName('company_logo');
         <!-- 5 Cards Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
             <!-- Active Plans -->
-            <div style="background: #e5eeff; border-radius: 12px; padding: 24px; position: relative; overflow: hidden;" class="group">
-                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(70,72,212,0.05);"></div>
+            <div style="background: #f1f1f1; border-radius: 12px; padding: 24px; position: relative; overflow: hidden;" class="group">
+                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(0,0,0,0.03);"></div>
                 <div class="flex justify-between items-start mb-6">
-                    <div style="width: 48px; height: 48px; border-radius: 12px; background: #6063ee; color: #fffbff; display: flex; align-items: center; justify-content: center;">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: #000000; color: #ffffff !importantbff; display: flex; align-items: center; justify-content: center;">
                         <span class="material-symbols-outlined">workspace_premium</span>
                     </div>
                 </div>
                 <div>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #464554; margin-bottom: 4px;">{{ __('Active Plans') }}</p>
-                    <p style="font-family: 'Geist', sans-serif; font-size: 24px; font-weight: 600; color: #0b1c30; margin: 0;">{{ $user['active_plans'] }}</p>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #464554 !important !important; margin-bottom: 4px;">{{ __('Active Plans') }}</p>
+                    <p style="font-family: 'Geist', sans-serif; font-size: 24px; font-weight: 600; color: #0b1c30 !important; margin: 0;">{{ $user['active_plans'] }}</p>
                 </div>
             </div>
 
             <!-- Pending Requests -->
-            <div style="background: #e5eeff; border-radius: 12px; padding: 24px; position: relative; overflow: hidden;" class="group">
-                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(70,72,212,0.05);"></div>
+            <div style="background: #f1f1f1; border-radius: 12px; padding: 24px; position: relative; overflow: hidden;" class="group">
+                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(0,0,0,0.03);"></div>
                 <div class="flex justify-between items-start mb-6">
-                    <div style="width: 48px; height: 48px; border-radius: 12px; background: #6063ee; color: #fffbff; display: flex; align-items: center; justify-content: center;">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: #000000; color: #ffffff !importantbff; display: flex; align-items: center; justify-content: center;">
                         <span class="material-symbols-outlined">pending_actions</span>
                     </div>
                 </div>
                 <div>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #464554; margin-bottom: 4px;">{{ __('Pending Requests') }}</p>
-                    <p style="font-family: 'Geist', sans-serif; font-size: 24px; font-weight: 600; color: #0b1c30; margin: 0;">{{ $user['pending_requests'] }}</p>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #464554 !important !important; margin-bottom: 4px;">{{ __('Pending Requests') }}</p>
+                    <p style="font-family: 'Geist', sans-serif; font-size: 24px; font-weight: 600; color: #0b1c30 !important; margin: 0;">{{ $user['pending_requests'] }}</p>
                 </div>
             </div>
 
             <!-- Monthly Growth -->
-            <div style="background: #e5eeff; border-radius: 12px; padding: 24px; position: relative; overflow: hidden;" class="group">
-                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(70,72,212,0.05);"></div>
+            <div style="background: #f1f1f1; border-radius: 12px; padding: 24px; position: relative; overflow: hidden;" class="group">
+                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(0,0,0,0.03);"></div>
                 <div class="flex justify-between items-start mb-6">
-                    <div style="width: 48px; height: 48px; border-radius: 12px; background: #6063ee; color: #fffbff; display: flex; align-items: center; justify-content: center;">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: #000000; color: #ffffff !importantbff; display: flex; align-items: center; justify-content: center;">
                         <span class="material-symbols-outlined">trending_up</span>
                     </div>
                     @if($user['monthly_growth'] >= 0)
@@ -119,36 +119,36 @@ $company_logo = \App\Models\Utility::getValByName('company_logo');
                     @endif
                 </div>
                 <div>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #464554; margin-bottom: 4px;">{{ __('Monthly Growth') }}</p>
-                    <p style="font-family: 'Geist', sans-serif; font-size: 24px; font-weight: 600; color: #0b1c30; margin: 0;">{{ $user['monthly_growth'] }}%</p>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #464554 !important !important; margin-bottom: 4px;">{{ __('Monthly Growth') }}</p>
+                    <p style="font-family: 'Geist', sans-serif; font-size: 24px; font-weight: 600; color: #0b1c30 !important; margin: 0;">{{ $user['monthly_growth'] }}%</p>
                 </div>
             </div>
 
             <!-- Total Stores -->
-            <div style="background: #e5eeff; border-radius: 12px; padding: 24px; position: relative; overflow: hidden;" class="group">
-                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(70,72,212,0.05);"></div>
+            <div style="background: #f1f1f1; border-radius: 12px; padding: 24px; position: relative; overflow: hidden;" class="group">
+                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(0,0,0,0.03);"></div>
                 <div class="flex justify-between items-start mb-6">
-                    <div style="width: 48px; height: 48px; border-radius: 12px; background: #6063ee; color: #fffbff; display: flex; align-items: center; justify-content: center;">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: #000000; color: #ffffff !importantbff; display: flex; align-items: center; justify-content: center;">
                         <span class="material-symbols-outlined">storefront</span>
                     </div>
                 </div>
                 <div>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #464554; margin-bottom: 4px;">{{ __('Total Stores') }}</p>
-                    <p style="font-family: 'Geist', sans-serif; font-size: 24px; font-weight: 600; color: #0b1c30; margin: 0;">{{ $user->total_user }}</p>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #464554 !important !important; margin-bottom: 4px;">{{ __('Total Stores') }}</p>
+                    <p style="font-family: 'Geist', sans-serif; font-size: 24px; font-weight: 600; color: #0b1c30 !important; margin: 0;">{{ $user->total_user }}</p>
                 </div>
             </div>
 
             <!-- Total Revenue -->
-            <div style="background: #e5eeff; border-radius: 12px; padding: 24px; position: relative; overflow: hidden;" class="group">
-                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(70,72,212,0.05);"></div>
+            <div style="background: #f1f1f1; border-radius: 12px; padding: 24px; position: relative; overflow: hidden;" class="group">
+                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(0,0,0,0.03);"></div>
                 <div class="flex justify-between items-start mb-6">
-                    <div style="width: 48px; height: 48px; border-radius: 12px; background: #6063ee; color: #fffbff; display: flex; align-items: center; justify-content: center;">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: #000000; color: #ffffff !importantbff; display: flex; align-items: center; justify-content: center;">
                         <span class="material-symbols-outlined">payments</span>
                     </div>
                 </div>
                 <div>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #464554; margin-bottom: 4px;">{{ __('Total Revenue') }}</p>
-                    <p style="font-family: 'Geist', sans-serif; font-size: 24px; font-weight: 600; color: #0b1c30; margin: 0;">{{ \App\Models\Utility::priceFormat($user['total_plan_price']) }}</p>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #464554 !important !important; margin-bottom: 4px;">{{ __('Total Revenue') }}</p>
+                    <p style="font-family: 'Geist', sans-serif; font-size: 24px; font-weight: 600; color: #0b1c30 !important; margin: 0;">{{ \App\Models\Utility::priceFormat($user['total_plan_price']) }}</p>
                 </div>
             </div>
         </div>
@@ -166,12 +166,12 @@ $company_logo = \App\Models\Utility::getValByName('company_logo');
         <!-- Quick Links -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <a class="card mb-0 hover:bg-surface-container-high transition-colors group flex-row items-center gap-4 p-6" href="{{ route('store-resource.index') }}" style="border-radius: 12px; cursor: pointer; text-decoration: none;">
-                <div style="width: 48px; height: 48px; border-radius: 8px; background: #6063ee; color: #fffbff; display: flex; align-items: center; justify-content: center;" class="group-hover:scale-110 transition-transform flex-shrink-0">
+                <div style="width: 48px; height: 48px; border-radius: 8px; background: #000000; color: #ffffff !importantbff; display: flex; align-items: center; justify-content: center;" class="group-hover:scale-110 transition-transform flex-shrink-0">
                     <span class="material-symbols-outlined text-[24px]">business</span>
                 </div>
                 <div>
-                    <h3 style="font-family: 'Geist', sans-serif; font-size: 16px; font-weight: 600; color: #0b1c30; margin: 0 0 4px;">{{ __('Company Management') }}</h3>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #767586; margin: 0;">{{ __('View and edit registered companies') }}</p>
+                    <h3 style="font-family: 'Geist', sans-serif; font-size: 16px; font-weight: 600; color: #0b1c30 !important; margin: 0 0 4px;">{{ __('Company Management') }}</h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #767586 !important !important; margin: 0;">{{ __('View and edit registered companies') }}</p>
                 </div>
             </a>
             <a class="card mb-0 hover:bg-surface-container-high transition-colors group flex-row items-center gap-4 p-6" href="{{ route('plans.index') }}" style="border-radius: 12px; cursor: pointer; text-decoration: none;">
@@ -179,8 +179,8 @@ $company_logo = \App\Models\Utility::getValByName('company_logo');
                     <span class="material-symbols-outlined text-[24px]">subscriptions</span>
                 </div>
                 <div>
-                    <h3 style="font-family: 'Geist', sans-serif; font-size: 16px; font-weight: 600; color: #0b1c30; margin: 0 0 4px;">{{ __('Plan Management') }}</h3>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #767586; margin: 0;">{{ __('Configure subscription tiers and pricing') }}</p>
+                    <h3 style="font-family: 'Geist', sans-serif; font-size: 16px; font-weight: 600; color: #0b1c30 !important; margin: 0 0 4px;">{{ __('Plan Management') }}</h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #767586 !important !important; margin: 0;">{{ __('Configure subscription tiers and pricing') }}</p>
                 </div>
             </a>
             <a class="card mb-0 hover:bg-surface-container-high transition-colors group flex-row items-center gap-4 p-6" href="{{ route('coupons.index') }}" style="border-radius: 12px; cursor: pointer; text-decoration: none;">
@@ -188,8 +188,8 @@ $company_logo = \App\Models\Utility::getValByName('company_logo');
                     <span class="material-symbols-outlined text-[24px]">local_activity</span>
                 </div>
                 <div>
-                    <h3 style="font-family: 'Geist', sans-serif; font-size: 16px; font-weight: 600; color: #0b1c30; margin: 0 0 4px;">{{ __('Coupon Management') }}</h3>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #767586; margin: 0;">{{ __('Create and track promotional codes') }}</p>
+                    <h3 style="font-family: 'Geist', sans-serif; font-size: 16px; font-weight: 600; color: #0b1c30 !important; margin: 0 0 4px;">{{ __('Coupon Management') }}</h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #767586 !important !important; margin: 0;">{{ __('Create and track promotional codes') }}</p>
                 </div>
             </a>
         </div>

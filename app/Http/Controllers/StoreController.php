@@ -436,10 +436,10 @@ class StoreController extends Controller
             );
             $serverIp = gethostbyname($serverName);
 
-            if ($serverIp == $_SERVER['SERVER_ADDR']) {
+            if ($serverIp == ($_SERVER['SERVER_ADDR'] ?? $_SERVER['HTTP_HOST'] ?? '127.0.0.1')) {
                 $serverIp;
             } else {
-                $serverIp = request()->server('SERVER_ADDR');
+                $serverIp = request()->server('SERVER_ADDR') ?? $_SERVER['HTTP_HOST'] ?? '127.0.0.1';
             }
             $users = User::where('created_by', '=', \Auth::user()->creatorId())->where('type', '=', 'owner')->get();
             $stores = Store::where('enable_domain', 'on')->get();
@@ -464,7 +464,7 @@ class StoreController extends Controller
             if ($serverIp != $serverName) {
                 $serverIp;
             } else {
-                $serverIp = request()->server('SERVER_ADDR');
+                $serverIp = request()->server('SERVER_ADDR') ?? $_SERVER['HTTP_HOST'] ?? '127.0.0.1';
             }
             $users = User::where('created_by', '=', \Auth::user()->creatorId())->where('type', '=', 'owner')->get();
             $stores = Store::where('enable_subdomain', 'on')->get();

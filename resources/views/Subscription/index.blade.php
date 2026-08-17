@@ -1,40 +1,42 @@
-@extends('layouts.admin')
+@extends('layouts.ui-admin')
 
 @section('page-title')
     {{ __('Subscriber') }}
 @endsection
-@section('title')
-    <div class="d-inline-block">
-        <h5 class="h5 d-inline-block text-white font-weight-bold mb-0 ">{{ __('Subscriber') }}</h5>
-    </div>
-@endsection
-@section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{ __('Subscriber') }}</li>
-@endsection
-@section('action-btn')
-<div class="action-btn-wrapper">
-    @can('Create Subscriber')
-        <a class="btn btn-sm btn-icon  btn-primary  text-white" data-url="{{ route('subscriptions.create') }}" data-title="{{ __('Add Subscriber') }}" data-ajax-popup="true" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Add Subscriber') }}">
-            <i  data-feather="plus"></i>
-        </a>
-    @endcan
-</div>
-@endsection
-@section('filter')
-@endsection
+
 @section('content')
+<x-ui.page-container>
+    <x-ui.page-header title="{{ __('Subscriber') }}">
+        <x-slot name="breadcrumbs">
+            <a href="{{ route('dashboard') }}" class="hover:text-gray-900">{{ __('Home') }}</a>
+            <svg class="flex-shrink-0 mx-2 h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+            <span class="text-gray-900 font-medium">{{ __('Subscriber') }}</span>
+        </x-slot>
+
+        <x-slot name="actions">
+            @can('Create Subscriber')
+                <a href="#" data-url="{{ route('subscriptions.create') }}" data-title="{{ __('Add Subscriber') }}" data-ajax-popup="true" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Add Subscriber') }}">
+                    <x-ui.button variant="primary">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        {{ __('Add Subscriber') }}
+                    </x-ui.button>
+                </a>
+            @endcan
+        </x-slot>
+    </x-ui.page-header>
+
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body pb-0 table-border-style">
-                    <h5></h5>
                     <div class="table-responsive order-table-wrp">
-                        <table class="table mb-0 dataTable ">
+                        <table class="table mb-0 dataTable">
                             <thead>
                                 <tr>
                                     <th>{{ __('Email') }}</th>
-                                    <th class="text-right">{{ __('Action') }}</th>
+                                    <th>{{ __('Action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -67,6 +69,5 @@
             </div>
         </div>
     </div>
+</x-ui.page-container>
 @endsection
-@push('script-page')
-@endpush

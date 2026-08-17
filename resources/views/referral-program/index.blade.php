@@ -12,8 +12,8 @@
     <x-ui.page-container>
         <div class="flex items-center justify-between mb-8 mt-4">
             <div class="flex flex-col gap-1 relative z-10">
-                <h1 style="font-family: 'Geist', sans-serif; font-size: 1.5rem; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30; margin: 0;">{{ __('Referral Program') }}</h1>
-                <p style="font-family: 'Inter', sans-serif; font-size: 16px; color: #767586; margin-top: 4px; max-width: 42rem;">{{ __('Manage referral settings, payouts, and view all referral transactions.') }}</p>
+                <h1 style="font-family: 'Geist', sans-serif; font-size: 1.5rem; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30 !important; margin: 0;">{{ __('Referral Program') }}</h1>
+                <p style="font-family: 'Inter', sans-serif; font-size: 16px; color: #767586 !important !important; margin-top: 4px; max-width: 42rem;">{{ __('Manage referral settings, payouts, and view all referral transactions.') }}</p>
             </div>
         </div>
 
@@ -22,7 +22,7 @@
             <div class="w-full lg:w-1/4">
                 <x-ui.card class="sticky top-6 overflow-hidden">
                     <nav class="flex flex-col p-2 space-y-1" id="useradd-sidenav">
-                        <a href="#transaction" data-tab="transaction" class="tab-link flex items-center justify-between px-4 py-3 text-sm font-medium transition-colors rounded-lg" style="background-color: #e5eeff; color: #4648d4;">
+                        <a href="#transaction" data-tab="transaction" class="tab-link flex items-center justify-between px-4 py-3 text-sm font-medium transition-colors rounded-lg" style="background-color: #f1f1f1; color: #000000 !important;">
                             {{ __('Transaction') }}
                             <span class="material-symbols-outlined text-[18px]">chevron_right</span>
                         </a>
@@ -44,20 +44,20 @@
                 <!-- Transaction Tab -->
                 <div id="transaction" class="tab-content">
                     <x-ui.card class="overflow-hidden">
-                        <div class="px-6 py-4 border-b" style="border-color: #dce9ff;">
-                            <h5 style="font-family: 'Geist', sans-serif; font-size: 20px; font-weight: 600; color: #0b1c30; margin: 0;">{{ __('Transaction') }}</h5>
+                        <div class="px-6 py-4 border-b" style="border-color: #e5e5e5;">
+                            <h5 style="font-family: 'Geist', sans-serif; font-size: 20px; font-weight: 600; color: #0b1c30 !important; margin: 0;">{{ __('Transaction') }}</h5>
                         </div>
                         <div class="overflow-x-auto">
                             <x-ui.table>
                                 <thead>
                                     <tr>
-                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586; font-family: 'Geist', sans-serif;">#</th>
-                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Owner Name') }}</th>
-                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Referral Owner') }}</th>
-                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Plan Name') }}</th>
-                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Plan Price') }}</th>
-                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Commission (%)') }}</th>
-                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Commission Amount') }}</th>
+                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586 !important !important; font-family: 'Geist', sans-serif;">#</th>
+                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586 !important !important; font-family: 'Geist', sans-serif;">{{ __('Owner Name') }}</th>
+                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586 !important !important; font-family: 'Geist', sans-serif;">{{ __('Referral Owner') }}</th>
+                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586 !important !important; font-family: 'Geist', sans-serif;">{{ __('Plan Name') }}</th>
+                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586 !important !important; font-family: 'Geist', sans-serif;">{{ __('Plan Price') }}</th>
+                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586 !important !important; font-family: 'Geist', sans-serif;">{{ __('Commission (%)') }}</th>
+                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586 !important !important; font-family: 'Geist', sans-serif;">{{ __('Commission Amount') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
@@ -88,18 +88,18 @@
                 <!-- Payout Request Tab -->
                 <div id="payout-request" class="hidden tab-content">
                     <x-ui.card class="overflow-hidden">
-                        <div class="px-6 py-4 border-b" style="border-color: #dce9ff;">
-                            <h5 style="font-family: 'Geist', sans-serif; font-size: 20px; font-weight: 600; color: #0b1c30; margin: 0;">{{ __('Payout Request') }}</h5>
+                        <div class="px-6 py-4 border-b" style="border-color: #e5e5e5;">
+                            <h5 style="font-family: 'Geist', sans-serif; font-size: 20px; font-weight: 600; color: #0b1c30 !important; margin: 0;">{{ __('Payout Request') }}</h5>
                         </div>
                         <div class="overflow-x-auto">
                             <x-ui.table>
                                 <thead>
                                     <tr>
-                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586; font-family: 'Geist', sans-serif;">#</th>
-                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Owner Name') }}</th>
-                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Requested Date')}}</th>
-                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Requested Amount') }}</th>
-                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Action') }}</th>
+                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586 !important !important; font-family: 'Geist', sans-serif;">#</th>
+                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586 !important !important; font-family: 'Geist', sans-serif;">{{ __('Owner Name') }}</th>
+                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586 !important !important; font-family: 'Geist', sans-serif;">{{ __('Requested Date')}}</th>
+                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586 !important !important; font-family: 'Geist', sans-serif;">{{ __('Requested Amount') }}</th>
+                                        <th class="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase" style="color: #767586 !important !important; font-family: 'Geist', sans-serif;">{{ __('Action') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
@@ -131,12 +131,12 @@
                 <div id="settings" class="hidden tab-content">
                     {{ Form::open(['route' => 'referral-program.store', 'method' => 'POST', 'enctype' => 'multipart/form-data','class'=>'needs-validation','novalidate']) }}
                     <x-ui.card class="overflow-hidden">
-                        <div class="flex flex-col items-center justify-between px-6 py-4 border-b border-gray-200 lg:flex-row gap-y-4" style="border-color: #dce9ff;">
-                            <h5 style="font-family: 'Geist', sans-serif; font-size: 20px; font-weight: 600; color: #0b1c30; margin: 0;">{{ __('Settings') }}</h5>
+                        <div class="flex flex-col items-center justify-between px-6 py-4 border-b border-gray-200 lg:flex-row gap-y-4" style="border-color: #e5e5e5;">
+                            <h5 style="font-family: 'Geist', sans-serif; font-size: 20px; font-weight: 600; color: #0b1c30 !important; margin: 0;">{{ __('Settings') }}</h5>
                             <div class="flex items-center space-x-3">
                                 <label for="is_enable" class="text-sm font-medium text-gray-700">{{__('Enable')}}</label>
                                 <div class="relative inline-block w-10 mr-2 align-middle select-none">
-                                    <input type="checkbox" name="is_enable" id="is_enable" class="absolute block w-6 h-6 transition-all duration-200 ease-in-out bg-white border-4 appearance-none rounded-full cursor-pointer focus:outline-none is_enable right-4 checked:right-0" style="border-color: #4648d4;" {{ isset($setting) && $setting->is_enable == '1' ? 'checked' : ''}}>
+                                    <input type="checkbox" name="is_enable" id="is_enable" class="absolute block w-6 h-6 transition-all duration-200 ease-in-out bg-white border-4 appearance-none rounded-full cursor-pointer focus:outline-none is_enable right-4 checked:right-0" style="border-color: #000000 !important;" {{ isset($setting) && $setting->is_enable == '1' ? 'checked' : ''}}>
                                     <label for="is_enable" class="block h-6 overflow-hidden bg-gray-300 rounded-full cursor-pointer transition-colors duration-200 toggle-label"></label>
                                 </div>
                             </div>
@@ -164,8 +164,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="px-6 py-4 bg-gray-50 border-t text-right rounded-b-lg" style="border-color: #dce9ff;">
-                            <button type="submit" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-colors border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2" style="background-color: #4648d4;">
+                        <div class="px-6 py-4 bg-gray-50 border-t text-right rounded-b-lg" style="border-color: #e5e5e5;">
+                            <button type="submit" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-colors border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2" style="background-color: #000000 !important;">
                                 {{ __('Save Changes') }}
                             </button>
                         </div>
@@ -184,14 +184,14 @@
         $('.is_enable').on('change', function() {
             if($(this).is(':checked')) {
                 $(this).addClass('checked:right-0');
-                $(this).next('label').css('background-color', '#4648d4');
+                $(this).next('label').css('background-color', '#000000');
             } else {
                 $(this).next('label').css('background-color', '');
             }
         });
         // Run once on load
         if($('.is_enable').is(':checked')) {
-            $('.is_enable').next('label').css('background-color', '#4648d4');
+            $('.is_enable').next('label').css('background-color', '#000000');
         }
 
         // Tab Switching Logic
@@ -208,8 +208,8 @@
             $('.tab-link').removeAttr('style').addClass('text-gray-700 hover:bg-gray-50 hover:text-gray-900');
             // Style active link
             $(this).removeClass('text-gray-700 hover:bg-gray-50 hover:text-gray-900').css({
-                'background-color': '#e5eeff',
-                'color': '#4648d4'
+                'background-color': '#f1f1f1',
+                'color': '#000000'
             });
         });
 

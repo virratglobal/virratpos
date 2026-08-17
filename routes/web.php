@@ -70,7 +70,7 @@ use Illuminate\Http\Request;
 | contains the "web" middleware group. Now create something great!
 |
  */
-Route::get('/', [DashboardController::class, 'index'])->name('start')->middleware(['XSS']);
+Route::get('/', [DashboardController::class, 'landingPage'])->name('start')->middleware(['XSS']);
 Route::view('/ui-kitchen-sink', 'ui-kitchen-sink');
 
 Route::get('login/{lang?}', function () {

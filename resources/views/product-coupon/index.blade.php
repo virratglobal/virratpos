@@ -1,35 +1,9 @@
-@extends('layouts.admin')
+@extends('layouts.ui-admin')
+
 @section('page-title')
     {{ __('Product Coupons') }}
 @endsection
-@section('title')
-    <div class="d-inline-block">
-        <h5 class="h4 d-inline-block text-white font-weight-bold mb-2">{{ __('Product Coupons') }}</h5>
-    </div>
-@endsection
-@section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{ __('Product Coupons') }}</li>
-@endsection
 
-@section('action-btn')
-<div class="action-btn-wrapper d-flex">
-
-    <a class="btn btn-sm btn-icon  bg-primary text-white me-2" href="{{ route('productcoupon.export') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Export') }}">
-        <i  data-feather="download"></i>
-    </a>
-    @can('Create Product Coupan')
-    <a href="#!" class="btn btn-sm btn-icon  bg-primary text-white me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Import') }}" data-ajax-popup="true" data-size="lg" data-title="{{ __('Import Product-coupan CSV File') }}" data-url="{{ route('productcoupon.file.import') }}">
-        <i  data-feather="upload"></i>
-    </a>
-    @endcan
-    @can('Create Product Coupan')
-    <a class="btn btn-sm btn-icon  btn-primary text-white" data-url="{{ route('product-coupon.create') }}" data-title="{{ __('Add Coupon') }}" data-ajax-popup="true" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Create') }}">
-        <i  data-feather="plus"></i>
-    </a>
-    @endcan
-</div>
-@endsection
 @push('script-page')
     <script>
         $(document).on('click', '#code-generate', function() {
@@ -57,22 +31,60 @@
         });
     </script>
 @endpush
+
 @section('content')
+<x-ui.page-container>
+    <x-ui.page-header title="{{ __('Product Coupons') }}">
+        <x-slot name="breadcrumbs">
+            <a href="{{ route('dashboard') }}" class="hover:text-gray-900">{{ __('Home') }}</a>
+            <svg class="flex-shrink-0 mx-2 h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+            <span class="text-gray-900 font-medium">{{ __('Product Coupons') }}</span>
+        </x-slot>
+
+        <x-slot name="actions">
+            <div class="flex items-center space-x-2">
+                <a href="{{ route('productcoupon.export') }}">
+                    <x-ui.button variant="secondary" title="{{ __('Export') }}">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        Export
+                    </x-ui.button>
+                </a>
+                @can('Create Product Coupan')
+                    <a href="#!" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Import') }}" data-ajax-popup="true" data-size="lg" data-title="{{ __('Import Product-coupan CSV File') }}" data-url="{{ route('productcoupon.file.import') }}">
+                        <x-ui.button variant="secondary">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                            Import
+                        </x-ui.button>
+                    </a>
+                @endcan
+                @can('Create Product Coupan')
+                    <a href="#" data-url="{{ route('product-coupon.create') }}" data-title="{{ __('Add Coupon') }}" data-ajax-popup="true" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Create') }}">
+                        <x-ui.button variant="primary">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                            {{ __('Add Coupon') }}
+                        </x-ui.button>
+                    </a>
+                @endcan
+            </div>
+        </x-slot>
+    </x-ui.page-header>
+
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body pb-0 table-border-style">
-                    <h5></h5>
                     <div class="table-responsive order-table-wrp">
                         <table class="table mb-0 dataTable">
                             <thead>
                                 <tr>
-                                    <th> {{ __('Name') }}</th>
-                                    <th> {{ __('Code') }}</th>
-                                    <th> {{ __('Discount (%)') }}</th>
-                                    <th> {{ __('Limit') }}</th>
-                                    <th> {{ __('Used') }}</th>
-                                    <th class="text-right"> {{ __('Action') }}</th>
+                                    <th>{{ __('Name') }}</th>
+                                    <th>{{ __('Code') }}</th>
+                                    <th>{{ __('Discount') }}</th>
+                                    <th>{{ __('Limit') }}</th>
+                                    <th>{{ __('Used') }}</th>
+                                    <th>{{ __('Action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -92,13 +104,13 @@
                                         <td class="Action">
                                             <div class="d-flex action-btn-wrapper">
                                                 @can('Show Product Coupan')
-                                                    <a href="{{ route('product-coupon.show', $coupon->id) }}" class="btn btn-sm btn-icon bg-warning text-white me-2" data-tooltip="view" data-original-title="{{ __('View') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('View Coupon') }}" data-tooltip="View">
-                                                        <i  class="ti ti-eye f-20"></i>
+                                                    <a href="{{ route('product-coupon.show', $coupon->id) }}" class="btn btn-sm btn-icon bg-warning text-white me-2" data-tooltip="view" data-original-title="{{ __('View') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('View Coupon') }}">
+                                                        <i class="ti ti-eye f-20"></i>
                                                     </a>
                                                 @endcan
                                                 @can('Edit Product Coupan')
-                                                    <a href="#!" class="btn btn-sm btn-icon  bg-info text-white me-2" data-title="{{ __('Edit Coupon') }}" data-url="{{ route('product-coupon.edit', $coupon->id) }}" data-ajax-popup="true" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Edit') }}">
-                                                        <i  class=" ti ti-pencil f-20"></i>
+                                                    <a href="#!" class="btn btn-sm btn-icon bg-info text-white me-2" data-title="{{ __('Edit Coupon') }}" data-url="{{ route('product-coupon.edit', $coupon->id) }}" data-ajax-popup="true" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Edit') }}">
+                                                        <i class="ti ti-pencil f-20"></i>
                                                     </a>
                                                 @endcan
                                                 @can('Delete Product Coupan')
@@ -125,4 +137,5 @@
             </div>
         </div>
     </div>
+</x-ui.page-container>
 @endsection

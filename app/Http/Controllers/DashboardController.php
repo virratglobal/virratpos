@@ -57,7 +57,7 @@ class DashboardController extends Controller
             // remove WWW
             $remote = str_replace('www.', '', $remote);
 
-            if ($local != $remote){
+            if ($remote !== 'localhost' && $remote !== '127.0.0.1' && $local != $remote){
                 $domain = CustomDomainRequest::where('status','1')->where('custom_domain',$remote)->first();
                 // If the domain exists
                 if(isset($domain) && !empty($domain)) {
@@ -192,7 +192,20 @@ class DashboardController extends Controller
                 }
             }
         }
+    }
 
+    public function landingPage()
+    {
+        if (!file_exists(storage_path() . "/installed")) {
+            header('location:install');
+            die;
+        }
+        $settings = Utility::settings();
+        if ($settings['display_landing_page'] == 'on' && \Schema::hasTable('landing_page_settings')) {
+            return view('landingpage::layouts.landingpage');
+        } else {
+            return redirect('login');
+        }
     }
 
     public function getOrderChart($arrParam,$userstore = null)

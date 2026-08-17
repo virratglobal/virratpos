@@ -41,8 +41,22 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        primary: { DEFAULT: '#4648d4', light: '#6063ee', dark: '#2f2ebe' },
-                        sidebar: { bg: '#ffffff', text: '#464554', dark: '#f8f9ff', active: '#e5eeff', hover: '#dce9ff' },
+                        primary: {
+                            DEFAULT: '#000000',
+                            light: '#111111',
+                            dark: '#000000',
+                            50: '#f9f9f9',
+                            100: '#f5f5f5',
+                            200: '#e5e5e5',
+                            300: '#d4d4d4',
+                            400: '#a3a3a3',
+                            500: '#737373',
+                            600: '#111111',
+                            700: '#000000',
+                            800: '#000000',
+                            900: '#000000'
+                        },
+                        sidebar: { bg: '#ffffff', text: '#464554', dark: '#f8f9ff', active: '#f1f1f1', hover: '#e5e5e5' },
                         surface: '#ffffff',
                         background: '#f8f9ff',
                     }
@@ -55,6 +69,46 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
 
     <style>
         body { font-family: 'Inter', sans-serif !important; background-color: #f8f9ff !important; color: #0b1c30 !important; }
+        a { color: #000000; text-decoration: none; }
+        a:hover { color: #222222; }
+        .breadcrumb a, .breadcrumb-item a, [class*="breadcrumbs"] a { color: #767586 !important; }
+        .breadcrumb a:hover, .breadcrumb-item a:hover, [class*="breadcrumbs"] a:hover { color: #0b1c30 !important; }
+        /* Sidebar Link Styles */
+        .sg-sidebar a,
+        .sg-sidebar button {
+            color: #464554 !important;
+            background-color: transparent !important;
+            transition: all 0.2s ease-in-out !important;
+            font-weight: 600 !important;
+        }
+        .sg-sidebar a:hover,
+        .sg-sidebar button:hover {
+            background-color: #f1f1f1 !important;
+            color: #0b1c30 !important;
+        }
+        /* Inactive submenu link colors */
+        .sg-sidebar div a {
+            color: #767586 !important;
+        }
+        /* Active sidebar link styles */
+        .sg-sidebar a[style*="background: #000000"],
+        .sg-sidebar a[style*="background: rgb(0, 0, 0)"],
+        .sg-sidebar button[style*="background: #000000"],
+        .sg-sidebar button[style*="background: rgb(0, 0, 0)"],
+        .sg-sidebar a[style*="background:#000000"],
+        .sg-sidebar a[style*="background:rgb(0,0,0)"] {
+            background-color: #000000 !important;
+            color: #ffffff !important;
+        }
+        /* Active submenu link styles */
+        .sg-sidebar div a[style*="background: #000000"],
+        .sg-sidebar div a[style*="background: rgb(0, 0, 0)"],
+        .sg-sidebar div a[style*="background:#000000"],
+        .sg-sidebar div a[style*="background:rgb(0,0,0)"] {
+            background-color: #000000 !important;
+            color: #ffffff !important;
+        }
+        .sg-sidebar a *, .sg-sidebar button *, .sg-header a *, .sg-header button * { color: inherit !important; }
         .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
         .sg-main-content { padding-left: calc(240px + 32px + 32px); padding-right: 32px; }
         .sg-content-body { padding-top: calc(64px + 32px + 16px); padding-bottom: 32px; }
@@ -65,11 +119,11 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
         .card-header { background-color: transparent !important; border-bottom: 1px solid rgba(199,196,215,0.2) !important; padding: 20px 24px !important; font-family: 'Geist', sans-serif !important; font-size: 16px !important; font-weight: 600 !important; color: #0b1c30 !important; }
         .card-body { padding: 24px !important; }
         .form-control, .custom-select { border-radius: 8px !important; border: 1px solid #c7c4d7 !important; padding: 10px 12px !important; box-shadow: none !important; font-size: 14px !important; font-family: 'Inter', sans-serif !important; color: #0b1c30 !important; background-color: #f8f9ff !important; }
-        .form-control:focus { border-color: #4648d4 !important; box-shadow: 0 0 0 3px rgba(70,72,212,0.12) !important; }
+        .form-control:focus { border-color: #000000 !important; box-shadow: 0 0 0 3px rgba(0,0,0,0.06) !important; }
         .btn { border-radius: 8px !important; font-weight: 500 !important; font-family: 'Geist', sans-serif !important; font-size: 12px !important; padding: 10px 16px !important; box-shadow: none !important; border: none !important; }
-        .btn-primary { background-color: #4648d4 !important; color: #ffffff !important; }
-        .btn-primary:hover { background-color: #2f2ebe !important; }
-        .btn-secondary { background-color: #e5eeff !important; color: #4648d4 !important; }
+        .btn-primary { background-color: #000000 !important; color: #ffffff !important; }
+        .btn-primary:hover { background-color: #222222 !important; }
+        .btn-secondary { background-color: #f1f1f1 !important; color: #000000 !important; }
         .btn-danger { background-color: #ba1a1a !important; color: #ffffff !important; }
         .badge { font-weight: 500 !important; font-family: 'Geist', sans-serif !important; font-size: 11px !important; padding: 4px 8px !important; border-radius: 6px !important; }
         .table th { font-family: 'Geist', sans-serif !important; font-size: 11px !important; text-transform: uppercase !important; letter-spacing: 0.08em !important; color: #767586 !important; background-color: #eff4ff !important; border-bottom: 1px solid rgba(199,196,215,0.2) !important; padding: 12px 16px !important; }
@@ -82,7 +136,7 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
         .dropdown-item { border-radius: 8px !important; font-size: 13px !important; padding: 8px 12px !important; color: #464554 !important; }
         .dropdown-item:hover { background-color: #eff4ff !important; color: #0b1c30 !important; }
         .nav-pills .nav-link { font-family: 'Geist', sans-serif !important; font-size: 13px !important; color: #464554 !important; border-radius: 8px !important; padding: 10px 14px !important; }
-        .nav-pills .nav-link.active { background-color: #e5eeff !important; color: #4648d4 !important; }
+        .nav-pills .nav-link.active { background-color: #f1f1f1 !important; color: #000000 !important; }
     </style>
 </head>
 <body class="{{ $themeColor }} antialiased" x-data="{ sidebarOpen: false }" style="background-color: #f8f9ff !important;">
