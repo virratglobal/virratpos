@@ -4,6 +4,10 @@
     {{__('Register')}}
 @endsection
 
+@section('bottom-title')
+    {{ __('Sell everywhere people shop. Online and in person. Across AI and on social. Locally and globally.') }}
+@endsection
+
 @section('language-bar')
 @php
     $languages = App\Models\Utility::languages();
@@ -240,14 +244,14 @@
         </div>
         
     </form>
-@endsection
 
-@section('bottom-text')
     @if(Utility::getValByName('signup_button')=='on')
-        {{ __("Already have an account?") }}
-        <a href="{{ route('login',$lang) }}" class="font-label-md text-label-md text-primary hover:text-on-primary-fixed-variant ml-1 transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
-            {{__('Log in')}}
-        </a>
+        <div class="mt-6 text-center text-on-surface-variant font-body-sm text-body-sm">
+            {{ __("Already have an account?") }}
+            <a href="{{ route('login',$lang) }}" class="font-label-md text-label-md text-primary hover:text-on-primary-fixed-variant ml-1 transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
+                {{__('Log in')}}
+            </a>
+        </div>
     @endif
 @endsection
 
