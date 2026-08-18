@@ -119,8 +119,14 @@ class DashboardController extends Controller
                     $user['pending_requests'] = \App\Models\plan_request::count();
                     $user['active_plans'] = \App\Models\Plan::count();
 
+                    $recentActivity = \App\Models\PlanOrder::orderBy('created_at', 'desc')->limit(5)->get();
+                    $topPlans = \App\Models\Plan::select('plans.*', 
+                        \DB::raw('(SELECT count(*) FROM users WHERE users.plan = plans.id) as users_count'),
+                        \DB::raw('COALESCE((SELECT sum(price) FROM plan_orders WHERE plan_orders.plan_id = plans.id), 0) as revenue')
+                    )->orderBy('revenue', 'desc')->limit(3)->get();
+
                     $chartData = $this->getOrderChart(['duration' => 'week']);
-                    return view('home', compact('user', 'chartData'));
+                    return view('home', compact('user', 'chartData', 'recentActivity', 'topPlans'));
                 } else {
                     $store = Auth::user();
                     $userstore = UserStore::where('store_id', $store->current_store)->first();

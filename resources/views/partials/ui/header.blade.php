@@ -23,11 +23,10 @@
 ">
     {{-- Left: Mobile menu button + Search --}}
     <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
-        {{-- Mobile menu button --}}
-        <button @click="sidebarOpen = true"
+        {{-- Menu toggle button --}}
+        <button @click="sidebarOpen = !sidebarOpen; if(!sidebarOpen) document.body.classList.add('sidebar-closed-manual'); else document.body.classList.remove('sidebar-closed-manual');"
             style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 8px; color: #464554; background: none; border: none; cursor: pointer; transition: background 0.2s;"
-            onmouseover="this.style.background='#dce9ff';" onmouseout="this.style.background='';"
-            class="lg:hidden">
+            onmouseover="this.style.background='#dce9ff';" onmouseout="this.style.background='';">
             <span class="material-symbols-outlined">menu</span>
         </button>
 
@@ -76,7 +75,7 @@
                         data-url="{{ route('store-resource.create') }}"
                         data-ajax-popup="true"
                         data-title="{{ __('Create New Store') }}"
-                        style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; background: #e5eeff; color: #4648d4; border-radius: 8px; font-family: Geist, sans-serif; font-size: 12px; font-weight: 500; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s;"
+                        style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; background: #e5eeff; color: {{ $primaryColor }}; border-radius: 8px; font-family: Geist, sans-serif; font-size: 12px; font-weight: 500; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s;"
                         onmouseover="this.style.background='#dce9ff';" onmouseout="this.style.background='#e5eeff';">
                         <span class="material-symbols-outlined" style="font-size: 16px;">add</span>
                         <span class="hidden sm:inline">{{ __('New Store') }}</span>
@@ -103,11 +102,11 @@
                         @foreach ($userStores as $store)
                             @if ($store->is_store_enabled == 1)
                                 <a href="{{ Auth::user()->current_store == $store->id ? '#' : route('change_store', $store->id) }}"
-                                    style="display: flex; align-items: center; padding: 8px 12px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; transition: background 0.2s; {{ Auth::user()->current_store == $store->id ? 'background: #e5eeff; color: #4648d4;' : 'color: #464554;' }}"
+                                    style="display: flex; align-items: center; padding: 8px 12px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; transition: background 0.2s; {{ Auth::user()->current_store == $store->id ? 'background: #e5eeff; color: ' . $primaryColor . ';' : 'color: #464554;' }}"
                                     onmouseover="if(!this.style.background.includes('#e5eeff')) { this.style.background='#eff4ff'; }"
                                     onmouseout="if(!this.style.background.includes('#e5eeff')) { this.style.background=''; }">
                                     @if (Auth::user()->current_store == $store->id)
-                                        <span class="material-symbols-outlined" style="font-size: 16px; margin-right: 8px; color: #4648d4;" >check</span>
+                                        <span class="material-symbols-outlined" style="font-size: 16px; margin-right: 8px; color: {{ $primaryColor }};" >check</span>
                                     @else
                                         <span style="width: 16px; margin-right: 8px;"></span>
                                     @endif
@@ -120,7 +119,7 @@
                                         {{ $store->name }}
                                     </div>
                                     @if (isset($store->pivot->permission))
-                                        <span style="background: #e5eeff; color: #4648d4; padding: 2px 8px; border-radius: 999px; font-size: 11px;">{{ $store->pivot->permission == 'Owner' ? __($store->pivot->permission) : __('Shared') }}</span>
+                                        <span style="background: #e5eeff; color: {{ $primaryColor }}; padding: 2px 8px; border-radius: 999px; font-size: 11px;">{{ $store->pivot->permission == 'Owner' ? __($store->pivot->permission) : __('Shared') }}</span>
                                     @endif
                                 </div>
                             @endif
@@ -129,6 +128,24 @@
                 </div>
             </div>
         @endif
+
+        {{-- Full Screen Button --}}
+        <button type="button" x-data="{ isFullScreen: false }"
+            @click="
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen().then(() => isFullScreen = true).catch(err => console.error(err));
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen().then(() => isFullScreen = false);
+                    }
+                }
+            "
+            @fullscreenchange.window="isFullScreen = !!document.fullscreenElement"
+            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #464554; background: none; border: none; cursor: pointer; transition: background 0.2s;"
+            onmouseover="this.style.background='#dce9ff';" onmouseout="this.style.background='';"
+            title="{{ __('Toggle Fullscreen') }}">
+            <span class="material-symbols-outlined" x-text="isFullScreen ? 'fullscreen_exit' : 'fullscreen'">fullscreen</span>
+        </button>
 
         {{-- Theme Button --}}
         <button id="theme-toggle-btn" type="button"
@@ -151,7 +168,7 @@
             <div x-show="open" style="display: none; position: absolute; right: 0; z-index: 50; margin-top: 8px; width: 224px; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.1); border: 1px solid rgba(199,196,215,0.2); padding: 6px;">
                 @foreach ($languages as $code => $lang)
                     <a href="{{ route('change.language', $code) }}"
-                        style="display: block; padding: 8px 12px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; transition: background 0.2s; {{ $currantLang == $code ? 'background: #e5eeff; color: #4648d4; font-weight: 500;' : 'color: #464554;' }}"
+                        style="display: block; padding: 8px 12px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; transition: background 0.2s; {{ $currantLang == $code ? 'background: #e5eeff; color: ' . $primaryColor . '; font-weight: 500;' : 'color: #464554;' }}"
                         onmouseover="if(!this.style.background.includes('#e5eeff')) { this.style.background='#eff4ff'; }"
                         onmouseout="if(!this.style.background.includes('#e5eeff')) { this.style.background=''; }">
                         {{ ucFirst($lang) }}
@@ -161,14 +178,14 @@
                     <div style="height: 1px; background: rgba(199,196,215,0.3); margin: 4px 0;"></div>
                     @can('Create Language')
                         <a href="#" data-url="{{ route('create.language') }}" data-size="md" data-ajax-popup="true" data-title="{{ __('Create New Language') }}" class="cust-btn"
-                            style="display: block; padding: 8px 12px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; color: #4648d4; transition: background 0.2s;"
+                            style="display: block; padding: 8px 12px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; color: {{ $primaryColor }}; transition: background 0.2s;"
                             onmouseover="this.style.background='#eff4ff';" onmouseout="this.style.background='';">
                             {{ __('Create Language') }}
                         </a>
                     @endcan
                     @can('Manage Language')
                         <a href="{{ route('manage.language', [$currantLang]) }}"
-                            style="display: block; padding: 8px 12px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; color: #4648d4; transition: background 0.2s;"
+                            style="display: block; padding: 8px 12px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; color: {{ $primaryColor }}; transition: background 0.2s;"
                             onmouseover="this.style.background='#eff4ff';" onmouseout="this.style.background='';">
                             {{ __('Manage Languages') }}
                         </a>
@@ -202,7 +219,7 @@
                 transition: all 0.2s;
             }
             .sg-profile-link:hover {
-                background: #4648d4 !important;
+                background: {{ $primaryColor }} !important;
                 color: #ffffff !important;
             }
             .sg-profile-logout {

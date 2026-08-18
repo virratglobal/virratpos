@@ -92,7 +92,7 @@ class RegisteredUserController extends Controller
         }
         
         $validation = [];
-        if ($request->has('terms_condition') && $request->terms_condition == 'off') {
+        if ($request->has('terms_condition') && $request->terms_condition != 'on') {
             $validation['terms_condition_check'] = 'required';
         }
         

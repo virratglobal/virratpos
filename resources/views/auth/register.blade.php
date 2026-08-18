@@ -163,9 +163,10 @@
         <!-- Terms and Conditions -->
         @if (isset($keyArray) && count($keyArray) > 0)
             <div class="flex items-start gap-2 mt-2">
-                <div class="relative flex items-center justify-center w-5 h-5 rounded bg-surface shadow-[0_0_0_1px_#c7c4d7] hover:shadow-[0_0_0_1px_#4648d4] transition-shadow duration-200 mt-0.5">
-                    <input class="peer sr-only" id="termsCheckbox" name="terms_condition_check" type="checkbox" required>
-                    <span class="material-symbols-outlined text-[16px] text-on-primary opacity-0 peer-checked:opacity-100 transition-opacity duration-200 absolute pointer-events-none" style="font-variation-settings: 'FILL' 1;">check</span>
+                <div class="relative flex items-center justify-center w-5 h-5 rounded bg-surface shadow-[0_0_0_1px_#c7c4d7] hover:shadow-[0_0_0_1px_#4648d4] transition-shadow duration-200 mt-0.5 cursor-pointer">
+                    <input id="termsCheckbox" name="terms_condition_check" type="checkbox" value="on"
+                        class="peer absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10 m-0">
+                    <span class="material-symbols-outlined text-[16px] text-on-primary opacity-0 peer-checked:opacity-100 transition-opacity duration-200 absolute pointer-events-none" style="font-variation-settings: 'FILL' 1; z-index: 1;">check</span>
                     <div class="absolute inset-0 bg-primary rounded opacity-0 peer-checked:opacity-100 transition-opacity duration-200 pointer-events-none"></div>
                     <input type="hidden" name="terms_condition" id="terms_condition" value="off">
                 </div>
@@ -278,9 +279,12 @@
     @if (isset($keyArray) && count($keyArray) > 0)
         <script>
             $('#registerForm').on('submit', function() {
-                if ($('#termsCheckbox').prop('checked')) {
-                    $('#terms_condition').val('on');
-                }
+                // Sync the hidden terms_condition field with the checkbox state
+                $('#terms_condition').val($('#termsCheckbox').is(':checked') ? 'on' : 'off');
+            });
+            // Also update on every change so the field stays in sync
+            $('#termsCheckbox').on('change', function() {
+                $('#terms_condition').val($(this).is(':checked') ? 'on' : 'off');
             });
         </script>
     @endif

@@ -279,12 +279,213 @@
         </div>
 
         <!-- Chart Section -->
-        <div class="card mb-8">
-            <div class="card-header border-b-0 pb-0">
-                <h3 class="mb-0">{{ __('Recent Orders') }}</h3>
+        <!-- Chart Section -->
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap');
+        
+        .dashboard-custom-card {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            height: 100%;
+        }
+        .dashboard-custom-title {
+            font-family: 'Geist', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: #0b1c30;
+            margin: 0;
+        }
+        .dashboard-custom-link {
+            font-family: 'Geist', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            color: #4648d4;
+            text-decoration: none;
+        }
+        .dashboard-custom-link:hover { text-decoration: underline; }
+        
+        .timeline-container { position: relative; margin-top: 24px; }
+        .timeline-line {
+            position: absolute;
+            left: 15px;
+            top: 8px;
+            bottom: 8px;
+            width: 1px;
+            background-color: rgba(199, 196, 215, 0.4);
+        }
+        .timeline-item {
+            display: flex;
+            gap: 16px;
+            position: relative;
+            padding-bottom: 28px;
+        }
+        .timeline-item:last-child { padding-bottom: 0; }
+        .timeline-dot-wrapper {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #dce9ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            border: 4px solid #fff;
+            flex-shrink: 0;
+        }
+        .timeline-dot { width: 8px; height: 8px; border-radius: 50%; }
+        
+        .text-primary-dot { background-color: #4648d4; }
+        .text-error-dot { background-color: #ba1a1a; }
+        .text-tertiary-dot { background-color: #904900; }
+        
+        .timeline-content {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-top: 4px;
+        }
+        .timeline-text-main {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: #0b1c30;
+            margin: 0;
+        }
+        .timeline-text-sub {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: #464554;
+            margin: 4px 0 0 0;
+        }
+        
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-family: 'Geist', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .status-success { background-color: rgba(70, 72, 212, 0.1); color: #4648d4; }
+        .status-pending { background-color: rgba(144, 73, 0, 0.1); color: #904900; }
+        .status-error { background-color: rgba(186, 26, 26, 0.1); color: #ba1a1a; }
+        
+        .plan-item { margin-bottom: 28px; }
+        .plan-item:last-child { margin-bottom: 0; }
+        .plan-item-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-family: 'Geist', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .plan-name { color: #0b1c30; }
+        .plan-users { color: #464554; }
+        .plan-progress-track {
+            width: 100%;
+            height: 8px;
+            background-color: #d3e4fe;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+        .plan-progress-fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+        .plan-revenue {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: #464554;
+            text-align: right;
+            margin: 0;
+        }
+        </style>
+        <div class="row mb-4">
+            <div class="col-md-8 mb-4 mb-md-0">
+                <div class="dashboard-custom-card">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <h2 class="dashboard-custom-title">{{ __('Recent Activity') }}</h2>
+                        <a href="{{ route('order.index') }}" class="dashboard-custom-link">{{ __('View All') }}</a>
+                    </div>
+                    <div class="timeline-container">
+                        <div class="timeline-line"></div>
+                        @foreach($recentActivity as $activity)
+                        <div class="timeline-item">
+                            <div class="timeline-dot-wrapper">
+                                <div class="timeline-dot {{ $activity->payment_status == 'success' ? 'text-primary-dot' : ($activity->payment_status == 'pending' ? 'text-tertiary-dot' : 'text-error-dot') }}"></div>
+                            </div>
+                            <div class="timeline-content">
+                                <div>
+                                    <p class="timeline-text-main">
+                                        <span style="font-weight: 500;">{{ $activity->name }}</span>
+                                        {{ __('purchased') }} 
+                                        <span style="font-weight: 500;">{{ $activity->plan_name }}</span>
+                                    </p>
+                                    <p class="timeline-text-sub">{{ $activity->created_at->diffForHumans() }}</p>
+                                </div>
+                                @if($activity->payment_status == 'success')
+                                    <span class="status-badge status-success">{{ ucfirst($activity->payment_status) }}</span>
+                                @elseif($activity->payment_status == 'pending')
+                                    <span class="status-badge status-pending">{{ ucfirst($activity->payment_status) }}</span>
+                                @else
+                                    <span class="status-badge status-error">{{ ucfirst($activity->payment_status) }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        @endforeach
+                        @if($recentActivity->isEmpty())
+                        <div class="timeline-item">
+                            <div class="timeline-dot-wrapper">
+                                <div class="timeline-dot" style="background-color: #c7c4d7;"></div>
+                            </div>
+                            <div class="timeline-content">
+                                <p class="timeline-text-main" style="color: #464554;">{{ __('No recent activity found.') }}</p>
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <div id="plan_order" data-color="primary" data-height="250"></div>
+            
+            <div class="col-md-4">
+                <div class="dashboard-custom-card">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
+                        <h2 class="dashboard-custom-title">{{ __('Top-Performing Plans') }}</h2>
+                    </div>
+                    <div>
+                        @foreach($topPlans as $index => $plan)
+                        @php
+                            $colors = ['#4648d4', '#c0c1ff', '#494bd6'];
+                            $fillColor = $colors[$index % count($colors)];
+                            
+                            $maxRevenue = $topPlans->first()->revenue > 0 ? $topPlans->first()->revenue : 1;
+                            $percentage = ($plan->revenue / $maxRevenue) * 100;
+                        @endphp
+                        <div class="plan-item">
+                            <div class="plan-item-header">
+                                <span class="plan-name">{{ $plan->name }}</span>
+                                <span class="plan-users">{{ $plan->users_count }} {{ __('Users') }}</span>
+                            </div>
+                            <div class="plan-progress-track">
+                                <div class="plan-progress-fill" style="width: {{ $percentage }}%; background-color: {{ $fillColor }};"></div>
+                            </div>
+                            <p class="plan-revenue">
+                                @if(env('CURRENCY_SYMBOL'))
+                                    {{ env('CURRENCY_SYMBOL') }}
+                                @else
+                                    $
+                                @endif
+                                {{ number_format($plan->revenue) }}
+                            </p>
+                        </div>
+                        @endforeach
+                        @if($topPlans->isEmpty())
+                            <p class="timeline-text-main" style="color: #464554;">{{ __('No plan data available.') }}</p>
+                        @endif
+                    </div>
+                </div>
             </div>
         </div>
 

@@ -383,49 +383,95 @@
             flex-shrink: 0; 
         }
     </style>
-    <x-ui.page-container class="settings-layout-wrapper pt-6">
-        <div class="w-full lg:w-64 shrink-0 settings-sidebar">
+    <x-ui.page-container class="pt-6">
+        <!-- Page Header -->
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <h1 style="font-family: 'Geist', sans-serif; font-size: 1.5rem; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30 !important; margin: 0;">
+                    @if (Auth::user()->type == 'super admin')
+                        {{ __('Super Admin Settings') }}
+                    @else
+                        {{ __('Store Settings') }}
+                    @endif
+                </h1>
+                <p style="font-family: 'Inter', sans-serif; font-size: 14px; color: #767586 !important; margin-top: 4px;">
+                    @if (Auth::user()->type == 'super admin')
+                        {{ __('Overview and control of platform-wide configurations and brand settings.') }}
+                    @else
+                        {{ __('Manage and configure your storefront preferences and integrations.') }}
+                    @endif
+                </p>
+            </div>
+        </div>
+
+        <div class="settings-layout-wrapper flex flex-col lg:flex-row gap-6">
+            <div class="w-full lg:w-64 shrink-0 settings-sidebar">
             <div class="sticky top-6">
                 <ul class="nav setting-nav-wrp nav-pills" id="pills-tab" role="tablist">
                     @if (Auth::user()->type == 'super admin')
+            <!-- Brand Settings -->
             <li class="nav-item col-12">
                 <a class="nav-link active" id="site_setting_tab" data-bs-toggle="pill" href="#pills-brand-setting"
-                    role="tab" aria-controls="pills-brand-setting" aria-selected="true">{{ __('Brand Settings') }}</a>
+                    role="tab" aria-controls="pills-brand-setting" aria-selected="true">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
+                    <span>{{ __('Brand Settings') }}</span>
+                </a>
             </li>
+            <!-- Payment Settings -->
             <li class="nav-item col-12">
                 <a class="nav-link" id="pills-payment-setting_tab" data-bs-toggle="pill" href="#pills-payment-setting"
-                    role="tab" aria-controls="pills-payment-setting"
-                    aria-selected="false">{{ __('Payment Settings') }}</a>
+                    role="tab" aria-controls="pills-payment-setting" aria-selected="false">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                    <span>{{ __('Payment Settings') }}</span>
+                </a>
             </li>
+            <!-- Email Settings -->
             <li class="nav-item col-12">
                 <a class="nav-link" id="pills-email-settings_tab" data-bs-toggle="pill" href="#pills-email-settings"
-                    role="tab" aria-controls="pills-email-settings"
-                    aria-selected="false">{{ __('Email Settings') }}</a>
+                    role="tab" aria-controls="pills-email-settings" aria-selected="false">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    <span>{{ __('Email Settings') }}</span>
+                </a>
             </li>
+            <!-- ReCaptcha Settings -->
             <li class="nav-item col-12">
                 <a class="nav-link" id="recaptcha-settings_tab" data-bs-toggle="pill" href="#pills-recaptcha-settings"
-                    role="tab" aria-controls="pills-recaptcha-settings-tab"
-                    aria-selected="false">{{ __('ReCaptcha Settings') }}</a>
+                    role="tab" aria-controls="pills-recaptcha-settings-tab" aria-selected="false">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    <span>{{ __('ReCaptcha Settings') }}</span>
+                </a>
             </li>
+            <!-- Storage Settings -->
             <li class="nav-item col-12">
                 <a class="nav-link" id="storage_settings_tab" data-bs-toggle="pill" href="#storage_settings"
-                    role="tab" aria-controls="pills-storage_settings-tab"
-                    aria-selected="false">{{ __('Storage Settings') }}</a>
+                    role="tab" aria-controls="pills-storage_settings-tab" aria-selected="false">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+                    <span>{{ __('Storage Settings') }}</span>
+                </a>
             </li>
+            <!-- Cache Settings -->
             <li class="nav-item col-12">
                 <a class="nav-link" id="pills-cache_settings-tab" data-bs-toggle="pill" href="#pills-cache-settings"
-                    role="tab" aria-controls="pills-cache_settings-tab"
-                    aria-selected="false">{{ __('Cache Settings') }}</a>
+                    role="tab" aria-controls="pills-cache_settings-tab" aria-selected="false">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    <span>{{ __('Cache Settings') }}</span>
+                </a>
             </li>
+            <!-- Cookie Settings -->
             <li class="nav-item col-12">
                 <a class="nav-link" id="pills-cookie_settings-tab" data-bs-toggle="pill" href="#pills-cookie-settings"
-                    role="tab" aria-controls="pills-cookie_settings-tab"
-                    aria-selected="false">{{ __('Cookie Settings') }}</a>
+                    role="tab" aria-controls="pills-cookie_settings-tab" aria-selected="false">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    <span>{{ __('Cookie Settings') }}</span>
+                </a>
             </li>
+            <!-- Chat GPT Settings -->
             <li class="nav-item col-12">
                 <a class="nav-link" id="pills-chatgpt-tab" data-bs-toggle="pill" href="#pills-chatgpt-settings"
-                    role="tab" aria-controls="pills-chatgpt-tab"
-                    aria-selected="false">{{ __('Chat GPT Settings') }}</a>
+                    role="tab" aria-controls="pills-chatgpt-tab" aria-selected="false">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    <span>{{ __('Chat GPT Settings') }}</span>
+                </a>
             </li>
         @else
             <!-- Store Details -->
