@@ -4,6 +4,10 @@
     {{__('Login')}}
 @endsection
 
+@section('bottom-title')
+    {{ __('Welcome back. Manage your business from anywhere.') }}
+@endsection
+
 @section('language-bar')
     @php
         $languages = App\Models\Utility::languages();
@@ -165,14 +169,14 @@
             </a>
         </div>
     </form>
-@endsection
 
-@section('bottom-text')
     @if(Utility::getValByName('signup_button')=='on')
-        {{ __("Don't have an account?") }}
-        <a href="{{ route('register') }}"
-            class="font-label-md text-label-md text-primary hover:text-on-primary-fixed-variant ml-1 transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
-            {{ __('Create one') }}
-        </a>
+        <div class="mt-6 text-center text-on-surface-variant font-body-sm text-body-sm">
+            {{ __("Don't have an account?") }}
+            <a href="{{ route('register') }}"
+                class="font-label-md text-label-md text-primary hover:text-on-primary-fixed-variant ml-1 transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
+                {{ __('Create one') }}
+            </a>
+        </div>
     @endif
 @endsection

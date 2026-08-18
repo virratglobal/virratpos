@@ -927,13 +927,13 @@ class Utility extends Model
             }
 
             //            return (($settings['currency_symbol_position'] == "pre") ? $settings['currency_symbol'] : '') . number_format($price, 2) . (($settings['currency_symbol_position'] == "post") ? $settings['currency_symbol'] : '');
-            return (($settings['currency_symbol_position'] == "pre") ? $settings['site_currency_symbol'] : '') . number_format($price, Utility::getValByName('decimal_number')) . (($settings['currency_symbol_position'] == "post") ? $settings['site_currency_symbol'] : '');
+            return (($settings['currency_symbol_position'] == "pre") ? $settings['currency_symbol'] : '') . number_format($price, Utility::getValByName('decimal_number')) . (($settings['currency_symbol_position'] == "post") ? $settings['currency_symbol'] : '');
         }
     }
 
     public static function currencySymbol($settings)
     {
-        return $settings['site_currency_symbol'];
+        return $settings['currency_symbol'];
     }
 
     public static function timeFormat($settings, $time)
