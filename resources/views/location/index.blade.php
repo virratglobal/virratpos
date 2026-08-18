@@ -16,12 +16,10 @@
         </x-slot>
 
         <x-slot name="actions">
-            <a href="#" data-size="lg" data-url="{{ route('location.create') }}" data-ajax-popup="true" data-title="{{ __('Create New Location') }}">
-                <x-ui.button variant="primary">
-                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                    {{ __('Create New Location') }}
-                </x-ui.button>
-            </a>
+            <x-ui.button variant="primary" data-size="lg" data-url="{{ route('location.create') }}" data-ajax-popup="true" data-title="{{ __('Create New Location') }}">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                {{ __('Create New Location') }}
+            </x-ui.button>
         </x-slot>
     </x-ui.page-header>
 

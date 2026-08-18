@@ -1137,17 +1137,6 @@
                     let width = 0;
                     let time = 0;
 
-                    const onResize = () => {
-                        if (canvas) {
-                            width = canvas.offsetWidth || canvas.parentElement.offsetWidth || 500;
-                            canvas.style.width = width + 'px';
-                            canvas.style.height = width + 'px';
-                        }
-                    };
-
-                    window.addEventListener("resize", onResize);
-                    onResize();
-
                     // Locations of active commerce cities
                     const baseMarkers = [
                         { location: [40.7128, -74.006], size: 0.04 },   // Index 0: New York
@@ -1161,6 +1150,24 @@
                     ];
 
                     let currentMarkers = baseMarkers.map(m => ({ ...m }));
+
+                    // Resize handler — keeps globe responsive
+                    const onResize = () => {
+                        if (canvas) {
+                            width = canvas.offsetWidth || canvas.parentElement?.offsetWidth || 500;
+                            canvas.style.width = width + 'px';
+                            canvas.style.height = width + 'px';
+                        }
+                    };
+                    window.addEventListener("resize", onResize);
+
+                    // Ensure width is always a positive value — re-read right before creating the globe
+                    width = canvas.offsetWidth
+                        || canvas.parentElement?.offsetWidth
+                        || canvas.closest('[class*="col"]')?.offsetWidth
+                        || 500;
+                    canvas.style.width = width + 'px';
+                    canvas.style.height = width + 'px';
 
                     const config = {
                         width: width * 2,
@@ -1196,9 +1203,15 @@
                         console.error("COBE initialization error:", e);
                     }
                     
+                    // Immediately reveal canvas and globe-wrapper (don't rely solely on IntersectionObserver)
                     setTimeout(() => {
                         canvas.style.opacity = "1";
-                    }, 100);
+                        const globeWrapper = document.getElementById("globe-wrapper");
+                        if (globeWrapper) {
+                            globeWrapper.style.opacity = "1";
+                            globeWrapper.style.transform = "translateY(0) scale(1)";
+                        }
+                    }, 200);
 
                     // Drag Interactions
                     canvas.addEventListener("pointerdown", (e) => {

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.ui-admin')
 @php
     $logo = asset(Storage::url('uploads/logo/'));
     $company_logo = \App\Models\Utility::getValByName('company_logo');
@@ -10,58 +10,65 @@
    // }
 
 @endphp
-@section('page-title')
-    {{ __('Store Theme Setting') }}
-@endsection
-@section('breadcrumb')
-<li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
-<li class="breadcrumb-item"><a href="{{ route('settings') }}">{{ __(' Store Settings') }}</a></li>
-<li class="breadcrumb-item active" aria-current="page">{{ __('Store Theme Setting') }}</li>
-@endsection
-@section('action-btn')
-    <ul class="nav nav-pills cust-nav rounded  mb-3" id="pills-tab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="header" data-bs-toggle="pill" href="#pills-header" role="tab"
-                aria-controls="pills-header" aria-selected="true">{{ __('Header') }}</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="home" data-bs-toggle="pill" href="#pills-home" role="tab"
-                aria-controls="pills-home" aria-selected="false">{{ __('Home') }}</a>
-        </li>
-        @if($theme !== 'theme3' && $theme !== 'theme8' && $theme !== 'theme9')
-        <li class="nav-item">
-            <a class="nav-link" id="brand" data-bs-toggle="pill" href="#pills-brand" role="tab"
-                aria-controls="pills-brand" aria-selected="false">{{ __('Brand') }}</a>
-        </li>
-        @endif
-        @if($theme == 'theme8' || $theme == 'theme7' || $theme == 'theme9' ||$theme == 'theme10')
-            <li class="nav-item">
-                <a class="nav-link" id="product" data-bs-toggle="pill" href="#pills-product" role="tab"
-                    aria-controls="pills-product" aria-selected="false">{{ __('Product') }}</a>
-            </li>
-        @endif
-        <li class="nav-item">
-            <a class="nav-link" id="footer" data-bs-toggle="pill" href="#pills-footer" role="tab"
-                aria-controls="pills-footer" aria-selected="false">{{ __('Footer') }}</a>
-        </li>
-    </ul>
-@endsection
-@push('css-page')
+@section('page-title', __('Store Theme Setting'))
+
+@push('style')
     <link rel="stylesheet" href="{{ asset('custom/libs/summernote/summernote-bs4.css') }}">
     <style>
         hr {
             margin: 8px;
         }
+        [dir="rtl"] .custom-switch-v1.form-switch {
+            padding-left: 0 !important;
+        }
     </style>
 @endpush
-@push('css')
-<style>
-    [dir="rtl"] .custom-switch-v1.form-switch {
-        padding-left: 0 !important;
-    }
-</style>
-@endpush
+
 @section('content')
+<x-ui.page-container>
+    <x-ui.page-header title="{{ __('Store Theme Setting') }}">
+        <x-slot name="breadcrumbs">
+            <a href="{{ route('dashboard') }}" class="hover:text-gray-900">{{ __('Home') }}</a>
+            <svg class="flex-shrink-0 mx-2 h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+            <a href="{{ route('settings') }}" class="hover:text-gray-900">{{ __('Store Settings') }}</a>
+            <svg class="flex-shrink-0 mx-2 h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+            <span class="text-gray-900 font-medium">{{ __('Store Theme Setting') }}</span>
+        </x-slot>
+    </x-ui.page-header>
+
+    <div class="mb-6">
+        <ul class="nav nav-pills cust-nav rounded" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="header" data-bs-toggle="pill" href="#pills-header" role="tab"
+                    aria-controls="pills-header" aria-selected="true">{{ __('Header') }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="home" data-bs-toggle="pill" href="#pills-home" role="tab"
+                    aria-controls="pills-home" aria-selected="false">{{ __('Home') }}</a>
+            </li>
+            @if($theme !== 'theme3' && $theme !== 'theme8' && $theme !== 'theme9')
+            <li class="nav-item">
+                <a class="nav-link" id="brand" data-bs-toggle="pill" href="#pills-brand" role="tab"
+                    aria-controls="pills-brand" aria-selected="false">{{ __('Brand') }}</a>
+            </li>
+            @endif
+            @if($theme == 'theme8' || $theme == 'theme7' || $theme == 'theme9' ||$theme == 'theme10')
+                <li class="nav-item">
+                    <a class="nav-link" id="product" data-bs-toggle="pill" href="#pills-product" role="tab"
+                        aria-controls="pills-product" aria-selected="false">{{ __('Product') }}</a>
+                </li>
+            @endif
+            <li class="nav-item">
+                <a class="nav-link" id="footer" data-bs-toggle="pill" href="#pills-footer" role="tab"
+                    aria-controls="pills-footer" aria-selected="false">{{ __('Footer') }}</a>
+            </li>
+        </ul>
+    </div>
+
     <div class="row">
         @if (Auth::user()->type !== 'super admin')
         <!-- [ sample-page ] start -->
@@ -2727,8 +2734,9 @@
         @endif
         <!-- [ sample-page ] end -->
     </div>
+</x-ui.page-container>
 @endsection
-@push('script-page')
+@push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.js"></script>
     <script>

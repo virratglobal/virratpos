@@ -1,0 +1,215 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Zoho Commerce - Market</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "brand-green": "#00D87B",
+                        "brand-green-dark": "#008A52",
+                        "brand-red": "#FF4500",
+                        "brand-beige": "#F9F6ED",
+                        "primary-container": "#0058ff",
+                        "outline-variant": "#c3c5d9",
+                        "on-tertiary-fixed": "#191c1d",
+                        "surface": "#ffffff",
+                        "secondary-fixed": "#e5e2e1",
+                        "primary": "#000000",
+                        "surface-dim": "#dbd9d9",
+                        "error": "#ba1a1a",
+                        "inverse-surface": "#303030",
+                        "on-primary-fixed": "#00164f",
+                        "on-tertiary-fixed-variant": "#454748",
+                        "on-tertiary-container": "#e9ebec",
+                        "primary-fixed": "#dce1ff",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "on-primary-container": "#e6e9ff",
+                        "tertiary-fixed-dim": "#c5c7c8",
+                        "surface-container": "#f0eded",
+                        "on-error-container": "#93000a",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#b6c4ff",
+                        "secondary": "#5f5e5e",
+                        "surface-bright": "#fbf9f8",
+                        "tertiary": "#4f5253",
+                        "surface-container-high": "#eae8e7",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#e5e2e1",
+                        "outline": "#737688",
+                        "surface-container-low": "#f5f3f3",
+                        "tertiary-fixed": "#e1e3e4",
+                        "on-secondary-fixed-variant": "#474646",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#1b1c1c",
+                        "on-surface-variant": "#434656",
+                        "surface-tint": "#004fe6",
+                        "on-background": "#1b1c1c",
+                        "surface-container-highest": "#e4e2e2",
+                        "background": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-container": "#656464",
+                        "tertiary-container": "#686a6b",
+                        "on-primary-fixed-variant": "#003bb1",
+                        "inverse-on-surface": "#f2f0f0",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "surface-variant": "#e4e2e2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "1.5rem",
+                        "xl": "2rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "lg": "1.5rem",
+                        "xxl": "4rem",
+                        "sm": "0.5rem",
+                        "xs": "0.25rem",
+                        "container-max": "1280px",
+                        "xl": "2.5rem",
+                        "md": "1rem",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "display-lg": ["Hanken Grotesk"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "display-lg-mobile": ["Hanken Grotesk"],
+                        "label-md": ["Inter"],
+                        "handwritten": ["'Shadows Into Light'", "cursive"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "display-lg-mobile": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .strikethrough-green {
+            position: relative;
+            display: inline-block;
+            color: #008A52;
+        }
+        .strikethrough-green::after {
+            content: '';
+            position: absolute;
+            left: -5%;
+            top: 50%;
+            width: 110%;
+            height: 4px;
+            background-color: #00D87B;
+            transform: rotate(-2deg);
+            z-index: 1;
+        }
+        .nav-toggle-bg {
+            background-color: #666;
+            background: linear-gradient(90deg, #666 0%, #666 66%, #00D87B 66%, #00D87B 100%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased relative min-h-screen">
+<!-- Top Navigation Bar -->
+<nav class="bg-surface/80 dark:bg-surface/80 backdrop-blur-md fixed top-0 w-full z-50 border-b border-outline-variant/30 shadow-sm transition-all duration-300">
+
+</nav>
+<!-- Main Content -->
+<main class="pt-32 pb-24 max-w-container-max mx-auto px-gutter">
+<!-- Header Section -->
+<div class="mb-16 relative">
+<div class="absolute top-0 left-0">
+
+</div>
+<!-- Segmented Control -->
+<div class="flex justify-center mb-12">
+<div class="flex items-center rounded-full bg-[#666] text-white p-1 relative shadow-sm">
+
+
+
+</div>
+</div>
+<!-- Headline -->
+<h1 class="font-display-lg text-display-lg max-w-4xl tracking-tight leading-tight">
+                Tools to find your <br>
+<span class="strikethrough-green font-bold">buyers</span> loyal fan-base.
+            </h1>
+</div>
+<!-- Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Top Left: SEO -->
+<div class="bg-brand-beige rounded-xl p-10 flex flex-col justify-between relative overflow-hidden group">
+<div class="z-10 relative max-w-[60%]">
+<span class="text-brand-red font-label-md text-label-md uppercase tracking-wider mb-4 block">SEO</span>
+<h2 class="font-headline-lg text-headline-lg mb-4 text-primary">Be the first store <br>in search</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">The built-in and extensible SEO tools ensures your store is found first when a shopper is looking to make a purchase.</p>
+</div>
+<div class="absolute right-0 bottom-10 w-1/3 max-w-[200px]">
+<img class="w-full h-auto object-contain" data-alt="Illustration of a hand placing a green building block on top of a stack of white blocks, symbolizing building an SEO foundation." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOiqA2f1S7nRvHNzhODTzXO5EekJpp3ttmdgNYpmEtZsQjbd8ZkEqF-buJOHyF2xhNrTpibK77Qwr-6RTbQdPP5HL72IKPmp-ygm0RuP0qzDv1YObhDGPRcsqHod2mTVSjtZ1FmMDhdgG2vkH2BuPl3ZjliW7QjXMU2JByiFGBlhhF61ZD1Ic2wPniq9HnafnUzVjLgqQ1M_gqoAdrSwNxNP9FvZJ0ID-3D8tJOtSH75JIBJdT6-rL9g">
+</div>
+</div>
+<!-- Top Right: Social Selling -->
+<div class="bg-surface border border-outline-variant/30 rounded-xl p-10 flex flex-col justify-between relative overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+<div class="z-10 relative max-w-[60%]">
+<span class="text-brand-red font-label-md text-label-md uppercase tracking-wider mb-4 block">SOCIAL SELLING</span>
+<h2 class="font-headline-lg text-headline-lg mb-4 text-primary">Make them buy where they browse</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Make it easier for your buyers to shop from you, regardless of what social platform they're on.</p>
+</div>
+<div class="absolute right-[-5%] bottom-10 w-1/2 max-w-[250px]">
+<img class="w-full h-auto object-contain" data-alt="Isometric illustration of a smartphone displaying a green shopping tag icon, representing social commerce and mobile shopping." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyZ0ZfdmqvVq10UqIt4s3kFCVNVUuy2ka1VP_9NA8Eh3rTQnu6kLRE_8FyRkmfHUi26S_zNsDRP2D5RXTPddJpgRgilDB7hvnHi5mfWdRiwHHLGRcNvllOQTqat9yTol8wYzXybKhyNpY8Q2R2-ETK7mi3GCL97s8I5ckUdPUEnc1LuScKakalDooSrPakdEMnYxe_bdL0BQ5-_f9WZQ7qSAv3pRVW5HmbsebHqR4vOkmql6bFagSH0g">
+</div>
+</div>
+<!-- Bottom Left: Campaigns -->
+<div class="bg-brand-green-dark rounded-xl p-10 flex flex-col justify-between relative overflow-hidden text-white">
+<div class="z-10 relative max-w-[60%]">
+<span class="text-brand-green font-label-md text-label-md uppercase tracking-wider mb-4 block opacity-90">CAMPAIGNS</span>
+<h2 class="font-headline-lg text-headline-lg mb-4 text-white">Get shoppers to the finish line</h2>
+<p class="font-body-lg text-body-lg text-white/90">Turn all your shoppers into buyers as you prompt them to finish their checkout line using effective campaigns and smart notifications.</p>
+</div>
+<div class="absolute right-5 bottom-5 w-1/3 max-w-[220px]">
+<img class="w-full h-auto object-contain" data-alt="Line art illustration in white of a hand clicking on a digital envelope with a shopping item inside, set against a solid dark green background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqXy4lJdeQv9MC9d40OrpSeCg41wqjF2oUERQiYJqGfgZUUmOu9rWT9FSINuArNq6FLSDrUUSqCLhBMa-qjy6oJBpqf4Ge_ArMlr2VbnKHvPrwWRnwUHCwTCIt9ZlBxqETzneT-u-q_nogliq98hL7cT32V4fFhqC0Oq1CPZOEXgUqEcByRympSKokrx1rLzYhY6Y7F3pEUb7ppSIAzhnOgcraKGtQUavyWS2TaUyYdElG8vbf6dqfcw">
+</div>
+</div>
+<!-- Bottom Right: Visual -->
+<div class="rounded-xl overflow-hidden relative min-h-[400px]">
+<img class="absolute inset-0 w-full h-full object-cover" data-alt="Two professional men interacting cheerfully in a brightly lit furniture showroom. One man is holding a laptop. The mood is collaborative and business-focused. Soft warm lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsGoKEQcWeXqTJP6OkBZa9btVkSG5_v7v9IdlqL0RGRUk9iUeV40gEDM1CUIyk-vUt2NMlAyFyd2fTjKMUWdFzxb_bU-TxDJXosICnCJ_ne8HmoUJLrcBqSmVYLANsZF2_ikY8liKKRwQ5gUT7NCvCERlQlaYUoQVNqtNU5jLfJ0aHVAfauYiSB4gEJkK_sx1VczvdN2JD8xgoo-X5xH10gpY6znIQ8BNPlSzxx5RP2Az3G6mUL_aIvQ">
+</div>
+</div>
+</main>
+<!-- Floating Actions -->
+<div class="fixed bottom-8 right-8 flex flex-col items-end gap-4 z-50">
+<div class="flex items-center gap-3">
+<div class="bg-surface text-on-surface font-body-sm px-4 py-2 rounded-l-full rounded-tr-full shadow-md border border-outline-variant/20 whitespace-nowrap hidden md:block">
+                Schedule a free demo
+            </div>
+<button class="w-14 h-14 bg-brand-green-dark rounded-full flex items-center justify-center text-white shadow-lg hover:scale-105 transition-transform duration-200">
+<span class="material-symbols-outlined text-[28px]">desktop_mac</span>
+</button>
+</div>
+<button class="w-14 h-14 bg-brand-green-dark rounded-full flex items-center justify-center text-white shadow-lg hover:scale-105 transition-transform duration-200">
+<span class="material-symbols-outlined text-[28px]">chat</span>
+</button>
+</div>
+
+
+</body></html>

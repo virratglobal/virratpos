@@ -386,13 +386,16 @@ function show_toastr(title, message, type) {
     var o, i;
     var icon = '';
     var cls = '';
+    var bgStyle = '';
     if (type == 'success') {
         icon = 'fas fa-check-circle';
         // $('.toast-body').addClass('bg-success');
         cls = 'primary';
+        bgStyle = 'style="background-color: #4648d4 !important; background: #4648d4 !important; border: none !important; box-shadow: 0 5px 15px rgba(70, 72, 212, 0.4) !important;"';
     } else {
         icon = 'fas fa-times-circle';
         cls = 'danger';
+        bgStyle = 'style="background-color: #ba1a1a !important; background: #ba1a1a !important; border: none !important; box-shadow: 0 5px 15px rgba(186, 26, 26, 0.4) !important;"';
     }
 
     $.notify({icon: icon, title: " " + title, message: message, url: ""},
@@ -409,7 +412,7 @@ function show_toastr(title, message, type) {
         url_target: "_blank",
         mouse_over: !1,
         animate: {enter: o, exit: i},
-        template: '<div class="toast text-white bg-'+cls+' fade show pr-5" role="alert" aria-live="assertive" aria-atomic="true">'
+        template: '<div class="toast text-white bg-'+cls+' fade show pr-5" ' + bgStyle + ' role="alert" aria-live="assertive" aria-atomic="true">'
         +'<div class="d-flex">'
             +'<div class="toast-body"> '+message+' </div>'
             +'<button type="button" class="btn-close btn-close-white me-2 pt-3 m-auto" data-notify="dismiss" data-bs-dismiss="toast" aria-label="Close"></button>'

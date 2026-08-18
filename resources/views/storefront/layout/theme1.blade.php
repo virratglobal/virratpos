@@ -69,6 +69,7 @@
         href="{{ asset(Storage::url('uploads/logo/') . (!empty($setting->value) ? $setting->value : 'favicon.png' . '?timestamp='. time())) }}"
         type="image/png">
     <link rel="stylesheet" href="{{ asset('assets/theme1/fonts/fontawesome-free/css/all.min.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     @if (isset($data->value) && $data->value == 'on')
         <link rel="stylesheet" href="{{ asset('assets/theme1/css/rtl-main-style.css') }}">
@@ -123,6 +124,127 @@
         [dir="rtl"] .mobile-menu-bottom ul .language-header-2 .menu-dropdown {
             right: auto !important;
         }
+    }
+
+    /* Premium UI Overrides for Storefront */
+    body {
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        background-color: #fcfdfd !important;
+    }
+    .product-card {
+        background: #ffffff !important;
+        border: 1px solid rgba(0, 0, 0, 0.06) !important;
+        border-radius: 16px !important;
+        padding: 12px !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.02) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+    .product-card:hover {
+        transform: translateY(-5px) !important;
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06) !important;
+        border-color: rgba(0, 0, 0, 0.1) !important;
+    }
+    .product-card .card-img {
+        border-radius: 12px !important;
+        overflow: hidden !important;
+        position: relative !important;
+    }
+    .product-card .card-img img {
+        transition: transform 0.5s ease !important;
+    }
+    .product-card:hover .card-img img {
+        transform: scale(1.05) !important;
+    }
+    .product-card .card-content {
+        padding-top: 16px !important;
+    }
+    .product-card h6 a {
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        font-weight: 700 !important;
+        font-size: 15px !important;
+        color: #1a1e26 !important;
+        transition: color 0.2s !important;
+        text-decoration: none !important;
+    }
+    .product-card h6 a:hover {
+        color: #4648d4 !important;
+    }
+    .product-card p {
+        font-size: 13px !important;
+        color: #767586 !important;
+        margin-top: 4px !important;
+    }
+    .product-card .last-btn {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        margin-top: 12px !important;
+    }
+    .product-card .last-btn .price {
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        font-size: 16px !important;
+        font-weight: 700 !important;
+        color: #1a1e26 !important;
+    }
+    .product-card .last-btn a {
+        background: #4648d4 !important;
+        color: #ffffff !important;
+        width: 36px !important;
+        height: 36px !important;
+        border-radius: 10px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: all 0.2s !important;
+        text-decoration: none !important;
+    }
+    .product-card .last-btn a:hover {
+        background: #2f2ebe !important;
+        transform: scale(1.08) !important;
+    }
+    .tabs-wrapper .tabs {
+        background: #f1f5f9 !important;
+        padding: 4px !important;
+        border-radius: 12px !important;
+        display: inline-flex !important;
+        gap: 4px !important;
+    }
+    .tabs-wrapper .tabs li {
+        margin: 0 !important;
+        padding: 0 !important;
+        list-style: none !important;
+    }
+    .tabs-wrapper .tabs li a {
+        padding: 8px 16px !important;
+        border-radius: 10px !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        color: #475569 !important;
+        display: block !important;
+        transition: all 0.2s !important;
+        text-decoration: none !important;
+    }
+    .tabs-wrapper .tabs li.active a,
+    .tabs-wrapper .tabs li a:hover {
+        background: #ffffff !important;
+        color: #0f172a !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+    }
+    /* Search Bar UI */
+    .site-header .main-navigationbar .right-menu .search-header input {
+        border-radius: 10px !important;
+        border: 1px solid rgba(0, 0, 0, 0.08) !important;
+        background: #f8fafc !important;
+        padding: 10px 16px !important;
+        font-size: 14px !important;
+        transition: all 0.2s !important;
+    }
+    .site-header .main-navigationbar .right-menu .search-header input:focus {
+        border-color: #4648d4 !important;
+        background: #ffffff !important;
+        box-shadow: 0 0 0 3px rgba(70, 72, 212, 0.15) !important;
     }
     </style>
     @stack('css-page')

@@ -21,12 +21,10 @@ $store_logo=\App\Models\Utility::get_file('uploads/product_image/');
 
         <x-slot name="actions">
             @can('Create Product category')
-                <a href="#" data-ajax-popup="true" data-url="{{ route('product_categorie.create') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Create') }}" data-title="{{ __('Create New Product Category') }}">
-                    <x-ui.button variant="primary">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                        {{ __('Create New Product Category') }}
-                    </x-ui.button>
-                </a>
+                <x-ui.button variant="primary" data-ajax-popup="true" data-url="{{ route('product_categorie.create') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Create') }}" data-title="{{ __('Create New Product Category') }}">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    {{ __('Create New Product Category') }}
+                </x-ui.button>
             @endcan
         </x-slot>
     </x-ui.page-header>

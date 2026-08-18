@@ -6,18 +6,18 @@
 
 @php
     $variantStyles = [
-        'primary' => 'background: #000000; color: #ffffff !importantfff !important;',
-        'secondary' => 'background: #f1f1f1; color: #000000 !important;',
-        'danger' => 'background: #ba1a1a; color: #ffffff !importantfff !important;',
-        'ghost' => 'background: transparent; color: #464554 !important !important;',
-        'outline' => 'background: transparent; color: #000000 !important; border: 1px solid rgba(0,0,0,0.15);',
+        'primary' => 'background: #4648d4; color: #ffffff !important;',
+        'secondary' => 'background: #e5eeff; color: #4648d4 !important;',
+        'danger' => 'background: #ba1a1a; color: #ffffff !important;',
+        'ghost' => 'background: transparent; color: #464554 !important;',
+        'outline' => 'background: transparent; color: #4648d4 !important; border: 1px solid rgba(70,72,212,0.2);',
     ];
     $hoverStyles = [
-        'primary' => 'onmouseover="this.style.background=\'#222222\'" onmouseout="this.style.background=\'#000000\'"',
-        'secondary' => 'onmouseover="this.style.background=\'#e5e5e5\'" onmouseout="this.style.background=\'#f1f1f1\'"',
+        'primary' => 'onmouseover="this.style.background=\'#2f2ebe\'" onmouseout="this.style.background=\'#4648d4\'"',
+        'secondary' => 'onmouseover="this.style.background=\'#dce9ff\'" onmouseout="this.style.background=\'#e5eeff\'"',
         'danger' => 'onmouseover="this.style.background=\'#93000a\'" onmouseout="this.style.background=\'#ba1a1a\'"',
         'ghost' => 'onmouseover="this.style.background=\'#eff4ff\'" onmouseout="this.style.background=\'transparent\'"',
-        'outline' => 'onmouseover="this.style.background=\'#f1f1f1\'" onmouseout="this.style.background=\'transparent\'"',
+        'outline' => 'onmouseover="this.style.background=\'#e5eeff\'" onmouseout="this.style.background=\'transparent\'"',
     ];
     $sizeStyles = [
         'sm' => 'padding: 6px 12px; font-size: 12px;',

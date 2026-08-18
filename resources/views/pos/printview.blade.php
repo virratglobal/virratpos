@@ -1,7 +1,34 @@
 @php
     $settings = Utility::settings();
 @endphp
-<div class="pt-0 pb-3 modal-body pos-module" id="printarea" >
+<style>
+    #printarea {
+        background: #ffffff !important;
+        color: #0b1c30 !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05) !important;
+        padding: 24px !important;
+        font-family: 'Inter', sans-serif !important;
+    }
+    #printarea *,
+    #printarea p,
+    #printarea h3,
+    #printarea h5,
+    #printarea b,
+    #printarea div,
+    #printarea td,
+    #printarea th,
+    #printarea span,
+    #printarea .text-dark {
+        color: #0b1c30 !important;
+    }
+    #printarea .product-border {
+        border-bottom: 1px dotted rgba(11, 28, 48, 0.2) !important;
+        padding-bottom: 6px !important;
+        margin-bottom: 6px !important;
+    }
+</style>
+<div class="modal-body pos-module" id="printarea" >
     <table class="table pos-module-tbl">
         <tbody>
             <div class="text-center ">

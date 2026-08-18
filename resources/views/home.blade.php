@@ -1,22 +1,147 @@
+@extends('layouts.ui-admin')
 @php
-
-$logo=\App\Models\Utility::get_file('uploads/logo/');
-$profile=\App\Models\Utility::get_file('uploads/profile/');
-$logo1=\App\Models\Utility::get_file('uploads/is_cover_image/');
-$setting = App\Models\Utility::settings();
-$company_logo = \App\Models\Utility::getValByName('company_logo');
+    $logo=\App\Models\Utility::get_file('uploads/logo/');
+    $profile=\App\Models\Utility::get_file('uploads/profile/');
+    $logo1=\App\Models\Utility::get_file('uploads/is_cover_image/');
+    $setting = App\Models\Utility::settings();
+    $company_logo = \App\Models\Utility::getValByName('company_logo');
 @endphp
 
-@extends('layouts.ui-admin')
 @section('page-title')
     {{ __('Dashboard') }}
 @endsection
 
-@section('breadcrumb')
-    @if(\Auth::user()->type != 'super admin')
-        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{__('Home')}}</a></li>
-    @endif
-@endsection
+@push('style')
+<style>
+    /* Dashboard custom aesthetics */
+    .dashboard-card {
+        border: 1px solid rgba(199, 196, 215, 0.15) !important;
+        box-shadow: 0 1px 8px rgba(0,0,0,0.04) !important;
+        border-radius: 12px !important;
+        background: #ffffff !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    .dashboard-card:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.06) !important;
+    }
+    
+    /* Chart wrappers */
+    .chart-container-wrap {
+        height: 160px !important;
+        width: 100% !important;
+        margin-top: 10px !important;
+        overflow: hidden !important;
+    }
+    
+    /* Select Dropdown override */
+    .timeframe-select-wrap select {
+        border-radius: 8px !important;
+        border: 1px solid #c7c4d7 !important;
+        background-color: #ffffff !important;
+        color: #0b1c30 !important;
+        font-family: 'Geist', sans-serif !important;
+        font-size: 13px !important;
+        font-weight: 500 !important;
+        padding: 6px 36px 6px 12px !important;
+        transition: all 0.2s !important;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
+    }
+    .timeframe-select-wrap select:focus {
+        border-color: #4648d4 !important;
+        box-shadow: 0 0 0 3px rgba(70, 72, 212, 0.1) !important;
+        outline: none !important;
+    }
+    
+    /* Quick status rows */
+    .status-row-item {
+        transition: all 0.2s ease !important;
+        border-bottom: 1px solid rgba(199, 196, 215, 0.1) !important;
+    }
+    .status-row-item:last-child {
+        border-bottom: none !important;
+    }
+    .status-row-item:hover {
+        background-color: #f8fafc !important;
+    }
+    .status-icon-box {
+        width: 34px !important;
+        height: 34px !important;
+        border-radius: 8px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: all 0.2s !important;
+    }
+    .status-row-item:hover .status-icon-box {
+        transform: scale(1.05) !important;
+    }
+    
+    /* Copy link button and store link styling */
+    .store-link-box {
+        background-color: #f8fafc !important;
+        border: 1px solid rgba(199, 196, 215, 0.15) !important;
+        border-radius: 8px !important;
+        padding: 8px 12px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 8px !important;
+    }
+    .store-link-url {
+        color: #4648d4 !important;
+        font-weight: 600 !important;
+        font-size: 13px !important;
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        text-decoration: none !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        max-width: 170px !important;
+    }
+    .store-link-url:hover {
+        text-decoration: underline !important;
+    }
+    .btn-copy-link {
+        background-color: #ffffff !important;
+        border: 1px solid rgba(199, 196, 215, 0.3) !important;
+        color: #464554 !important;
+        border-radius: 6px !important;
+        padding: 4px 8px !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        cursor: pointer !important;
+        transition: all 0.2s !important;
+    }
+    .btn-copy-link:hover {
+        background-color: #4648d4 !important;
+        color: #ffffff !important;
+        border-color: #4648d4 !important;
+    }
+    
+    /* Shortcuts add button */
+    .btn-add-shortcut {
+        border: 1px dashed #cbd5e1 !important;
+        background-color: #f8fafc !important;
+        border-radius: 12px !important;
+        height: 80px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: all 0.2s !important;
+        cursor: pointer !important;
+        color: #475569 !important;
+        text-decoration: none !important;
+    }
+    .btn-add-shortcut:hover {
+        border-color: #4648d4 !important;
+        background-color: #f5f3ff !important;
+        color: #4648d4 !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 12px rgba(70, 72, 212, 0.05) !important;
+    }
+</style>
+@endpush
 @push('script-page')
     <script>
         var timezone = '{{ !empty($setting['timezone']) ? $setting['timezone'] : 'Asia/Kolkata' }}';
@@ -200,8 +325,11 @@ $company_logo = \App\Models\Utility::getValByName('company_logo');
 
     <!-- Header Section -->
     <div class="flex items-center justify-between mb-6">
-        <h1 class="text-[1.5rem] font-semibold text-gray-900" style="font-family: 'Geist', sans-serif; line-height: 40px; letter-spacing: -0.04em;">{{ __('Your overview') }}</h1>
-        <div class="relative">
+        <div>
+            <h1 class="text-[1.5rem] font-semibold text-gray-900" style="font-family: 'Geist', sans-serif; line-height: 40px; letter-spacing: -0.04em; margin: 0;">{{ __('Your overview') }}</h1>
+            <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #767586; margin-top: 2px;">{{ __('Real-time store performance & metrics') }}</p>
+        </div>
+        <div class="relative timeframe-select-wrap">
             <select class="appearance-none bg-white border border-gray-200 rounded-md py-1.5 pl-3 pr-8 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                 <option>{{ __('Lifetime') }}</option>
                 <option>{{ __('Today') }}</option>
@@ -218,113 +346,126 @@ $company_logo = \App\Models\Utility::getValByName('company_logo');
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         
         <!-- Total Sales Card -->
-        <x-ui.card class="p-6">
+        <div class="dashboard-card p-6 flex flex-col">
             <div class="flex justify-between items-start mb-2">
-                <div class="flex items-center text-sm font-medium text-gray-600">
+                <div class="flex items-center text-sm font-medium text-gray-500">
                     {{ __('Total sales') }}
-                    <svg class="w-4 h-4 ml-1 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
+                    <svg class="w-4 h-4 ml-1.5 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
+                </div>
+                <div class="status-icon-box" style="background: rgba(70, 72, 212, 0.08); color: #4648d4;">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">payments</span>
                 </div>
             </div>
-            <div class="flex items-end justify-between mb-6">
-                <h3 class="text-3xl font-bold text-gray-900">{{ \App\Models\Utility::priceFormat($totle_sale) }}</h3>
-                <span class="text-sm text-gray-500 mb-1">{{ $totle_order }} {{ __('orders') }}</span>
+            <div class="flex items-end justify-between mb-4">
+                <h3 class="text-3xl font-bold text-gray-900" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ \App\Models\Utility::priceFormat($totle_sale) }}</h3>
+                <span class="text-xs text-gray-500 font-semibold mb-1" style="background: #f1f5f9; padding: 2px 8px; border-radius: 12px;">{{ $totle_order }} {{ __('orders') }}</span>
             </div>
             
-            <div class="h-24 w-full">
-                <div id="traffic-chart" style="min-height: 100px;"></div>
+            <div class="chart-container-wrap">
+                <div id="traffic-chart"></div>
             </div>
             
-            <div class="mt-4 text-center">
-                <a href="{{ route('orders.index') }}" class="text-sm font-medium text-primary-600 hover:text-primary-800">{{ __('View more') }} &rarr;</a>
+            <div class="mt-4 pt-3 border-t border-gray-100 text-center">
+                <a href="{{ route('orders.index') }}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-800 flex items-center justify-center gap-1" style="color: #4648d4 !important;">
+                    {{ __('View order history') }} 
+                    <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+                </a>
             </div>
-        </x-ui.card>
+        </div>
 
         <!-- Store Conversion Rate Card -->
-        <x-ui.card class="p-6">
+        <div class="dashboard-card p-6 flex flex-col">
             <div class="flex justify-between items-start mb-2">
-                <div class="flex items-center text-sm font-medium text-gray-600">
+                <div class="flex items-center text-sm font-medium text-gray-500">
                     {{ __('Store conversion rate') }}
-                    <svg class="w-4 h-4 ml-1 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
+                    <svg class="w-4 h-4 ml-1.5 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
+                </div>
+                <div class="status-icon-box" style="background: rgba(16, 185, 129, 0.08); color: #10b981;">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">analytics</span>
                 </div>
             </div>
-            <div class="flex items-end justify-between mb-6">
-                <h3 class="text-3xl font-bold text-gray-900">0%</h3>
-                <span class="text-sm text-gray-500 mb-1">0 {{ __('sessions') }}</span>
+            <div class="flex items-end justify-between mb-4">
+                <h3 class="text-3xl font-bold text-gray-900" style="font-family: 'Plus Jakarta Sans', sans-serif;">0%</h3>
+                <span class="text-xs text-gray-500 font-semibold mb-1" style="background: #f1f5f9; padding: 2px 8px; border-radius: 12px;">0 {{ __('sessions') }}</span>
             </div>
             
-            <div class="h-24 w-full flex flex-col justify-end">
-                <!-- Static placeholder chart lines for empty state -->
-                <div class="border-t border-gray-100 flex items-end justify-between pb-1 text-xs text-gray-400"><span class="w-4 text-right">4</span></div>
-                <div class="border-t border-gray-100 flex items-end justify-between pb-1 text-xs text-gray-400"><span class="w-4 text-right">3</span></div>
-                <div class="border-t border-gray-100 flex items-end justify-between pb-1 text-xs text-gray-400"><span class="w-4 text-right">2</span></div>
-                <div class="border-t border-gray-100 flex items-end justify-between pb-1 text-xs text-gray-400"><span class="w-4 text-right">1</span></div>
-                <div class="border-t border-gray-200 mt-2 text-center text-xs text-gray-400 pt-1">
-                    <div class="w-2 h-2 rounded-full bg-primary-600 mx-auto -mt-2"></div>
-                    Aug 26
-                </div>
+            <div class="chart-container-wrap">
+                <div id="conversion-chart"></div>
             </div>
             
-            <div class="mt-4 text-center">
-                <a href="{{ route('storeanalytic') }}" class="text-sm font-medium text-primary-600 hover:text-primary-800">{{ __('View more') }} &rarr;</a>
+            <div class="mt-4 pt-3 border-t border-gray-100 text-center">
+                <a href="{{ route('storeanalytic') }}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-800 flex items-center justify-center gap-1" style="color: #4648d4 !important;">
+                    {{ __('View analytics') }} 
+                    <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+                </a>
             </div>
-        </x-ui.card>
+        </div>
 
         <!-- Store Link & Quick Status -->
         <div class="flex flex-col space-y-4">
-            <x-ui.card class="p-6">
-                <div class="flex justify-between items-start mb-2">
-                    <div class="text-sm font-medium text-gray-600">{{ __('Store link') }}</div>
-                    <a href="#" class="text-sm font-medium text-primary-600 hover:text-primary-800">{{ __('Link domain') }}</a>
+            <div class="dashboard-card p-6">
+                <div class="flex justify-between items-start mb-3">
+                    <div class="text-sm font-semibold text-gray-500">{{ __('Store link') }}</div>
+                    <a href="#" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800" style="color: #4648d4 !important;">{{ __('Link domain') }}</a>
                 </div>
-                <div class="flex items-center">
-                    <a href="{{ $store_id['store_url'] ?? '' }}" target="_blank" class="text-sm text-orange-500 hover:text-orange-600 hover:underline flex items-center">
+                <div class="store-link-box">
+                    <a href="{{ $store_id['store_url'] ?? '' }}" target="_blank" class="store-link-url flex items-center gap-1">
                         {{ $store_id['store_url'] ?? 'mydukaan.io/virrat' }}
-                        <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        <span class="material-symbols-outlined" style="font-size: 14px;">open_in_new</span>
                     </a>
+                    <button class="btn-copy-link cp_link" data-link="{{ $store_id['store_url'] ?? '' }}">
+                        {{ __('Copy') }}
+                    </button>
                 </div>
-            </x-ui.card>
+            </div>
             
             <!-- List items -->
-            <x-ui.card class="py-2">
+            <div class="dashboard-card py-2">
                 <div class="divide-y divide-gray-100">
-                    <a href="#" class="flex items-center justify-between px-6 py-4 hover:bg-gray-50 transition-colors">
+                    <a href="#" class="status-row-item flex items-center justify-between px-5 py-3.5 transition-colors text-decoration-none">
                         <div class="flex items-center">
-                            <svg class="w-6 h-6 text-gray-400 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
-                            <span class="text-sm text-gray-700 font-medium">{{ __('No new orders pending') }}</span>
+                            <div class="status-icon-box mr-3" style="background: rgba(79, 70, 229, 0.08); color: #4f46e5;">
+                                <span class="material-symbols-outlined" style="font-size: 18px;">shopping_bag</span>
+                            </div>
+                            <span class="text-sm text-gray-700 font-semibold">{{ __('No new orders pending') }}</span>
                         </div>
-                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        <span class="material-symbols-outlined text-gray-400" style="font-size: 18px;">chevron_right</span>
                     </a>
-                    <a href="#" class="flex items-center justify-between px-6 py-4 hover:bg-gray-50 transition-colors">
+                    <a href="#" class="status-row-item flex items-center justify-between px-5 py-3.5 transition-colors text-decoration-none">
                         <div class="flex items-center">
-                            <svg class="w-6 h-6 text-gray-400 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path></svg>
-                            <span class="text-sm text-gray-700 font-medium">{{ __('No order to ship today') }}</span>
+                            <div class="status-icon-box mr-3" style="background: rgba(217, 119, 6, 0.08); color: #d97706;">
+                                <span class="material-symbols-outlined" style="font-size: 18px;">local_shipping</span>
+                            </div>
+                            <span class="text-sm text-gray-700 font-semibold">{{ __('No order to ship today') }}</span>
                         </div>
-                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        <span class="material-symbols-outlined text-gray-400" style="font-size: 18px;">chevron_right</span>
                     </a>
-                    <a href="#" class="flex items-center justify-between px-6 py-4 hover:bg-gray-50 transition-colors">
+                    <a href="#" class="status-row-item flex items-center justify-between px-5 py-3.5 transition-colors text-decoration-none">
                         <div class="flex items-center">
-                            <svg class="w-6 h-6 text-gray-400 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                            <span class="text-sm text-gray-700 font-medium">{{ __('No abandoned order') }}</span>
+                            <div class="status-icon-box mr-3" style="background: rgba(220, 38, 38, 0.08); color: #dc2626;">
+                                <span class="material-symbols-outlined" style="font-size: 18px;">shopping_cart_off</span>
+                            </div>
+                            <span class="text-sm text-gray-700 font-semibold">{{ __('No abandoned order') }}</span>
                         </div>
-                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        <span class="material-symbols-outlined text-gray-400" style="font-size: 18px;">chevron_right</span>
                     </a>
                 </div>
-            </x-ui.card>
+            </div>
         </div>
     </div>
 
     <!-- Shortcuts -->
     <div class="mb-8">
         <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg font-semibold text-gray-900">{{ __('Shortcuts') }}</h2>
+            <h2 class="text-lg font-semibold text-gray-900" style="font-family: 'Geist', sans-serif; letter-spacing: -0.02em;">{{ __('Shortcuts') }}</h2>
             <button class="text-gray-400 hover:text-gray-600">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
             </button>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-            <a href="{{ route('product.create') }}" class="flex items-center justify-center p-6 border border-dashed border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-600 bg-white">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                <span class="font-medium text-sm">{{ __('Add new shortcut') }}</span>
+            <a href="{{ route('product.create') }}" class="btn-add-shortcut flex items-center justify-center p-6 transition-colors">
+                <span class="material-symbols-outlined mr-2" style="font-size: 18px;">add</span>
+                <span class="font-semibold text-sm">{{ __('Add new shortcut') }}</span>
             </a>
         </div>
     </div>
@@ -412,8 +553,11 @@ $company_logo = \App\Models\Utility::getValByName('company_logo');
     (function () {
         var options = {
             chart: {
-                height: 250,
+                height: 140,
                 type: 'area',
+                sparkline: {
+                    enabled: false
+                },
                 toolbar: {
                     show: false,
                 },
@@ -431,17 +575,31 @@ $company_logo = \App\Models\Utility::getValByName('company_logo');
             }],
             xaxis: {
                 axisBorder: {
-                    show: !1
+                    show: false
                 },
-                type: "MMM",
+                axisTicks: {
+                    show: false
+                },
                 categories: {!! json_encode($chartData['label']) !!},
-                title: {
-                    text: '{{ __("Days") }}'
+                labels: {
+                    style: {
+                        colors: '#767586',
+                        fontSize: '10px'
+                    }
                 }
             },
-            colors: ['#ffa21d', '#FF3A6E'],
-
+            colors: ['#4648d4'],
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shadeIntensity: 1,
+                    opacityFrom: 0.3,
+                    opacityTo: 0.05,
+                    stops: [0, 90, 100]
+                }
+            },
             grid: {
+                borderColor: 'rgba(199, 196, 215, 0.15)',
                 strokeDashArray: 4,
             },
             legend: {
@@ -449,12 +607,81 @@ $company_logo = \App\Models\Utility::getValByName('company_logo');
             },
             yaxis: {
                 tickAmount: 3,
-                title: {
-                text: '{{ __("Amount") }}'
-            },
+                labels: {
+                    style: {
+                        colors: '#767586',
+                        fontSize: '10px'
+                    }
+                }
             }
         };
         var chart = new ApexCharts(document.querySelector("#traffic-chart"), options);
+        chart.render();
+    })();
+
+    (function () {
+        var options = {
+            chart: {
+                height: 140,
+                type: 'area',
+                toolbar: {
+                    show: false,
+                },
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                width: 2,
+                curve: 'smooth'
+            },
+            series: [{
+                name: "{{ __('Sessions') }}",
+                data: [0, 0, 0, 0, 0, 0, 0]
+            }],
+            xaxis: {
+                axisBorder: {
+                    show: false
+                },
+                axisTicks: {
+                    show: false
+                },
+                categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                labels: {
+                    style: {
+                        colors: '#767586',
+                        fontSize: '10px'
+                    }
+                }
+            },
+            colors: ['#6063ee'],
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shadeIntensity: 1,
+                    opacityFrom: 0.3,
+                    opacityTo: 0.05,
+                    stops: [0, 90, 100]
+                }
+            },
+            grid: {
+                borderColor: 'rgba(199, 196, 215, 0.15)',
+                strokeDashArray: 4,
+            },
+            legend: {
+                show: false,
+            },
+            yaxis: {
+                tickAmount: 3,
+                labels: {
+                    style: {
+                        colors: '#767586',
+                        fontSize: '10px'
+                    }
+                }
+            }
+        };
+        var chart = new ApexCharts(document.querySelector("#conversion-chart"), options);
         chart.render();
     })();
 

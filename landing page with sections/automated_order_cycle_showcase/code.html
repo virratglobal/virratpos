@@ -1,0 +1,208 @@
+<!-- Design implemented as requested --><!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0043c8",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#0058ff",
+                        "on-primary-container": "#e6e9ff",
+                        "background": "#fbf9f8",
+                        "on-background": "#1b1c1c",
+                        "surface": "#fbf9f8",
+                        "on-surface": "#1b1c1c",
+                        "surface-variant": "#e4e2e2",
+                        "on-surface-variant": "#434656",
+                        "outline": "#737688",
+                        "outline-variant": "#c3c5d9"
+                    },
+                    fontFamily: {
+                        "body": ["Inter", "sans-serif"],
+                        "heading": ["Hanken Grotesk", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .workflow-path {
+                @apply absolute border-2 border-dashed border-outline-variant rounded-[100px] md:rounded-[200px] -z-10;
+                top: 20px;
+                bottom: 20px;
+                left: 20px;
+                right: 20px;
+            }
+            @media (max-width: 768px) {
+                .workflow-path {
+                    @apply left-1/2 -translate-x-1/2 w-0 h-full rounded-none border-l-2 border-r-0 border-t-0 border-b-0;
+                    top: 0;
+                    bottom: 0;
+                }
+            }
+        }
+
+        .stage-icon {
+            transition: all 0.5s ease;
+        }
+
+        .stage.active .stage-icon {
+            transform: scale(1.1);
+            background-color: theme('colors.primary');
+            color: theme('colors.on-primary');
+            box-shadow: 0 0 20px theme('colors.primary');
+        }
+
+        .stage.active .stage-label {
+            opacity: 1;
+            font-weight: 700;
+            color: theme('colors.primary');
+        }
+
+        .stage-label {
+            transition: all 0.5s ease;
+            opacity: 0.6;
+        }
+
+        /* The traveling dot animation */
+        .order-dot {
+            width: 16px;
+            height: 16px;
+            background-color: theme('colors.primary-container');
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: 0 0 15px theme('colors.primary-container');
+            z-index: 10;
+            /* Default desktop path using offset-path if supported, fallback to keyframes */
+            offset-path: path('M 200 40 C 400 40 400 360 200 360 C 0 360 0 40 200 40');
+            animation: moveDotDesktop 10.8s linear infinite;
+        }
+
+        /* Fallback for offset-path not supported (simple box translation) */
+        @supports not (offset-path: path('M 0 0')) {
+             .order-dot {
+                animation: fallbackMoveDot 10.8s linear infinite;
+             }
+        }
+
+        @media (max-width: 768px) {
+            .order-dot {
+                offset-path: none;
+                left: 50%;
+                transform: translateX(-50%);
+                animation: moveDotMobile 10.8s linear infinite;
+            }
+        }
+
+        @keyframes moveDotDesktop {
+            0% { offset-distance: 0%; }
+            100% { offset-distance: 100%; }
+        }
+
+        @keyframes fallbackMoveDot {
+            0% { top: 0%; left: 50%; }
+            25% { top: 50%; left: 100%; }
+            50% { top: 100%; left: 50%; }
+            75% { top: 50%; left: 0%; }
+            100% { top: 0%; left: 50%; }
+        }
+
+        @keyframes moveDotMobile {
+            0% { top: 0%; }
+            100% { top: 100%; }
+        }
+
+    </style>
+</head>
+<body class="bg-background text-on-background font-body antialiased min-h-screen flex items-center justify-center py-20 px-4">
+<section class="w-full max-w-5xl mx-auto relative">
+<!-- Center Content (Desktop) / Top Content (Mobile) -->
+<div class="md:absolute inset-0 flex flex-col items-center justify-center text-center z-20 pointer-events-none mb-12 md:mb-0 px-4">
+<span class="text-sm font-bold tracking-widest text-primary uppercase mb-2">Manage</span>
+<h2 class="text-3xl md:text-5xl font-heading font-bold mb-4 max-w-md mx-auto leading-tight">Your entire order cycle, automated.</h2>
+<p class="text-on-surface-variant max-w-sm mx-auto text-sm md:text-base">From the first order to final delivery, everything stays connected.</p>
+</div>
+<!-- Workflow Container -->
+<div class="relative w-full h-auto md:h-[600px] flex flex-col md:block items-center justify-between gap-12 md:gap-0 mt-8 md:mt-0">
+<!-- Path Line -->
+<div class="workflow-path"></div>
+<!-- Traveling Dot -->
+<div class="order-dot"></div>
+<!-- Stages -->
+<!-- 1. Order Placed -->
+<div class="stage absolute md:top-[5%] md:left-1/2 md:-translate-x-1/2 flex flex-col items-center z-10 w-32 relative md:absolute" id="stage-0">
+<div class="stage-icon w-16 h-16 bg-surface-variant rounded-full flex items-center justify-center text-on-surface mb-2 shadow-sm">
+<span class="material-symbols-outlined text-2xl">local_mall</span>
+</div>
+<span class="stage-label text-sm text-center font-heading">Order Placed</span>
+</div>
+<!-- 2. Payment Received -->
+<div class="stage absolute md:top-[25%] md:right-[5%] flex flex-col items-center z-10 w-32 relative md:absolute" id="stage-1">
+<div class="stage-icon w-16 h-16 bg-surface-variant rounded-full flex items-center justify-center text-on-surface mb-2 shadow-sm">
+<span class="material-symbols-outlined text-2xl">credit_card</span>
+</div>
+<span class="stage-label text-sm text-center font-heading">Payment Received</span>
+</div>
+<!-- 3. Inventory Updated -->
+<div class="stage absolute md:bottom-[25%] md:right-[5%] flex flex-col items-center z-10 w-32 relative md:absolute" id="stage-2">
+<div class="stage-icon w-16 h-16 bg-surface-variant rounded-full flex items-center justify-center text-on-surface mb-2 shadow-sm">
+<span class="material-symbols-outlined text-2xl">inventory_2</span>
+</div>
+<span class="stage-label text-sm text-center font-heading">Inventory Updated</span>
+</div>
+<!-- 4. Shipped & Tracked -->
+<div class="stage absolute md:bottom-[5%] md:left-1/2 md:-translate-x-1/2 flex flex-col items-center z-10 w-32 relative md:absolute" id="stage-3">
+<div class="stage-icon w-16 h-16 bg-surface-variant rounded-full flex items-center justify-center text-on-surface mb-2 shadow-sm">
+<span class="material-symbols-outlined text-2xl">local_shipping</span>
+</div>
+<span class="stage-label text-sm text-center font-heading">Shipped &amp; Tracked</span>
+</div>
+<!-- 5. Product Delivered -->
+<div class="stage absolute md:bottom-[25%] md:left-[5%] flex flex-col items-center z-10 w-32 relative md:absolute" id="stage-4">
+<div class="stage-icon w-16 h-16 bg-surface-variant rounded-full flex items-center justify-center text-on-surface mb-2 shadow-sm">
+<span class="material-symbols-outlined text-2xl">package_2</span>
+</div>
+<span class="stage-label text-sm text-center font-heading">Product Delivered</span>
+</div>
+<!-- 6. Happy Customer -->
+<div class="stage absolute md:top-[25%] md:left-[5%] flex flex-col items-center z-10 w-32 relative md:absolute" id="stage-5">
+<div class="stage-icon w-16 h-16 bg-surface-variant rounded-full flex items-center justify-center text-on-surface mb-2 shadow-sm">
+<span class="material-symbols-outlined text-2xl">favorite</span>
+</div>
+<span class="stage-label text-sm text-center font-heading">Happy Customer</span>
+</div>
+</div>
+</section>
+<script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const stages = document.querySelectorAll('.stage');
+            const totalStages = stages.length;
+            const delay = 1800; // 1.8 seconds per stage
+            let currentStage = 0;
+
+            function activateNextStage() {
+                // Remove active class from all
+                stages.forEach(stage => stage.classList.remove('active'));
+                
+                // Add active class to current
+                stages[currentStage].classList.add('active');
+
+                // Increment and loop
+                currentStage = (currentStage + 1) % totalStages;
+            }
+
+            // Start immediately, then loop
+            activateNextStage();
+            setInterval(activateNextStage, delay);
+        });
+    </script>
+</body></html>
