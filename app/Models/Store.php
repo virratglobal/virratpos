@@ -122,13 +122,4 @@ class Store extends Model
         return $pwa_data;
 
     }
-
-    public function getThemeDirAttribute($value)
-    {
-        if (preg_match('/^theme([1-2][0-9]|30)$/', $value, $matches)) {
-            $mapped_num = (($matches[1] - 1) % 10) + 1;
-            return 'theme' . $mapped_num;
-        }
-        return $value;
-    }
 }
