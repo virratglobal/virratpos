@@ -519,6 +519,77 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
             color: #FFFFFF !important;
         }
 
+        /* 15. Comprehensive Inline Style Overrides in Dark Mode */
+        html.dark [style*="color: #0b1c30"],
+        html.dark [style*="color:#0b1c30"],
+        html.dark [style*="color: #0F172A"],
+        html.dark [style*="color:#0F172A"],
+        html.dark [style*="color: #0b1b30"],
+        html.dark [style*="color: #1e293b"],
+        html.dark [style*="color: #111827"],
+        html.dark [style*="color: #000"],
+        html.dark [style*="color: black"],
+        html.dark [style*="color: #000000"] {
+            color: #F8FAFC !important;
+        }
+
+        html.dark [style*="color: #464554"],
+        html.dark [style*="color:#464554"],
+        html.dark [style*="color: #64748B"],
+        html.dark [style*="color:#64748B"],
+        html.dark [style*="color: #767586"],
+        html.dark [style*="color:#767586"],
+        html.dark [style*="color: #475569"],
+        html.dark [style*="color:#475569"],
+        html.dark [style*="color: #334155"],
+        html.dark [style*="color:#334155"] {
+            color: #CBD5E1 !important;
+        }
+
+        html.dark [style*="background: #e5eeff"],
+        html.dark [style*="background:#e5eeff"],
+        html.dark [style*="background: #F0F4FE"],
+        html.dark [style*="background:#F0F4FE"],
+        html.dark [style*="background: #f0f4fe"],
+        html.dark [style*="background: #EEF2FF"],
+        html.dark [style*="background:#EEF2FF"],
+        html.dark [style*="background: #eef2ff"],
+        html.dark [style*="background: #EFF6FF"],
+        html.dark [style*="background:#EFF6FF"],
+        html.dark [style*="background: #eff6ff"],
+        html.dark [style*="background: #ffffff"],
+        html.dark [style*="background:#ffffff"],
+        html.dark [style*="background: white"],
+        html.dark [style*="background: #fff"],
+        html.dark [style*="background-color: #ffffff"],
+        html.dark [style*="background-color: #fff"],
+        html.dark [style*="background-color: #F8FAFC"],
+        html.dark [style*="background-color: #f8fafc"],
+        html.dark [style*="background-color: #f8f9ff"],
+        html.dark [style*="background: #f8f9ff"],
+        html.dark [style*="background-color: #fafafa"],
+        html.dark [style*="background: #fafafa"],
+        html.dark [style*="background: #F8FAFC"],
+        html.dark [style*="background:#F8FAFC"] {
+            background-color: #111827 !important;
+            border-color: #263449 !important;
+        }
+
+        html.dark [style*="background: #FEE2E2"],
+        html.dark [style*="background:#FEE2E2"] {
+            background-color: rgba(239, 68, 68, 0.12) !important;
+            color: #F87171 !important;
+        }
+        html.dark [style*="background: #DBEAFE"],
+        html.dark [style*="background:#DBEAFE"] {
+            background-color: rgba(59, 130, 246, 0.12) !important;
+            color: #60A5FA !important;
+        }
+        html.dark [style*="rgba(70,72,212,0.05)"],
+        html.dark [style*="rgba(70, 72, 212, 0.05)"] {
+            background: rgba(59, 130, 246, 0.08) !important;
+        }
+
         /* Force brand purple color variables and override legacy themes */
         .nav-pills .nav-link.active,
         .nav-pills .show > .nav-link {
