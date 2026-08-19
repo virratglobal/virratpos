@@ -620,6 +620,121 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
             background: rgba(59, 130, 246, 0.08) !important;
         }
 
+        /* 16. Shared SaaS Component Dark Overrides (Referral, Domain Requests, Stores, Settings) */
+        html.dark .referral-stat-card,
+        html.dark .main-table-card,
+        html.dark .config-card,
+        html.dark .status-system-card,
+        html.dark .domain-stat-box,
+        html.dark .domain-table-card,
+        html.dark .auto-approve-box,
+        html.dark .store-table-footer {
+            background-color: #111827 !important;
+            border-color: #263449 !important;
+            color: #F8FAFC !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+        }
+
+        html.dark .referral-header h1,
+        html.dark .domain-header h1,
+        html.dark .table-card-header h3,
+        html.dark .config-card-title,
+        html.dark .referral-stat-number,
+        html.dark .domain-stat-number {
+            color: #F8FAFC !important;
+        }
+
+        html.dark .referral-header p,
+        html.dark .domain-header p,
+        html.dark .referral-stat-label,
+        html.dark .domain-stat-label,
+        html.dark .range-slider-label,
+        html.dark .referrer-id {
+            color: #CBD5E1 !important;
+        }
+
+        html.dark .table-card-header {
+            border-bottom-color: #263449 !important;
+        }
+
+        html.dark .tab-switch-btn,
+        html.dark .btn-export-csv-outline {
+            background-color: #1E293B !important;
+            border-color: #334155 !important;
+            color: #CBD5E1 !important;
+        }
+
+        html.dark .tab-switch-btn.active {
+            background-color: #2563EB !important;
+            color: #FFFFFF !important;
+        }
+
+        html.dark .referral-custom-table th,
+        html.dark .custom-domain-table th {
+            background-color: #0F172A !important;
+            border-bottom-color: #263449 !important;
+            color: #94A3B8 !important;
+        }
+
+        html.dark .referral-custom-table td,
+        html.dark .custom-domain-table td {
+            background-color: #111827 !important;
+            border-bottom-color: #1E293B !important;
+            color: #CBD5E1 !important;
+        }
+
+        html.dark .referral-custom-table tr:hover td,
+        html.dark .custom-domain-table tr:hover td {
+            background-color: #172033 !important;
+        }
+
+        html.dark .badge-domain-pending {
+            background-color: rgba(245, 158, 11, 0.15) !important;
+            color: #FBBF24 !important;
+        }
+        html.dark .badge-domain-approved {
+            background-color: rgba(59, 130, 246, 0.15) !important;
+            color: #60A5FA !important;
+        }
+        html.dark .badge-domain-rejected {
+            background-color: rgba(239, 68, 68, 0.15) !important;
+            color: #F87171 !important;
+        }
+
+        html.dark .btn-domain-approve {
+            background-color: rgba(59, 130, 246, 0.15) !important;
+            color: #60A5FA !important;
+        }
+        html.dark .btn-domain-approve:hover {
+            background-color: #2563EB !important;
+            color: #FFFFFF !important;
+        }
+        html.dark .btn-domain-reject {
+            background-color: rgba(239, 68, 68, 0.15) !important;
+            color: #F87171 !important;
+        }
+        html.dark .btn-domain-reject:hover {
+            background-color: #DC2626 !important;
+            color: #FFFFFF !important;
+        }
+
+        /* 17. Shared Pagination Dark Mode Override */
+        html.dark .border-t,
+        html.dark .border-gray-100,
+        html.dark .border-gray-200 {
+            border-color: #263449 !important;
+        }
+        html.dark .text-gray-600,
+        html.dark .text-gray-500,
+        html.dark .text-\[\#64748B\] {
+            color: #CBD5E1 !important;
+        }
+        html.dark button.hover\:bg-gray-50:hover,
+        html.dark .hover\:bg-gray-50:hover {
+            background-color: #1E293B !important;
+            color: #FFFFFF !important;
+        }
+
         /* Force brand purple color variables and override legacy themes */
         .nav-pills .nav-link.active,
         .nav-pills .show > .nav-link {
