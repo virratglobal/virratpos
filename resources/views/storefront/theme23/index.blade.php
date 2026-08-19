@@ -39,62 +39,62 @@ $s_logo = \App\Models\Utility::get_file('uploads/blog_cover_image/');
     <section class="main-home-first-section">
         <div class="offset-container offset-left">
             <div class="row justify-content-end">
-                @if($theme23_product != null)
+                @if($theme3_product != null)
                     <div class="col-lg-6 col-12">
                         <div class="home-banner-product padding-top">
                             <div class="row align-items-center">
                                 <div class="col-md-6 col-12">
                                     <div class="banner-title">
-                                        <h1>{{$theme23_product->name}}</h1>
+                                        <h1>{{$theme3_product->name}}</h1>
                                     </div>
                                     <div class="banner-links">
                                         <ul class="banner-list">
-                                            <li><a href="{{route('store.product.product_view',[$store->slug,$theme23_product->id])}}" class="text-dark">{{__('DESCRIPTION')}}</a></li>
-                                            <li><a href="{{route('store.product.product_view',[$store->slug,$theme23_product->id])}}" class="text-dark">{{__('SPECIFICATION')}}</a></li>
-                                            <li><a href="{{route('store.product.product_view',[$store->slug,$theme23_product->id])}}" class="text-dark">{{__('DETAILS')}}</a></li>
+                                            <li><a href="{{route('store.product.product_view',[$store->slug,$theme3_product->id])}}" class="text-dark">{{__('DESCRIPTION')}}</a></li>
+                                            <li><a href="{{route('store.product.product_view',[$store->slug,$theme3_product->id])}}" class="text-dark">{{__('SPECIFICATION')}}</a></li>
+                                            <li><a href="{{route('store.product.product_view',[$store->slug,$theme3_product->id])}}" class="text-dark">{{__('DETAILS')}}</a></li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div class="product-img">
-                                        {{--  @if($theme23_product_image != null && $theme23_product_image->count()>0)
-                                            <img src="{{$catimg .$theme23_product_image[0]['product_images']}}" alt="">
+                                        {{--  @if($theme3_product_image != null && $theme3_product_image->count()>0)
+                                            <img src="{{$catimg .$theme3_product_image[0]['product_images']}}" alt="">
                                         @endif  --}}
-                                        @if($theme23_product_image != null &&  $theme23_product_image->count()>0)
-                                            <img src="{{$catimg.$theme23_product_image[0]['product_images']}}" alt="">
+                                        @if($theme3_product_image != null &&  $theme3_product_image->count()>0)
+                                            <img src="{{$catimg.$theme3_product_image[0]['product_images']}}" alt="">
                                         @endif
                                     </div>
-                                    @if($theme23_product_image != null )
-                                        @if($theme23_product['enable_product_variant'] == 'on')
+                                    @if($theme3_product_image != null )
+                                        @if($theme3_product['enable_product_variant'] == 'on')
                                             <div class="price justify-content-center">
                                                 <ins><span class="currency-type"></span> {{__('In variant')}}</ins>
                                             </div>
                                             <div class="cart-btns">
-                                                <a href="{{route('store.product.product_view',[$store->slug,$theme23_product->id])}}" class="btn">{{__('ADD TO CART')}}<i class="fas fa-shopping-basket"></i></a>
-                                                @if(!empty($wishlist) && isset($wishlist[$theme23_product->id]['product_id']))
-                                                    @if($wishlist[$theme23_product->id]['product_id'] != $theme23_product->id)
-                                                        <a class="btn-secondary wish-btn add_to_wishlist wishlist_{{$theme23_product->id}}" data-id="{{$theme23_product->id}}"><i class="far fa-heart"></i></a>
+                                                <a href="{{route('store.product.product_view',[$store->slug,$theme3_product->id])}}" class="btn">{{__('ADD TO CART')}}<i class="fas fa-shopping-basket"></i></a>
+                                                @if(!empty($wishlist) && isset($wishlist[$theme3_product->id]['product_id']))
+                                                    @if($wishlist[$theme3_product->id]['product_id'] != $theme3_product->id)
+                                                        <a class="btn-secondary wish-btn add_to_wishlist wishlist_{{$theme3_product->id}}" data-id="{{$theme3_product->id}}"><i class="far fa-heart"></i></a>
                                                     @else
-                                                        <a class="btn-secondary wish-btn"><i class="fas fa-heart" data-id="{{$theme23_product->id}}"></i></a>
+                                                        <a class="btn-secondary wish-btn"><i class="fas fa-heart" data-id="{{$theme3_product->id}}"></i></a>
                                                     @endif
                                                 @else
-                                                    <a class="btn-secondary wish-btn add_to_wishlist wishlist_{{$theme23_product->id}}" data-id="{{$theme23_product->id}}"><i class="far fa-heart"></i></a>
+                                                    <a class="btn-secondary wish-btn add_to_wishlist wishlist_{{$theme3_product->id}}" data-id="{{$theme3_product->id}}"><i class="far fa-heart"></i></a>
                                                 @endif
                                             </div>
                                         @else
                                             <div class="price justify-content-center">
-                                                <ins>{{\App\Models\Utility::priceFormat($theme23_product->price)}}</ins>
+                                                <ins>{{\App\Models\Utility::priceFormat($theme3_product->price)}}</ins>
                                             </div>
                                             <div class="cart-btns">
-                                                <a class="btn add_to_cart" data-id="{{$theme23_product->id}}">{{__('ADD TO CART')}}<i class="fas fa-shopping-basket"></i></a>
-                                                @if(!empty($wishlist) && isset($wishlist[$theme23_product->id]['product_id']))
-                                                    @if($wishlist[$theme23_product->id]['product_id'] != $theme23_product->id)
-                                                        <a class="btn-secondary wish-btn add_to_wishlist wishlist_{{$theme23_product->id}}" data-id="{{$theme23_product->id}}"><i class="far fa-heart"></i></a>
+                                                <a class="btn add_to_cart" data-id="{{$theme3_product->id}}">{{__('ADD TO CART')}}<i class="fas fa-shopping-basket"></i></a>
+                                                @if(!empty($wishlist) && isset($wishlist[$theme3_product->id]['product_id']))
+                                                    @if($wishlist[$theme3_product->id]['product_id'] != $theme3_product->id)
+                                                        <a class="btn-secondary wish-btn add_to_wishlist wishlist_{{$theme3_product->id}}" data-id="{{$theme3_product->id}}"><i class="far fa-heart"></i></a>
                                                     @else
-                                                        <a class="btn-secondary wish-btn"><i class="fas fa-heart" data-id="{{$theme23_product->id}}"></i></a>
+                                                        <a class="btn-secondary wish-btn"><i class="fas fa-heart" data-id="{{$theme3_product->id}}"></i></a>
                                                     @endif
                                                 @else
-                                                    <a class="btn-secondary wish-btn add_to_wishlist wishlist_{{$theme23_product->id}}" data-id="{{$theme23_product->id}}"><i class="far fa-heart"></i></a>
+                                                    <a class="btn-secondary wish-btn add_to_wishlist wishlist_{{$theme3_product->id}}" data-id="{{$theme3_product->id}}"><i class="far fa-heart"></i></a>
                                                 @endif
                                             </div>
                                         @endif
@@ -207,37 +207,37 @@ $s_logo = \App\Models\Utility::get_file('uploads/blog_cover_image/');
             </div>
         </section>
     @endif
-    @if($theme23_product_random != null && $theme23_product_random->count()>0)
+    @if($theme3_product_random != null && $theme3_product_random->count()>0)
         <section class="your-time-section padding-bottom ">
             <div class="container">
                 <div class="row  align-items-center ">
                     <div class="col-lg-6 col-md-6 col-12">
                         <div class="rightside-img">
-                            @if(!empty($theme23_product_random->is_cover))
-                                <img src="{{$productImg.(!empty($theme23_product_random->is_cover)?$theme23_product_random->is_cover:'')}}" title="{{$theme23_product_random->name}}" alt="">
+                            @if(!empty($theme3_product_random->is_cover))
+                                <img src="{{$productImg.(!empty($theme3_product_random->is_cover)?$theme3_product_random->is_cover:'')}}" title="{{$theme3_product_random->name}}" alt="">
                             @else
-                                <img src="{{asset(Storage::url('uploads/is_cover_image/default.jpg'))}}" alt="" title="{{$theme23_product_random->name}}">
+                                <img src="{{asset(Storage::url('uploads/is_cover_image/default.jpg'))}}" alt="" title="{{$theme3_product_random->name}}">
                             @endif
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-12">
                         <div class="product-desk">
                             <div class="title-inner">
-                                <h2><a href="{{route('store.product.product_view',[$store->slug,$theme23_product_random->id])}}">{{$theme23_product_random->name}}</a></h2>
+                                <h2><a href="{{route('store.product.product_view',[$store->slug,$theme3_product_random->id])}}">{{$theme3_product_random->name}}</a></h2>
                             </div>
-                            <p>{!! $theme23_product_random->detail !!}</p>
-                            @if($theme23_product_random['enable_product_variant'] == 'on')
+                            <p>{!! $theme3_product_random->detail !!}</p>
+                            @if($theme3_product_random['enable_product_variant'] == 'on')
                                 <div class="cart-btn align-items-center">
-                                    <a href="{{route('store.product.product_view',[$store->slug,$theme23_product_random->id])}}" class="btn"><i class="fas fa-shopping-basket"></i></a>
+                                    <a href="{{route('store.product.product_view',[$store->slug,$theme3_product_random->id])}}" class="btn"><i class="fas fa-shopping-basket"></i></a>
                                     @if(Auth::guard('customers')->check())
-                                        @if(!empty($wishlist) && isset($wishlist[$theme23_product_random->id]['product_id']))
-                                            @if($wishlist[$theme23_product_random->id]['product_id'] != $theme23_product_random->id)
-                                                <a class="btn-secondary wish-btn add_to_wishlist wishlist_{{$theme23_product_random->id}}" data-id="{{$theme23_product_random->id}}"><i class="far fa-heart"></i></a>
+                                        @if(!empty($wishlist) && isset($wishlist[$theme3_product_random->id]['product_id']))
+                                            @if($wishlist[$theme3_product_random->id]['product_id'] != $theme3_product_random->id)
+                                                <a class="btn-secondary wish-btn add_to_wishlist wishlist_{{$theme3_product_random->id}}" data-id="{{$theme3_product_random->id}}"><i class="far fa-heart"></i></a>
                                             @else
-                                                <a class="btn-secondary wish-btn"><i class="fas fa-heart" data-id="{{$theme23_product_random->id}}"></i></a>
+                                                <a class="btn-secondary wish-btn"><i class="fas fa-heart" data-id="{{$theme3_product_random->id}}"></i></a>
                                             @endif
                                         @else
-                                            <a class="btn-secondary wish-btn add_to_wishlist wishlist_{{$theme23_product_random->id}}" data-id="{{$theme23_product_random->id}}"><i class="far fa-heart"></i></a>
+                                            <a class="btn-secondary wish-btn add_to_wishlist wishlist_{{$theme3_product_random->id}}" data-id="{{$theme3_product_random->id}}"><i class="far fa-heart"></i></a>
                                         @endif
                                     @endif
                                     <div class="price">
@@ -246,20 +246,20 @@ $s_logo = \App\Models\Utility::get_file('uploads/blog_cover_image/');
                                 </div>
                             @else
                                 <div class="cart-btn align-items-center">
-                                    <a class="btn add_to_cart" data-id="{{$theme23_product_random->id}}">{{__('Add to cart')}}<i class="fas fa-shopping-basket"></i></a>
+                                    <a class="btn add_to_cart" data-id="{{$theme3_product_random->id}}">{{__('Add to cart')}}<i class="fas fa-shopping-basket"></i></a>
                                     @if(Auth::guard('customers')->check())
-                                        @if(!empty($wishlist) && isset($wishlist[$theme23_product_random->id]['product_id']))
-                                            @if($wishlist[$theme23_product_random->id]['product_id'] != $theme23_product_random->id)
-                                                <a class="btn-secondary wish-btn add_to_wishlist wishlist_{{$theme23_product_random->id}}" data-id="{{$theme23_product_random->id}}"><i class="far fa-heart"></i></a>
+                                        @if(!empty($wishlist) && isset($wishlist[$theme3_product_random->id]['product_id']))
+                                            @if($wishlist[$theme3_product_random->id]['product_id'] != $theme3_product_random->id)
+                                                <a class="btn-secondary wish-btn add_to_wishlist wishlist_{{$theme3_product_random->id}}" data-id="{{$theme3_product_random->id}}"><i class="far fa-heart"></i></a>
                                             @else
-                                                <a class="btn-secondary wish-btn"><i class="fas fa-heart" data-id="{{$theme23_product_random->id}}"></i></a>
+                                                <a class="btn-secondary wish-btn"><i class="fas fa-heart" data-id="{{$theme3_product_random->id}}"></i></a>
                                             @endif
                                         @else
-                                            <a class="btn-secondary wish-btn add_to_wishlist wishlist_{{$theme23_product_random->id}}" data-id="{{$theme23_product_random->id}}"><i class="far fa-heart"></i></a>
+                                            <a class="btn-secondary wish-btn add_to_wishlist wishlist_{{$theme3_product_random->id}}" data-id="{{$theme3_product_random->id}}"><i class="far fa-heart"></i></a>
                                         @endif
                                     @endif
                                     <div class="price">
-                                        <ins>{{\App\Models\Utility::priceFormat($theme23_product_random->price)}}</ins>
+                                        <ins>{{\App\Models\Utility::priceFormat($theme3_product_random->price)}}</ins>
                                     </div>
                                 </div>
                             @endif

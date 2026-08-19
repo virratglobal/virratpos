@@ -121,7 +121,7 @@
     @if ($getStoreThemeSetting[0]['section_enable'] == 'on')
         <section class="top-product padding-top padding-bottom">
             <div class="top-product-slider">
-                @foreach ($theme19_product_random as $kei => $headerProduct)
+                @foreach ($theme9_product_random as $kei => $headerProduct)
                     <div class="top-pd-itm">
                         <div class="top-pd-inner">
                             <div class="top-card-img">

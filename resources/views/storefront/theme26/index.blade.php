@@ -318,7 +318,7 @@ $s_logo = \App\Models\Utility::get_file('uploads/store_logo/');
                         </div>
                     @endif
                     <div class="container">
-                        @if (count($theme26_product_random) > 0)
+                        @if (count($theme6_product_random) > 0)
                             <div class="tabs-wrapper">
                                 <div class="section-title">
                                     <div class="row row-gap align-items-center">

@@ -111,62 +111,62 @@ $s_logo = \App\Models\Utility::get_file('uploads/store_logo/');
                                         </p>
                                         <a href="#" class="btn start_shopping" id="start_shopping">{{ $homepage_header_btn }}</a>
                                     </div>
-                                    @if (sizeof($theme17_product))
+                                    @if (sizeof($theme7_product))
                                         <div class="banner-right">
-                                            @if ($theme17_product != null)
+                                            @if ($theme7_product != null)
                                                 <div class="banner-img">
                                                     <div class="banner-img-inner">
                                                         @if ($i == 0)
-                                                            @if (!empty($theme17_product_image[1]))
-                                                                @if ($theme17_product_image->count() > 0 )
-                                                                    <img src="{{ $catimg . $theme17_product_image[1]['product_images'] }}"> 
+                                                            @if (!empty($theme7_product_image[1]))
+                                                                @if ($theme7_product_image->count() > 0 )
+                                                                    <img src="{{ $catimg . $theme7_product_image[1]['product_images'] }}"> 
                                                                 @else
                                                                     <img src="{{ asset(Storage::url('uploads/product_image/default.jpg')) }}"> 
                                                                 @endif
                                                                 <div class="banner-img-text">
-                                                                    @if ($theme17_product[0]['enable_product_variant'] == 'on')
-                                                                        <a href="{{ route('store.product.product_view', [$store->slug, $theme17_product[0]['id']]) }}" class="btn">
+                                                                    @if ($theme7_product[0]['enable_product_variant'] == 'on')
+                                                                        <a href="{{ route('store.product.product_view', [$store->slug, $theme7_product[0]['id']]) }}" class="btn">
                                                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="512px" id="Layer_1"  version="1.1" viewBox="0 0 512 512" width="512px" xml:space="preserve"><polygon points="448,224 288,224 288,64 224,64 224,224 64,224 64,288 224,288 224,448 288,448 288,288 448,288 "/></svg>
                                                                         </a>
                                                                     @else
-                                                                        <a class="btn add_to_cart"  data-id="{{ $theme17_product[0]['id'] }}">
+                                                                        <a class="btn add_to_cart"  data-id="{{ $theme7_product[0]['id'] }}">
                                                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="512px" id="Layer_1"  version="1.1" viewBox="0 0 512 512" width="512px" xml:space="preserve"><polygon points="448,224 288,224 288,64 224,64 224,224 64,224 64,288 224,288 224,448 288,448 288,288 448,288 "/></svg>
                                                                         </a>
                                                                     @endif
-                                                                    <p>{{ $theme17_product[0]['name'] }}</p>
+                                                                    <p>{{ $theme7_product[0]['name'] }}</p>
                                                                     <div class="price">
-                                                                        @if ($theme17_product[0]['enable_product_variant'] == 'on')
+                                                                        @if ($theme7_product[0]['enable_product_variant'] == 'on')
                                                                             {{ __('In variant') }}
                                                                         @else
-                                                                            {{ \App\Models\Utility::priceFormat($theme17_product[0]['price']) }}
+                                                                            {{ \App\Models\Utility::priceFormat($theme7_product[0]['price']) }}
                                                                         @endif
                                                                     </div>
                                                                 </div>
                                                             @endif
                                                         @else
-                                                            @if (!empty($theme17_product_image[0]))
-                                                                @if ($theme17_product_image->count() > 0 )
-                                                                    <img src="{{ $catimg . $theme17_product_image[0]['product_images'] }}"> 
+                                                            @if (!empty($theme7_product_image[0]))
+                                                                @if ($theme7_product_image->count() > 0 )
+                                                                    <img src="{{ $catimg . $theme7_product_image[0]['product_images'] }}"> 
                                                                 @else
                                                                     <img src="{{ asset(Storage::url('uploads/product_image/default.jpg')) }}"> 
                                                                 @endif
                                                                 <div class="banner-img-text">
-                                                                    @if (!empty($theme17_product[1]) && $theme17_product[1]['enable_product_variant'] == 'on')
-                                                                        <a href="{{ route('store.product.product_view', [$store->slug, $theme17_product[1]['id']]) }}" class="btn">
+                                                                    @if (!empty($theme7_product[1]) && $theme7_product[1]['enable_product_variant'] == 'on')
+                                                                        <a href="{{ route('store.product.product_view', [$store->slug, $theme7_product[1]['id']]) }}" class="btn">
                                                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="512px" id="Layer_1"  version="1.1" viewBox="0 0 512 512" width="512px" xml:space="preserve"><polygon points="448,224 288,224 288,64 224,64 224,224 64,224 64,288 224,288 224,448 288,448 288,288 448,288 "/></svg>
                                                                         </a>
                                                                     @else 
-                                                                        <a class="btn add_to_cart"  data-id="{{ $theme17_product[1]['id'] }}">
+                                                                        <a class="btn add_to_cart"  data-id="{{ $theme7_product[1]['id'] }}">
                                                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="512px" id="Layer_1"  version="1.1" viewBox="0 0 512 512" width="512px" xml:space="preserve"><polygon points="448,224 288,224 288,64 224,64 224,224 64,224 64,288 224,288 224,448 288,448 288,288 448,288 "/></svg>
                                                                         </a>
                                                                     @endif
                                                 
-                                                                    <p>{{ $theme17_product[1]['name'] }}</p>
+                                                                    <p>{{ $theme7_product[1]['name'] }}</p>
                                                                     <div class="price">
-                                                                        @if (!empty($theme17_product[1]) && $theme17_product[1]['enable_product_variant'] == 'on')
+                                                                        @if (!empty($theme7_product[1]) && $theme7_product[1]['enable_product_variant'] == 'on')
                                                                             {{ __('In variant') }}
                                                                         @else
-                                                                         {{ \App\Models\Utility::priceFormat($theme17_product[1]['price']) }}
+                                                                         {{ \App\Models\Utility::priceFormat($theme7_product[1]['price']) }}
                                                                         @endif
                                                                     </div>
                                                                 </div>
