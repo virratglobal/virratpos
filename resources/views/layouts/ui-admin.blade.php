@@ -150,23 +150,39 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
         }
 
         /* Reset and base */
-        body {
+        html, body {
             font-family: 'Inter', sans-serif !important;
+            background-color: var(--app-bg) !important;
+            color: var(--text-primary) !important;
+            min-height: 100vh !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .sg-main-content,
+        .sg-content-body,
+        .dash-container,
+        .dash-content,
+        .dash-footer,
+        .footer-wrapper,
+        .requests-container,
+        .coupons-container,
+        .stores-container,
+        .landing-container,
+        .settings-layout-wrapper {
             background-color: var(--app-bg) !important;
             color: var(--text-primary) !important;
         }
 
-        html.dark .sg-main-content,
-        html.dark .sg-content-body,
-        html.dark .dash-container,
-        html.dark .dash-content,
-        html.dark .requests-container,
-        html.dark .coupons-container,
-        html.dark .stores-container,
-        html.dark .landing-container,
-        html.dark .settings-layout-wrapper {
-            background-color: #0B1120 !important;
-            color: #F8FAFC !important;
+        .dash-footer {
+            border-top: 1px solid var(--border) !important;
+            padding: 16px 24px !important;
+            margin-top: auto !important;
+        }
+
+        .dash-footer .text-muted,
+        .dash-footer span {
+            color: var(--text-secondary) !important;
         }
 
         /* 2. Sidebar Dark Theme (Surface 1 & 2) */
@@ -1513,25 +1529,28 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
         </div>
     </div>
 
-    <div style="display: flex; min-height: 100vh; overflow-x: hidden;">
+    <div style="display: flex; min-height: 100vh; overflow-x: hidden; background-color: var(--app-bg);">
         
         <!-- Sidebar (Stitch floating card) -->
         @include('partials.ui.sidebar')
 
         <!-- Main Content Area -->
-        <div class="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden sg-main-content">
+        <div class="relative flex flex-col flex-1 min-h-screen overflow-y-auto overflow-x-hidden sg-main-content" style="background-color: var(--app-bg);">
             
             <!-- Header (Stitch floating card) -->
             @include('partials.ui.header')
 
             <!-- Main Content -->
-            <main class="w-full sg-content-body">
-                <div class="dash-container">
-                    <div class="dash-content">
+            <main class="w-full flex-1 sg-content-body" style="background-color: var(--app-bg);">
+                <div class="dash-container" style="background-color: var(--app-bg);">
+                    <div class="dash-content" style="background-color: var(--app-bg);">
                         @yield('content')
                     </div>
                 </div>
             </main>
+
+            <!-- Footer (Inside main flex column) -->
+            @include('partials.admin.footer')
         </div>
         
     </div>
@@ -1560,8 +1579,6 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
             </div>
         </div>
     </div>
-
-    @include('partials.admin.footer')
     @if (isset($settings['enable_cookie']) && $settings['enable_cookie'] == 'on')
         @include('layouts.cookie_consent')
     @endif
