@@ -47,8 +47,8 @@
 <div x-show="sidebarOpen" class="fixed inset-0 z-40 bg-on-surface/50 lg:hidden" @click="sidebarOpen = false" style="display:none;"></div>
 
 {{-- Sidebar --}}
-<aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
-    class="fixed left-0 top-0 bottom-0 z-50 flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0 sg-sidebar"
+<aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-[150%]'"
+    class="fixed left-0 top-0 bottom-0 z-50 flex flex-col transition-transform duration-300 ease-in-out sg-sidebar"
     style="background: #ffffff; border-radius: 12px; box-shadow: 0 1px 8px rgba(0,0,0,0.04); border: 1px solid rgba(199,196,215,0.1);">
 
     {{-- Logo Area --}}
@@ -332,7 +332,7 @@
                 $profile = \App\Models\Utility::get_file('uploads/profile');
                 $users_sidebar = \Auth::user();
             @endphp
-            <div style="width: 32px; height: 32px; border-radius: 50%; background: #4648d4; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: {{ $primaryColor }}; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;">
                 @if(!empty($users_sidebar->avatar))
                     <img src="{{ $profile . '/' . $users_sidebar->avatar }}" alt="" style="width: 100%; height: 100%; object-fit: cover;">
                 @else

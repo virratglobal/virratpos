@@ -1,473 +1,36 @@
-@extends('layouts.admin')
-@section('page-title')
-    {{ __('Order') }}
-@endsection
-@section('title')
-    <div class="d-inline-block">
-        <h5 class="h4 d-inline-block text-white font-weight-bold mb-0 ">{{ __('Orders') }}</h5>
-    </div>
-@endsection
-@section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('orders.index') }}">{{ __('Orders') }}</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{ __('Order') }} {{ $order->order_id }} </li>
-@endsection
-@push('css')
-    <style>
+@extends('layouts.ui-admin')
 
-    </style>
-@endpush
-@section('action-btn')
-    <div class="pr-2 d-flex align-items-center gap-2 rating-btn-wrapper">
-        <a href="#" id="{{ env('APP_URL') .'/' . $store->slug . '/order/' . $order_id }}" class="btn btn-sm btn-primary btn-icon"  onclick="copyToClipboard(this)" title="{{__('Click to copy')}}" data-bs-toggle="tooltip" data-original-title="{{__('Click to copy')}}"><i class="ti ti-link text-white"></i></a>
+@section('page-title', __('Order Details'))
 
-        <a href="{{ route('order.receipt', $order->id) }}" class="btn btn-sm btn-primary btn-icon"
-            data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Receipt') }}"><i class="ti ti-receipt"></i></a>
-
-        {{-- <a href="#" onclick="saveAsPDF();" id="download-buttons" class="btn btn-sm btn-primary btn-icon"
-            data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Print') }}"><i class="ti ti-printer"></i></a> --}}
-
-        <a href="{{ route('invoice.pdf', \Crypt::encrypt($order->id)) }}" target="_blank"
-            id="download-buttons" class="btn btn-sm btn-primary btn-icon"
-            data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Print') }}"><i class="ti ti-printer"></i></a>
-
-        <div class="btn-group " id="deliver_btn">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">{{ __('Status') }} : {{ __(ucfirst($order->status)) }}</button>
-            <div class="dropdown-menu">
-                <h6 class="dropdown-header">{{ __('Set order status') }}</h6>
-                <a class="dropdown-item" href="#" id="delivered" data-value="delivered">
-                    @if ($order->status == 'pending' || $order->status == 'Cancel Order')
-                        <i class="fa fa-check text-primary"></i>
-                    @else
-                        <i class="fa fa-check-double text-primary"></i>
-                    @endif
-                    {{ __('Delivered') }}
-                </a>
-                <a class="dropdown-item text-danger" href="#" id="delivered" data-value="Cancel Order">
-                    @if ($order->status != 'Cancel Order')
-                        <i class="fa fa-check text-primary"></i>
-                    @else
-                        <i class="fa fa-check-double text-danger"></i>
-                    @endif
-                    {{ __('Cancel Order') }}
-                </a>
-            </div>
-        </div>
-    </div>
-@endsection
-@section('filter')
-@endsection
-@section('content')
-    <div class="row">
-        <!-- [ sample-page ] start -->
-        <div class="col-sm-12">
-            <div class="row" id="printableArea">
-                <div class="col-xxl-7">
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between">
-                            <h5 class="mb-0">{{ __('Order') }} {{ $order->order_id }}</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>{{ __('Item') }}</th>
-                                            <th>{{ __('Quantity') }}</th>
-                                            <th>{{ __('Price') }}</th>
-                                            <th>{{ __('Total') }}</th>
-                                            <th>{{ __('Action') }}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $sub_tax = 0;
-                                            $total = 0;
-                                            $order_id = trim($order->order_id,'#');
-                                        @endphp
-                                        @foreach ($order_products as $key => $product)
-                                            @if (isset($product->variant_id) && $product->variant_id != 0)
-                                                <tr>
-                                                    <td class="total">
-                                                        <span class="h6 text-sm">
-                                                            @if (isset($product->product_name))
-                                                                <a
-                                                                    href="{{ route('product.show', $product->id) }}">{{ $product->product_name . ' - ( ' . $product->variant_name . ' )' }}</a>
-                                                            @else
-                                                                <a href="{{ route('product.show', $product->id) }}">
-                                                                    {{ $product->name }}
-                                                                </a>
-                                                            @endif
-                                                        </span>
-                                                        @if (!empty($product->tax))
-                                                            @php
-                                                                $total_tax = 0;
-                                                            @endphp
-                                                            @foreach ($product->tax as $tax)
-                                                                @php
-                                                                    $sub_tax = ($product->variant_price * $product->quantity * $tax->tax) / 100;
-                                                                    $total_tax += $sub_tax;
-                                                                @endphp
-                                                                {{ $tax->tax_name . ' ' . $tax->tax . '%' . ' (' . $sub_tax . ')' }}
-                                                            @endforeach
-                                                        @else
-                                                            @php
-                                                                $total_tax = 0;
-                                                            @endphp
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        {{ $product->quantity }}
-                                                    </td>
-                                                    <td>
-                                                        {{ App\Models\Utility::priceFormat($product->variant_price) }}
-                                                    </td>
-                                                    <td>
-                                                        {{ App\Models\Utility::priceFormat($product->variant_price * $product->quantity + $total_tax) }}
-                                                    </td>
-                                                    <td class="d-flex action-btn-wrapper">
-                                                        @can('Delete Orders')
-                                                            <div class="action-btn bg-danger me-2">
-                                                                {!! Form::open(['method' => 'DELETE',
-                                                                'route' => ['delete.order_item', $product->id , $product->variant_id,$order_id,$key],]) !!}
-                                                                <a class="show_confirm align-items-center bg-danger text-white btn btn-sm d-inline-flex" data-bs-toggle="tooltip" data-bs-placement="top" title="{{__('Delete')}}">
-                                                                <span><i class="ti ti-trash"></i></span>
-                                                                </a>
-                                                                {!! Form::close() !!}
-                                                            </div>
-                                                        @endcan
-                                                    </td>
-                                                </tr>
-                                            @else
-                                                <tr>
-                                                    <td class="total">
-                                                        <span class="h6 text-sm">
-
-                                                            @if (isset($product->product_name))
-                                                                <a href="{{ route('product.show', $product->id) }}">{{ $product->product_name }}
-                                                                </a>
-                                                            @else
-                                                                <a href="{{ route('product.show', $product->id) }}">
-                                                                    {{ $product->name }}
-                                                                </a>
-                                                            @endif
-                                                        </span>
-                                                        @if (!empty($product->tax))
-                                                            @php
-                                                                $total_tax = 0;
-                                                            @endphp
-                                                            @foreach ($product->tax as $tax)
-                                                                @php
-                                                                    $sub_tax = ($product->price * $product->quantity * $tax->tax) / 100;
-                                                                    $total_tax += $sub_tax;
-                                                                @endphp
-                                                                {{ $tax->tax_name . ' ' . $tax->tax . '%' . ' (' . $sub_tax . ')' }}
-                                                            @endforeach
-                                                        @else
-                                                            @php
-                                                                $total_tax = 0;
-                                                            @endphp
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        {{ $product->quantity }}
-                                                    </td>
-                                                    <td>
-                                                        {{ App\Models\Utility::priceFormat($product->price) }}
-                                                    </td>
-                                                    <td>
-                                                        {{ App\Models\Utility::priceFormat($product->price * $product->quantity + $total_tax) }}
-                                                    </td>
-                                                    <td>
-                                                        <div class="action-btn-wrapper d-flex">
-
-                                                            @can('Delete Orders')
-                                                            <div class="action-btn bg-danger me-2">
-                                                                {!! Form::open(['method' => 'DELETE',
-                                                                'route' => ['delete.order_item', $product->id , $product->variant_id,$order_id,$key],]) !!}
-                                                                <a class="show_confirm align-items-center btn btn-sm bg-danger text-white d-inline-flex" data-bs-toggle="tooltip" data-bs-placement="top" title="{{__('Delete')}}">
-                                                                    <span ><i class="ti ti-trash"></i></span>
-                                                                </a>
-                                                                {!! Form::close() !!}
-                                                            </div>
-                                                            @endcan
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @endif
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12 col-lg-6 ">
-                            <div class="card">
-                                <div class="card-header d-flex justify-content-between">
-                                    <h5 class="">{{ __('Shipping Information') }}</h5>
-                                </div>
-                                <div class="card-body pt-0">
-                                    <address class="mb-0 text-sm">
-                                        <dl class="row mt-4 align-items-center">
-                                            <dt class="col-sm-4 h6 text-sm">{{ __('Name') }}</dt>
-                                            <dd class="col-sm-8 text-sm me-0"> {{ !empty($user_details->name) ? $user_details->name : '' }}</dd>
-                                            <dt class="col-sm-4 h6 text-sm">{{ __('Company') }}</dt>
-                                            <dd class="col-sm-8 text-sm me-0"> {{ !empty($user_details->shipping_address) ? $user_details->shipping_address  : '' }}</dd>
-                                            <dt class="col-sm-4 h6 text-sm">{{ __('City') }}</dt>
-                                            <dd class="col-sm-8 text-sm me-0">{{ !empty($user_details->shipping_city) ? $user_details->shipping_city : '' }}</dd>
-                                            <dt class="col-sm-4 h6 text-sm">{{ __('Country') }}</dt>
-                                            <dd class="col-sm-8 text-sm me-0"> {{ !empty($user_details->shipping_country) ? $user_details->shipping_country : '' }}</dd>
-                                            <dt class="col-sm-4 h6 text-sm">{{ __('Postal Code') }}</dt>
-                                            <dd class="col-sm-8 text-sm me-0">{{ !empty($user_details->shipping_postalcode) ? $user_details->shipping_postalcode : '' }}</dd>
-                                            <dt class="col-sm-4 h6 text-sm">{{ __('Phone') }}</dt>
-                                            <dd class="col-sm-8 text-sm me-0">
-												@if(!empty($user_details->phone))
-                                                <a href="{{ $url = 'https://api.whatsapp.com/send?phone=' . str_replace(' ', '', $user_details->phone) . '&text=Hi' }}"
-                                                    target="_blank">
-                                                    {{ !empty($user_details->phone) ? $user_details->phone : '' }}
-                                                </a>
-												@endif
-                                            </dd>
-                                            @if (!empty($location_data && $shipping_data))
-                                                <dt class="col-sm-4 h6 text-sm">{{ __('Location') }}</dt>
-                                                <dd class="col-sm-8 text-sm me-0">{{ $location_data->name }}</dd>
-                                                <dt class="col-sm-4 h6 text-sm">{{ __('Shipping Method') }}</dt>
-                                                <dd class="col-sm-8 text-sm me-0">{{ $shipping_data->shipping_name }}</dd>
-                                            @endif
-                                        </dl>
-                                    </address>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-sm-12 col-lg-6 ">
-                            <div class="card">
-                                <div class="card-header d-flex justify-content-between">
-                                    <h5 class="">{{ __('Billing Information') }}</h5>
-                                </div>
-                                <div class="card-body pt-0">
-                                    <dl class="row mt-4 align-items-center">
-                                        <dt class="col-sm-4 h6 text-sm">{{ __('Name') }}</dt>
-                                        <dd class="col-sm-8 text-sm me-0"> {{ !empty($user_details->name) ? $user_details->name : '' }}</dd>
-                                        <dt class="col-sm-4 h6 text-sm">{{ __('Company') }}</dt>
-                                        <dd class="col-sm-8 text-sm me-0"> {{ !empty($user_details->billing_address) ? $user_details->billing_address  : '' }}</dd>
-                                        <dt class="col-sm-4 h6 text-sm">{{ __('City') }}</dt>
-                                        <dd class="col-sm-8 text-sm me-0">{{ !empty($user_details->billing_city) ? $user_details->billing_city : '' }}</dd>
-                                        <dt class="col-sm-4 h6 text-sm">{{ __('Country') }}</dt>
-                                        <dd class="col-sm-8 text-sm me-0"> {{ !empty($user_details->billing_country) ? $user_details->billing_country : '' }}</dd>
-                                        <dt class="col-sm-4 h6 text-sm">{{ __('Postal Code') }}</dt>
-                                        <dd class="col-sm-8 text-sm me-0">{{ !empty($user_details->billing_postalcode) ? $user_details->billing_postalcode : '' }}</dd>
-                                        <dt class="col-sm-4 h6 text-sm">{{ __('Phone') }}</dt>
-                                        <dd class="col-sm-8 text-sm me-0">
-											@if(!empty($user_details->phone))
-                                            <a href="{{ $url = 'https://api.whatsapp.com/send?phone=' . str_replace(' ', '', $user_details->phone) . '&text=Hi' }}"
-                                                target="_blank">
-                                                {{ $user_details->phone }}
-                                            </a>
-											@endif
-                                        </dd>
-                                        @if (!empty($location_data && $shipping_data))
-                                            <dt class="col-sm-4 h6 text-sm">{{ __('Location') }}</dt>
-                                            <dd class="col-sm-8 text-sm me-0">{{ $location_data->name }}</dd>
-                                            <dt class="col-sm-4 h6 text-sm">{{ __('Shipping Method') }}</dt>
-                                            <dd class="col-sm-8 text-sm me-0">{{ $shipping_data->shipping_name }}</dd>
-                                        @endif
-                                    </dl>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xxl-5">
-                    <div class="card  p-0">
-                        <div class="card-header d-flex justify-content-between pb-0">
-                            <h5 class="mb-4">{{ __('Order') }} {{ $order->order_id }}</h5>
-                        </div>
-                        <div class="card-body ">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>{{ __('Sub Total') }} :</td>
-                                            <td>{{ App\Models\Utility::priceFormat($sub_total) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{ __('Estimated Tax') }} :</td>
-                                            <td>{{ App\Models\Utility::priceFormat($total_taxs) }}</td>
-                                        </tr>
-                                        @if (!empty($discount_price))
-                                            <tr>
-                                                <td>{{ __('Apply Coupon') }} :</td>
-                                                <td>
-                                                    @if($order->payment_type == 'POS')
-                                                        {{ App\Models\Utility::priceFormat($discount_price) }}
-                                                    @else
-                                                        {{ $discount_price }}
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @endif
-                                        @if (!empty($shipping_data))
-                                            @if (!empty($discount_value))
-                                                <tr>
-                                                    <td>{{ __('Shipping Price') }} :</td>
-                                                    <td>{{ App\Models\Utility::priceFormat($shipping_data->shipping_price) }}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>{{ __('Grand Total') }} :</td>
-                                                    <td>{{ App\Models\Utility::priceFormat($grand_total + $shipping_data->shipping_price - $discount_value) }}
-                                                    </td>
-                                                </tr>
-                                            @else
-                                                <tr>
-                                                    <td>{{ __('Shipping Price') }} :</td>
-                                                    <td>{{ App\Models\Utility::priceFormat($shipping_data->shipping_price) }}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>{{ __('Grand Total') }} :</td>
-                                                    <td>{{ App\Models\Utility::priceFormat($sub_total + $shipping_data->shipping_price + $total_taxs) }}
-                                                    </td>
-                                                </tr>
-                                            @endif
-                                        @elseif(!empty($discount_value))
-                                            <tr>
-                                                <td>{{ __('Grand  Total') }} :</td>
-                                                <td>{{ App\Models\Utility::priceFormat($grand_total - $discount_value) }}
-                                                </td>
-                                            </tr>
-                                        @else
-                                            <tr>
-                                                <td>{{ __('Grand  Total') }} :</td>
-                                                <td>
-                                                    @if($order->payment_type == 'POS')
-                                                        @php
-                                                            $discount = !empty($discount_price) ? $discount_price : 0;
-                                                        @endphp
-                                                        {{ App\Models\Utility::priceFormat($grand_total - $discount) }}
-                                                    @else
-                                                        {{ App\Models\Utility::priceFormat($grand_total) }}
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @endif
-                                        <td>{{ __('Payment Type') }} :</td>
-                                        <td>{{ $order['payment_type'] }}</td>
-                                        {{-- @if (!empty($store_payment_setting['custom_field_title_1']) && !empty($user_details->custom_field_title_1))
-                                        <tr>
-                                            <td>{{ $store_payment_setting['custom_field_title_1'] }} :</td>
-                                            <td>{{ $user_details->custom_field_title_1 }}</td>
-                                        </tr>
-                                        @endif
-                                        @if (!empty($store_payment_setting['custom_field_title_2']) && !empty($user_details->custom_field_title_2))
-                                        <tr>
-                                            <td> {{ $store_payment_setting['custom_field_title_2'] }} :</td>
-                                            <td> {{ $user_details->custom_field_title_2 }}</td>
-                                        </tr>
-                                        @endif
-                                        @if (!empty($store_payment_setting['custom_field_title_3']) && !empty($user_details->custom_field_title_3))
-                                        <tr>
-                                            <td> {{ $store_payment_setting['custom_field_title_3'] }} :</td>
-                                            <td> {{ $user_details->custom_field_title_3 }}</td>
-                                        </tr>
-                                        @endif
-                                        @if (!empty($store_payment_setting['custom_field_title_4']) && !empty($user_details->custom_field_title_4))
-                                        <tr>
-                                            <td>{{ $store_payment_setting['custom_field_title_4'] }} :</td>
-                                            <td> {{ $user_details->custom_field_title_4 }}</td>
-                                        </tr>
-                                        @endif --}}
-                                    </tbody>
-                                </table>
-                            </div>
-                            @if((!empty($store_payment_setting['custom_field_title_1']) && !empty($user_details->custom_field_title_1)) ||
-                                (!empty($store_payment_setting['custom_field_title_2']) && !empty($user_details->custom_field_title_2)) ||
-                                (!empty($store_payment_setting['custom_field_title_3']) && !empty($user_details->custom_field_title_3)) ||
-                                (!empty($store_payment_setting['custom_field_title_4']) && !empty($user_details->custom_field_title_4)))
-                                <div class="card">
-                                    <div class="card-header d-flex justify-content-between">
-                                        <h5 class="">{{ __('Extra Information') }}</h5>
-                                    </div>
-                                    <div class="card-body pt-0">
-                                        <dl class="row mt-4 align-items-center">
-                                            <dt class="col-sm-4 h6 text-sm">{{isset($store_payment_setting['custom_field_title_1']) ? $store_payment_setting['custom_field_title_1'] : ''}}</dt>
-                                            <dd class="col-sm-8 text-sm me-0"> {{ !empty($user_details->custom_field_title_1) ? $user_details->custom_field_title_1 : '' }}</dd>
-                                            <dt class="col-sm-4 h6 text-sm">{{isset($store_payment_setting['custom_field_title_2']) ? $store_payment_setting['custom_field_title_2'] : ''}}</dt>
-                                            <dd class="col-sm-8 text-sm me-0"> {{ !empty($user_details->custom_field_title_2) ? $user_details->custom_field_title_2  : '' }}</dd>
-                                            <dt class="col-sm-4 h6 text-sm">{{isset($store_payment_setting['custom_field_title_3']) ? $store_payment_setting['custom_field_title_3'] : ''}}</dt>
-                                            <dd class="col-sm-8 text-sm me-0">{{ !empty($user_details->custom_field_title_3) ? $user_details->custom_field_title_3 : '' }}</dd>
-                                            <dt class="col-sm-4 h6 text-sm">{{isset($store_payment_setting['custom_field_title_4']) ? $store_payment_setting['custom_field_title_4'] : ''}}</dt>
-                                            <dd class="col-sm-8 text-sm me-0"> {{ !empty($user_details->custom_field_title_4) ? $user_details->custom_field_title_4 : '' }}</dd>
-                                        </dl>
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-        <!-- [ sample-page ] end -->
-    </div>
-@endsection
-@push('script-page')
+@push('scripts')
     <script type="text/javascript" src="{{ asset('custom/js/html2pdf.bundle.min.js') }}"></script>
     <script>
-
-
         function copyToClipboard(element) {
-
             var copyText = element.id;
             document.addEventListener('copy', function (e) {
                 e.clipboardData.setData('text/plain', copyText);
                 e.preventDefault();
             }, true);
-
             document.execCommand('copy');
             show_toastr('success', 'Url copied to clipboard', 'success');
         }
-    </script>
-    <script>
-        var filename = $('#filesname').val();
 
+        var filename = $('#filesname').val();
         function saveAsPDF() {
             var element = document.getElementById('printableArea');
             var opt = {
                 margin: 0.3,
                 filename: filename,
-                image: {
-                    type: 'jpeg',
-                    quality: 1
-                },
-                html2canvas: {
-                    scale: 4,
-                    dpi: 72,
-                    letterRendering: true
-                },
-                jsPDF: {
-                    unit: 'in',
-                    format: 'A2'
-                }
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 4, dpi: 72, letterRendering: true },
+                jsPDF: { unit: 'in', format: 'A2' }
             };
             html2pdf().set(opt).from(element).save();
-
         }
-    </script>
-    <script>
+
         $("#deliver_btn").on('click', '#delivered', function() {
             var status = $(this).attr('data-value');
-            var data = {
-                delivered: status,
-            }
+            var data = { delivered: status }
             $.ajax({
                 url: '{{ route('orders.update', $order->id) }}',
                 method: 'PUT',
@@ -484,13 +47,359 @@
             });
         });
     </script>
-    <script>
-        function myFunction() {
-            var copyText = document.getElementById("myInput");
-            copyText.select();
-            copyText.setSelectionRange(0, 99999)
-            document.execCommand("copy");
-            show_toastr('Success', 'Link copied', 'success');
-        }
-    </script>
 @endpush
+
+@section('content')
+<x-ui.page-container>
+    <!-- Header -->
+    <x-ui.page-header title="{{ __('Order') }} {{ $order->order_id }}">
+        <x-slot name="breadcrumbs">
+            <a href="{{ route('dashboard') }}" class="hover:text-gray-900">{{ __('Home') }}</a>
+            <svg class="flex-shrink-0 mx-2 h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+            <a href="{{ route('orders.index') }}" class="hover:text-gray-900">{{ __('Orders') }}</a>
+            <svg class="flex-shrink-0 mx-2 h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+            <span class="text-gray-900 font-medium">{{ __('Order') }} {{ $order->order_id }}</span>
+        </x-slot>
+
+        <x-slot name="actions">
+            <div class="flex items-center space-x-2">
+                <x-ui.button variant="secondary" id="{{ env('APP_URL') .'/' . $store->slug . '/order/' . trim($order->order_id,'#') }}" onclick="copyToClipboard(this)" title="{{__('Click to copy')}}" data-bs-toggle="tooltip">
+                    <span class="material-symbols-outlined text-[18px]">link</span>
+                </x-ui.button>
+                <a href="{{ route('order.receipt', $order->id) }}">
+                    <x-ui.button variant="secondary" title="{{ __('Receipt') }}">
+                        <span class="material-symbols-outlined text-[18px]">receipt</span>
+                    </x-ui.button>
+                </a>
+                <a href="{{ route('invoice.pdf', \Crypt::encrypt($order->id)) }}" target="_blank">
+                    <x-ui.button variant="secondary" title="{{ __('Print') }}">
+                        <span class="material-symbols-outlined text-[18px]">print</span>
+                    </x-ui.button>
+                </a>
+                <div class="relative" x-data="{ open: false }" id="deliver_btn">
+                    <x-ui.button variant="primary" @click="open = !open" @click.away="open = false">
+                        {{ __('Status') }} : {{ __(ucfirst($order->status)) }}
+                        <span class="material-symbols-outlined text-[16px] ml-1">arrow_drop_down</span>
+                    </x-ui.button>
+                    <div x-show="open" style="display: none; position: absolute; right: 0; margin-top: 4px; width: 180px; background: #ffffff; border-radius: 8px; box-shadow: 0 4px 24px rgba(0,0,0,0.1); border: 1px solid rgba(199,196,215,0.2); padding: 4px;" class="z-50">
+                        <span class="block px-3 py-1.5 text-[10px] font-semibold text-gray-400 uppercase tracking-wider">{{ __('Set order status') }}</span>
+                        <a class="flex items-center gap-2 px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 rounded no-underline" href="#" id="delivered" data-value="delivered">
+                            <span class="material-symbols-outlined text-[16px] text-green-600">done</span>
+                            <span>{{ __('Delivered') }}</span>
+                        </a>
+                        <a class="flex items-center gap-2 px-3 py-2 text-xs text-red-600 hover:bg-red-50 rounded no-underline" href="#" id="delivered" data-value="Cancel Order">
+                            <span class="material-symbols-outlined text-[16px] text-red-600">close</span>
+                            <span>{{ __('Cancel Order') }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </x-slot>
+    </x-ui.page-header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8" id="printableArea">
+        {{-- Left: Items & Info --}}
+        <div class="lg:col-span-2 flex flex-col space-y-6">
+            {{-- Items Card --}}
+            <div class="bg-white rounded-xl border border-gray-150 p-6 shadow-sm">
+                <h3 class="text-base font-semibold text-gray-900 mb-4">{{ __('Order Items') }}</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-100 text-sm">
+                        <thead>
+                            <tr>
+                                <th class="py-2 text-left font-medium text-gray-400">{{ __('Item') }}</th>
+                                <th class="py-2 text-left font-medium text-gray-400">{{ __('Quantity') }}</th>
+                                <th class="py-2 text-left font-medium text-gray-400">{{ __('Price') }}</th>
+                                <th class="py-2 text-left font-medium text-gray-400">{{ __('Total') }}</th>
+                                <th class="py-2 text-right font-medium text-gray-400">{{ __('Action') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            @php
+                                $sub_tax = 0;
+                                $total = 0;
+                                $order_id = trim($order->order_id,'#');
+                            @endphp
+                            @foreach ($order_products as $key => $product)
+                                @if (isset($product->variant_id) && $product->variant_id != 0)
+                                    <tr>
+                                        <td class="py-3">
+                                            @if (isset($product->product_name))
+                                                <a href="{{ route('product.show', $product->id) }}" class="no-underline font-medium text-gray-900 hover:text-indigo-600">{{ $product->product_name . ' - ( ' . $product->variant_name . ' )' }}</a>
+                                            @else
+                                                <a href="{{ route('product.show', $product->id) }}" class="no-underline font-medium text-gray-900 hover:text-indigo-600">{{ $product->name }}</a>
+                                            @endif
+                                            @if (!empty($product->tax))
+                                                @php $total_tax = 0; @endphp
+                                                <span class="block text-[10px] text-gray-400 mt-1">
+                                                    @foreach ($product->tax as $tax)
+                                                        @php
+                                                            $sub_tax = ($product->variant_price * $product->quantity * $tax->tax) / 100;
+                                                            $total_tax += $sub_tax;
+                                                        @endphp
+                                                        {{ $tax->tax_name . ' ' . $tax->tax . '%' . ' (' . $sub_tax . ')' }}
+                                                    @endforeach
+                                                </span>
+                                            @else
+                                                @php $total_tax = 0; @endphp
+                                            @endif
+                                        </td>
+                                        <td class="py-3 text-gray-500">{{ $product->quantity }}</td>
+                                        <td class="py-3 text-gray-500">{{ App\Models\Utility::priceFormat($product->variant_price) }}</td>
+                                        <td class="py-3 text-gray-900 font-medium">{{ App\Models\Utility::priceFormat($product->variant_price * $product->quantity + $total_tax) }}</td>
+                                        <td class="py-3 text-right">
+                                            @can('Delete Orders')
+                                                {!! Form::open(['method' => 'DELETE', 'route' => ['delete.order_item', $product->id , $product->variant_id,$order_id,$key]]) !!}
+                                                <x-ui.button variant="danger" size="sm" type="submit" class="show_confirm" title="{{__('Delete')}}">
+                                                    <span class="material-symbols-outlined text-[14px]">delete</span>
+                                                </x-ui.button>
+                                                {!! Form::close() !!}
+                                            @endcan
+                                        </td>
+                                    </tr>
+                                @else
+                                    <tr>
+                                        <td class="py-3">
+                                            @if (isset($product->product_name))
+                                                <a href="{{ route('product.show', $product->id) }}" class="no-underline font-medium text-gray-900 hover:text-indigo-600">{{ $product->product_name }}</a>
+                                            @else
+                                                <a href="{{ route('product.show', $product->id) }}" class="no-underline font-medium text-gray-900 hover:text-indigo-600">{{ $product->name }}</a>
+                                            @endif
+                                            @if (!empty($product->tax))
+                                                @php $total_tax = 0; @endphp
+                                                <span class="block text-[10px] text-gray-400 mt-1">
+                                                    @foreach ($product->tax as $tax)
+                                                        @php
+                                                            $sub_tax = ($product->price * $product->quantity * $tax->tax) / 100;
+                                                            $total_tax += $sub_tax;
+                                                        @endphp
+                                                        {{ $tax->tax_name . ' ' . $tax->tax . '%' . ' (' . $sub_tax . ')' }}
+                                                    @endforeach
+                                                </span>
+                                            @else
+                                                @php $total_tax = 0; @endphp
+                                            @endif
+                                        </td>
+                                        <td class="py-3 text-gray-500">{{ $product->quantity }}</td>
+                                        <td class="py-3 text-gray-500">{{ App\Models\Utility::priceFormat($product->price) }}</td>
+                                        <td class="py-3 text-gray-900 font-medium">{{ App\Models\Utility::priceFormat($product->price * $product->quantity + $total_tax) }}</td>
+                                        <td class="py-3 text-right">
+                                            @can('Delete Orders')
+                                                {!! Form::open(['method' => 'DELETE', 'route' => ['delete.order_item', $product->id , $product->variant_id,$order_id,$key]]) !!}
+                                                <x-ui.button variant="danger" size="sm" type="submit" class="show_confirm" title="{{__('Delete')}}">
+                                                    <span class="material-symbols-outlined text-[14px]">delete</span>
+                                                </x-ui.button>
+                                                {!! Form::close() !!}
+                                            @endcan
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            {{-- Shipping & Billing Information --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {{-- Shipping Information --}}
+                <div class="bg-white rounded-xl border border-gray-150 p-6 shadow-sm">
+                    <h3 class="text-base font-semibold text-gray-900 mb-4">{{ __('Shipping Information') }}</h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">{{ __('Name') }}</span>
+                            <span class="font-medium text-gray-900">{{ !empty($user_details->name) ? $user_details->name : '-' }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">{{ __('Company') }}</span>
+                            <span class="font-medium text-gray-900">{{ !empty($user_details->shipping_address) ? $user_details->shipping_address : '-' }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">{{ __('City') }}</span>
+                            <span class="font-medium text-gray-900">{{ !empty($user_details->shipping_city) ? $user_details->shipping_city : '-' }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">{{ __('Country') }}</span>
+                            <span class="font-medium text-gray-900">{{ !empty($user_details->shipping_country) ? $user_details->shipping_country : '-' }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">{{ __('Postal Code') }}</span>
+                            <span class="font-medium text-gray-900">{{ !empty($user_details->shipping_postalcode) ? $user_details->shipping_postalcode : '-' }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">{{ __('Phone') }}</span>
+                            <span class="font-medium text-gray-900">
+                                @if(!empty($user_details->phone))
+                                    <a href="https://api.whatsapp.com/send?phone={{ str_replace(' ', '', $user_details->phone) }}&text=Hi" target="_blank" class="text-indigo-600 no-underline hover:underline">{{ $user_details->phone }}</a>
+                                @else
+                                    -
+                                @endif
+                            </span>
+                        </div>
+                        @if (!empty($location_data && $shipping_data))
+                            <div class="flex justify-between border-t border-gray-100 pt-3">
+                                <span class="text-gray-400">{{ __('Location') }}</span>
+                                <span class="font-medium text-gray-900">{{ $location_data->name }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">{{ __('Shipping Method') }}</span>
+                                <span class="font-medium text-gray-900">{{ $shipping_data->shipping_name }}</span>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                {{-- Billing Information --}}
+                <div class="bg-white rounded-xl border border-gray-150 p-6 shadow-sm">
+                    <h3 class="text-base font-semibold text-gray-900 mb-4">{{ __('Billing Information') }}</h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">{{ __('Name') }}</span>
+                            <span class="font-medium text-gray-900">{{ !empty($user_details->name) ? $user_details->name : '-' }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">{{ __('Company') }}</span>
+                            <span class="font-medium text-gray-900">{{ !empty($user_details->billing_address) ? $user_details->billing_address : '-' }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">{{ __('City') }}</span>
+                            <span class="font-medium text-gray-900">{{ !empty($user_details->billing_city) ? $user_details->billing_city : '-' }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">{{ __('Country') }}</span>
+                            <span class="font-medium text-gray-900">{{ !empty($user_details->billing_country) ? $user_details->billing_country : '-' }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">{{ __('Postal Code') }}</span>
+                            <span class="font-medium text-gray-900">{{ !empty($user_details->billing_postalcode) ? $user_details->billing_postalcode : '-' }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">{{ __('Phone') }}</span>
+                            <span class="font-medium text-gray-900">
+                                @if(!empty($user_details->phone))
+                                    <a href="https://api.whatsapp.com/send?phone={{ str_replace(' ', '', $user_details->phone) }}&text=Hi" target="_blank" class="text-indigo-600 no-underline hover:underline">{{ $user_details->phone }}</a>
+                                @else
+                                    -
+                                @endif
+                            </span>
+                        </div>
+                        @if (!empty($location_data && $shipping_data))
+                            <div class="flex justify-between border-t border-gray-100 pt-3">
+                                <span class="text-gray-400">{{ __('Location') }}</span>
+                                <span class="font-medium text-gray-900">{{ $location_data->name }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">{{ __('Shipping Method') }}</span>
+                                <span class="font-medium text-gray-900">{{ $shipping_data->shipping_name }}</span>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Right: Order Summary --}}
+        <div class="flex flex-col space-y-6">
+            <div class="bg-white rounded-xl border border-gray-150 p-6 shadow-sm">
+                <h3 class="text-base font-semibold text-gray-900 mb-4">{{ __('Order Summary') }}</h3>
+                <div class="space-y-3 text-sm">
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">{{ __('Sub Total') }}</span>
+                        <span class="font-semibold text-gray-900">{{ App\Models\Utility::priceFormat($sub_total) }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">{{ __('Estimated Tax') }}</span>
+                        <span class="font-semibold text-gray-900">{{ App\Models\Utility::priceFormat($total_taxs) }}</span>
+                    </div>
+                    @if (!empty($discount_price))
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">{{ __('Apply Coupon') }}</span>
+                            <span class="font-semibold text-gray-900">
+                                @if($order->payment_type == 'POS')
+                                    {{ App\Models\Utility::priceFormat($discount_price) }}
+                                @else
+                                    {{ $discount_price }}
+                                @endif
+                            </span>
+                        </div>
+                    @endif
+                    @if (!empty($shipping_data))
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">{{ __('Shipping Price') }}</span>
+                            <span class="font-semibold text-gray-900">{{ App\Models\Utility::priceFormat($shipping_data->shipping_price) }}</span>
+                        </div>
+                        <div class="flex justify-between border-t border-gray-100 pt-3">
+                            <span class="text-base font-semibold text-gray-900">{{ __('Grand Total') }}</span>
+                            @if (!empty($discount_value))
+                                <span class="text-base font-bold text-indigo-600">{{ App\Models\Utility::priceFormat($grand_total + $shipping_data->shipping_price - $discount_value) }}</span>
+                            @else
+                                <span class="text-base font-bold text-indigo-600">{{ App\Models\Utility::priceFormat($sub_total + $shipping_data->shipping_price + $total_taxs) }}</span>
+                            @endif
+                        </div>
+                    @elseif(!empty($discount_value))
+                        <div class="flex justify-between border-t border-gray-100 pt-3">
+                            <span class="text-base font-semibold text-gray-900">{{ __('Grand Total') }}</span>
+                            <span class="text-base font-bold text-indigo-600">{{ App\Models\Utility::priceFormat($grand_total - $discount_value) }}</span>
+                        </div>
+                    @else
+                        <div class="flex justify-between border-t border-gray-100 pt-3">
+                            <span class="text-base font-semibold text-gray-900">{{ __('Grand Total') }}</span>
+                            <span class="text-base font-bold text-indigo-600">
+                                @if($order->payment_type == 'POS')
+                                    @php $discount = !empty($discount_price) ? $discount_price : 0; @endphp
+                                    {{ App\Models\Utility::priceFormat($grand_total - $discount) }}
+                                @else
+                                    {{ App\Models\Utility::priceFormat($grand_total) }}
+                                @endif
+                            </span>
+                        </div>
+                    @endif
+                    <div class="flex justify-between border-t border-gray-100 pt-3">
+                        <span class="text-gray-400">{{ __('Payment Type') }}</span>
+                        <span class="font-medium text-gray-900">{{ $order['payment_type'] }}</span>
+                    </div>
+                </div>
+            </div>
+
+            @if((!empty($store_payment_setting['custom_field_title_1']) && !empty($user_details->custom_field_title_1)) ||
+                (!empty($store_payment_setting['custom_field_title_2']) && !empty($user_details->custom_field_title_2)) ||
+                (!empty($store_payment_setting['custom_field_title_3']) && !empty($user_details->custom_field_title_3)) ||
+                (!empty($store_payment_setting['custom_field_title_4']) && !empty($user_details->custom_field_title_4)))
+                <div class="bg-white rounded-xl border border-gray-150 p-6 shadow-sm">
+                    <h3 class="text-base font-semibold text-gray-900 mb-4">{{ __('Extra Information') }}</h3>
+                    <div class="space-y-3 text-sm">
+                        @if(!empty($user_details->custom_field_title_1))
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">{{ isset($store_payment_setting['custom_field_title_1']) ? $store_payment_setting['custom_field_title_1'] : '' }}</span>
+                                <span class="font-medium text-gray-900">{{ $user_details->custom_field_title_1 }}</span>
+                            </div>
+                        @endif
+                        @if(!empty($user_details->custom_field_title_2))
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">{{ isset($store_payment_setting['custom_field_title_2']) ? $store_payment_setting['custom_field_title_2'] : '' }}</span>
+                                <span class="font-medium text-gray-900">{{ $user_details->custom_field_title_2 }}</span>
+                            </div>
+                        @endif
+                        @if(!empty($user_details->custom_field_title_3))
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">{{ isset($store_payment_setting['custom_field_title_3']) ? $store_payment_setting['custom_field_title_3'] : '' }}</span>
+                                <span class="font-medium text-gray-900">{{ $user_details->custom_field_title_3 }}</span>
+                            </div>
+                        @endif
+                        @if(!empty($user_details->custom_field_title_4))
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">{{ isset($store_payment_setting['custom_field_title_4']) ? $store_payment_setting['custom_field_title_4'] : '' }}</span>
+                                <span class="font-medium text-gray-900">{{ $user_details->custom_field_title_4 }}</span>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            @endif
+        </div>
+    </div>
+</x-ui.page-container>
+@endsection

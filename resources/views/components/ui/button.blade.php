@@ -6,11 +6,11 @@
 
 @php
     $variantStyles = [
-        'primary' => 'background: #4648d4; color: #ffffff;',
-        'secondary' => 'background: #e5eeff; color: #4648d4;',
-        'danger' => 'background: #ba1a1a; color: #ffffff;',
-        'ghost' => 'background: transparent; color: #464554;',
-        'outline' => 'background: transparent; color: #4648d4; border: 1px solid rgba(70,72,212,0.3);',
+        'primary' => 'background: #4648d4; color: #ffffff !important;',
+        'secondary' => 'background: #e5eeff; color: #4648d4 !important;',
+        'danger' => 'background: #ba1a1a; color: #ffffff !important;',
+        'ghost' => 'background: transparent; color: #464554 !important;',
+        'outline' => 'background: transparent; color: #4648d4 !important; border: 1px solid rgba(70,72,212,0.2);',
     ];
     $hoverStyles = [
         'primary' => 'onmouseover="this.style.background=\'#2f2ebe\'" onmouseout="this.style.background=\'#4648d4\'"',

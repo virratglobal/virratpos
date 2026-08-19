@@ -23,11 +23,10 @@
 ">
     {{-- Left: Mobile menu button + Search --}}
     <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
-        {{-- Mobile menu button --}}
-        <button @click="sidebarOpen = true"
+        {{-- Menu toggle button --}}
+        <button @click="sidebarOpen = !sidebarOpen; if(!sidebarOpen) document.body.classList.add('sidebar-closed-manual'); else document.body.classList.remove('sidebar-closed-manual');"
             style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 8px; color: #464554; background: none; border: none; cursor: pointer; transition: background 0.2s;"
-            onmouseover="this.style.background='#dce9ff';" onmouseout="this.style.background='';"
-            class="lg:hidden">
+            onmouseover="this.style.background='#dce9ff';" onmouseout="this.style.background='';">
             <span class="material-symbols-outlined">menu</span>
         </button>
 
@@ -107,7 +106,7 @@
                                     onmouseover="if(!this.style.background.includes('#e5eeff')) { this.style.background='#F8FAFC'; }"
                                     onmouseout="if(!this.style.background.includes('#e5eeff')) { this.style.background=''; }">
                                     @if (Auth::user()->current_store == $store->id)
-                                        <span class="material-symbols-outlined" style="font-size: 16px; margin-right: 8px; color: #4648d4;" >check</span>
+                                        <span class="material-symbols-outlined" style="font-size: 16px; margin-right: 8px; color: {{ $primaryColor }};" >check</span>
                                     @else
                                         <span style="width: 16px; margin-right: 8px;"></span>
                                     @endif
@@ -120,7 +119,7 @@
                                         {{ $store->name }}
                                     </div>
                                     @if (isset($store->pivot->permission))
-                                        <span style="background: #e5eeff; color: #4648d4; padding: 2px 8px; border-radius: 999px; font-size: 11px;">{{ $store->pivot->permission == 'Owner' ? __($store->pivot->permission) : __('Shared') }}</span>
+                                        <span style="background: #e5eeff; color: {{ $primaryColor }}; padding: 2px 8px; border-radius: 999px; font-size: 11px;">{{ $store->pivot->permission == 'Owner' ? __($store->pivot->permission) : __('Shared') }}</span>
                                     @endif
                                 </div>
                             @endif
@@ -129,6 +128,24 @@
                 </div>
             </div>
         @endif
+
+        {{-- Full Screen Button --}}
+        <button type="button" x-data="{ isFullScreen: false }"
+            @click="
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen().then(() => isFullScreen = true).catch(err => console.error(err));
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen().then(() => isFullScreen = false);
+                    }
+                }
+            "
+            @fullscreenchange.window="isFullScreen = !!document.fullscreenElement"
+            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #464554; background: none; border: none; cursor: pointer; transition: background 0.2s;"
+            onmouseover="this.style.background='#dce9ff';" onmouseout="this.style.background='';"
+            title="{{ __('Toggle Fullscreen') }}">
+            <span class="material-symbols-outlined" x-text="isFullScreen ? 'fullscreen_exit' : 'fullscreen'">fullscreen</span>
+        </button>
 
         {{-- Theme Button --}}
         <button id="theme-toggle-btn" type="button"
@@ -202,7 +219,7 @@
                 transition: all 0.2s;
             }
             .sg-profile-link:hover {
-                background: #4648d4 !important;
+                background: {{ $primaryColor }} !important;
                 color: #ffffff !important;
             }
             .sg-profile-logout {

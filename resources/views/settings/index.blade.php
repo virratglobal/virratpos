@@ -1,4 +1,4 @@
-@extends('layouts.admin-hybrid')
+@extends('layouts.ui-admin')
 @php
     $storagesetting = App\Models\Utility::StorageSettings();
     if($storagesetting['storage_setting'] == 'wasabi' || $storagesetting['storage_setting'] == 's3'){

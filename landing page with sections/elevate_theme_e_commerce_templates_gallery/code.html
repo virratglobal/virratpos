@@ -1,0 +1,268 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>SilkStore - Templates Gallery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "on-secondary-container": "#656464",
+                "error": "#ba1a1a",
+                "inverse-on-surface": "#f2f0f0",
+                "secondary-fixed": "#e5e2e1",
+                "on-tertiary-container": "#e9ebec",
+                "surface-tint": "#004fe6",
+                "tertiary-container": "#686a6b",
+                "on-secondary": "#ffffff",
+                "error-container": "#ffdad6",
+                "tertiary-fixed-dim": "#c5c7c8",
+                "surface-bright": "#fbf9f8",
+                "on-error": "#ffffff",
+                "primary-fixed-dim": "#b6c4ff",
+                "on-tertiary": "#ffffff",
+                "inverse-primary": "#b6c4ff",
+                "on-background": "#1b1c1c",
+                "surface-container-low": "#f5f3f3",
+                "on-error-container": "#93000a",
+                "on-tertiary-fixed": "#191c1d",
+                "surface-container-high": "#eae8e7",
+                "primary-fixed": "#dce1ff",
+                "secondary": "#5f5e5e",
+                "outline": "#737688",
+                "tertiary": "#4f5253",
+                "on-primary": "#ffffff",
+                "surface-container": "#f0eded",
+                "secondary-fixed-dim": "#c8c6c5",
+                "on-surface": "#1b1c1c",
+                "on-primary-fixed-variant": "#003bb1",
+                "on-secondary-fixed-variant": "#474646",
+                "on-secondary-fixed": "#1c1b1b",
+                "surface-container-lowest": "#ffffff",
+                "surface-container-highest": "#e4e2e2",
+                "inverse-surface": "#303030",
+                "background": "#fbf9f8",
+                "on-primary-fixed": "#00164f",
+                "on-surface-variant": "#434656",
+                "primary": "#0043c8",
+                "primary-container": "#0058ff",
+                "on-primary-container": "#e6e9ff",
+                "secondary-container": "#e5e2e1",
+                "tertiary-fixed": "#e1e3e4",
+                "surface": "#fbf9f8",
+                "outline-variant": "#c3c5d9",
+                "on-tertiary-fixed-variant": "#454748",
+                "surface-dim": "#dbd9d9",
+                "surface-variant": "#e4e2e2"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "xl": "2.5rem",
+                "margin-mobile": "16px",
+                "xs": "0.25rem",
+                "sm": "0.5rem",
+                "xxl": "4rem",
+                "md": "1rem",
+                "lg": "1.5rem",
+                "gutter": "24px",
+                "container-max": "1280px"
+        },
+        "fontFamily": {
+                "display-lg-mobile": [
+                        "Hanken Grotesk"
+                ],
+                "body-sm": [
+                        "Inter"
+                ],
+                "display-lg": [
+                        "Hanken Grotesk"
+                ],
+                "headline-lg": [
+                        "Hanken Grotesk"
+                ],
+                "label-md": [
+                        "Inter"
+                ],
+                "body-md": [
+                        "Inter"
+                ],
+                "headline-md": [
+                        "Hanken Grotesk"
+                ],
+                "body-lg": [
+                        "Inter"
+                ]
+        },
+        "fontSize": {
+                "display-lg-mobile": [
+                        "40px",
+                        {
+                                "lineHeight": "48px",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-sm": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "display-lg": [
+                        "64px",
+                        {
+                                "lineHeight": "72px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "40px",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "label-md": [
+                        "14px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-md": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "400"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        body {
+            background-color: #fbf9f8;
+            color: #1b1c1c;
+            font-family: 'Hanken Grotesk', sans-serif;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-['Hanken_Grotesk']">
+<!-- TopAppBar -->
+
+<!-- Main Content -->
+<main class="flex-grow container mx-auto px-4 py-12 flex flex-col items-center">
+<!-- Toggle Switch -->
+
+<div class="w-full max-w-[1280px] mb-12">
+<h1 class="text-display-lg-mobile md:text-display-lg text-on-surface mb-8 tracking-tight">Templates Gallery</h1>
+<!-- Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Card 1 -->
+<div class="bg-surface rounded-xl p-4 overflow-hidden group cursor-pointer border border-outline-variant hover:shadow-md transition-all">
+<div class="rounded-lg overflow-hidden aspect-[4/3] mb-4 bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="A clean, modern beauty and cosmetics e-commerce storefront template featuring soft pink tones, elegant typography, and high-quality product photography of skincare items. Soft lighting, minimalist aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJLkhrlCOg80l0j8NcCQuIPwqR13AzN9Vzb4VTFQUVShR-WQ_reL_UhoSW-0jZsA2xT9_imml-_Unwe_5yPMy7NWU4vGzNUX-0ap2kn9wY1pU_i8-56QUMW76yoPXmNQn2SbeShsbbtyaEt401qZbj2iFjuRuWZUL5LH8L-0z-r1vqy7A2bH6Z_8b7BavyFwao0fZzQ6cCtCeqItG-JdFnRfjjlrQvdaEqNcj1GNKP98k1EnOeFKN3jA">
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface rounded-xl p-4 overflow-hidden group cursor-pointer border border-outline-variant hover:shadow-md transition-all">
+<div class="rounded-lg overflow-hidden aspect-[4/3] mb-4 bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="A sophisticated men's fashion e-commerce template. Deep monochromatic color scheme, bold sans-serif typography, featuring a stylish male model in a modern urban setting. High contrast, premium feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnZ7uHiCNTuJqSM_mAmpjSpPsJYa0e7Tz-Ot0YSZ4oM24QgBbyyGi_cKy4snXywTpGKzrLYyIODkUjlgMOfUspBCFPi-xJnpC2iIKqjPt8hw13bgOfrgLv8_H18my7kD2WRnyJdsu4aG_5mgeUXa3LT8DFjsysCOPLLimQ83yKAQnY9BoBbm1rgCfZHktnOglZ5bhJPD0CHHw-eAFXZJAJ5YWiRFwFHRuJA7IEC6hUXQUZ19NGRSezOw">
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface rounded-xl p-4 overflow-hidden group cursor-pointer border border-outline-variant hover:shadow-md transition-all">
+<div class="rounded-lg overflow-hidden aspect-[4/3] mb-4 bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="An earthy, organic skincare e-commerce website template. Warm terracotta and beige tones, natural lighting, featuring essential oils and natural beauty products in a minimalist layout." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAB3UqJAIcScvw8Okt9VQLl53eNY4w5pqIy-MKGfX2gY9WOdWErqWtua30hWb9uIDN9DTmJGfVf7V53WYNNSZCNAS5IzxhTb1_v_AKcl1YtUfFCeMsBRq4Op1V4iQoxemmcKBMzguIicoPEBrXS-ZzmdMdOMDif0RvSrV3o4AEPxLhRkZHM9o6YYqEWMk-OFv2VH8_oVuerUN0-XsYvtkalRLiny3EvGP8Ks05eEeSqVIz-lCsRBq6b_Q">
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface rounded-xl p-4 overflow-hidden group cursor-pointer border border-outline-variant hover:shadow-md transition-all">
+<div class="rounded-lg overflow-hidden aspect-[4/3] mb-4 bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="A high-tech electronics e-commerce storefront template. Dark mode aesthetic with neon blue accents, featuring a sleek smartwatch hovering on a glowing pedestal. Futuristic, clean, and dynamic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQrIdIkvrOsU3BxgsR9gXgn2xifoTSatEYtt_oGaN_CK8SZcaWoa6iyJCF4YzMm_1KmfkbnaHAHLzd1GR0tbZ3lEX1nQ9HlZeSh_nEwcZK8x9fbs5FrFcXe1Jd1ge8ExMSP0CJlybjahH4TJdpeD9YNxdPhaX4a76zDi53OaayqBEWKyxMNkHUJ120eO0-1s3W0HHVspqouRFPc_Sr44WGeCybbudjdmmV6YCeycQGZFUdFxyUhQtHiw">
+</div>
+</div>
+<!-- Card 5 -->
+<div class="bg-surface rounded-xl p-4 overflow-hidden group cursor-pointer border border-outline-variant hover:shadow-md transition-all">
+<div class="rounded-lg overflow-hidden aspect-[4/3] mb-4 bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="An elegant jewelry and luxury goods e-commerce template. Soft grey and silver tones, delicate serif typography, featuring a close-up of a sparkling diamond ring. High-end, refined luxury." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhbfxEjqhnsIhfqHfH4Sk5LHOoPCKtCcgn1YAl7rWbgJqGMv9vowDpd2dMp6jXatRMTbmkIbREqXY614I-dZhyYXSsN3Zn3guJo4d9q0JBI6askT3QB0MLZQdt8fiJeCWBUWc7bBVJSybi-V8d2sbDpjEv0FGZp5uJ0DlKwnn_Bv7LGmHqzP8LWF3ZmseNJEbiKUu4cUXqwq6tBLQWogOG_b5EOgou8Uao2XmTYWvCE1Z4DpOFcCscwA">
+</div>
+</div>
+<!-- Card 6 -->
+<div class="bg-surface rounded-xl p-4 overflow-hidden group cursor-pointer border border-outline-variant hover:shadow-md transition-all">
+<div class="rounded-lg overflow-hidden aspect-[4/3] mb-4 bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="A contemporary women's fashion e-commerce template. Muted earth tones, asymmetrical grid layout, featuring models in chic everyday wear. Editorial style photography, modern and approachable." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_lJl34_yvM8OaMGB4a-sPVzl1pBmG9b1a4-S1ipWPanOgek4kag00sr6w0OXwIhMyFW1ZtBXgOs06Sn_V5-A6dSieTmHjH82RfOpFoyWSwiN8Y1i-B7da--jv56Q-J_dArRv4-LhRhbhRVA_Vf8cQq9VjYjN0hp_q5k84q_fyJzNSHbYeJ7MBtSOrpvfaPFhmJqbCQIkm1O4ld3l72heh5EVB4iD7_YOJMVYZMJyCH06MKG34bbUdRA">
+</div>
+</div>
+<!-- Card 7 -->
+<div class="bg-surface rounded-xl p-4 overflow-hidden group cursor-pointer border border-outline-variant hover:shadow-md transition-all">
+<div class="rounded-lg overflow-hidden aspect-[4/3] mb-4 bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="A vibrant, playful children's toys e-commerce website template. Bright yellow and primary colors, rounded playful typography, featuring a happy child holding a teddy bear. Fun, energetic, and colorful." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzk66Cgo_CtSCVKlZ0MEYplqS1SgitTlGvx22TtZ83UJTfBasyJmcTuUukFkImq2NRuu16pXz7ALurVceyUgFeO1li6zXKkXaihYnUcahRfhAzh2rukPOrLURtFPEcLeiYB6vtaKAKspWh6T-CJRgxyHOw93WslaraahiQaoGAg52iqeSAtVJ-0SycV9ZKPEnrZbqGnL4Z7YSYysdUKd6DicE72tLKIADMF9bEw-vh1Fj3iplqRNNPpA">
+</div>
+</div>
+<!-- Card 8 -->
+<div class="bg-surface rounded-xl p-4 overflow-hidden group cursor-pointer border border-outline-variant hover:shadow-md transition-all">
+<div class="rounded-lg overflow-hidden aspect-[4/3] mb-4 bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="A minimalist modern furniture e-commerce template. Soft neutral tones, clean lines, featuring a stylish armchair in a bright, sunlit room. Scandinavian design influence, airy and spacious." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAe8SKKZSEjjaPsvl9T6Me5YCFIN7Le6B-dclL_YJkfQNqx1Kk3FrXsH-5QtB7lnDj6LoI2spD7vHFZuuxr419iF-4ZSwh92FJwJjpmWeJsTgUfNg0cZyDgCulZs0ftmCr_DHy5mRQWJbCtlLpQdPlRo4ENk9WpsC0yxsEZHr2ntNkEAf8TE624CkvVWxWwo3FBywxavSsoGtxp8s9EqPEoaG6kNkqrApoOfY_KFEpU5baAsCDHb5rKRQ">
+</div>
+</div>
+<!-- Card 9 -->
+<div class="bg-surface rounded-xl p-4 overflow-hidden group cursor-pointer border border-outline-variant hover:shadow-md transition-all">
+<div class="rounded-lg overflow-hidden aspect-[4/3] mb-4 bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="A bold streetwear fashion e-commerce template. Dark industrial aesthetic, striking typography, featuring an edgy male model wearing sunglasses. Urban, cool, and impactful." src="https://lh3.googleusercontent.com/aida-public/AB6AXuATiERe3PQaWbmzPRFPshv0vOkoJ0Lm4Oqk_1ORyfbpn9HzpwhXXgrC-OXVnmUHgP7wgfotMlVjutIfNIfxM7nsvTJpvd7TgqmOfAIojwPO_5Z2jDAxNExMEQBab3fFErobk9fflJ5pGQ1SPVWqKxsxxbis-L2sqydUi_XppDNW1Ix6wGnVrE8nT57U9PjXbPJvd3k_2XHs62jXpy2_83lJ2qTAsEPvwUjUuANbXURDrtAhOeCXPk049g">
+</div>
+</div>
+<!-- Card 10 -->
+<div class="bg-surface rounded-xl p-4 overflow-hidden group cursor-pointer border border-outline-variant hover:shadow-md transition-all">
+<div class="rounded-lg overflow-hidden aspect-[4/3] mb-4 bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="A fresh home and garden e-commerce website template. Crisp white background with vibrant green accents, featuring a collection of small potted succulent plants in a clean grid. Bright, natural, and inviting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwTLSx2WYIeSk4g07xlL64USAcnhlIIJaWGECgmA4o8Y67lcYTrrfaf2onSwrgp03JDD0didzk8F_kmgohZB_aTojUMBoKOzwdYu9C2U5c_TdXMTrQ3rueKY4zIJFHV612tdl6Nos43_qQ5Efp7uanjBqyWWdQoc4P2kiGTeizfcM_VMEC2OuKi4sAv_Nvy9SPy78hWRDsCPGHdBx6j5CoMcpRtbWhLVSXvVPLMzqJrr6Q8YlYAuVlRg">
+</div>
+</div>
+<!-- Card 11 -->
+<div class="bg-surface rounded-xl p-4 overflow-hidden group cursor-pointer border border-outline-variant hover:shadow-md transition-all">
+<div class="rounded-lg overflow-hidden aspect-[4/3] mb-4 bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="A premium audio equipment e-commerce template. Deep moody colors, sleek interface elements, featuring high-end noise-canceling headphones in dramatic lighting. Immersive and professional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCR-7NSCF7G3HUK7f78OhbnN96udLAOIoIcwzTtqAgCIFsPNunYk56nOa-CaiWhyZeWx3_Zm05Z52ubfI3BKx66vLQ5Mozok2ZmmpYiA-RJDsfOnfkyOx6v7DXveHy2QzTn5ALKrtsjam0SJerOXETnpngLa0dLaKO60HNpyJZAo1m-0_qoKQu87lUPc7gSMaWHt4iaSnsvSXgIDdeKh0rs5OPr6zb_GPZfuS039of1nPXOf15i9bQLuw">
+</div>
+</div>
+<!-- Card 12 -->
+<div class="bg-surface rounded-xl p-4 overflow-hidden group cursor-pointer border border-outline-variant hover:shadow-md transition-all">
+<div class="rounded-lg overflow-hidden aspect-[4/3] mb-4 bg-surface-container"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB835SQ8BUDicZM3zBdQlfAwGp8PLnDEkE-OzM5K6ChZQAQklfEuNEjx5RVv_IWUWD8TFMJOuA9M0RJFrc_01ci_NJwyfFDTRDxl2JDojoFdGnE3SS8ezTC5TkIG-B1UXlTJ_SeVG53n8asuts9RGuxlqZI0Nr324vadDJQnsNXThytpEVPyJL4M32QT3Dg9wkAqFVnnP-MAw5F-P1b9gWOgTk2dMmzCsng2TLDX9G5344zyyDOxpTwpg" alt="New Template"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+
+
+
+</body></html>

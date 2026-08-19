@@ -1,95 +1,52 @@
-@extends('layouts.admin')
+@extends('layouts.ui-admin')
+
+@section('page-title', __('Permission'))
+
 @section('content')
-<div class="row">
+<x-ui.page-container>
+    <x-ui.page-header title="{{ __('Permission') }}">
+        <x-slot name="breadcrumbs">
+            <a href="{{ route('dashboard') }}" class="hover:text-gray-900">{{ __('Dashboard') }}</a>
+            <svg class="flex-shrink-0 mx-2 h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+            <span class="text-gray-900 font-medium">{{ __('Permission') }}</span>
+        </x-slot>
 
-    <div class="main-content">
-        <section class="section">
-            <div class="section-header">
-                <h1>{{ __('Permission') }}</h1>
-                <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></div>
-                    <div class="breadcrumb-item">{{ __('Permission') }}</div>
-                </div>
-            </div>
-            <div class="section-body">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="d-flex justify-content-between w-100">
-                                    <h4> {{ __('Manage Permission') }}</h4>
+        <x-slot name="actions">
+            <x-ui.button variant="primary" data-url="{{ route('permissions.create') }}" data-ajax-popup="true" data-title="{{ __('Add Permission') }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ __('Add Permission') }}">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                {{ __('Add Permission') }}
+            </x-ui.button>
+        </x-slot>
+    </x-ui.page-header>
 
-                                    <a href="#" data-url="{{ route('permissions.create') }}"
-                                        class="btn btn-sm btn-icon  btn-primary me-2"
-                                        data-ajax-popup="true"   data-title="{{ __('Add Permission') }}"
-                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                    title="{{ __('Add Permission') }}">
-
-                                        {{--  <span>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 49.861 49.861">
-                                                <path
-                                                    d="M45.963 21.035h-17.14V3.896C28.824 1.745 27.08 0 24.928 0s-3.896 1.744-3.896 3.896v17.14H3.895C1.744 21.035 0 22.78 0 24.93s1.743 3.895 3.895 3.895h17.14v17.14c0 2.15 1.744 3.896 3.896 3.896s3.896-1.744 3.896-3.896v-17.14h17.14c2.152 0 3.896-1.744 3.896-3.895a3.9 3.9 0 0 0-3.898-3.896z"
-                                                    fill="#010002" />
-                                            </svg>
-                                        </span>  --}}
-                                        <i  data-feather="plus"></i>
-
-                                    </a>
-
-                                </div>
-                            </div>
-                            <div class="card-body pb-0">
-                                <div class="row">
-                                    <div class="table-responsive">
-                                        <div class="row">
-                                            <div class="col-sm-12 card-body">
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped dataTable">
-                                                        <thead class="">
-                                                            <tr>
-                                                                <th scope="col" style="width: 88%;">{{ __('title') }}</th>
-                                                                <th scope="col" style="width: 12%;">{{ __('Action') }}
-                                                                </th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach ($permissions as $permission)
-                                                                <tr role="row">
-                                                                    <td>{{ $permission->name }}</td>
-                                                                    <td class="d-flex action-btn-wrapper">
-                                                                        <a href="#"
-                                                                            data-url="{{ route('permissions.edit', $permission->id) }}"
-                                                                            data-size="lg" data-ajax-popup="true"
-                                                                            data-title="{{ __('Update permission') }}"  data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                                            title="{{ __('Edit') }}"
-                                                                            class="btn btn-sm btn-icon  bg-info text-white me-2">
-                                                                            <i class="far fa-edit"></i>
-                                                                        </a>
-                                                                        <a href="#" class="bs-pass-para btn btn-sm btn-icon bg-danger text-white"
-                                                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                                        title="{{ __('Delete') }}"
-                                                                            data-confirm="{{ __('Are You Sure?') . '|' . __('This action can not be undone. Do you want to continue?') }}"
-                                                                            data-confirm-yes="document.getElementById('delete-form-{{ $permission->id }}').submit();">
-                                                                            <i class="far fa-trash-alt"></i></a>
-                                                                        {!! Form::open(['method' => 'DELETE', 'route' => ['permissions.destroy', $permission->id], 'id' => 'delete-form-' . $permission->id]) !!}
-                                                                        {!! Form::close() !!}
-                                                                    </td>
-                                                                </tr>
-                                                            @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+    <x-ui.table>
+        <x-slot name="head">
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style="width: 85%;">{{ __('Title') }}</th>
+            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider" style="width: 15%;">{{ __('Action') }}</th>
+        </x-slot>
+        <x-slot name="body">
+            @foreach ($permissions as $permission)
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {{ $permission->name }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <div class="flex items-center justify-end space-x-2">
+                            <x-ui.button variant="secondary" size="sm" data-url="{{ route('permissions.edit', $permission->id) }}" data-size="lg" data-ajax-popup="true" data-title="{{ __('Update permission') }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ __('Edit') }}">
+                                <span class="material-symbols-outlined text-[16px]">edit</span>
+                            </x-ui.button>
+                            <x-ui.button variant="danger" size="sm" class="bs-pass-para" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ __('Delete') }}" data-confirm="{{ __('Are You Sure?') . '|' . __('This action can not be undone. Do you want to continue?') }}" data-confirm-yes="document.getElementById('delete-form-{{ $permission->id }}').submit();">
+                                <span class="material-symbols-outlined text-[16px]">delete</span>
+                            </x-ui.button>
+                            {!! Form::open(['method' => 'DELETE', 'route' => ['permissions.destroy', $permission->id], 'id' => 'delete-form-' . $permission->id]) !!}
+                            {!! Form::close() !!}
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-</div>
+                    </td>
+                </tr>
+            @endforeach
+        </x-slot>
+    </x-ui.table>
+</x-ui.page-container>
 @endsection

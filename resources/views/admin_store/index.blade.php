@@ -7,10 +7,10 @@
         <!-- Header -->
         <div class="flex items-center justify-between mb-8">
             <div>
-                <h1 style="font-family: 'Geist', sans-serif; font-size: 1.5rem; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30; margin: 0;">
+                <h1 style="font-family: 'Geist', sans-serif; font-size: 1.5rem; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30 !important; margin: 0;">
                     {{ __('Stores Management') }}
                 </h1>
-                <p style="font-family: 'Inter', sans-serif; font-size: 14px; color: #767586; margin-top: 4px;">
+                <p style="font-family: 'Inter', sans-serif; font-size: 14px; color: #767586 !important !important; margin-top: 4px;">
                     {{ __('Overview and control of all active merchant storefronts on the platform.') }}
                 </p>
             </div>
@@ -37,13 +37,13 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <!-- Total Active Stores -->
             <div style="background: #ffffff; border-radius: 12px; padding: 24px; position: relative; overflow: hidden; border: 1px solid rgba(199,196,215,0.15); box-shadow: 0 1px 8px rgba(0,0,0,0.04);" class="group flex flex-col justify-between">
-                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150 blur-xl" style="background: rgba(70,72,212,0.05);"></div>
+                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150 blur-xl" style="background: rgba(0,0,0,0.03);"></div>
                 <div class="flex justify-between items-start mb-4 relative z-10">
                     <div>
-                        <p style="font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.02em; color: #767586; text-transform: uppercase; margin-bottom: 4px;">{{ __('Total Active Stores') }}</p>
-                        <h2 style="font-family: 'Geist', sans-serif; font-size: 36px; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30; margin: 0;">{{ $users->count() }}</h2>
+                        <p style="font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.02em; color: #767586 !important !important; text-transform: uppercase; margin-bottom: 4px;">{{ __('Total Active Stores') }}</p>
+                        <h2 style="font-family: 'Geist', sans-serif; font-size: 36px; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30 !important; margin: 0;">{{ $users->count() }}</h2>
                     </div>
-                    <div style="width: 40px; height: 40px; border-radius: 8px; background: #e5eeff; color: #4648d4; display: flex; align-items: center; justify-content: center;">
+                    <div style="width: 40px; height: 40px; border-radius: 8px; background: #f1f1f1; color: #000000 !important; display: flex; align-items: center; justify-content: center;">
                         <span class="material-symbols-outlined">storefront</span>
                     </div>
                 </div>
@@ -51,13 +51,13 @@
 
             <!-- Total Revenue (Placeholder) -->
             <div style="background: #ffffff; border-radius: 12px; padding: 24px; position: relative; overflow: hidden; border: 1px solid rgba(199,196,215,0.15); box-shadow: 0 1px 8px rgba(0,0,0,0.04);" class="group flex flex-col justify-between">
-                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150 blur-xl" style="background: rgba(70,72,212,0.05);"></div>
+                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150 blur-xl" style="background: rgba(0,0,0,0.03);"></div>
                 <div class="flex justify-between items-start mb-4 relative z-10">
                     <div>
-                        <p style="font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.02em; color: #767586; text-transform: uppercase; margin-bottom: 4px;">{{ __('Total Revenue (30D)') }}</p>
-                        <h2 style="font-family: 'Geist', sans-serif; font-size: 36px; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30; margin: 0;">---</h2>
+                        <p style="font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.02em; color: #767586 !important !important; text-transform: uppercase; margin-bottom: 4px;">{{ __('Total Revenue (30D)') }}</p>
+                        <h2 style="font-family: 'Geist', sans-serif; font-size: 36px; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30 !important; margin: 0;">---</h2>
                     </div>
-                    <div style="width: 40px; height: 40px; border-radius: 8px; background: #e5eeff; color: #4648d4; display: flex; align-items: center; justify-content: center;">
+                    <div style="width: 40px; height: 40px; border-radius: 8px; background: #f1f1f1; color: #000000 !important; display: flex; align-items: center; justify-content: center;">
                         <span class="material-symbols-outlined">payments</span>
                     </div>
                 </div>
@@ -68,10 +68,10 @@
                 <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150 blur-xl" style="background: rgba(186,26,26,0.05);"></div>
                 <div class="flex justify-between items-start mb-4 relative z-10">
                     <div>
-                        <p style="font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.02em; color: #ba1a1a; text-transform: uppercase; margin-bottom: 4px;">{{ __('Needs Attention') }}</p>
-                        <h2 style="font-family: 'Geist', sans-serif; font-size: 36px; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30; margin: 0;">---</h2>
+                        <p style="font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.02em; color: #ba1a1a !important; text-transform: uppercase; margin-bottom: 4px;">{{ __('Needs Attention') }}</p>
+                        <h2 style="font-family: 'Geist', sans-serif; font-size: 36px; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30 !important; margin: 0;">---</h2>
                     </div>
-                    <div style="width: 40px; height: 40px; border-radius: 8px; background: #ffdad6; color: #ba1a1a; display: flex; align-items: center; justify-content: center;">
+                    <div style="width: 40px; height: 40px; border-radius: 8px; background: #ffdad6; color: #ba1a1a !important; display: flex; align-items: center; justify-content: center;">
                         <span class="material-symbols-outlined">warning</span>
                     </div>
                 </div>

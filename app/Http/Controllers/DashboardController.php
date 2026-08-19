@@ -57,7 +57,7 @@ class DashboardController extends Controller
             // remove WWW
             $remote = str_replace('www.', '', $remote);
 
-            if ($local != $remote){
+            if ($remote !== 'localhost' && $remote !== '127.0.0.1' && $local != $remote){
                 $domain = CustomDomainRequest::where('status','1')->where('custom_domain',$remote)->first();
                 // If the domain exists
                 if(isset($domain) && !empty($domain)) {
@@ -119,8 +119,14 @@ class DashboardController extends Controller
                     $user['pending_requests'] = \App\Models\plan_request::count();
                     $user['active_plans'] = \App\Models\Plan::count();
 
+                    $recentActivity = \App\Models\PlanOrder::orderBy('created_at', 'desc')->limit(5)->get();
+                    $topPlans = \App\Models\Plan::select('plans.*', 
+                        \DB::raw('(SELECT count(*) FROM users WHERE users.plan = plans.id) as users_count'),
+                        \DB::raw('COALESCE((SELECT sum(price) FROM plan_orders WHERE plan_orders.plan_id = plans.id), 0) as revenue')
+                    )->orderBy('revenue', 'desc')->limit(3)->get();
+
                     $chartData = $this->getOrderChart(['duration' => 'week']);
-                    return view('home', compact('user', 'chartData'));
+                    return view('home', compact('user', 'chartData', 'recentActivity', 'topPlans'));
                 } else {
                     $store = Auth::user();
                     $userstore = UserStore::where('store_id', $store->current_store)->first();
@@ -192,7 +198,20 @@ class DashboardController extends Controller
                 }
             }
         }
+    }
 
+    public function landingPage()
+    {
+        if (!file_exists(storage_path() . "/installed")) {
+            header('location:install');
+            die;
+        }
+        $settings = Utility::settings();
+        if ($settings['display_landing_page'] == 'on' && \Schema::hasTable('landing_page_settings')) {
+            return view('landingpage::layouts.landingpage');
+        } else {
+            return redirect('login');
+        }
     }
 
     public function getOrderChart($arrParam,$userstore = null)

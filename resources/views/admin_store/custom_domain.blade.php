@@ -1,83 +1,13 @@
-@extends('layouts.admin')
-@section('page-title')
-    {{__('Custom Domain')}}
-@endsection
-@section('title')
-    <div class="d-inline-block">
-        <h5 class="h4 d-inline-block text-white font-weight-bold mb-0 ">{{__('Domain')}}</h5>
-    </div>
-@endsection
-@section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('store-resource.index') }}">{{ __('Store') }}</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{ __('Custom Domain') }}</li>
-@endsection
-@section('action-btn')
-<div class="pr-2">
-    <a href="{{ route('store.subDomain') }}" class="btn btn-sm btn-primary btn-icon m-1" data-bs-toggle="tooltip" data-bs-placement="top"
-    title="{{ __('Sub Domain') }}" >{{__('Sub Domain')}}</a>
+@extends('layouts.ui-admin')
 
-    <a href="{{ route('store.grid') }}" class="btn btn-sm btn-primary btn-icon m-1" data-bs-toggle="tooltip"
-    data-bs-placement="top" title="{{ __('Grid View') }}"><i class="ti ti-grid-dots"></i></a>
+@section('page-title', __('Custom Domain'))
 
-    <a href="{{ route('store-resource.index') }}" class="btn btn-sm btn-primary btn-icon m-1" data-bs-toggle="tooltip"
-    data-bs-placement="top" title="{{ __('List View') }}"><i class="fas fa-list"></i></a>
-    @can('Create Store')
-        <a href="#"  data-size="md" data-url="{{ route('store-resource.create') }}" data-ajax-popup="true" data-title="{{__('Create New Store')}}"  class="btn btn-sm btn-primary btn-icon m-1" data-bs-toggle="tooltip"
-        data-bs-placement="top" title="{{ __('Create New Store') }}"><i class="ti ti-plus"></i></a>
-    @endcan
-</div>
-@endsection
-@section('filter')
-@endsection
-@push('css-page')
-@endpush
-@section('content')
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-body pb-0 table-border-style">
-                <h6 class="text-muted text-sm my-2">{{__('If you\'re using cPanel or Plesk then you need to manually add below custom domain in your server with the same root directory as the script\'s installation. and user need to point their custom domain A record with your server IP '.$serverIp.'')}}</h6>
-                <div class="table-responsive">
-                    <table class="table mb-0 dataTable">
-                        <thead>
-                            <tr>
-                                <th>{{ __('Custom Domain Name')}}</th>
-                                <th>{{ __('Store Name')}}</th>
-                                <th>{{ __('Email')}}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($stores as $store)
-                                <tr>
-                                    <td>
-                                        {{$store->domains}}
-                                    </td>
-                                    <td>
-                                        {{$store->name}}
-                                    </td>
-                                    <td>
-                                        {{($store->email)}}
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
-
-@push('script-page')
-{{-- Password  --}}
+@push('scripts')
 <script>
     $(document).on('change', '#password_switch', function() {
         if ($(this).is(':checked')) {
             $('.ps_div').removeClass('d-none');
             $('#password').attr("required", true);
-
         } else {
             $('.ps_div').addClass('d-none');
             $('#password').val(null);
@@ -86,3 +16,76 @@
     });
 </script>
 @endpush
+
+@section('content')
+<x-ui.page-container>
+    <x-ui.page-header title="{{ __('Custom Domain') }}">
+        <x-slot name="breadcrumbs">
+            <a href="{{ route('dashboard') }}" class="hover:text-gray-900">{{ __('Home') }}</a>
+            <svg class="flex-shrink-0 mx-2 h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+            <a href="{{ route('store-resource.index') }}" class="hover:text-gray-900">{{ __('Store') }}</a>
+            <svg class="flex-shrink-0 mx-2 h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+            <span class="text-gray-900 font-medium">{{ __('Custom Domain') }}</span>
+        </x-slot>
+
+        <x-slot name="actions">
+            <div class="flex items-center space-x-2">
+                <a href="{{ route('store.subDomain') }}">
+                    <x-ui.button variant="secondary">
+                        {{ __('Sub Domain') }}
+                    </x-ui.button>
+                </a>
+                <a href="{{ route('store.grid') }}">
+                    <x-ui.button variant="secondary" title="{{ __('Grid View') }}">
+                        <span class="material-symbols-outlined text-[16px]">grid_on</span>
+                    </x-ui.button>
+                </a>
+                <a href="{{ route('store-resource.index') }}">
+                    <x-ui.button variant="secondary" title="{{ __('List View') }}">
+                        <span class="material-symbols-outlined text-[16px]">list</span>
+                    </x-ui.button>
+                </a>
+                @can('Create Store')
+                    <x-ui.button variant="primary" data-size="md" data-url="{{ route('store-resource.create') }}" data-ajax-popup="true" data-title="{{__('Create New Store')}}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Create New Store') }}">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        {{ __('Create Store') }}
+                    </x-ui.button>
+                @endcan
+            </div>
+        </x-slot>
+    </x-ui.page-header>
+
+    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded-r-lg">
+        <p class="text-sm text-blue-700">
+            {{ __('If you\'re using cPanel or Plesk then you need to manually add below custom domain in your server with the same root directory as the script\'s installation. and user need to point their custom domain A record with your server IP ' . $serverIp) }}
+        </p>
+    </div>
+
+    <x-ui.table>
+        <x-slot name="head">
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Custom Domain Name') }}</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Store Name') }}</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Email') }}</th>
+        </x-slot>
+        <x-slot name="body">
+            @foreach($stores as $store)
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {{ $store->domains }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {{ $store->name }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {{ $store->email }}
+                    </td>
+                </tr>
+            @endforeach
+        </x-slot>
+    </x-ui.table>
+</x-ui.page-container>
+@endsection

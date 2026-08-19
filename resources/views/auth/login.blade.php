@@ -105,9 +105,10 @@
         <!-- Remember Me & Forgot Password -->
         <div class="flex items-center justify-between">
             <label class="flex items-center gap-2 cursor-pointer group">
-                <div class="relative flex items-center justify-center w-4 h-4 rounded bg-surface shadow-[0_0_0_1px_#c7c4d7] group-hover:shadow-[0_0_0_1px_#4648d4] transition-shadow duration-200">
-                    <input class="peer sr-only" type="checkbox" name="remember">
-                    <span class="material-symbols-outlined text-[14px] text-on-primary opacity-0 peer-checked:opacity-100 transition-opacity duration-200 absolute pointer-events-none" style="font-variation-settings: 'FILL' 1;">check</span>
+                <div class="relative flex items-center justify-center w-4 h-4 rounded bg-surface shadow-[0_0_0_1px_#c7c4d7] group-hover:shadow-[0_0_0_1px_#4648d4] transition-shadow duration-200 cursor-pointer">
+                    <input type="checkbox" name="remember"
+                        class="peer absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10 m-0">
+                    <span class="material-symbols-outlined text-[14px] text-on-primary opacity-0 peer-checked:opacity-100 transition-opacity duration-200 absolute pointer-events-none" style="font-variation-settings: 'FILL' 1; z-index: 1;">check</span>
                     <div class="absolute inset-0 bg-primary rounded opacity-0 peer-checked:opacity-100 transition-opacity duration-200 pointer-events-none"></div>
                 </div>
                 <span class="font-body-sm text-body-sm text-on-surface-variant group-hover:text-on-surface transition-colors duration-200">{{ __('Remember Me') }}</span>

@@ -1,102 +1,13 @@
-@extends('layouts.admin')
-@section('page-title')
-    {{ __('Custom Page') }}
-@endsection
-@section('title')
-    <div class="d-inline-block">
-        <h5 class="h4 d-inline-block text-white font-weight-bold mb-0 ">{{ __('Custom Page') }}</h5>
-    </div>
-@endsection
-@section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{ __('Custom Page') }}</li>
-@endsection
+@extends('layouts.ui-admin')
 
-@push('css-page')
-    <link rel="stylesheet" href="{{asset('custom/libs/summernote/summernote-bs4.css')}}">
-@endpush
-@push('script-page')
-    <script src="{{asset('custom/libs/summernote/summernote-bs4.js')}}"></script>
+@section('page-title', __('Custom Page'))
+
+@push('style')
+    <link rel="stylesheet" href="{{ asset('custom/libs/summernote/summernote-bs4.css') }}">
 @endpush
 
-@section('action-btn')
-<div class="action-btn-wrapper">
-@can('Create Custom Page')
-    <a class="btn btn-sm btn-icon  btn-primary text-white" data-url="{{ route('custom-page.create') }}" data-title="{{ __('Create New Page') }}" data-ajax-popup="true" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Create') }}">
-        <i  data-feather="plus"></i>
-    </a>
-@endcan
-</div>
-@endsection
-@section('filter')
-@endsection
-@section('content')
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body pb-0 table-border-style">
-                    <div class="table-responsive">
-                        <table class="table mb-0 dataTable">
-                            <thead>
-                                <tr>
-                                    <th>{{ __('Name') }}</th>
-                                    <th>{{ __('Page Slug') }}</th>
-                                    <th>{{ __('Header') }}</th>
-                                    <th class="text-right">{{ __('Action') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($pageoptions as $pageoption)
-                                    <tr data-name="{{ $pageoption->name }}">
-                                        <td>{{ $pageoption->name }}</td>
-                                        @if ($store && $store->enable_domain == 'on')
-                                            <td>
-                                                {{ $store->domains . '/page/' . $pageoption->slug }}
-                                            </td>
-                                        @elseif($sub_store && $sub_store->enable_subdomain == 'on')
-                                            <td>
-                                                {{ $sub_store->subdomain . '/page/' . $pageoption->slug }}</td>
-                                        @else
-                                            <td>
-                                                {{ env('APP_URL') . '/page/' . $pageoption->slug }}
-                                            </td>
-                                        @endif
-                                        <td>
-                                            {{ ucfirst($pageoption->enable_page_header == 'on' ? $pageoption->enable_page_header : 'Off') }}
-                                        </td>
-                                        <td class="Action">
-                                            <div class="d-flex action-btn-wrapper">
-                                                @can('Edit Custom Page')
-                                                    <a href="#!" class="btn btn-sm btn-icon  bg-info text-white me-2" data-title="{{ __('Edit Page') }}" data-url="{{ route('custom-page.edit', $pageoption->id) }}" data-ajax-popup="true" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Edit') }}">
-                                                        <i  class=" ti ti-pencil f-20"></i>
-                                                    </a>
-                                                @endcan
-                                                @can('Delete Custom Page')
-                                                    <a class="bs-pass-para btn btn-sm btn-icon bg-danger text-white" href="#"
-                                                        data-title="{{ __('Delete Lead') }}"
-                                                        data-confirm="{{ __('Are You Sure?') }}"
-                                                        data-text="{{ __('This action can not be undone. Do you want to continue?') }}"
-                                                        data-confirm-yes="delete-form-{{ $pageoption->id }}"
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="{{ __('Delete') }}">
-                                                        <i class="ti ti-trash f-20"></i>
-                                                    </a>
-                                                    {!! Form::open(['method' => 'DELETE', 'route' => ['custom-page.destroy', $pageoption->id], 'id' => 'delete-form-' . $pageoption->id]) !!}
-                                                    {!! Form::close() !!}
-                                                @endcan
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
-@push('script-page')
+@push('scripts')
+    <script src="{{ asset('custom/libs/summernote/summernote-bs4.js') }}"></script>
     <script>
         $(document).ready(function() {
             $(document).on('keyup', '.search-user', function() {
@@ -113,7 +24,6 @@
         });
     </script>
     <script src="{{ asset('assets/js/plugins/tinymce/tinymce.min.js') }}"></script>
-
     <script>
         if ($(".pc-tinymce-2").length) {
             tinymce.init({
@@ -125,5 +35,73 @@
             });
         }
     </script>
-
 @endpush
+
+@section('content')
+<x-ui.page-container>
+    <x-ui.page-header title="{{ __('Custom Page') }}">
+        <x-slot name="breadcrumbs">
+            <a href="{{ route('dashboard') }}" class="hover:text-gray-900">{{ __('Home') }}</a>
+            <svg class="flex-shrink-0 mx-2 h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+            <span class="text-gray-900 font-medium">{{ __('Custom Page') }}</span>
+        </x-slot>
+
+        <x-slot name="actions">
+            @can('Create Custom Page')
+                <x-ui.button variant="primary" data-url="{{ route('custom-page.create') }}" data-title="{{ __('Create New Page') }}" data-ajax-popup="true" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Create') }}">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    {{ __('Create Page') }}
+                </x-ui.button>
+            @endcan
+        </x-slot>
+    </x-ui.page-header>
+
+    <x-ui.table>
+        <x-slot name="head">
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Name') }}</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Page Slug') }}</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Header') }}</th>
+            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Action') }}</th>
+        </x-slot>
+        <x-slot name="body">
+            @foreach ($pageoptions as $pageoption)
+                <tr data-name="{{ $pageoption->name }}">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {{ $pageoption->name }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        @if ($store && $store->enable_domain == 'on')
+                            {{ $store->domains . '/page/' . $pageoption->slug }}
+                        @elseif($sub_store && $sub_store->enable_subdomain == 'on')
+                            {{ $sub_store->subdomain . '/page/' . $pageoption->slug }}
+                        @else
+                            {{ env('APP_URL') . '/page/' . $pageoption->slug }}
+                        @endif
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {{ ucfirst($pageoption->enable_page_header == 'on' ? $pageoption->enable_page_header : 'Off') }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <div class="flex items-center justify-end space-x-2">
+                            @can('Edit Custom Page')
+                                <x-ui.button variant="secondary" size="sm" data-title="{{ __('Edit Page') }}" data-url="{{ route('custom-page.edit', $pageoption->id) }}" data-ajax-popup="true" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Edit') }}">
+                                    <span class="material-symbols-outlined text-[16px]">edit</span>
+                                </x-ui.button>
+                            @endcan
+                            @can('Delete Custom Page')
+                                <x-ui.button variant="danger" size="sm" class="bs-pass-para" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Delete') }}" data-title="{{ __('Delete Lead') }}" data-confirm="{{ __('Are You Sure?') }}" data-text="{{ __('This action can not be undone. Do you want to continue?') }}" data-confirm-yes="delete-form-{{ $pageoption->id }}">
+                                    <span class="material-symbols-outlined text-[16px]">delete</span>
+                                </x-ui.button>
+                                {!! Form::open(['method' => 'DELETE', 'route' => ['custom-page.destroy', $pageoption->id], 'id' => 'delete-form-' . $pageoption->id]) !!}
+                                {!! Form::close() !!}
+                            @endcan
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+        </x-slot>
+    </x-ui.table>
+</x-ui.page-container>
+@endsection

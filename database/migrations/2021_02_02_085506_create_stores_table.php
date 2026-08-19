@@ -53,7 +53,7 @@ class CreateStoresTable extends Migration
             $table->text('twilio_sid')->nullable();
             $table->text('twilio_token')->nullable();
             $table->text('twilio_from')->nullable();
-            $table->text('notification_number');
+            $table->text('notification_number')->nullable();
             $table->string('is_stripe_enabled')->default('off');
             $table->text('stripe_key')->nullable();
             $table->text('stripe_secret')->nullable();

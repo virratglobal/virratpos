@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        if(\Request::route()->getName()!='LaravelUpdater::database')
+        if(\Request::route() == null || \Request::route()->getName()!='LaravelUpdater::database')
         {
             $this->call(UsersTableSeeder::class);
             $this->call(PlansTableSeeder::class);

@@ -18,7 +18,7 @@ class CreateSettingsTable extends Migration
             $table->string('name');
             $table->text('value')->nullable();
             $table->integer('created_by');
-            $table->integer('store_id');
+            $table->integer('store_id')->default(0);
             $table->timestamps();
             $table->unique(['name', 'store_id', 'created_by']);
         });

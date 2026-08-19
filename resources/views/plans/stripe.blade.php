@@ -1,8 +1,8 @@
-@extends('layouts.admin')
+@extends('layouts.ui-admin')
 @php
 $dir = asset(Storage::url('uploads/plan'));
 @endphp
-@push('script-page')
+@push('scripts')
 <script src="https://js.stripe.com/v3/"></script>
 <script src="https://js.paystack.co/v1/inline.js"></script>
 <script src="https://api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js"></script>
@@ -404,22 +404,23 @@ $dir = asset(Storage::url('uploads/plan'));
 $dir = asset(Storage::url('uploads/plan'));
 $dir_payment = asset(Storage::url('uploads/payments'));
 @endphp
-@section('page-title')
-    {{ __('Order Summary') }}
-@endsection
-@section('title')
-    <div class="d-inline-block">
-        <h5 class="h4 d-inline-block font-weight-400 mb-0 text-white">{{ __('Order Summary') }}</h5>
-    </div>
-@endsection
-@section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('plans.index') }}">{{ __('Plan') }}</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{ __('Order Summary') }}</li>
-@endsection
-@section('action-btn')
-@endsection
+@section('page-title', __('Order Summary'))
+
 @section('content')
+<x-ui.page-container>
+    <x-ui.page-header title="{{ __('Order Summary') }}">
+        <x-slot name="breadcrumbs">
+            <a href="{{ route('dashboard') }}" class="hover:text-gray-900">{{ __('Dashboard') }}</a>
+            <svg class="flex-shrink-0 mx-2 h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+            <a href="{{ route('plans.index') }}" class="hover:text-gray-900">{{ __('Plan') }}</a>
+            <svg class="flex-shrink-0 mx-2 h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+            <span class="text-gray-900 font-medium">{{ __('Order Summary') }}</span>
+        </x-slot>
+    </x-ui.page-header>
 <input type="hidden" id="coupon_use_id" name="user_coupon_id">
     <div class="row mt-4">
         <!-- [ sample-page ] start -->
@@ -2302,4 +2303,5 @@ $dir_payment = asset(Storage::url('uploads/payments'));
                 </div>
             </div>
         </div>
-    @endsection
+    </x-ui.page-container>
+@endsection

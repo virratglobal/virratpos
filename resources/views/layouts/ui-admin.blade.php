@@ -8,9 +8,23 @@ $color = !empty($setting['color']) ? $setting['color'] : 'theme-3';
 if(isset($setting['color_flag']) && $setting['color_flag'] == 'true')
 {
     $themeColor = 'custom-color';
+    $primaryColor = $color;
 }
 else {
     $themeColor = $color;
+    $themePrimaryColors = [
+        'theme-1' => '#0CAF60',
+        'theme-2' => '#584ED2',
+        'theme-3' => '#6FD943',
+        'theme-4' => '#145388',
+        'theme-5' => '#B9406B',
+        'theme-6' => '#008ECC',
+        'theme-7' => '#922C88',
+        'theme-8' => '#C0A145',
+        'theme-9' => '#48494B',
+        'theme-10' => '#0C7785',
+    ];
+    $primaryColor = isset($themePrimaryColors[$themeColor]) ? $themePrimaryColors[$themeColor] : '#4648d4';
 }
 $users = \Auth::user();
 $currantLang = $users->currentLanguages();
@@ -42,7 +56,7 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
                         // Stitch design tokens
-                        "sg-primary": "#4648d4",
+                        "sg-primary": "{{ $primaryColor }}",
                         "sg-on-primary": "#ffffff",
                         "sg-surface": "#f8f9ff",
                         "sg-background": "#f8f9ff",
@@ -60,10 +74,10 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
                         "sg-on-tertiary-container": "#fffbff",
                         "sg-secondary-container": "#dae2fd",
                         "sg-on-secondary-container": "#5c647a",
-                        "sg-primary-container": "#6063ee",
+                        "sg-primary-container": "{{ $primaryColor }}",
                         "sg-on-primary-container": "#fffbff",
                         // Legacy compat
-                        primary: { DEFAULT: '#4648d4', light: '#6063ee', dark: '#2f2ebe' },
+                        primary: { DEFAULT: '{{ $primaryColor }}', light: '{{ $primaryColor }}', dark: '{{ $primaryColor }}' },
                         sidebar: { bg: '#ffffff', text: '#464554', dark: '#f8f9ff', active: '#e5eeff', hover: '#dce9ff' },
                         surface: '#ffffff',
                         background: '#f8f9ff',
@@ -82,6 +96,133 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
             font-family: 'Inter', sans-serif !important;
             background-color: #f8f9ff !important;
             color: #0b1c30 !important;
+        }
+
+        /* Force brand purple color variables and override legacy themes */
+        .nav-pills .nav-link.active,
+        .nav-pills .show > .nav-link {
+            background-color: {{ $primaryColor }} !important;
+            color: #ffffff !important;
+        }
+        .form-check-input:checked,
+        .form-check-input.input-primary:checked {
+            background-color: {{ $primaryColor }} !important;
+            border-color: {{ $primaryColor }} !important;
+        }
+        .card.border-primary,
+        .border-primary {
+            border-color: {{ $primaryColor }} !important;
+        }
+        .btn-primary {
+            background-color: {{ $primaryColor }} !important;
+            border-color: {{ $primaryColor }} !important;
+        }
+        .btn-primary:hover {
+            background-color: {{ $primaryColor }} !important;
+            border-color: {{ $primaryColor }} !important;
+        }
+        .text-primary {
+            color: {{ $primaryColor }} !important;
+        }
+
+        /* Force notification toast/alert colors to brand purple and override theme specific rules */
+        .toast.bg-primary,
+        .toast.bg-success,
+        .toast.bg-info,
+        .alert-primary,
+        .alert-success,
+        body.theme-1 .bg-primary, body.theme-2 .bg-primary, body.theme-3 .bg-primary, body.theme-4 .bg-primary, body.theme-5 .bg-primary, body.theme-6 .bg-primary, body.theme-7 .bg-primary, body.theme-8 .bg-primary, body.theme-9 .bg-primary, body.theme-10 .bg-primary,
+        body.theme-1 .alert-primary, body.theme-2 .alert-primary, body.theme-3 .alert-primary, body.theme-4 .alert-primary, body.theme-5 .alert-primary, body.theme-6 .alert-primary, body.theme-7 .alert-primary, body.theme-8 .alert-primary, body.theme-9 .alert-primary, body.theme-10 .alert-primary,
+        body.theme-1 .alert-success, body.theme-2 .alert-success, body.theme-3 .alert-success, body.theme-4 .alert-success, body.theme-5 .alert-success, body.theme-6 .alert-success, body.theme-7 .alert-success, body.theme-8 .alert-success, body.theme-9 .alert-success, body.theme-10 .alert-success {
+            background-color: {{ $primaryColor }} !important;
+            background: {{ $primaryColor }} !important;
+            border-color: {{ $primaryColor }} !important;
+        }
+
+        /* Force checkboxes/toggles active color across all themes */
+        body.theme-1 .form-check-input:checked, body.theme-2 .form-check-input:checked, body.theme-3 .form-check-input:checked, body.theme-4 .form-check-input:checked, body.theme-5 .form-check-input:checked, body.theme-6 .form-check-input:checked, body.theme-7 .form-check-input:checked, body.theme-8 .form-check-input:checked, body.theme-9 .form-check-input:checked, body.theme-10 .form-check-input:checked,
+        body.theme-1 .form-check-input.input-primary:checked, body.theme-2 .form-check-input.input-primary:checked, body.theme-3 .form-check-input.input-primary:checked, body.theme-4 .form-check-input.input-primary:checked, body.theme-5 .form-check-input.input-primary:checked, body.theme-6 .form-check-input.input-primary:checked, body.theme-7 .form-check-input.input-primary:checked, body.theme-8 .form-check-input.input-primary:checked, body.theme-9 .form-check-input.input-primary:checked, body.theme-10 .form-check-input.input-primary:checked {
+            background-color: {{ $primaryColor }} !important;
+            border-color: {{ $primaryColor }} !important;
+        }
+
+        /* Force active nav link color across all themes */
+        body.theme-1 .nav-pills .nav-link.active, body.theme-2 .nav-pills .nav-link.active, body.theme-3 .nav-pills .nav-link.active, body.theme-4 .nav-pills .nav-link.active, body.theme-5 .nav-pills .nav-link.active, body.theme-6 .nav-pills .nav-link.active, body.theme-7 .nav-pills .nav-link.active, body.theme-8 .nav-pills .nav-link.active, body.theme-9 .nav-pills .nav-link.active, body.theme-10 .nav-pills .nav-link.active {
+            background-color: {{ $primaryColor }} !important;
+            color: #ffffff !important;
+        }
+
+        /* Force primary borders across all themes */
+        body.theme-1 .border-primary, body.theme-2 .border-primary, body.theme-3 .border-primary, body.theme-4 .border-primary, body.theme-5 .border-primary, body.theme-6 .border-primary, body.theme-7 .border-primary, body.theme-8 .border-primary, body.theme-9 .border-primary, body.theme-10 .border-primary {
+            border-color: {{ $primaryColor }} !important;
+        }
+
+        /* Override legacy link colors to inherit or map to neutral gray/black */
+        a {
+            color: #000000;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #222222;
+        }
+
+        .breadcrumb a,
+        .breadcrumb-item a,
+        [class*="breadcrumbs"] a {
+            color: #767586 !important;
+        }
+        .breadcrumb a:hover,
+        .breadcrumb-item a:hover,
+        [class*="breadcrumbs"] a:hover {
+            color: #0b1c30 !important;
+        }
+
+        /* Sidebar Link Styles */
+        .sg-sidebar a,
+        .sg-sidebar button {
+            color: #464554 !important;
+            background-color: transparent !important;
+            transition: all 0.2s ease-in-out !important;
+            font-weight: 600 !important;
+        }
+        
+        .sg-sidebar a:hover,
+        .sg-sidebar button:hover {
+            background-color: #f1f1f1 !important;
+            color: #0b1c30 !important;
+        }
+
+        /* Inactive submenu link colors */
+        .sg-sidebar div a {
+            color: #767586 !important;
+        }
+
+        /* Active sidebar link styles */
+        .sg-sidebar a[style*="background: {{ $primaryColor }}"],
+        .sg-sidebar a[style*="background: rgb(96, 99, 238)"],
+        .sg-sidebar button[style*="background: {{ $primaryColor }}"],
+        .sg-sidebar button[style*="background: rgb(96, 99, 238)"],
+        .sg-sidebar a[style*="background:{{ $primaryColor }}"],
+        .sg-sidebar a[style*="background:rgb(96,99,238)"] {
+            background-color: {{ $primaryColor }} !important;
+            color: #ffffff !important;
+        }
+
+        /* Active submenu link styles */
+        .sg-sidebar div a[style*="background: {{ $primaryColor }}"],
+        .sg-sidebar div a[style*="background: rgb(96, 99, 238)"],
+        .sg-sidebar div a[style*="background:{{ $primaryColor }}"],
+        .sg-sidebar div a[style*="background:rgb(96,99,238)"] {
+            background-color: {{ $primaryColor }} !important;
+            color: #ffffff !important;
+        }
+
+        /* Force children inside sidebar and header to inherit parent text colors */
+        .sg-sidebar a *,
+        .sg-sidebar button *,
+        .sg-header a *,
+        .sg-header button * {
+            color: inherit !important;
         }
 
         /* Material Symbols */
@@ -113,10 +254,16 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
             height: calc(100vh - 32px);
         }
 
+        .sg-main-content {
+            transition: padding-left 0.3s ease-in-out;
+        }
         @media (min-width: 1024px) {
             .sg-main-content {
                 padding-left: calc(240px + 32px + 32px);
                 padding-right: 32px;
+            }
+            body.sidebar-closed .sg-main-content {
+                padding-left: 32px;
             }
             .sg-content-body {
                 padding-top: calc(64px + 32px + 16px);
@@ -126,6 +273,9 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
                 left: calc(240px + 64px);
                 right: 32px;
                 top: 32px;
+            }
+            body.sidebar-closed .sg-header {
+                left: 32px;
             }
             .sg-sidebar {
                 margin: 32px;
@@ -161,10 +311,12 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
         /* Form Controls → Stitch style */
         .form-control,
         .custom-select,
-        select.form-control {
+        select.form-control,
+        .dataTable-input,
+        .dataTable-selector {
             border-radius: 8px !important;
             border: 1px solid #c7c4d7 !important;
-            padding: 10px 12px !important;
+            padding: 8px 12px !important;
             box-shadow: none !important;
             font-size: 14px !important;
             font-family: 'Inter', sans-serif !important;
@@ -173,12 +325,78 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
             transition: box-shadow 0.2s, border-color 0.2s !important;
         }
         .form-control:focus,
-        .custom-select:focus {
-            border-color: #4648d4 !important;
+        .custom-select:focus,
+        .dataTable-input:focus,
+        .dataTable-selector:focus {
+            border-color: {{ $primaryColor }} !important;
             box-shadow: 0 0 0 3px rgba(70,72,212,0.12) !important;
             outline: none !important;
             background-color: #ffffff !important;
+            color: #0b1c30 !important;
         }
+
+        /* Choices.js Dropdown / Select Overrides: Fix Black Box Issue */
+        .choices__inner {
+            background-color: #f8f9ff !important;
+            border: 1px solid #c7c4d7 !important;
+            border-radius: 8px !important;
+            color: #0b1c30 !important;
+            padding: 8px 12px !important;
+            min-height: 40px !important;
+            font-family: 'Inter', sans-serif !important;
+            font-size: 14px !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+        .choices.is-focused .choices__inner,
+        .choices.is-open .choices__inner {
+            border-color: {{ $primaryColor }} !important;
+            background-color: #ffffff !important;
+            box-shadow: 0 0 0 3px rgba(70,72,212,0.12) !important;
+        }
+        .choices__list--dropdown {
+            background-color: #ffffff !important;
+            border: 1px solid #c7c4d7 !important;
+            border-radius: 8px !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+            z-index: 99 !important;
+        }
+        .choices__list--dropdown .choices__item--selectable.is-highlighted {
+            background-color: #f1f5f9 !important;
+            color: #0b1c30 !important;
+        }
+        .choices__list--dropdown .choices__item {
+            color: #0b1c30 !important;
+            font-size: 14px !important;
+            padding: 8px 12px !important;
+        }
+        
+        /* Multi-select active choices pill/badge */
+        .choices__list--multiple .choices__item {
+            background-color: #e2e8f0 !important;
+            border: 1px solid #cbd5e1 !important;
+            color: #0b1c30 !important;
+            border-radius: 6px !important;
+            font-size: 12px !important;
+            font-weight: 500 !important;
+            padding: 2px 8px !important;
+            margin-right: 4px !important;
+        }
+        .choices__list--multiple .choices__item.is-highlighted {
+            background-color: #cbd5e1 !important;
+        }
+        
+        /* Placeholder styling inside choices */
+        .choices__input {
+            background-color: transparent !important;
+            color: #0b1c30 !important;
+            font-size: 14px !important;
+        }
+        .choices__placeholder {
+            color: #767586 !important;
+            opacity: 0.8 !important;
+        }
+
         label,
         .form-label {
             font-family: 'Geist', sans-serif !important;
@@ -202,16 +420,16 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
             border: none !important;
         }
         .btn-primary {
-            background-color: #4648d4 !important;
+            background-color: {{ $primaryColor }} !important;
             color: #ffffff !important;
         }
         .btn-primary:hover {
-            background-color: #2f2ebe !important;
+            background-color: {{ $primaryColor }} !important;
             color: #ffffff !important;
         }
         .btn-secondary {
             background-color: #e5eeff !important;
-            color: #4648d4 !important;
+            color: {{ $primaryColor }} !important;
         }
         .btn-secondary:hover {
             background-color: #dce9ff !important;
@@ -258,7 +476,7 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
             border-radius: 6px !important;
             letter-spacing: 0.02em !important;
         }
-        .badge-primary { background-color: #e5eeff !important; color: #4648d4 !important; }
+        .badge-primary { background-color: #e5eeff !important; color: {{ $primaryColor }} !important; }
         .badge-success { background-color: #e8f5e9 !important; color: #1a7431 !important; }
         .badge-danger { background-color: #ffdad6 !important; color: #ba1a1a !important; }
         .badge-warning { background-color: #fff3e0 !important; color: #904900 !important; }
@@ -328,8 +546,8 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
             background: none !important;
         }
         .nav-tabs .nav-link.active {
-            color: #4648d4 !important;
-            border-bottom: 2px solid #4648d4 !important;
+            color: {{ $primaryColor }} !important;
+            border-bottom: 2px solid {{ $primaryColor }} !important;
             background: none !important;
         }
 
@@ -344,12 +562,12 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
             transition: all 0.2s !important;
         }
         .nav-pills .nav-link:hover {
-            background-color: #eff4ff !important;
+            background-color: #f1f1f1 !important;
             color: #0b1c30 !important;
         }
         .nav-pills .nav-link.active {
             background-color: #e5eeff !important;
-            color: #4648d4 !important;
+            color: {{ $primaryColor }} !important;
         }
 
         /* Modals */
@@ -393,7 +611,7 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
         .alert-success { background: #e8f5e9 !important; border-color: rgba(26,116,49,0.2) !important; color: #1a7431 !important; }
         .alert-danger { background: #ffdad6 !important; border-color: rgba(186,26,26,0.2) !important; color: #ba1a1a !important; }
         .alert-warning { background: #fff3e0 !important; border-color: rgba(144,73,0,0.2) !important; color: #904900 !important; }
-        .alert-info { background: #e5eeff !important; border-color: rgba(70,72,212,0.2) !important; color: #4648d4 !important; }
+        .alert-info { background: #e5eeff !important; border-color: rgba(70,72,212,0.2) !important; color: {{ $primaryColor }} !important; }
 
         /* Input groups */
         .input-group-text {
@@ -434,14 +652,14 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
         /* DataTables */
         .dataTables_wrapper .dataTables_paginate .paginate_button.current,
         .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-            background: #4648d4 !important;
+            background: {{ $primaryColor }} !important;
             color: #ffffff !important;
             border: none !important;
             border-radius: 8px !important;
         }
         .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
             background: #e5eeff !important;
-            color: #4648d4 !important;
+            color: {{ $primaryColor }} !important;
             border: none !important;
             border-radius: 8px !important;
         }
@@ -482,7 +700,7 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
         }
         .select2-container--default .select2-results__option--highlighted[aria-selected] {
             background-color: #e5eeff !important;
-            color: #4648d4 !important;
+            color: {{ $primaryColor }} !important;
         }
 
         /* Pagination */
@@ -495,12 +713,12 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
             transition: all 0.2s !important;
         }
         .pagination .page-item.active .page-link {
-            background-color: #4648d4 !important;
+            background-color: {{ $primaryColor }} !important;
             color: #ffffff !important;
         }
         .pagination .page-item .page-link:hover {
             background-color: #e5eeff !important;
-            color: #4648d4 !important;
+            color: {{ $primaryColor }} !important;
         }
 
         /* Dashboard container override */
@@ -525,11 +743,11 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
         .iziToast-success { background: #e8f5e9 !important; border-left: 4px solid #1a7431 !important; }
         .iziToast-error { background: #ffdad6 !important; border-left: 4px solid #ba1a1a !important; }
         .iziToast-warning { background: #fff3e0 !important; border-left: 4px solid #904900 !important; }
-        .iziToast-info { background: #e5eeff !important; border-left: 4px solid #4648d4 !important; }
+        .iziToast-info { background: #e5eeff !important; border-left: 4px solid {{ $primaryColor }} !important; }
     </style>
     @stack('style')
 </head>
-<body class="{{ $themeColor }} text-on-surface antialiased" x-data="{ sidebarOpen: false }" style="background-color: #f8f9ff !important;">
+<body class="{{ $themeColor }} text-on-surface antialiased" x-data="{ sidebarOpen: window.innerWidth >= 1024 }" :class="{ 'sidebar-closed': !sidebarOpen }" style="background-color: #f8f9ff !important;" @resize.window="if(window.innerWidth >= 1024 && !sidebarOpen && !document.body.classList.contains('sidebar-closed-manual')) { sidebarOpen = true }">
 
     <!-- [ Pre-loader ] start -->
     <div class="loader-bg">
@@ -586,9 +804,11 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
         </div>
     </div>
 
+    @include('partials.admin.footer')
     @if (isset($settings['enable_cookie']) && $settings['enable_cookie'] == 'on')
         @include('layouts.cookie_consent')
     @endif
     @stack('scripts')
+    @stack('script-page')
 </body>
 </html>
