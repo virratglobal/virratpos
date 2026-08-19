@@ -796,6 +796,51 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
             color: #FFFFFF !important;
         }
 
+        /* 19. Email Templates & Shared Components Dark Overrides */
+        html.dark .templates-container {
+            color: #F8FAFC !important;
+        }
+        html.dark .templates-header h1,
+        html.dark .template-title {
+            color: #F8FAFC !important;
+        }
+        html.dark .templates-header p,
+        html.dark .template-category,
+        html.dark .template-description,
+        html.dark .btn-preview-link {
+            color: #CBD5E1 !important;
+        }
+        html.dark .template-card {
+            background-color: #111827 !important;
+            border-color: #263449 !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+        }
+        html.dark .edited-badge-pill {
+            background-color: #172033 !important;
+            border-color: #263449 !important;
+            color: #CBD5E1 !important;
+        }
+        html.dark .template-card-footer {
+            border-top-color: #263449 !important;
+        }
+        html.dark .stores-table-footer {
+            background-color: #111827 !important;
+            border-top-color: #263449 !important;
+        }
+        html.dark .footer-count-text {
+            color: #CBD5E1 !important;
+        }
+        html.dark .page-pill {
+            background-color: #172033 !important;
+            border-color: #263449 !important;
+            color: #CBD5E1 !important;
+        }
+        html.dark .page-pill.active {
+            background-color: #2563EB !important;
+            color: #FFFFFF !important;
+            border-color: #2563EB !important;
+        }
+
         /* Force brand purple color variables and override legacy themes */
         .nav-pills .nav-link.active,
         .nav-pills .show > .nav-link {

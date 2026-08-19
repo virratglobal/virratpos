@@ -12,7 +12,7 @@
         margin: 0 auto;
         padding: 8px 20px 40px 20px;
         font-family: 'Inter', -apple-system, sans-serif;
-        color: #0F172A;
+        color: var(--text-primary);
     }
 
     /* Page Header */
@@ -22,13 +22,13 @@
     .templates-header h1 {
         font-size: 24px;
         font-weight: 700;
-        color: #0F172A;
+        color: var(--text-primary);
         margin: 0;
         letter-spacing: -0.02em;
     }
     .templates-header p {
         font-size: 13.5px;
-        color: #64748B;
+        color: var(--text-secondary);
         margin-top: 4px;
         margin-bottom: 0;
     }
@@ -53,10 +53,10 @@
 
     /* Template Card Design */
     .template-card {
-        background: #F0F4FE;
+        background: var(--surface);
         border-radius: 18px;
         padding: 24px;
-        border: 1px solid rgba(226, 232, 240, 0.8);
+        border: 1px solid var(--border);
         box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
         display: flex;
         flex-direction: column;
@@ -86,39 +86,39 @@
         flex-shrink: 0;
     }
     .icon-badge-purple {
-        background: #E0E7FF;
-        color: #4F46E5;
+        background: rgba(79, 70, 229, 0.15);
+        color: #60A5FA;
     }
     .icon-badge-amber {
-        background: #FEF3C7;
-        color: #D97706;
+        background: rgba(245, 158, 11, 0.15);
+        color: #FBBF24;
     }
     .icon-badge-red {
-        background: #FEE2E2;
-        color: #DC2626;
+        background: rgba(239, 68, 68, 0.15);
+        color: #F87171;
     }
     .icon-badge-blue {
-        background: #EFF6FF;
-        color: #2563EB;
+        background: rgba(59, 130, 246, 0.15);
+        color: #60A5FA;
     }
 
     .template-title {
         font-size: 18px;
         font-weight: 700;
-        color: #0F172A;
+        color: var(--text-primary);
         margin: 0;
         line-height: 1.2;
     }
     .template-category {
         font-size: 12px;
-        color: #64748B;
+        color: var(--text-secondary);
         margin-top: 3px;
         display: block;
     }
 
     .template-description {
         font-size: 13.5px;
-        color: #64748B;
+        color: var(--text-secondary);
         margin-bottom: 16px;
         line-height: 1.5;
         flex: 1;
@@ -126,13 +126,13 @@
 
     .edited-badge-pill {
         display: inline-block;
-        background: #FFFFFF;
-        color: #475569;
+        background: var(--surface-2);
+        color: var(--text-secondary);
         font-size: 11.5px;
         font-weight: 500;
         padding: 3px 10px;
         border-radius: 6px;
-        border: 1px solid #E2E8F0;
+        border: 1px solid var(--border);
         margin-bottom: 20px;
         width: fit-content;
     }
@@ -143,12 +143,12 @@
         align-items: center;
         justify-content: space-between;
         padding-top: 14px;
-        border-top: 1px solid rgba(226, 232, 240, 0.8);
+        border-top: 1px solid var(--border);
     }
     .btn-preview-link {
         font-size: 13px;
         font-weight: 600;
-        color: #475569;
+        color: var(--text-secondary);
         text-decoration: none;
         display: flex;
         align-items: center;
@@ -159,7 +159,7 @@
         cursor: pointer;
     }
     .btn-preview-link:hover {
-        color: #4F46E5;
+        color: var(--primary);
     }
 
     .btn-edit-action {
@@ -170,7 +170,7 @@
         height: 36px !important;
         padding: 0 16px !important;
         border-radius: 8px !important;
-        background: #4F46E5 !important;
+        background: var(--primary) !important;
         color: #FFFFFF !important;
         font-size: 13px !important;
         font-weight: 600 !important;
@@ -180,7 +180,7 @@
         cursor: pointer !important;
     }
     .btn-edit-action:hover {
-        background: #4338CA !important;
+        background: var(--primary-hover) !important;
         color: #FFFFFF !important;
     }
 </style>

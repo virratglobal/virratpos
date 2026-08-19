@@ -20,7 +20,7 @@
         margin: 0 auto;
         padding: 8px 20px 40px 20px;
         font-family: 'Inter', -apple-system, sans-serif;
-        color: #0F172A;
+        color: var(--text-primary);
     }
 
     /* Page Header */
@@ -33,13 +33,13 @@
     .plans-header h1 {
         font-size: 24px;
         font-weight: 700;
-        color: #0F172A;
+        color: var(--text-primary);
         margin: 0;
         letter-spacing: -0.02em;
     }
     .plans-header p {
         font-size: 13.5px;
-        color: #64748B;
+        color: var(--text-secondary);
         margin-top: 4px;
         margin-bottom: 0;
     }
@@ -52,7 +52,7 @@
         height: 42px !important;
         padding: 0 22px !important;
         border-radius: 10px !important;
-        background: #4F46E5 !important;
+        background: var(--primary) !important;
         color: #FFFFFF !important;
         font-size: 14px !important;
         font-weight: 600 !important;
@@ -63,7 +63,7 @@
         cursor: pointer !important;
     }
     .btn-new-plan:hover {
-        background: #4338CA !important;
+        background: var(--primary-hover) !important;
         box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35) !important;
         color: #FFFFFF !important;
     }
@@ -89,7 +89,7 @@
 
     /* Standard Plan Card (Starter / Enterprise) */
     .plan-card-standard {
-        background: #F0F4FE;
+        background: var(--surface);
         border-radius: 18px;
         padding: 28px 24px 24px 24px;
         display: flex;
@@ -98,7 +98,7 @@
         position: relative;
         transition: all 0.2s ease;
         box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
-        border: 1px solid rgba(226, 232, 240, 0.8);
+        border: 1px solid var(--border);
     }
     .plan-card-standard:hover {
         transform: translateY(-3px);
@@ -147,7 +147,7 @@
     .plan-card-title {
         font-size: 22px;
         font-weight: 700;
-        color: #0F172A;
+        color: var(--text-primary);
         margin: 0;
         line-height: 1.2;
     }
@@ -157,7 +157,7 @@
 
     .plan-card-subtitle {
         font-size: 13.5px;
-        color: #64748B;
+        color: var(--text-secondary);
         margin-top: 6px;
         margin-bottom: 0;
         line-height: 1.4;
@@ -167,8 +167,8 @@
     }
 
     .badge-active-tag {
-        background: #E0E7FF;
-        color: #4F46E5;
+        background: rgba(59, 130, 246, 0.15);
+        color: #60A5FA;
         font-size: 10.5px;
         font-weight: 700;
         letter-spacing: 0.05em;
@@ -192,7 +192,7 @@
     .plan-price-amount {
         font-size: 36px;
         font-weight: 800;
-        color: #0F172A;
+        color: var(--text-primary);
         letter-spacing: -0.03em;
         line-height: 1;
     }
@@ -201,7 +201,7 @@
     }
     .plan-price-period {
         font-size: 13.5px;
-        color: #64748B;
+        color: var(--text-secondary);
         font-weight: 500;
     }
     .plan-card-featured .plan-price-period {
@@ -221,7 +221,7 @@
         align-items: center;
         gap: 10px;
         font-size: 13.5px;
-        color: #334155;
+        color: var(--text-secondary);
         font-weight: 500;
     }
     .plan-card-featured .feature-row {
@@ -229,7 +229,7 @@
     }
     .feature-icon-check {
         font-size: 18px;
-        color: #4F46E5;
+        color: var(--primary);
         flex-shrink: 0;
     }
     .plan-card-featured .feature-icon-check {
@@ -238,7 +238,8 @@
 
     /* Subscriber Footer Bar inside Plan Card */
     .subscriber-bar-standard {
-        background: #FFFFFF;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
         border-radius: 14px;
         padding: 14px 18px;
         display: flex;
@@ -260,7 +261,7 @@
     .subscriber-label {
         font-size: 11px;
         font-weight: 600;
-        color: #64748B;
+        color: var(--text-secondary);
         text-transform: uppercase;
         letter-spacing: 0.03em;
         display: block;
@@ -271,7 +272,7 @@
     .subscriber-count {
         font-size: 18px;
         font-weight: 700;
-        color: #0F172A;
+        color: var(--text-primary);
         margin: 2px 0 0 0;
         line-height: 1.1;
     }
@@ -283,8 +284,8 @@
         width: 38px;
         height: 38px;
         border-radius: 50%;
-        background: #E0E7FF;
-        color: #4F46E5;
+        background: rgba(59, 130, 246, 0.15);
+        color: var(--primary);
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -294,7 +295,7 @@
         cursor: pointer;
     }
     .btn-circle-edit:hover {
-        background: #4F46E5;
+        background: var(--primary);
         color: #FFFFFF;
     }
     .subscriber-bar-featured .btn-circle-edit {
@@ -308,8 +309,8 @@
 
     /* Revenue Performance Table Card */
     .revenue-card {
-        background: #FFFFFF;
-        border: 1px solid #E2E8F0;
+        background: var(--surface);
+        border: 1px solid var(--border);
         border-radius: 16px;
         padding: 24px;
         box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
@@ -321,17 +322,17 @@
         justify-content: space-between;
         margin-bottom: 20px;
         padding-bottom: 16px;
-        border-bottom: 1px solid #E2E8F0;
+        border-bottom: 1px solid var(--border);
     }
     .revenue-header h3 {
         font-size: 18px;
         font-weight: 700;
-        color: #0F172A;
+        color: var(--text-primary);
         margin: 0;
     }
     .revenue-header p {
         font-size: 13.5px;
-        color: #64748B;
+        color: var(--text-secondary);
         margin-top: 4px;
         margin-bottom: 0;
     }
@@ -345,31 +346,32 @@
         font-family: 'Inter', sans-serif;
     }
     .revenue-table th {
-        background-color: #F8FAFC;
-        color: #64748B;
+        background-color: var(--input-bg);
+        color: var(--text-muted);
         font-size: 11.5px;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.05em;
         padding: 14px 18px;
         text-align: left;
-        border-bottom: 1px solid #E2E8F0;
+        border-bottom: 1px solid var(--border);
     }
     .revenue-table td {
         padding: 16px 18px;
         font-size: 14px;
-        color: #334155;
-        border-bottom: 1px solid #E2E8F0;
+        color: var(--text-secondary);
+        border-bottom: 1px solid var(--border);
         vertical-align: middle;
     }
     .revenue-table tr:hover td {
-        background-color: #F8FAFC;
+        background-color: var(--surface-2);
     }
     .revenue-table tfoot tr td {
-        background-color: #F8FAFC;
-        border-top: 2px solid #E2E8F0;
+        background-color: var(--surface-2);
+        border-top: 2px solid var(--border);
         border-bottom: none;
         font-weight: 700;
+        color: var(--text-primary);
     }
 
     .growth-up {
