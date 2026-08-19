@@ -902,42 +902,39 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
 
         /* Override legacy link colors to inherit or map to neutral gray/black */
         a {
-            color: #000000;
+            color: var(--text-primary);
             text-decoration: none;
-        }
-        a:hover {
-            color: #222222;
         }
 
         .breadcrumb a,
         .breadcrumb-item a,
         [class*="breadcrumbs"] a {
-            color: #767586 !important;
+            color: var(--text-muted) !important;
         }
         .breadcrumb a:hover,
         .breadcrumb-item a:hover,
         [class*="breadcrumbs"] a:hover {
-            color: #0b1c30 !important;
+            color: var(--text-primary) !important;
         }
 
         /* Sidebar Link Styles */
         .sg-sidebar a,
         .sg-sidebar button {
-            color: #464554 !important;
+            color: var(--text-secondary) !important;
             background-color: transparent !important;
             transition: all 0.2s ease-in-out !important;
-            font-weight: 600 !important;
+            font-weight: 500 !important;
         }
         
         .sg-sidebar a:hover,
         .sg-sidebar button:hover {
-            background-color: #f1f1f1 !important;
-            color: #0b1c30 !important;
+            background-color: var(--surface-2) !important;
+            color: var(--primary) !important;
         }
 
         /* Inactive submenu link colors */
         .sg-sidebar div a {
-            color: #767586 !important;
+            color: var(--text-secondary) !important;
         }
 
         /* Active sidebar link styles */
@@ -1033,18 +1030,19 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
         .card {
             border-radius: 12px !important;
             box-shadow: 0 1px 8px rgba(0,0,0,0.04) !important;
-            border: 1px solid rgba(199,196,215,0.15) !important;
-            background: #ffffff !important;
+            border: 1px solid var(--border) !important;
+            background: var(--surface) !important;
+            color: var(--text-primary) !important;
             margin-bottom: 24px !important;
         }
         .card-header {
             background-color: transparent !important;
-            border-bottom: 1px solid rgba(199,196,215,0.2) !important;
+            border-bottom: 1px solid var(--border) !important;
             padding: 20px 24px !important;
-            font-family: 'Geist', sans-serif !important;
+            font-family: 'Inter', sans-serif !important;
             font-size: 16px !important;
             font-weight: 600 !important;
-            color: #0b1c30 !important;
+            color: var(--text-primary) !important;
             letter-spacing: -0.02em !important;
         }
         .card-body {
@@ -1058,13 +1056,13 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
         .dataTable-input,
         .dataTable-selector {
             border-radius: 8px !important;
-            border: 1px solid #c7c4d7 !important;
+            border: 1px solid var(--border) !important;
             padding: 8px 12px !important;
             box-shadow: none !important;
             font-size: 14px !important;
             font-family: 'Inter', sans-serif !important;
-            color: #0b1c30 !important;
-            background-color: #f8f9ff !important;
+            color: var(--text-primary) !important;
+            background-color: var(--input-bg) !important;
             transition: box-shadow 0.2s, border-color 0.2s !important;
         }
         .form-control:focus,
@@ -1491,6 +1489,22 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
     @stack('style')
 </head>
 <body class="{{ $themeColor }} {{ (isset($settings['cust_darklayout']) && $settings['cust_darklayout'] == 'on') ? 'dark' : '' }} text-on-surface antialiased" x-data="{ sidebarOpen: window.innerWidth >= 1024 }" :class="{ 'sidebar-closed': !sidebarOpen }" @resize.window="if(window.innerWidth >= 1024 && !sidebarOpen && !document.body.classList.contains('sidebar-closed-manual')) { sidebarOpen = true }">
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem('virratpos_theme');
+            var serverTheme = "{{ isset($settings['cust_darklayout']) ? $settings['cust_darklayout'] : 'off' }}";
+            var isDark = savedTheme === 'dark' || (savedTheme !== 'light' && serverTheme === 'on');
+            if (isDark) {
+                document.body.classList.add('dark');
+                document.documentElement.classList.add('dark');
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                document.documentElement.classList.remove('dark');
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
 
     <!-- [ Pre-loader ] start -->
     <div class="loader-bg">

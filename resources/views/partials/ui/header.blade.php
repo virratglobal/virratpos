@@ -87,38 +87,36 @@
         @if (Auth::user()->type !== 'super admin' && $current_store)
             <div x-data="{ open: false }" class="relative">
                 <button @click="open = !open" @click.away="open = false" type="button"
-                    style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; background: #e5eeff; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; color: #0F172A; border: 1px solid #E2E8F0; cursor: pointer; transition: background 0.2s;"
-                    onmouseover="this.style.background='#dce9ff';" onmouseout="this.style.background='#e5eeff';">
-                    <span class="material-symbols-outlined" style="font-size: 18px; color: #4648d4;">storefront</span>
+                    style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--surface-2); border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; color: var(--text-primary); border: 1px solid var(--border); cursor: pointer; transition: background 0.2s;">
+                    <span class="material-symbols-outlined" style="font-size: 18px; color: var(--primary);">storefront</span>
                     <span class="hidden sm:block">{{ ucfirst($current_store->name) }}</span>
-                    <span class="material-symbols-outlined" style="font-size: 16px; color: #64748B;">expand_more</span>
+                    <span class="material-symbols-outlined" style="font-size: 16px; color: var(--text-muted);">expand_more</span>
                 </button>
                 <div x-show="open" style="display: none;"
-                    class="absolute right-0 z-50 mt-2 w-56 origin-top-right"
-                    style="background: #ffffff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.1); border: 1px solid #E2E8F0;">
+                    class="absolute right-0 z-50 mt-2 w-56 origin-top-right hdr-dropdown"
+                    style="border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.2);">
                     <div style="padding: 6px;">
                         @php $userStores = \Auth::user()->currentuser()->stores; @endphp
                         @foreach ($userStores as $store)
                             @if ($store->is_store_enabled == 1)
                                 <a href="{{ Auth::user()->current_store == $store->id ? '#' : route('change_store', $store->id) }}"
-                                    style="display: flex; align-items: center; padding: 8px 12px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; transition: background 0.2s; {{ Auth::user()->current_store == $store->id ? 'background: #e5eeff; color: #4648d4;' : 'color: #475569;' }}"
-                                    onmouseover="if(!this.style.background.includes('#e5eeff')) { this.style.background='#F8FAFC'; }"
-                                    onmouseout="if(!this.style.background.includes('#e5eeff')) { this.style.background=''; }">
+                                    class="hdr-dropdown-item"
+                                    style="{{ Auth::user()->current_store == $store->id ? 'background: rgba(59,130,246,0.12); color: var(--primary); font-weight: 600;' : '' }}">
                                     @if (Auth::user()->current_store == $store->id)
-                                        <span class="material-symbols-outlined" style="font-size: 16px; margin-right: 8px; color: {{ $primaryColor }};" >check</span>
+                                        <span class="material-symbols-outlined" style="font-size: 16px; margin-right: 8px; color: var(--primary);" >check</span>
                                     @else
                                         <span style="width: 16px; margin-right: 8px;"></span>
                                     @endif
                                     {{ $store->name }}
                                 </a>
                             @else
-                                <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; font-family: Inter, sans-serif; font-size: 13px; color: #94A3B8; cursor: not-allowed;">
+                                <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; font-family: Inter, sans-serif; font-size: 13px; color: var(--text-muted); cursor: not-allowed;">
                                     <div style="display: flex; align-items: center; gap: 8px;">
                                         <span class="material-symbols-outlined" style="font-size: 16px;">lock</span>
                                         {{ $store->name }}
                                     </div>
                                     @if (isset($store->pivot->permission))
-                                        <span style="background: #e5eeff; color: {{ $primaryColor }}; padding: 2px 8px; border-radius: 999px; font-size: 11px;">{{ $store->pivot->permission == 'Owner' ? __($store->pivot->permission) : __('Shared') }}</span>
+                                        <span style="background: rgba(59,130,246,0.12); color: var(--primary); padding: 2px 8px; border-radius: 999px; font-size: 11px;">{{ $store->pivot->permission == 'Owner' ? __($store->pivot->permission) : __('Shared') }}</span>
                                     @endif
                                 </div>
                             @endif
@@ -161,22 +159,22 @@
             <div x-show="open" style="display: none; position: absolute; right: 0; z-index: 50; margin-top: 8px; width: 224px; border-radius: 12px; padding: 6px;" class="hdr-dropdown">
                 @foreach ($languages as $code => $lang)
                     <a href="{{ route('change.language', $code) }}" class="hdr-dropdown-item">
-                        <span class="material-symbols-outlined" style="font-size: 16px; color: {{ $currantLang == $code ? '#2563EB' : 'inherit' }};">
+                        <span class="material-symbols-outlined" style="font-size: 16px; color: {{ $currantLang == $code ? 'var(--primary)' : 'inherit' }};">
                             {{ $currantLang == $code ? 'check' : 'translate' }}
                         </span>
                         {{ ucFirst($lang) }}
                     </a>
                 @endforeach
                 @if (Auth::user()->type == 'super admin')
-                    <div style="height: 1px; background: #E2E8F0; margin: 4px 0;"></div>
+                    <div style="height: 1px; background: var(--border); margin: 4px 0;"></div>
                     @can('Create Language')
-                        <a href="#" data-url="{{ route('create.language') }}" data-size="md" data-ajax-popup="true" data-title="{{ __('Create New Language') }}" class="cust-btn hdr-dropdown-item" style="color: #2563EB !important;">
+                        <a href="#" data-url="{{ route('create.language') }}" data-size="md" data-ajax-popup="true" data-title="{{ __('Create New Language') }}" class="cust-btn hdr-dropdown-item" style="color: var(--primary) !important;">
                             <span class="material-symbols-outlined" style="font-size: 16px;">add</span>
                             {{ __('Create Language') }}
                         </a>
                     @endcan
                     @can('Manage Language')
-                        <a href="{{ route('manage.language', [$currantLang]) }}" class="hdr-dropdown-item" style="color: #2563EB !important;">
+                        <a href="{{ route('manage.language', [$currantLang]) }}" class="hdr-dropdown-item" style="color: var(--primary) !important;">
                             <span class="material-symbols-outlined" style="font-size: 16px;">settings_applications</span>
                             {{ __('Manage Languages') }}
                         </a>
@@ -191,9 +189,9 @@
                 <span class="material-symbols-outlined">notifications</span>
             </button>
             <div x-show="open" style="display: none; position: absolute; right: 0; z-index: 50; margin-top: 8px; width: 320px; border-radius: 12px; overflow: hidden;" class="hdr-dropdown">
-                <div class="hdr-dropdown-header" style="padding: 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #E2E8F0;">
-                    <h4 style="margin: 0; font-size: 15px; font-weight: 700; color: #0F172A;">{{ __('Notifications') }}</h4>
-                    <span style="font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 9999px; background: rgba(59,130,246,0.12); color: #2563EB;">{{ __('System Active') }}</span>
+                <div class="hdr-dropdown-header" style="padding: 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border);">
+                    <h4 style="margin: 0; font-size: 15px; font-weight: 700; color: var(--text-primary);">{{ __('Notifications') }}</h4>
+                    <span style="font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 9999px; background: rgba(59,130,246,0.12); color: var(--primary);">{{ __('System Active') }}</span>
                 </div>
                 <div style="padding: 24px 16px; text-align: center;">
                     <div style="width: 44px; height: 44px; border-radius: 50%; background: rgba(59,130,246,0.12); color: #2563EB; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
