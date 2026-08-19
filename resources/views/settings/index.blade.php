@@ -418,15 +418,23 @@
             border: none !important;
         }
 
-        /* Upload Grid */
+        /* Upload Grid Layout (3 Equal Columns) */
         .upload-grid-container {
             display: grid !important;
             grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-            gap: 16px !important;
+            gap: 20px !important;
             margin-bottom: 24px !important;
             width: 100% !important;
+            box-sizing: border-box !important;
         }
+
         @media (max-width: 991px) {
+            .upload-grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            }
+        }
+
+        @media (max-width: 575px) {
             .upload-grid-container {
                 grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
             }
@@ -439,12 +447,39 @@
             padding: 18px !important;
             display: flex !important;
             flex-direction: column !important;
+            justify-content: space-between !important;
             width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+            height: 100% !important;
+        }
+
+        .upload-card-header {
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            margin-bottom: 14px !important;
+        }
+
+        .upload-card-indicator {
+            width: 4px !important;
+            height: 18px !important;
+            background: #4F46E5 !important;
+            border-radius: 2px !important;
+            flex-shrink: 0 !important;
+        }
+
+        .upload-card-title {
+            font-size: 15px !important;
+            font-weight: 700 !important;
+            color: var(--text-primary) !important;
+            margin: 0 !important;
+            line-height: 1.2 !important;
         }
 
         .upload-preview-box {
             width: 100% !important;
-            min-height: 140px !important;
+            height: 140px !important;
             background: var(--surface-2) !important;
             border: 1px solid var(--border) !important;
             border-radius: 12px !important;
@@ -452,14 +487,23 @@
             flex-direction: column !important;
             align-items: center !important;
             justify-content: center !important;
-            padding: 16px !important;
+            padding: 12px !important;
             margin-bottom: 16px !important;
-            position: relative !important;
+            box-sizing: border-box !important;
             overflow: hidden !important;
+            position: relative !important;
         }
-        .upload-preview-box img {
-            max-height: 75px !important;
-            max-width: 85% !important;
+
+        .upload-preview-box img,
+        .upload-preview-box img.logo-preview-img {
+            max-height: 80% !important;
+            max-width: 80% !important;
+            object-fit: contain !important;
+        }
+
+        .upload-preview-box img.favicon-preview-img {
+            width: 44px !important;
+            height: 44px !important;
             object-fit: contain !important;
         }
 
@@ -470,7 +514,7 @@
             gap: 6px !important;
             width: 100% !important;
             height: 40px !important;
-            padding: 0 16px !important;
+            padding: 0 14px !important;
             background-color: #4F46E5 !important;
             color: #FFFFFF !important;
             font-size: 13px !important;
@@ -479,11 +523,39 @@
             border: none !important;
             cursor: pointer !important;
             white-space: nowrap !important;
+            box-sizing: border-box !important;
             transition: background-color 0.15s ease !important;
+            margin-top: auto !important;
         }
         .btn-upload-blue:hover {
             background-color: #4338CA !important;
             color: #FFFFFF !important;
+        }
+
+        /* Branding Form Inputs Grid */
+        .branding-inputs-grid-2 {
+            display: grid !important;
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            gap: 20px !important;
+            margin-bottom: 20px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .branding-inputs-grid-3 {
+            display: grid !important;
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            gap: 20px !important;
+            margin-bottom: 20px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        @media (max-width: 767px) {
+            .branding-inputs-grid-2,
+            .branding-inputs-grid-3 {
+                grid-template-columns: 1fr !important;
+            }
         }
 
         /* Inputs & Form Controls */
@@ -814,27 +886,27 @@
                                         <!-- Three-Column Logo Upload Grid -->
                                         <div class="upload-grid-container">
                                             <!-- Dark Logo Card -->
-                                            <div class="upload-asset-card" style="background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px;">
-                                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px;">
-                                                    <div style="width: 4px; height: 18px; background: #4F46E5; border-radius: 2px;"></div>
-                                                    <h6 style="font-size: 15px; font-weight: 700; color: var(--text-primary); margin: 0;">{{ __('Logo dark') }}</h6>
+                                            <div class="upload-asset-card">
+                                                <div class="upload-card-header">
+                                                    <div class="upload-card-indicator"></div>
+                                                    <h6 class="upload-card-title">{{ __('Logo dark') }}</h6>
                                                 </div>
-                                                <div class="upload-preview-box" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; min-height: 150px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 16px;">
+                                                <div class="upload-preview-box">
                                                     @php
                                                         $darkPath = $logo . '/' . (isset($logo_img) && !empty($logo_img) ? $logo_img : 'logo-dark.png');
                                                         $defaultDark = asset('uploads/logo/logo-dark.png');
                                                     @endphp
-                                                    <img id="logoDark" alt="Dark Logo" src="{{ $darkPath . '?timestamp=' . time() }}" style="max-height: 75px; max-width: 85%; object-fit: contain;"
+                                                    <img id="logoDark" alt="Dark Logo" class="logo-preview-img" src="{{ $darkPath . '?timestamp=' . time() }}"
                                                         onerror="if(!this.dataset.tried){ this.dataset.tried='1'; this.src='{{ $defaultDark }}'; } else { this.style.display='none'; this.nextElementSibling.style.display='flex'; }">
                                                     <div class="upload-empty-state" style="display: none; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
                                                         <span class="material-symbols-outlined" style="font-size: 28px; color: #94A3B8;">image</span>
                                                         <span style="font-size: 13px; font-weight: 500; color: var(--text-secondary);">{{ __('No image uploaded') }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="text-center w-100">
-                                                    <label for="logo_dark" class="btn-upload-blue mb-0" style="background: #4F46E5 !important; color: #FFFFFF !important; border-radius: 8px !important; padding: 8px 18px !important; font-size: 13px !important; font-weight: 600 !important; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
-                                                        <span class="material-symbols-outlined text-[16px]">upload</span>
-                                                        <span>{{ __('Choose file here') }}</span>
+                                                <div class="w-100">
+                                                    <label for="logo_dark" class="btn-upload-blue mb-0">
+                                                        <span class="material-symbols-outlined text-[18px]">upload</span>
+                                                        <span>{{ __('Upload Image') }}</span>
                                                         <input type="file" name="logo_dark" id="logo_dark" class="form-control file d-none" data-filename="logo_dark" onchange="var img = document.getElementById('logoDark'); img.src = window.URL.createObjectURL(this.files[0]); img.style.display='block'; if(img.nextElementSibling) img.nextElementSibling.style.display='none';">
                                                     </label>
                                                 </div>
@@ -844,27 +916,27 @@
                                             </div>
 
                                             <!-- Light Logo Card -->
-                                            <div class="upload-asset-card" style="background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px;">
-                                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px;">
-                                                    <div style="width: 4px; height: 18px; background: #4F46E5; border-radius: 2px;"></div>
-                                                    <h6 style="font-size: 15px; font-weight: 700; color: var(--text-primary); margin: 0;">{{ __('Logo Light') }}</h6>
+                                            <div class="upload-asset-card">
+                                                <div class="upload-card-header">
+                                                    <div class="upload-card-indicator"></div>
+                                                    <h6 class="upload-card-title">{{ __('Logo Light') }}</h6>
                                                 </div>
-                                                <div class="upload-preview-box" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; min-height: 150px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 16px;">
+                                                <div class="upload-preview-box">
                                                     @php
                                                         $lightPath = $logo . '/' . 'logo-light.png';
                                                         $defaultLight = asset('uploads/logo/logo-light.png');
                                                     @endphp
-                                                    <img id="adminLogoLight" alt="Light Logo" src="{{ $lightPath . '?timestamp=' . time() }}" style="max-height: 75px; max-width: 85%; object-fit: contain;"
+                                                    <img id="adminLogoLight" alt="Light Logo" class="logo-preview-img" src="{{ $lightPath . '?timestamp=' . time() }}"
                                                         onerror="if(!this.dataset.tried){ this.dataset.tried='1'; this.src='{{ $defaultLight }}'; } else { this.style.display='none'; this.nextElementSibling.style.display='flex'; }">
                                                     <div class="upload-empty-state" style="display: none; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
                                                         <span class="material-symbols-outlined" style="font-size: 28px; color: #94A3B8;">image</span>
                                                         <span style="font-size: 13px; font-weight: 500; color: var(--text-secondary);">{{ __('No image uploaded') }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="text-center w-100">
-                                                    <label for="logo_light" class="btn-upload-blue mb-0" style="background: #4F46E5 !important; color: #FFFFFF !important; border-radius: 8px !important; padding: 8px 18px !important; font-size: 13px !important; font-weight: 600 !important; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
-                                                        <span class="material-symbols-outlined text-[16px]">upload</span>
-                                                        <span>{{ __('Choose file here') }}</span>
+                                                <div class="w-100">
+                                                    <label for="logo_light" class="btn-upload-blue mb-0">
+                                                        <span class="material-symbols-outlined text-[18px]">upload</span>
+                                                        <span>{{ __('Upload Image') }}</span>
                                                         <input type="file" name="logo_light" id="logo_light" class="form-control file d-none" data-filename="logo_light" onchange="var img = document.getElementById('adminLogoLight'); img.src = window.URL.createObjectURL(this.files[0]); img.style.display='block'; if(img.nextElementSibling) img.nextElementSibling.style.display='none';">
                                                     </label>
                                                 </div>
@@ -874,27 +946,27 @@
                                             </div>
 
                                             <!-- Favicon Card -->
-                                            <div class="upload-asset-card" style="background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px;">
-                                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px;">
-                                                    <div style="width: 4px; height: 18px; background: #4F46E5; border-radius: 2px;"></div>
-                                                    <h6 style="font-size: 15px; font-weight: 700; color: var(--text-primary); margin: 0;">{{ __('Favicon') }}</h6>
+                                            <div class="upload-asset-card">
+                                                <div class="upload-card-header">
+                                                    <div class="upload-card-indicator"></div>
+                                                    <h6 class="upload-card-title">{{ __('Favicon') }}</h6>
                                                 </div>
-                                                <div class="upload-preview-box" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; min-height: 150px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 16px;">
+                                                <div class="upload-preview-box">
                                                     @php
                                                         $favPath = $logo . '/' . 'favicon.png';
                                                         $defaultFav = asset('uploads/logo/favicon.png');
                                                     @endphp
-                                                    <img id="adminfavicon" alt="Favicon" src="{{ $favPath . '?timestamp=' . time() }}" style="width: 44px; height: 44px; object-fit: contain;"
+                                                    <img id="adminfavicon" alt="Favicon" class="favicon-preview-img" src="{{ $favPath . '?timestamp=' . time() }}"
                                                         onerror="if(!this.dataset.tried){ this.dataset.tried='1'; this.src='{{ $defaultFav }}'; } else { this.style.display='none'; this.nextElementSibling.style.display='flex'; }">
                                                     <div class="upload-empty-state" style="display: none; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
                                                         <span class="material-symbols-outlined" style="font-size: 28px; color: #94A3B8;">image</span>
                                                         <span style="font-size: 13px; font-weight: 500; color: var(--text-secondary);">{{ __('No image uploaded') }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="text-center w-100">
-                                                    <label for="favicon" class="btn-upload-blue mb-0" style="background: #4F46E5 !important; color: #FFFFFF !important; border-radius: 8px !important; padding: 8px 18px !important; font-size: 13px !important; font-weight: 600 !important; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
-                                                        <span class="material-symbols-outlined text-[16px]">upload</span>
-                                                        <span>{{ __('Choose file here') }}</span>
+                                                <div class="w-100">
+                                                    <label for="favicon" class="btn-upload-blue mb-0">
+                                                        <span class="material-symbols-outlined text-[18px]">upload</span>
+                                                        <span>{{ __('Upload Image') }}</span>
                                                         <input type="file" name="favicon" id="favicon" class="form-control file d-none" data-filename="favicon_update" onchange="var img = document.getElementById('adminfavicon'); img.src = window.URL.createObjectURL(this.files[0]); img.style.display='block'; if(img.nextElementSibling) img.nextElementSibling.style.display='none';">
                                                     </label>
                                                 </div>
@@ -904,25 +976,28 @@
                                             </div>
                                         </div>
 
-                                        <!-- Branding Form Inputs -->
-                                        <div class="row g-4 mb-4">
-                                            <div class="col-md-6">
+                                        <!-- Branding Form Inputs: Title Text & Footer Text (2 Equal Columns) -->
+                                        <div class="branding-inputs-grid-2">
+                                            <div>
                                                 {{ Form::label('title_text', __('Title Text'), ['class' => 'form-label']) }}
                                                 {{ Form::text('title_text', null, ['class' => 'form-control', 'placeholder' => __('Enter application title')]) }}
                                                 @error('title_text')
-                                                    <span class="invalid-title_text text-danger text-xs mt-1">{{ $message }}</span>
+                                                    <span class="invalid-title_text text-danger text-xs mt-1 d-block">{{ $message }}</span>
                                                 @enderror
                                             </div>
 
-                                            <div class="col-md-6">
+                                            <div>
                                                 {{ Form::label('footer_text', __('Footer Text'), ['class' => 'form-label']) }}
                                                 {{ Form::text('footer_text', null, ['class' => 'form-control', 'placeholder' => __('Enter footer text')]) }}
                                                 @error('footer_text')
-                                                    <span class="invalid-footer_text text-danger text-xs mt-1">{{ $message }}</span>
+                                                    <span class="invalid-footer_text text-danger text-xs mt-1 d-block">{{ $message }}</span>
                                                 @enderror
                                             </div>
+                                        </div>
 
-                                            <div class="col-md-4">
+                                        <!-- Currency & Language Section (3 Equal Columns) -->
+                                        <div class="branding-inputs-grid-3">
+                                            <div>
                                                 {{ Form::label('default_language', __('Default Language'), ['class' => 'form-label']) }}
                                                 <select name="default_language" id="default_language" class="form-control">
                                                     @foreach ($languages as $code => $language)
@@ -933,21 +1008,21 @@
                                                 </select>
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div>
                                                 {{ Form::label('currency_symbol', __('Currency Symbol*'), ['class' => 'form-label']) }}
                                                 {{ Form::text('currency_symbol', $settings['currency_symbol'], ['class' => 'form-control', 'placeholder' => __('Enter currency symbol')]) }}
-                                                <small class="text-xs text-muted">{{ __('Note: Assigned when creating new stores.') }}</small>
+                                                <small class="text-xs text-muted d-block mt-1">{{ __('Note: Assigned when creating new stores.') }}</small>
                                                 @error('currency_symbol')
-                                                    <span class="invalid-currency_symbol text-danger text-xs mt-1">{{ $message }}</span>
+                                                    <span class="invalid-currency_symbol text-danger text-xs mt-1 d-block">{{ $message }}</span>
                                                 @enderror
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div>
                                                 {{ Form::label('currency', __('Currency*'), ['class' => 'form-label']) }}
                                                 {{ Form::text('currency', $settings['currency'], ['class' => 'form-control', 'placeholder' => __('Enter currency')]) }}
-                                                <small class="text-xs text-muted">{{ __('Note: Assigned when creating new stores.') }}</small>
+                                                <small class="text-xs text-muted d-block mt-1">{{ __('Note: Assigned when creating new stores.') }}</small>
                                                 @error('currency')
-                                                    <span class="invalid-currency text-danger text-xs mt-1">{{ $message }}</span>
+                                                    <span class="invalid-currency text-danger text-xs mt-1 d-block">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                         </div>
@@ -3909,158 +3984,100 @@
                                             <h5>{{ __('Brand Settings') }}</h5>
                                         </div>
                                         <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-lg-4 col-sm-6 col-md-6">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h5>{{ __('Logo dark') }}</h5>
-                                                        </div>
-
-                                                        <div class="card-body pt-0">
-                                                            <div class="setting-card">
-                                                                <div class="mt-4">  {{-- logo-content --}}
-                                                                    {{-- <img src="{{ $logo . '/' . (isset($logo_dark) && !empty($logo_dark) ? $logo_dark : ' logo-dark.png') }}"
-                                                                        class="img-setting" width="170px"> --}}
-
-                                                                    <a href="{{ route('dashboard') }}" class="b-brand">
-                                                                        <img src="{{ $logo . '/' . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png') . '?timestamp='. time() }}"
-                                                                            alt="{{ config('app.name', 'SaaS') }}"
-                                                                            id="adminlogoDark"
-                                                                            class="logo logo-lg nav-sidebar-logo fix-logo">
-                                                                    </a>
-                                                                </div>
-                                                                <div class="choose-files mt-5">
-                                                                    <label for="company_logo">
-                                                                        <div class=" bg-primary company_logo_update">
-                                                                            <i
-                                                                                class="ti ti-upload "></i>{{ __('Choose file here') }}
-                                                                            <input type="file" id="company_logo"
-                                                                                data-filename="company_logo_update"
-                                                                                name="logo_dark" class="form-control file"
-                                                                                onchange=" document.getElementById('adminlogoDark').src = window.URL.createObjectURL(this.files[0])">
-                                                                        </div>
-                                                                        {{-- <input type="file" name="logo_dark"
-                                                                        id="company_logo" class="form-control file "
-                                                                        data-filename="company_logo_update"> --}}
-                                                                    </label>
-
-                                                                </div>
-                                                                @error('company_logo')
-                                                                    <div class="row">
-                                                                        <span class="invalid-logo" role="alert">
-                                                                            <strong
-                                                                                class="text-danger">{{ $message }}</strong>
-                                                                        </span>
-                                                                    </div>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
+                                            <!-- Three-Column Logo Upload Grid -->
+                                            <div class="upload-grid-container">
+                                                <!-- Dark Logo Card -->
+                                                <div class="upload-asset-card">
+                                                    <div class="upload-card-header">
+                                                        <div class="upload-card-indicator"></div>
+                                                        <h6 class="upload-card-title">{{ __('Logo dark') }}</h6>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-4 col-sm-6 col-md-6">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h5>{{ __('Logo Light') }}</h5>
-                                                        </div>
-                                                        <div class="card-body pt-0">
-                                                            <div class=" setting-card">
-                                                                <div class="mt-4">  {{-- logo-content --}}
-                                                                    <a href="{{ $logo . '/' . (isset($logo_light) && !empty($logo_light) ? $logo_light : 'logo-light.png') }}"
-                                                                        target="_blank">
-                                                                        <img src="{{ $logo . '/' . (isset($logo_light) && !empty($logo_light) ? $logo_light : 'logo-light.png') . '?timestamp='. time() }}"
-                                                                            class=" img_setting fix-logo" width="170px"
-                                                                            id="logo-light">
-                                                                    </a>
-
-                                                                    {{--  <a href="{{ $logo . 'logo-light.png' }}" target="_blank">
-                                                                        <img id="logo-light" alt="your image"
-                                                                            src="{{ $logo . 'logo-light.png' }}" width="170px"
-                                                                            class="img_setting">
-                                                                    </a>  --}}
-                                                                </div>
-                                                                <div class="choose-files mt-5">
-                                                                    <label for="company_logo_light">
-                                                                        <div class=" bg-primary dark_logo_update"> <i
-                                                                                class="ti ti-upload px-1"></i>{{ __('Choose file here') }}
-                                                                        </div>
-                                                                        <input type="file" class="form-control file"
-                                                                            name="logo_light" id="company_logo_light"
-                                                                            data-filename="dark_logo_update"
-                                                                            onchange=" document.getElementById('logo-light').src = window.URL.createObjectURL(this.files[0])">
-                                                                    </label>
-                                                                </div>
-                                                                @error('company_logo_light')
-                                                                    <div class="row">
-                                                                        <span class="invalid-logo" role="alert">
-                                                                            <strong
-                                                                                class="text-danger">{{ $message }}</strong>
-                                                                        </span>
-                                                                    </div>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
+                                                    <div class="upload-preview-box">
+                                                        <a href="{{ route('dashboard') }}" class="b-brand">
+                                                            <img src="{{ $logo . '/' . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png') . '?timestamp='. time() }}"
+                                                                alt="{{ config('app.name', 'SaaS') }}"
+                                                                id="adminlogoDark"
+                                                                class="logo-preview-img">
+                                                        </a>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-4 col-sm-6 col-md-6">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h5>{{ __('Favicon') }}</h5>
-                                                        </div>
-                                                        <div class="card-body pt-0">
-                                                            <div class=" setting-card">
-                                                                <div class="logo-content mt-3">
-                                                                    <a href="{{ $logo . '/' . (isset($company_favicon) && !empty($company_favicon) ? $company_favicon : 'favicon.png') }}"
-                                                                        target="_blank">
-                                                                        <img src="{{ $logo . '/' . (isset($company_favicon) && !empty($company_favicon) ? $company_favicon : 'favicon.png') . '?timestamp='. time() }}"
-                                                                            width="50px" height="50px"
-                                                                            class=" img_setting favicon" id="faviCon">
-                                                                    </a>
-                                                                    {{--  <a href="{{$logo.(isset($logo) && !empty($logo)? $logo :'favicon.png')}}" target="_blank">
-                                                                        <img alt="your image" src="{{$logo.'favicon.png'}}"   width="50px" height="50px" class=" img_setting favicon" id="faviCon">
-                                                                    </a>  --}}
-                                                                </div>
-                                                                <div class="choose-files mt-5">
-                                                                    <label for="company_favicon">
-                                                                        <div class=" bg-primary company_favicon_update"> <i
-                                                                                class="ti ti-upload px-1"></i>{{ __('Choose file here') }}
-                                                                        </div>
-                                                                        <input type="file" class="form-control file"
-                                                                            id="company_favicon" name="favicon"
-                                                                            data-filename="company_favicon_update"
-                                                                            onchange=" document.getElementById('faviCon').src = window.URL.createObjectURL(this.files[0])">
-                                                                    </label>
-                                                                </div>
-                                                                @error('logo')
-                                                                    <div class="row">
-                                                                        <span class="invalid-logo" role="alert">
-                                                                            <strong
-                                                                                class="text-danger">{{ $message }}</strong>
-                                                                        </span>
-                                                                    </div>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
+                                                    <div class="w-100">
+                                                        <label for="company_logo" class="btn-upload-blue mb-0">
+                                                            <span class="material-symbols-outlined text-[18px]">upload</span>
+                                                            <span>{{ __('Upload Image') }}</span>
+                                                            <input type="file" id="company_logo" data-filename="company_logo_update" name="logo_dark" class="form-control file d-none" onchange="document.getElementById('adminlogoDark').src = window.URL.createObjectURL(this.files[0])">
+                                                        </label>
                                                     </div>
+                                                    @error('company_logo')
+                                                        <span class="invalid-logo text-danger text-xs mt-2 d-block text-center">{{ $message }}</span>
+                                                    @enderror
                                                 </div>
 
-                                                <div class="form-group col-md-6">
+                                                <!-- Light Logo Card -->
+                                                <div class="upload-asset-card">
+                                                    <div class="upload-card-header">
+                                                        <div class="upload-card-indicator"></div>
+                                                        <h6 class="upload-card-title">{{ __('Logo Light') }}</h6>
+                                                    </div>
+                                                    <div class="upload-preview-box">
+                                                        <a href="{{ $logo . '/' . (isset($logo_light) && !empty($logo_light) ? $logo_light : 'logo-light.png') }}" target="_blank">
+                                                            <img src="{{ $logo . '/' . (isset($logo_light) && !empty($logo_light) ? $logo_light : 'logo-light.png') . '?timestamp='. time() }}"
+                                                                class="logo-preview-img" id="logo-light">
+                                                        </a>
+                                                    </div>
+                                                    <div class="w-100">
+                                                        <label for="company_logo_light" class="btn-upload-blue mb-0">
+                                                            <span class="material-symbols-outlined text-[18px]">upload</span>
+                                                            <span>{{ __('Upload Image') }}</span>
+                                                            <input type="file" class="form-control file d-none" name="logo_light" id="company_logo_light" data-filename="dark_logo_update" onchange="document.getElementById('logo-light').src = window.URL.createObjectURL(this.files[0])">
+                                                        </label>
+                                                    </div>
+                                                    @error('company_logo_light')
+                                                        <span class="invalid-logo text-danger text-xs mt-2 d-block text-center">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+
+                                                <!-- Favicon Card -->
+                                                <div class="upload-asset-card">
+                                                    <div class="upload-card-header">
+                                                        <div class="upload-card-indicator"></div>
+                                                        <h6 class="upload-card-title">{{ __('Favicon') }}</h6>
+                                                    </div>
+                                                    <div class="upload-preview-box">
+                                                        <a href="{{ $logo . '/' . (isset($company_favicon) && !empty($company_favicon) ? $company_favicon : 'favicon.png') }}" target="_blank">
+                                                            <img src="{{ $logo . '/' . (isset($company_favicon) && !empty($company_favicon) ? $company_favicon : 'favicon.png') . '?timestamp='. time() }}"
+                                                                class="favicon-preview-img" id="faviCon">
+                                                        </a>
+                                                    </div>
+                                                    <div class="w-100">
+                                                        <label for="company_favicon" class="btn-upload-blue mb-0">
+                                                            <span class="material-symbols-outlined text-[18px]">upload</span>
+                                                            <span>{{ __('Upload Image') }}</span>
+                                                            <input type="file" class="form-control file d-none" id="company_favicon" name="favicon" data-filename="company_favicon_update" onchange="document.getElementById('faviCon').src = window.URL.createObjectURL(this.files[0])">
+                                                        </label>
+                                                    </div>
+                                                    @error('logo')
+                                                        <span class="invalid-logo text-danger text-xs mt-2 d-block text-center">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            <!-- Title Text & Footer Text Grid (2 Equal Columns) -->
+                                            <div class="branding-inputs-grid-2">
+                                                <div>
                                                     {{ Form::label('title_text', __('Title Text'), ['class' => 'form-label']) }}
                                                     {{ Form::text('title_text', null, ['class' => 'form-control', 'placeholder' => __('Title Text')]) }}
                                                     @error('title_text')
-                                                        <span class="invalid-title_text" role="alert">
-                                                            <strong class="text-danger">{{ $message }}</strong>
-                                                        </span>
+                                                        <span class="invalid-title_text text-danger text-xs mt-1 d-block">{{ $message }}</span>
                                                     @enderror
                                                 </div>
-                                                <div class="form-group col-md-6">
+                                                <div>
                                                     {{ Form::label('footer_text', __('Footer Text'), ['class' => 'form-label']) }}
                                                     {{ Form::text('footer_text', null, ['class' => 'form-control', 'placeholder' => __('Footer Text')]) }}
                                                     @error('footer_text')
-                                                        <span class="invalid-footer_text" role="alert">
-                                                            <strong class="text-danger">{{ $message }}</strong>
-                                                        </span>
+                                                        <span class="invalid-footer_text text-danger text-xs mt-1 d-block">{{ $message }}</span>
                                                     @enderror
                                                 </div>
+                                            </div>
                                                 <div class="form-group col-md-6">
                                                     <label for="site_date_format"
                                                         class="form-label">{{ __('Date Format') }}</label>
