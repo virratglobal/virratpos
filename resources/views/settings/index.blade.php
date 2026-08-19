@@ -286,14 +286,14 @@
             border-radius: 2px 2px 0 0;
         }
 
-        /* Sidebar Navigation Card */
+        /* Sidebar Navigation Card - Matching User Mockup */
         .settings-sidebar .setting-nav-wrp {
-            background: #FFFFFF !important;
-            border: 1px solid #E2E8F0 !important;
-            border-radius: 14px !important;
-            padding: 16px !important;
-            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
-            gap: 6px !important;
+            background: var(--surface) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 16px !important;
+            padding: 14px !important;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03) !important;
+            gap: 4px !important;
             display: flex !important;
             flex-direction: column !important;
         }
@@ -301,27 +301,30 @@
             display: flex !important;
             align-items: center !important;
             gap: 12px !important;
-            height: 42px !important;
-            padding: 0 14px !important;
-            border-radius: 8px !important;
+            height: 44px !important;
+            padding: 0 16px !important;
+            border-radius: 10px !important;
             font-size: 13.5px !important;
             font-weight: 500 !important;
-            color: #64748B !important;
+            color: var(--text-secondary) !important;
             background: transparent !important;
             border: none !important;
             transition: all 0.15s ease-in-out !important;
             position: relative !important;
             width: 100% !important;
             text-align: left !important;
+            cursor: pointer !important;
+            text-decoration: none !important;
         }
         .settings-sidebar .nav-link:hover {
-            background-color: #EFF6FF !important;
-            color: #2563EB !important;
+            background-color: var(--surface-2) !important;
+            color: var(--primary) !important;
         }
         .settings-sidebar .nav-link.active {
-            background-color: #2563EB !important;
+            background-color: #4F46E5 !important;
             color: #FFFFFF !important;
             font-weight: 600 !important;
+            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3) !important;
         }
         .settings-sidebar .nav-link.active::before {
             display: none !important;
@@ -331,26 +334,26 @@
             font-size: 20px !important;
             width: 20px !important;
             height: 20px !important;
-            color: #64748B !important;
+            color: inherit !important;
             transition: color 0.15s ease !important;
             flex-shrink: 0;
         }
         .settings-sidebar .nav-link:hover .material-symbols-outlined {
-            color: #2563EB !important;
+            color: var(--primary) !important;
         }
         .settings-sidebar .nav-link.active .material-symbols-outlined,
         .settings-sidebar .nav-link.active svg {
             color: #FFFFFF !important;
         }
 
-        /* Clean White Settings Card Tiles */
+        /* Settings Card Tiles */
         .settings-layout-wrapper .card,
         .settings-layout-wrapper .setting-card {
-            background-color: #FFFFFF !important;
-            border-radius: 14px !important;
-            border: 1px solid #E2E8F0 !important;
-            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
-            padding: 24px !important;
+            background-color: var(--surface) !important;
+            border-radius: 16px !important;
+            border: 1px solid var(--border) !important;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03) !important;
+            padding: 28px !important;
             margin-bottom: 24px !important;
         }
 
@@ -757,20 +760,103 @@
     </style>
     <x-ui.page-container class="settings-layout-wrapper pt-4">
         <!-- Settings Top Header -->
-        <div class="settings-header">
-            <h1>{{ __('Settings') }}</h1>
-            <p>{{ __('Global platform configuration and administrative preferences.') }}</p>
+        <div class="settings-header" style="margin-bottom: 24px;">
+            <h1 style="font-size: 24px; font-weight: 700; color: var(--text-primary); margin: 0;">
+                @if (Auth::user()->type == 'super admin')
+                    {{ __('Super Admin Settings') }}
+                @else
+                    {{ __('Store Settings') }}
+                @endif
+            </h1>
+            <p style="font-size: 13.5px; color: var(--text-secondary); margin-top: 4px; margin-bottom: 0;">
+                @if (Auth::user()->type == 'super admin')
+                    {{ __('Overview and control of platform-wide configurations and brand settings.') }}
+                @else
+                    {{ __('Overview and control of store configurations and brand settings.') }}
+                @endif
+            </p>
         </div>
 
-        <!-- Horizontal Navigation Tabs Bar -->
-        <div class="settings-horizontal-tabs">
-            <a class="nav-link active" id="pill-general-tab" data-bs-toggle="pill" href="#pills-brand-setting" role="tab">{{ __('GENERAL') }}</a>
-            <a class="nav-link" id="pill-security-tab" data-bs-toggle="pill" href="#pills-recaptcha-settings" role="tab">{{ __('SECURITY') }}</a>
-            <a class="nav-link" id="pill-payments-tab" data-bs-toggle="pill" href="#pills-payment-setting" role="tab">{{ __('PAYMENTS') }}</a>
-            <a class="nav-link" id="pill-maintenance-tab" data-bs-toggle="pill" href="#pills-cache-settings" role="tab">{{ __('MAINTENANCE') }}</a>
-        </div>
+        <div class="flex flex-col lg:flex-row gap-6 mt-6">
+            <!-- Left Navigation Sidebar Card -->
+            <div class="w-full lg:w-72 flex-shrink-0 settings-sidebar">
+                <div class="setting-nav-wrp">
+                    @if (Auth::user()->type == 'super admin')
+                        <a class="nav-link active" id="pills-brand_setting-tab" data-bs-toggle="pill" href="#pills-brand-setting" role="tab" aria-controls="pills-brand-setting" aria-selected="true">
+                            <span class="material-symbols-outlined">palette</span>
+                            <span>{{ __('Brand Settings') }}</span>
+                        </a>
+                        <a class="nav-link" id="pills-payment-setting_tab" data-bs-toggle="pill" href="#pills-payment-setting" role="tab" aria-controls="pills-payment-setting" aria-selected="false">
+                            <span class="material-symbols-outlined">credit_card</span>
+                            <span>{{ __('Payment Settings') }}</span>
+                        </a>
+                        <a class="nav-link" id="pills-email-settings_tab" data-bs-toggle="pill" href="#pills-email-settings" role="tab" aria-controls="pills-email-settings" aria-selected="false">
+                            <span class="material-symbols-outlined">mail</span>
+                            <span>{{ __('Email Settings') }}</span>
+                        </a>
+                        <a class="nav-link" id="recaptcha-settings_tab" data-bs-toggle="pill" href="#pills-recaptcha-settings" role="tab" aria-controls="pills-recaptcha-settings-tab" aria-selected="false">
+                            <span class="material-symbols-outlined">verified_user</span>
+                            <span>{{ __('ReCaptcha Settings') }}</span>
+                        </a>
+                        <a class="nav-link" id="storage_settings_tab" data-bs-toggle="pill" href="#storage_settings" role="tab" aria-controls="pills-storage_settings-tab" aria-selected="false">
+                            <span class="material-symbols-outlined">database</span>
+                            <span>{{ __('Storage Settings') }}</span>
+                        </a>
+                        <a class="nav-link" id="pills-cache_settings-tab" data-bs-toggle="pill" href="#pills-cache-settings" role="tab" aria-controls="pills-cache_settings-tab" aria-selected="false">
+                            <span class="material-symbols-outlined">bolt</span>
+                            <span>{{ __('Cache Settings') }}</span>
+                        </a>
+                        <a class="nav-link" id="pills-cookie_settings-tab" data-bs-toggle="pill" href="#pills-cookie-settings" role="tab" aria-controls="pills-cookie_settings-tab" aria-selected="false">
+                            <span class="material-symbols-outlined">cookie</span>
+                            <span>{{ __('Cookie Settings') }}</span>
+                        </a>
+                        <a class="nav-link" id="pills-chatgpt-tab" data-bs-toggle="pill" href="#pills-chatgpt-settings" role="tab" aria-controls="pills-chatgpt-tab" aria-selected="false">
+                            <span class="material-symbols-outlined">smart_toy</span>
+                            <span>{{ __('Chat GPT Settings') }}</span>
+                        </a>
+                    @else
+                        <a class="nav-link active" id="pills-brand_setting-tab" data-bs-toggle="pill" href="#pills-brand-setting" role="tab" aria-controls="pills-brandsetting" aria-selected="true">
+                            <span class="material-symbols-outlined">palette</span>
+                            <span>{{ __('Brand Settings') }}</span>
+                        </a>
+                        <a class="nav-link" id="pills-store_setting-tab" data-bs-toggle="pill" href="#pills-store_setting" role="tab" aria-controls="pills-store_setting" aria-selected="false">
+                            <span class="material-symbols-outlined">storefront</span>
+                            <span>{{ __('Store Settings') }}</span>
+                        </a>
+                        <a class="nav-link" id="pills-store_payment-setting-tab" data-bs-toggle="pill" href="#pills-store_payment-setting" role="tab" aria-controls="pills-store_payment-setting" aria-selected="false">
+                            <span class="material-symbols-outlined">credit_card</span>
+                            <span>{{ __('Payment Settings') }}</span>
+                        </a>
+                        <a class="nav-link" id="pills-store_email_setting-tab" data-bs-toggle="pill" href="#pills-store_email_setting" role="tab" aria-controls="pills-store_email_setting" aria-selected="false">
+                            <span class="material-symbols-outlined">mail</span>
+                            <span>{{ __('Email Settings') }}</span>
+                        </a>
+                        <a class="nav-link" id="pills-whatsapp_custom_massage-tab" data-bs-toggle="pill" href="#pills-whatsapp_custom_massage" role="tab" aria-controls="pills-whatsapp_custom_massage" aria-selected="false">
+                            <span class="material-symbols-outlined">chat</span>
+                            <span>{{ __('Whatsapp Message Settings') }}</span>
+                        </a>
+                        <a class="nav-link" id="pills-twilio_setting-tab" data-bs-toggle="pill" href="#pills-twilio_setting" role="tab" aria-controls="pills-twilio_setting" aria-selected="false">
+                            <span class="material-symbols-outlined">sms</span>
+                            <span>{{ __('Twilio Settings') }}</span>
+                        </a>
+                        <a class="nav-link" id="pills-pixel_setting-tab" data-bs-toggle="pill" href="#pixel_settings" role="tab" aria-controls="pixel_settings" aria-selected="false">
+                            <span class="material-symbols-outlined">analytics</span>
+                            <span>{{ __('Pixel Settings') }}</span>
+                        </a>
+                        @if ($plan->pwa_store == 'on')
+                            <a class="nav-link" id="pills-pwa_setting-tab" data-bs-toggle="pill" href="#pwa_settings" role="tab" aria-controls="pwa_settings" aria-selected="false">
+                                <span class="material-symbols-outlined">install_mobile</span>
+                                <span>{{ __('PWA Settings') }}</span>
+                            </a>
+                        @endif
+                        <a class="nav-link" id="pills-webhook_setting-tab" data-bs-toggle="pill" href="#webhook_settings" role="tab" aria-controls="webhook_settings" aria-selected="false">
+                            <span class="material-symbols-outlined">webhook</span>
+                            <span>{{ __('Webhook Settings') }}</span>
+                        </a>
+                    @endif
+                </div>
+            </div>
 
-        <div class="flex flex-col lg:flex-row gap-6">
             <!-- Settings Main Content -->
             <div class="flex-1 min-w-0 settings-content">
                 @if (Auth::user()->type == 'super admin')
@@ -787,101 +873,92 @@
                                         <!-- Three-Column Logo Upload Grid -->
                                         <div class="upload-grid-container">
                                             <!-- Dark Logo Card -->
-                                            <div class="upload-asset-card">
-                                                <div class="upload-asset-header">
-                                                    <div class="icon-badge">
-                                                        <span class="material-symbols-outlined">dark_mode</span>
-                                                    </div>
-                                                    <h6>{{ __('Dark Logo') }}</h6>
+                                            <div class="upload-asset-card" style="background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px;">
+                                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px;">
+                                                    <div style="width: 4px; height: 18px; background: #4F46E5; border-radius: 2px;"></div>
+                                                    <h6 style="font-size: 15px; font-weight: 700; color: var(--text-primary); margin: 0;">{{ __('Logo dark') }}</h6>
                                                 </div>
-                                                <div class="upload-preview-box">
+                                                <div class="upload-preview-box" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; min-height: 150px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 16px;">
                                                     @php
                                                         $darkPath = $logo . '/' . (isset($logo_img) && !empty($logo_img) ? $logo_img : 'logo-dark.png');
                                                         $defaultDark = asset('uploads/logo/logo-dark.png');
                                                     @endphp
-                                                    <img id="logoDark" alt="Dark Logo" src="{{ $darkPath . '?timestamp=' . time() }}"
+                                                    <img id="logoDark" alt="Dark Logo" src="{{ $darkPath . '?timestamp=' . time() }}" style="max-height: 75px; max-width: 85%; object-fit: contain;"
                                                         onerror="if(!this.dataset.tried){ this.dataset.tried='1'; this.src='{{ $defaultDark }}'; } else { this.style.display='none'; this.nextElementSibling.style.display='flex'; }">
                                                     <div class="upload-empty-state" style="display: none; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
                                                         <span class="material-symbols-outlined" style="font-size: 28px; color: #94A3B8;">image</span>
-                                                        <span style="font-size: 13px; font-weight: 500; color: #64748B;">{{ __('No image uploaded') }}</span>
-                                                        <span style="font-size: 11.5px; color: #94A3B8;">{{ __('Upload your brand asset') }}</span>
+                                                        <span style="font-size: 13px; font-weight: 500; color: var(--text-secondary);">{{ __('No image uploaded') }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="w-100">
-                                                    <label for="logo_dark" class="btn-upload-blue mb-0">
-                                                        <span class="material-symbols-outlined text-[18px]">upload</span>
-                                                        <span>{{ __('Upload Image') }}</span>
+                                                <div class="text-center w-100">
+                                                    <label for="logo_dark" class="btn-upload-blue mb-0" style="background: #4F46E5 !important; color: #FFFFFF !important; border-radius: 8px !important; padding: 8px 18px !important; font-size: 13px !important; font-weight: 600 !important; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                                                        <span class="material-symbols-outlined text-[16px]">upload</span>
+                                                        <span>{{ __('Choose file here') }}</span>
                                                         <input type="file" name="logo_dark" id="logo_dark" class="form-control file d-none" data-filename="logo_dark" onchange="var img = document.getElementById('logoDark'); img.src = window.URL.createObjectURL(this.files[0]); img.style.display='block'; if(img.nextElementSibling) img.nextElementSibling.style.display='none';">
                                                     </label>
                                                 </div>
                                                 @error('logo_dark')
-                                                    <span class="invalid-logo text-danger text-xs mt-2">{{ $message }}</span>
+                                                    <span class="invalid-logo text-danger text-xs mt-2 d-block text-center">{{ $message }}</span>
                                                 @enderror
                                             </div>
 
                                             <!-- Light Logo Card -->
-                                            <div class="upload-asset-card">
-                                                <div class="upload-asset-header">
-                                                    <div class="icon-badge">
-                                                        <span class="material-symbols-outlined">light_mode</span>
-                                                    </div>
-                                                    <h6>{{ __('Light Logo') }}</h6>
+                                            <div class="upload-asset-card" style="background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px;">
+                                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px;">
+                                                    <div style="width: 4px; height: 18px; background: #4F46E5; border-radius: 2px;"></div>
+                                                    <h6 style="font-size: 15px; font-weight: 700; color: var(--text-primary); margin: 0;">{{ __('Logo Light') }}</h6>
                                                 </div>
-                                                <div class="upload-preview-box">
+                                                <div class="upload-preview-box" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; min-height: 150px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 16px;">
                                                     @php
                                                         $lightPath = $logo . '/' . 'logo-light.png';
                                                         $defaultLight = asset('uploads/logo/logo-light.png');
                                                     @endphp
-                                                    <img id="adminLogoLight" alt="Light Logo" src="{{ $lightPath . '?timestamp=' . time() }}"
+                                                    <img id="adminLogoLight" alt="Light Logo" src="{{ $lightPath . '?timestamp=' . time() }}" style="max-height: 75px; max-width: 85%; object-fit: contain;"
                                                         onerror="if(!this.dataset.tried){ this.dataset.tried='1'; this.src='{{ $defaultLight }}'; } else { this.style.display='none'; this.nextElementSibling.style.display='flex'; }">
                                                     <div class="upload-empty-state" style="display: none; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
                                                         <span class="material-symbols-outlined" style="font-size: 28px; color: #94A3B8;">image</span>
-                                                        <span style="font-size: 13px; font-weight: 500; color: #64748B;">{{ __('No image uploaded') }}</span>
-                                                        <span style="font-size: 11.5px; color: #94A3B8;">{{ __('Upload your brand asset') }}</span>
+                                                        <span style="font-size: 13px; font-weight: 500; color: var(--text-secondary);">{{ __('No image uploaded') }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="w-100">
-                                                    <label for="logo_light" class="btn-upload-blue mb-0">
-                                                        <span class="material-symbols-outlined text-[18px]">upload</span>
-                                                        <span>{{ __('Upload Image') }}</span>
+                                                <div class="text-center w-100">
+                                                    <label for="logo_light" class="btn-upload-blue mb-0" style="background: #4F46E5 !important; color: #FFFFFF !important; border-radius: 8px !important; padding: 8px 18px !important; font-size: 13px !important; font-weight: 600 !important; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                                                        <span class="material-symbols-outlined text-[16px]">upload</span>
+                                                        <span>{{ __('Choose file here') }}</span>
                                                         <input type="file" name="logo_light" id="logo_light" class="form-control file d-none" data-filename="logo_light" onchange="var img = document.getElementById('adminLogoLight'); img.src = window.URL.createObjectURL(this.files[0]); img.style.display='block'; if(img.nextElementSibling) img.nextElementSibling.style.display='none';">
                                                     </label>
                                                 </div>
                                                 @error('logo_light')
-                                                    <span class="invalid-logo text-danger text-xs mt-2">{{ $message }}</span>
+                                                    <span class="invalid-logo text-danger text-xs mt-2 d-block text-center">{{ $message }}</span>
                                                 @enderror
                                             </div>
 
                                             <!-- Favicon Card -->
-                                            <div class="upload-asset-card">
-                                                <div class="upload-asset-header">
-                                                    <div class="icon-badge">
-                                                        <span class="material-symbols-outlined">badge</span>
-                                                    </div>
-                                                    <h6>{{ __('Favicon') }}</h6>
+                                            <div class="upload-asset-card" style="background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px;">
+                                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px;">
+                                                    <div style="width: 4px; height: 18px; background: #4F46E5; border-radius: 2px;"></div>
+                                                    <h6 style="font-size: 15px; font-weight: 700; color: var(--text-primary); margin: 0;">{{ __('Favicon') }}</h6>
                                                 </div>
-                                                <div class="upload-preview-box">
+                                                <div class="upload-preview-box" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; min-height: 150px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 16px;">
                                                     @php
                                                         $favPath = $logo . '/' . 'favicon.png';
                                                         $defaultFav = asset('uploads/logo/favicon.png');
                                                     @endphp
-                                                    <img id="adminfavicon" alt="Favicon" src="{{ $favPath . '?timestamp=' . time() }}" style="width: 44px; height: 44px;"
+                                                    <img id="adminfavicon" alt="Favicon" src="{{ $favPath . '?timestamp=' . time() }}" style="width: 44px; height: 44px; object-fit: contain;"
                                                         onerror="if(!this.dataset.tried){ this.dataset.tried='1'; this.src='{{ $defaultFav }}'; } else { this.style.display='none'; this.nextElementSibling.style.display='flex'; }">
                                                     <div class="upload-empty-state" style="display: none; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
                                                         <span class="material-symbols-outlined" style="font-size: 28px; color: #94A3B8;">image</span>
-                                                        <span style="font-size: 13px; font-weight: 500; color: #64748B;">{{ __('No image uploaded') }}</span>
-                                                        <span style="font-size: 11.5px; color: #94A3B8;">{{ __('Upload your brand asset') }}</span>
+                                                        <span style="font-size: 13px; font-weight: 500; color: var(--text-secondary);">{{ __('No image uploaded') }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="w-100">
-                                                    <label for="favicon" class="btn-upload-blue mb-0">
-                                                        <span class="material-symbols-outlined text-[18px]">upload</span>
-                                                        <span>{{ __('Upload Image') }}</span>
+                                                <div class="text-center w-100">
+                                                    <label for="favicon" class="btn-upload-blue mb-0" style="background: #4F46E5 !important; color: #FFFFFF !important; border-radius: 8px !important; padding: 8px 18px !important; font-size: 13px !important; font-weight: 600 !important; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                                                        <span class="material-symbols-outlined text-[16px]">upload</span>
+                                                        <span>{{ __('Choose file here') }}</span>
                                                         <input type="file" name="favicon" id="favicon" class="form-control file d-none" data-filename="favicon_update" onchange="var img = document.getElementById('adminfavicon'); img.src = window.URL.createObjectURL(this.files[0]); img.style.display='block'; if(img.nextElementSibling) img.nextElementSibling.style.display='none';">
                                                     </label>
                                                 </div>
                                                 @error('favicon')
-                                                    <span class="invalid-logo text-danger text-xs mt-2">{{ $message }}</span>
+                                                    <span class="invalid-logo text-danger text-xs mt-2 d-block text-center">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                         </div>
