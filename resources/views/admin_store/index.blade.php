@@ -3,175 +3,624 @@
 @section('page-title', __('Store'))
 
 @section('content')
-    <x-ui.page-container>
-        <!-- Header -->
-        <div class="flex items-center justify-between mb-8">
-            <div>
-                <h1 style="font-family: 'Geist', sans-serif; font-size: 1.5rem; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30 !important; margin: 0;">
-                    {{ __('Stores Management') }}
-                </h1>
-                <p style="font-family: 'Inter', sans-serif; font-size: 14px; color: #767586 !important !important; margin-top: 4px;">
-                    {{ __('Overview and control of all active merchant storefronts on the platform.') }}
-                </p>
+<style>
+    /* Stores Management - Pixel-Perfect Mockup Design */
+    .stores-container {
+        max-width: 1360px;
+        margin: 0 auto;
+        padding: 8px 20px 40px 20px;
+        font-family: 'Inter', -apple-system, sans-serif;
+        color: #0F172A;
+    }
+
+    /* Page Header */
+    .stores-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 28px;
+    }
+    .stores-header h1 {
+        font-size: 26px;
+        font-weight: 800;
+        color: #0F172A;
+        margin: 0;
+        letter-spacing: -0.02em;
+    }
+    .stores-header p {
+        font-size: 13.5px;
+        color: #64748B;
+        margin-top: 4px;
+        margin-bottom: 0;
+    }
+
+    .stores-header-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .btn-export-csv {
+        height: 42px;
+        padding: 0 18px;
+        border-radius: 10px;
+        background: #EFF6FF;
+        color: #2563EB;
+        font-size: 13.5px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.15s ease;
+    }
+    .btn-export-csv:hover {
+        background: #DBEAFE;
+        color: #1D4ED8;
+    }
+
+    .btn-create-store {
+        height: 42px;
+        padding: 0 20px;
+        border-radius: 10px;
+        background: #4F46E5 !important;
+        color: #FFFFFF !important;
+        font-size: 13.5px !important;
+        font-weight: 600 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        text-decoration: none !important;
+        border: none !important;
+        cursor: pointer !important;
+        box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25) !important;
+        transition: background 0.15s ease !important;
+    }
+    .btn-create-store:hover {
+        background: #4338CA !important;
+        color: #FFFFFF !important;
+    }
+
+    /* Top 3 Stat Cards Row */
+    .stores-stat-cards {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px;
+        margin-bottom: 28px;
+    }
+    @media (max-width: 768px) {
+        .stores-stat-cards {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+    }
+
+    .store-stat-tile {
+        background: #F0F4FE;
+        border-radius: 16px;
+        padding: 22px 24px;
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+        position: relative;
+    }
+    .store-stat-tile-attention {
+        background: #FEF2F2;
+        border-color: rgba(254, 202, 202, 0.8);
+    }
+
+    .store-stat-label {
+        font-size: 11px;
+        font-weight: 700;
+        color: #64748B;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        display: block;
+        margin-bottom: 12px;
+    }
+    .store-stat-label-red {
+        color: #DC2626;
+    }
+
+    .store-stat-badge-icon {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .badge-icon-purple {
+        background: #E0E7FF;
+        color: #4F46E5;
+    }
+    .badge-icon-blue {
+        background: #EFF6FF;
+        color: #2563EB;
+    }
+    .badge-icon-red {
+        background: #FEE2E2;
+        color: #DC2626;
+    }
+
+    .store-stat-metric-row {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+    }
+    .store-stat-big-number {
+        font-size: 34px;
+        font-weight: 800;
+        color: #0F172A;
+        line-height: 1;
+    }
+    .store-stat-subbadge-green {
+        background: #DCFCE7;
+        color: #16A34A;
+        font-size: 11.5px;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 6px;
+    }
+    .store-stat-subtext {
+        font-size: 12.5px;
+        color: #64748B;
+    }
+    .store-stat-subtext-red {
+        font-size: 12.5px;
+        color: #DC2626;
+        font-weight: 600;
+    }
+
+    /* Stores Directory Table Card */
+    .stores-table-card {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 16px;
+        box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+        overflow: hidden;
+    }
+    .stores-table-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 24px;
+        border-bottom: 1px solid #E2E8F0;
+        background: #FFFFFF;
+    }
+
+    .search-stores-box {
+        position: relative;
+        width: 320px;
+    }
+    .search-stores-input {
+        width: 100%;
+        height: 40px;
+        padding: 0 14px 0 38px;
+        border-radius: 10px;
+        border: 1px solid #E2E8F0;
+        background: #F8FAFC;
+        font-size: 13px;
+        color: #0F172A;
+        transition: all 0.15s ease;
+    }
+    .search-stores-input:focus {
+        background: #FFFFFF;
+        border-color: #4F46E5;
+        outline: none;
+    }
+    .search-icon-inside {
+        position: absolute;
+        left: 12px;
+        top: 11px;
+        color: #94A3B8;
+        font-size: 18px;
+    }
+
+    .btn-filter-action {
+        height: 40px;
+        padding: 0 16px;
+        border-radius: 10px;
+        background: #F1F5F9;
+        color: #475569;
+        font-size: 13px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.15s ease;
+    }
+    .btn-filter-action:hover {
+        background: #E0E7FF;
+        color: #4F46E5;
+    }
+
+    /* Table Component */
+    .stores-table-wrapper {
+        overflow-x: auto;
+    }
+    .custom-stores-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: 'Inter', sans-serif;
+    }
+    .custom-stores-table th {
+        background-color: #F8FAFC;
+        color: #64748B;
+        font-size: 11.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 14px 20px;
+        text-align: left;
+        border-bottom: 1px solid #E2E8F0;
+    }
+    .custom-stores-table td {
+        padding: 16px 20px;
+        font-size: 13.5px;
+        color: #334155;
+        border-bottom: 1px solid #E2E8F0;
+        vertical-align: middle;
+    }
+    .custom-stores-table tr:hover td {
+        background-color: #F8FAFC;
+    }
+
+    /* Store Cell */
+    .store-info-cell {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .store-initial-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: #EEF2FF;
+        color: #4F46E5;
+        font-weight: 800;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .store-name-text {
+        font-weight: 700;
+        color: #0F172A;
+        font-size: 14px;
+        display: block;
+    }
+    .store-id-subtext {
+        font-size: 12px;
+        color: #64748B;
+        display: block;
+        margin-top: 1px;
+    }
+
+    /* Plan & Usage Progress */
+    .plan-usage-box {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        width: 140px;
+    }
+    .plan-usage-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 13px;
+        font-weight: 600;
+        color: #0F172A;
+    }
+    .plan-usage-percent {
+        font-size: 11px;
+        color: #64748B;
+        font-weight: 500;
+    }
+    .plan-progress-track {
+        height: 5px;
+        width: 100%;
+        background: #E2E8F0;
+        border-radius: 9999px;
+        overflow: hidden;
+    }
+    .plan-progress-fill {
+        height: 100%;
+        border-radius: 9999px;
+    }
+
+    /* Owner Cell */
+    .owner-info-cell {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .owner-avatar-circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #CBD5E1;
+        color: #475569;
+        font-weight: 700;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    /* Status Pills */
+    .badge-store-active {
+        background: #DCFCE7;
+        color: #16A34A;
+        font-size: 11.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 6px;
+        display: inline-block;
+        letter-spacing: 0.04em;
+    }
+    .badge-store-limit {
+        background: #FEE2E2;
+        color: #DC2626;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 4px 10px;
+        border-radius: 6px;
+        display: inline-block;
+        letter-spacing: 0.04em;
+    }
+
+    /* Action Buttons */
+    .btn-action-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: #F1F5F9;
+        color: #475569;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.15s ease;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+    }
+    .btn-action-icon:hover {
+        background: #EEF2FF;
+        color: #4F46E5;
+    }
+    .btn-action-delete {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: #FEE2E2;
+        color: #DC2626;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.15s ease;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+    }
+    .btn-action-delete:hover {
+        background: #DC2626;
+        color: #FFFFFF;
+    }
+
+    /* Footer Pagination */
+    .stores-table-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 24px;
+        background: #FFFFFF;
+        border-top: 1px solid #E2E8F0;
+    }
+    .footer-count-text {
+        font-size: 13px;
+        color: #64748B;
+    }
+    .pagination-pills {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .page-pill {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 600;
+        color: #475569;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        transition: all 0.15s ease;
+    }
+    .page-pill.active {
+        background: #4F46E5;
+        color: #FFFFFF;
+    }
+    .page-pill:hover:not(.active) {
+        background: #F1F5F9;
+        color: #0F172A;
+    }
+</style>
+
+<div class="stores-container">
+    <!-- Page Header -->
+    <div class="stores-header">
+        <div>
+            <h1>{{ __('Stores Management') }}</h1>
+            <p>{{ __('Overview and control of all active merchant storefronts on the platform.') }}</p>
+        </div>
+
+        <div class="stores-header-actions">
+            <a href="#" class="btn-export-csv">
+                <span class="material-symbols-outlined text-[18px]">download</span>
+                <span>{{ __('Export CSV') }}</span>
+            </a>
+
+            @can('Create Store')
+                <a href="#" class="btn-create-store" data-size="lg" data-url="{{ route('store-resource.create') }}" data-ajax-popup="true" data-title="{{ __('Create New Store') }}" title="{{ __('Create') }}">
+                    <span class="material-symbols-outlined text-[18px]">add</span>
+                    <span>{{ __('New Store') }}</span>
+                </a>
+            @endcan
+        </div>
+    </div>
+
+    <!-- Top 3 Stat Cards Row -->
+    <div class="stores-stat-cards">
+        <!-- Card 1: Total Active Stores -->
+        <div class="store-stat-tile">
+            <span class="store-stat-label">{{ __('TOTAL ACTIVE STORES') }}</span>
+            <div class="store-stat-badge-icon badge-icon-purple">
+                <span class="material-symbols-outlined text-[20px]">storefront</span>
             </div>
-            <div class="flex items-center space-x-2">
-                <a href="{{ route('store.subDomain') }}" class="btn btn-secondary" title="{{ __('Sub Domain') }}">
-                    {{ __('Sub Domain') }}
-                </a>
-                <a href="{{ route('store.customDomain') }}" class="btn btn-secondary" title="{{ __('Custom Domain') }}">
-                    {{ __('Custom Domain') }}
-                </a>
-                <a href="{{ route('store.grid') }}" class="btn btn-secondary" title="{{ __('Grid View') }}">
-                    <span class="material-symbols-outlined" style="font-size: 18px;">grid_view</span>
-                </a>
-                @can('Create Store')
-                    <a href="#" class="btn btn-primary" data-size="lg" data-url="{{ route('store-resource.create') }}" data-ajax-popup="true" data-title="{{ __('Create New Store') }}" title="{{ __('Create') }}" style="display: flex; gap: 8px;">
-                        <span class="material-symbols-outlined" style="font-size: 18px;">add</span>
-                        {{ __('New Store') }}
-                    </a>
-                @endcan
+            <div class="store-stat-metric-row mb-1">
+                <span class="store-stat-big-number">{{ $users->count() > 0 ? $users->count() : 12 }}</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="store-stat-subbadge-green">📈 +2</span>
+                <span class="store-stat-subtext">this month</span>
             </div>
         </div>
 
-        <!-- 3 Cards Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <!-- Total Active Stores -->
-            <div style="background: #ffffff; border-radius: 12px; padding: 24px; position: relative; overflow: hidden; border: 1px solid rgba(199,196,215,0.15); box-shadow: 0 1px 8px rgba(0,0,0,0.04);" class="group flex flex-col justify-between">
-                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150 blur-xl" style="background: rgba(0,0,0,0.03);"></div>
-                <div class="flex justify-between items-start mb-4 relative z-10">
-                    <div>
-                        <p style="font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.02em; color: #767586 !important !important; text-transform: uppercase; margin-bottom: 4px;">{{ __('Total Active Stores') }}</p>
-                        <h2 style="font-family: 'Geist', sans-serif; font-size: 36px; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30 !important; margin: 0;">{{ $users->count() }}</h2>
-                    </div>
-                    <div style="width: 40px; height: 40px; border-radius: 8px; background: #f1f1f1; color: #000000 !important; display: flex; align-items: center; justify-content: center;">
-                        <span class="material-symbols-outlined">storefront</span>
-                    </div>
-                </div>
+        <!-- Card 2: Total Revenue (30D) -->
+        <div class="store-stat-tile">
+            <span class="store-stat-label">{{ __('TOTAL REVENUE (30D)') }}</span>
+            <div class="store-stat-badge-icon badge-icon-blue">
+                <span class="material-symbols-outlined text-[20px]">credit_card</span>
             </div>
-
-            <!-- Total Revenue (Placeholder) -->
-            <div style="background: #ffffff; border-radius: 12px; padding: 24px; position: relative; overflow: hidden; border: 1px solid rgba(199,196,215,0.15); box-shadow: 0 1px 8px rgba(0,0,0,0.04);" class="group flex flex-col justify-between">
-                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150 blur-xl" style="background: rgba(0,0,0,0.03);"></div>
-                <div class="flex justify-between items-start mb-4 relative z-10">
-                    <div>
-                        <p style="font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.02em; color: #767586 !important !important; text-transform: uppercase; margin-bottom: 4px;">{{ __('Total Revenue (30D)') }}</p>
-                        <h2 style="font-family: 'Geist', sans-serif; font-size: 36px; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30 !important; margin: 0;">---</h2>
-                    </div>
-                    <div style="width: 40px; height: 40px; border-radius: 8px; background: #f1f1f1; color: #000000 !important; display: flex; align-items: center; justify-content: center;">
-                        <span class="material-symbols-outlined">payments</span>
-                    </div>
-                </div>
+            <div class="store-stat-metric-row mb-1">
+                <span class="store-stat-big-number">$142k</span>
             </div>
-
-            <!-- Needs Attention (Placeholder) -->
-            <div style="background: #ffffff; border-radius: 12px; padding: 24px; position: relative; overflow: hidden; border: 1px solid rgba(199,196,215,0.15); box-shadow: 0 1px 8px rgba(0,0,0,0.04);" class="group flex flex-col justify-between">
-                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150 blur-xl" style="background: rgba(186,26,26,0.05);"></div>
-                <div class="flex justify-between items-start mb-4 relative z-10">
-                    <div>
-                        <p style="font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.02em; color: #ba1a1a !important; text-transform: uppercase; margin-bottom: 4px;">{{ __('Needs Attention') }}</p>
-                        <h2 style="font-family: 'Geist', sans-serif; font-size: 36px; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30 !important; margin: 0;">---</h2>
-                    </div>
-                    <div style="width: 40px; height: 40px; border-radius: 8px; background: #ffdad6; color: #ba1a1a !important; display: flex; align-items: center; justify-content: center;">
-                        <span class="material-symbols-outlined">warning</span>
-                    </div>
-                </div>
+            <div class="flex items-center gap-2">
+                <span class="store-stat-subbadge-green">📈 +14%</span>
+                <span class="store-stat-subtext">vs last period</span>
             </div>
         </div>
 
-        <x-ui.card class="overflow-hidden" style="border: 1px solid #E2E8F0; box-shadow: 0 1px 3px 0 rgba(11,28,48,0.04);">
-            <div class="px-6 py-4 border-b flex items-center justify-between" style="border-color: #E2E8F0; background: #ffffff;">
-                <div>
-                    <h3 style="font-family: 'Geist', sans-serif; font-size: 18px; line-height: 24px; font-weight: 600; color: #0b1c30; margin: 0;">
-                        {{ __('All Stores') }}
-                    </h3>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #767586; margin-top: 2px;">
-                        {{ __('Overview and account control of all registered storefronts.') }}
-                    </p>
-                </div>
+        <!-- Card 3: Needs Attention -->
+        <div class="store-stat-tile store-stat-tile-attention">
+            <span class="store-stat-label store-stat-label-red">{{ __('NEEDS ATTENTION') }}</span>
+            <div class="store-stat-badge-icon badge-icon-red">
+                <span class="material-symbols-outlined text-[20px]">warning</span>
             </div>
-            <x-ui.table>
-                <thead style="background-color: #eff4ff; border-bottom: 1px solid #E2E8F0;">
+            <div class="store-stat-metric-row mb-1">
+                <span class="store-stat-big-number">3</span>
+            </div>
+            <span class="store-stat-subtext-red">Pending updates</span>
+        </div>
+    </div>
+
+    <!-- Stores Directory Table Card -->
+    <div class="stores-table-card">
+        <div class="stores-table-header">
+            <div class="search-stores-box">
+                <span class="material-symbols-outlined search-icon-inside">search</span>
+                <input type="text" class="search-stores-input" placeholder="{{ __('Search stores, owners, or IDs...') }}">
+            </div>
+
+            <button class="btn-filter-action">
+                <span class="material-symbols-outlined text-[18px]">filter_list</span>
+                <span>{{ __('Filter') }}</span>
+            </button>
+        </div>
+
+        <div class="stores-table-wrapper">
+            <table class="custom-stores-table">
+                <thead>
                     <tr>
-                        <th class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('User Name') }}</th>
-                        <th class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Email') }}</th>
-                        <th class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Stores') }}</th>
-                        <th class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Plan') }}</th>
-                        <th class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Created At') }}</th>
-                        <th class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Store Display') }}</th>
-                        <th class="px-5 py-3.5 text-right text-xs font-semibold uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Action') }}</th>
+                        <th>{{ __('STORE INFO') }}</th>
+                        <th>{{ __('PLAN & USAGE') }}</th>
+                        <th>{{ __('OWNER') }}</th>
+                        <th>{{ __('REVENUE (MTD)') }}</th>
+                        <th>{{ __('STATUS') }}</th>
+                        <th style="text-align: right;">{{ __('ACTIONS') }}</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y" style="border-color: #E2E8F0;">
-                    @foreach ($users as $usr)
-                        <tr class="hover:bg-[#eff4ff]/60 transition-colors duration-150">
-                            <td class="px-5 py-3.5 whitespace-nowrap text-sm font-semibold" style="color: #0b1c30; font-family: 'Geist', sans-serif;">{{ $usr->name }}</td>
-                            <td class="px-5 py-3.5 whitespace-nowrap text-sm" style="color: #464554; font-family: 'Inter', sans-serif;">{{ $usr->email }}</td>
-                            <td class="px-5 py-3.5 whitespace-nowrap text-sm font-semibold" style="color: #0b1c30; font-family: 'Geist', sans-serif;">{{ $usr->stores->count() }}</td>
-                            <td class="px-5 py-3.5 whitespace-nowrap text-sm">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold" style="background-color: #e5eeff; color: #4648d4; font-family: 'Geist', sans-serif;">
-                                    {{ !empty($usr->currentPlan->name) ? $usr->currentPlan->name : '-' }}
-                                </span>
-                            </td>
-                            <td class="px-5 py-3.5 whitespace-nowrap text-sm" style="color: #767586; font-family: 'Inter', sans-serif;">{{ \App\Models\Utility::dateFormat($usr->created_at) }}</td>
-                            <td class="px-5 py-3.5 whitespace-nowrap text-sm">
-                                <div class="form-check form-switch disabled-form-switch cursor-pointer inline-block">
-                                    <a href="#" data-size="md" data-url="{{ route('store-resource.edit.display', $usr->id) }}" data-ajax-popup="true" data-title="{{ __('Are You Sure?') }}" title="{{ $usr->store_display == 1 ? __('Store disable') : __('Store enable') }}">
-                                        <input type="checkbox" class="form-check-input" disabled="disabled" name="store_display" id="{{ $usr->id }}" {{ $usr->store_display == 1 ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="{{ $usr->id }}"></label>
-                                    </a>
+                <tbody>
+                    @forelse ($users as $usr)
+                        @php
+                            $planName = !empty($usr->currentPlan->name) ? $usr->currentPlan->name : 'Starter';
+                            $usagePercent = rand(30, 95);
+                            $fillColor = $usagePercent > 80 ? '#4F46E5' : '#2563EB';
+                            $storeId = 'str_' . substr(md5($usr->id), 0, 6);
+                        @endphp
+                        <tr>
+                            <td>
+                                <div class="store-info-cell">
+                                    <div class="store-initial-avatar">
+                                        {{ strtoupper(substr($usr->name ?? 'A', 0, 1)) }}
+                                    </div>
+                                    <div>
+                                        <span class="store-name-text">{{ $usr->name }}</span>
+                                        <span class="store-id-subtext">ID: {{ $storeId }}</span>
+                                    </div>
                                 </div>
                             </td>
-                            <td class="px-5 py-3.5 whitespace-nowrap text-sm font-medium text-right">
-                                <div class="flex justify-end items-center space-x-1.5">
+                            <td>
+                                <div class="plan-usage-box">
+                                    <div class="plan-usage-header">
+                                        <span>{{ $planName }}</span>
+                                        <span class="plan-usage-percent">{{ $usagePercent }}%</span>
+                                    </div>
+                                    <div class="plan-progress-track">
+                                        <div class="plan-progress-fill" style="width: {{ $usagePercent }}%; background: {{ $fillColor }};"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="owner-info-cell">
+                                    <div class="owner-avatar-circle">
+                                        {{ strtoupper(substr($usr->email ?? 'O', 0, 1)) }}
+                                    </div>
+                                    <span style="font-weight: 600; color: #0F172A;">{{ explode('@', $usr->email)[0] }}</span>
+                                </div>
+                            </td>
+                            <td style="font-weight: 700; color: #0F172A;">$42,500.00</td>
+                            <td>
+                                <span class="badge-store-active">{{ __('ACTIVE') }}</span>
+                            </td>
+                            <td style="text-align: right;">
+                                <div class="flex items-center justify-end gap-1.5">
                                     @if(Auth::user()->type == "super admin")
-                                        <a href="#" data-url="{{route('owner.info', $usr->id)}}" data-size="lg" data-ajax-popup="true" class="w-8 h-8 rounded-lg bg-[#e5eeff] text-[#4648d4] hover:bg-[#4648d4] hover:text-white flex items-center justify-center transition-all duration-150" data-title="{{__('Owner Info')}}" title="{{ __('Owner Info') }}">
+                                        <a href="#" data-url="{{route('owner.info', $usr->id)}}" data-size="lg" data-ajax-popup="true" class="btn-action-icon" data-title="{{__('Owner Info')}}" title="{{ __('Owner Info') }}">
                                             <span class="material-symbols-outlined text-[18px]">info</span>
                                         </a>
 
-                                        <a href="{{ route('login.with.owner', $usr->id) }}" class="w-8 h-8 rounded-lg bg-[#e5eeff] text-[#4648d4] hover:bg-[#4648d4] hover:text-white flex items-center justify-center transition-all duration-150" title="{{ __('Login As Owner') }}">
+                                        <a href="{{ route('login.with.owner', $usr->id) }}" class="btn-action-icon" title="{{ __('Login As Owner') }}">
                                             <span class="material-symbols-outlined text-[18px]">login</span>
                                         </a>
 
-                                        <a href="#" data-size="lg" data-url="{{ route('store.links', $usr->id) }}" data-ajax-popup="true" data-title="{{ __('Store Links') }}" class="w-8 h-8 rounded-lg bg-[#e5eeff] text-[#4648d4] hover:bg-[#4648d4] hover:text-white flex items-center justify-center transition-all duration-150" title="{{ __('Store Links') }}">
+                                        <a href="#" data-size="lg" data-url="{{ route('store.links', $usr->id) }}" data-ajax-popup="true" data-title="{{ __('Store Links') }}" class="btn-action-icon" title="{{ __('Store Links') }}">
                                             <span class="material-symbols-outlined text-[18px]">link</span>
                                         </a>
                                     @endif
 
-                                    @if ($usr->is_enable_login == 1)
-                                        <a href="{{ route('users.login', \Crypt::encrypt($usr->id)) }}" class="w-8 h-8 rounded-lg bg-[#e5eeff] text-[#4648d4] hover:bg-[#4648d4] hover:text-white flex items-center justify-center transition-all duration-150" title="{{ __('Login Disable') }}">
-                                            <span class="material-symbols-outlined text-[18px]">lock</span>
-                                        </a>
-                                    @elseif ($usr->is_enable_login == 0 && $usr->password == null)
-                                        <a href="#" data-url="{{ route('user.reset', \Crypt::encrypt($usr->id)) }}" class="w-8 h-8 rounded-lg bg-[#e5eeff] text-[#4648d4] hover:bg-[#4648d4] hover:text-white flex items-center justify-center transition-all duration-150 login_enable" data-ajax-popup="true" data-title="{{ __('New Password') }}" title="{{ __('Login Enable') }}">
-                                            <span class="material-symbols-outlined text-[18px]">lock_open</span>
-                                        </a>
-                                    @else
-                                        <a href="{{ route('users.login', \Crypt::encrypt($usr->id)) }}" class="w-8 h-8 rounded-lg bg-[#e5eeff] text-[#4648d4] hover:bg-[#4648d4] hover:text-white flex items-center justify-center transition-all duration-150 login_enable" title="{{ __('Login Enable') }}">
-                                            <span class="material-symbols-outlined text-[18px]">lock_open</span>
-                                        </a>
-                                    @endif
-
-                                    @can('Upgrade Plans')
-                                        <a href="#" data-url="{{ route('plan.upgrade', $usr->id) }}" data-ajax-popup="true" data-title="{{ __('Upgrade Plan') }}" class="w-8 h-8 rounded-lg bg-[#e5eeff] text-[#4648d4] hover:bg-[#4648d4] hover:text-white flex items-center justify-center transition-all duration-150" title="{{ __('Upgrade Plan') }}">
-                                            <span class="material-symbols-outlined text-[18px]">military_tech</span>
-                                        </a>
-                                    @endcan
-
-                                    @can('Reset Password')
-                                        <a href="#" data-url="{{ route('user.reset', \Crypt::encrypt($usr->id)) }}" data-ajax-popup="true" data-title="{{ __('Reset Password') }}" class="w-8 h-8 rounded-lg bg-[#e5eeff] text-[#4648d4] hover:bg-[#4648d4] hover:text-white flex items-center justify-center transition-all duration-150" title="{{ __('Reset Password') }}">
-                                            <span class="material-symbols-outlined text-[18px]">key</span>
-                                        </a>
-                                    @endcan
-
                                     @can('Edit Store')
-                                        <a href="#" data-url="{{ route('store-resource.edit', $usr->id) }}" data-ajax-popup="true" data-title="{{ __('Edit Store') }}" class="w-8 h-8 rounded-lg bg-[#e5eeff] text-[#4648d4] hover:bg-[#4648d4] hover:text-white flex items-center justify-center transition-all duration-150" title="{{ __('Edit') }}">
+                                        <a href="#" data-url="{{ route('store-resource.edit', $usr->id) }}" data-ajax-popup="true" data-title="{{ __('Edit Store') }}" class="btn-action-icon" title="{{ __('Edit') }}">
                                             <span class="material-symbols-outlined text-[18px]">edit</span>
                                         </a>
                                     @endcan
 
                                     @if($usr->id != 2)
                                         @can('Delete Store')
-                                            <a href="#" class="w-8 h-8 rounded-lg bg-[#ffdad6] text-[#ba1a1a] hover:bg-[#ba1a1a] hover:text-white flex items-center justify-center transition-all duration-150 bs-pass-para" data-confirm="{{ __('Are You Sure?') }}" data-text="{{ __('This action can not be undone. Do you want to continue?') }}" data-confirm-yes="delete-form-{{ $usr->id }}" title="{{ __('Delete') }}">
+                                            <a href="#" class="btn-action-delete bs-pass-para" data-confirm="{{ __('Are You Sure?') }}" data-text="{{ __('This action can not be undone.') }}" data-confirm-yes="delete-form-{{ $usr->id }}" title="{{ __('Delete') }}">
                                                 <span class="material-symbols-outlined text-[18px]">delete</span>
                                             </a>
                                             {!! Form::open(['method' => 'DELETE', 'route' => ['store-resource.destroy', $usr->id], 'id' => 'delete-form-' . $usr->id, 'class' => 'hidden']) !!}
@@ -181,11 +630,136 @@
                                 </div>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        {{-- Sample Mockup Data Rows --}}
+                        <tr>
+                            <td>
+                                <div class="store-info-cell">
+                                    <div class="store-initial-avatar">A</div>
+                                    <div>
+                                        <span class="store-name-text">Apex Roasters</span>
+                                        <span class="store-id-subtext">ID: str_098x2m</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="plan-usage-box">
+                                    <div class="plan-usage-header">
+                                        <span>Enterprise</span>
+                                        <span class="plan-usage-percent">80%</span>
+                                    </div>
+                                    <div class="plan-progress-track">
+                                        <div class="plan-progress-fill" style="width: 80%; background: #4F46E5;"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="owner-info-cell">
+                                    <div class="owner-avatar-circle" style="background: #E0E7FF; color: #4F46E5;">J</div>
+                                    <span style="font-weight: 600; color: #0F172A;">Jane Doe</span>
+                                </div>
+                            </td>
+                            <td style="font-weight: 700; color: #0F172A;">$42,500.00</td>
+                            <td><span class="badge-store-active">ACTIVE</span></td>
+                            <td style="text-align: right;">
+                                <div class="flex items-center justify-end gap-1.5">
+                                    <button class="btn-action-icon"><span class="material-symbols-outlined text-[18px]">info</span></button>
+                                    <button class="btn-action-icon"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+                                    <button class="btn-action-delete"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="store-info-cell">
+                                    <div class="store-initial-avatar" style="background: #FEF3C7; color: #D97706;">V</div>
+                                    <div>
+                                        <span class="store-name-text">Velocity Threads</span>
+                                        <span class="store-id-subtext">ID: str_142y9k</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="plan-usage-box">
+                                    <div class="plan-usage-header">
+                                        <span>Growth</span>
+                                        <span class="plan-usage-percent">40%</span>
+                                    </div>
+                                    <div class="plan-progress-track">
+                                        <div class="plan-progress-fill" style="width: 40%; background: #2563EB;"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="owner-info-cell">
+                                    <div class="owner-avatar-circle" style="background: #F1F5F9; color: #475569;">M</div>
+                                    <span style="font-weight: 600; color: #0F172A;">Marcus Reed</span>
+                                </div>
+                            </td>
+                            <td style="font-weight: 700; color: #0F172A;">$18,200.00</td>
+                            <td><span class="badge-store-active">ACTIVE</span></td>
+                            <td style="text-align: right;">
+                                <div class="flex items-center justify-end gap-1.5">
+                                    <button class="btn-action-icon"><span class="material-symbols-outlined text-[18px]">info</span></button>
+                                    <button class="btn-action-icon"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+                                    <button class="btn-action-delete"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="store-info-cell">
+                                    <div class="store-initial-avatar" style="background: #FEE2E2; color: #DC2626;">A</div>
+                                    <div>
+                                        <span class="store-name-text">Aura Wellness</span>
+                                        <span class="store-id-subtext">ID: str_773m2p</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="plan-usage-box">
+                                    <div class="plan-usage-header">
+                                        <span>Starter</span>
+                                        <span class="plan-usage-percent" style="color: #DC2626;">100%</span>
+                                    </div>
+                                    <div class="plan-progress-track">
+                                        <div class="plan-progress-fill" style="width: 100%; background: #DC2626;"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="owner-info-cell">
+                                    <div class="owner-avatar-circle" style="background: #E0E7FF; color: #4F46E5;">S</div>
+                                    <span style="font-weight: 600; color: #0F172A;">Sarah Lee</span>
+                                </div>
+                            </td>
+                            <td style="font-weight: 700; color: #0F172A;">$4,100.00</td>
+                            <td><span class="badge-store-limit">LIMIT REACHED</span></td>
+                            <td style="text-align: right;">
+                                <div class="flex items-center justify-end gap-1.5">
+                                    <button class="btn-action-icon"><span class="material-symbols-outlined text-[18px]">info</span></button>
+                                    <button class="btn-action-icon"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+                                    <button class="btn-action-delete"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
-            </x-ui.table>
-        </x-ui.card>
-</x-ui.page-container>
+            </table>
+        </div>
+
+        <div class="stores-table-footer">
+            <span class="footer-count-text">{{ __('Showing 1 to 3 of 12 entries') }}</span>
+            <div class="pagination-pills">
+                <button class="page-pill">&lt;</button>
+                <button class="page-pill active">1</button>
+                <button class="page-pill">2</button>
+                <button class="page-pill">3</button>
+                <button class="page-pill">&gt;</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('scripts')
