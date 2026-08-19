@@ -50,6 +50,7 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             corePlugins: { preflight: false },
             theme: {
                 extend: {
@@ -732,6 +733,66 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
         html.dark button.hover\:bg-gray-50:hover,
         html.dark .hover\:bg-gray-50:hover {
             background-color: #1E293B !important;
+            color: #FFFFFF !important;
+        }
+
+        /* 18. Subscription Plans Page Specific Dark Theme Overrides */
+        html.dark .plans-container {
+            color: #F8FAFC !important;
+        }
+        html.dark .plans-header h1,
+        html.dark .plan-card-title,
+        html.dark .plan-price-amount,
+        html.dark .subscriber-count,
+        html.dark .revenue-header h3,
+        html.dark .plan-name-text {
+            color: #F8FAFC !important;
+        }
+        html.dark .plans-header p,
+        html.dark .plan-card-subtitle,
+        html.dark .plan-price-period,
+        html.dark .feature-row,
+        html.dark .subscriber-label,
+        html.dark .revenue-header p {
+            color: #CBD5E1 !important;
+        }
+        html.dark .plan-card-standard,
+        html.dark .subscriber-bar-standard,
+        html.dark .revenue-card {
+            background-color: #111827 !important;
+            border-color: #263449 !important;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25) !important;
+        }
+        html.dark .revenue-header {
+            border-bottom-color: #263449 !important;
+        }
+        html.dark .revenue-table th {
+            background-color: #0F172A !important;
+            border-bottom-color: #263449 !important;
+            color: #94A3B8 !important;
+        }
+        html.dark .revenue-table td {
+            background-color: #111827 !important;
+            border-bottom-color: #1E293B !important;
+            color: #CBD5E1 !important;
+        }
+        html.dark .revenue-table tr:hover td {
+            background-color: #172033 !important;
+        }
+        html.dark .revenue-table tfoot tr td {
+            background-color: #0F172A !important;
+            border-top-color: #263449 !important;
+            color: #F8FAFC !important;
+        }
+        html.dark .feature-icon-check {
+            color: #60A5FA !important;
+        }
+        html.dark .btn-circle-edit {
+            background-color: rgba(59, 130, 246, 0.15) !important;
+            color: #60A5FA !important;
+        }
+        html.dark .btn-circle-edit:hover {
+            background-color: #2563EB !important;
             color: #FFFFFF !important;
         }
 
