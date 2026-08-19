@@ -666,6 +666,38 @@
             background: #4338CA !important;
             color: #FFFFFF !important;
         }
+
+        /* Enforce Full Width Layout Across Main Settings Column */
+        .settings-content,
+        .settings-content .tab-content,
+        .settings-content .tab-pane,
+        .settings-content form,
+        .settings-content .card,
+        .settings-content .card-body,
+        .settings-content .setting-card {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .settings-content .row {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            width: 100% !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .settings-content .col-12,
+        .settings-content .col-lg-12,
+        .settings-content .col-md-12,
+        .settings-content .col-sm-12 {
+            width: 100% !important;
+            flex: 0 0 100% !important;
+            max-width: 100% !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
     </style>
     <x-ui.page-container class="settings-layout-wrapper pt-4">
         <!-- Settings Top Header -->
@@ -4083,58 +4115,59 @@
                                                             id="SITE_RTL"
                                                             {{ $settings['SITE_RTL'] == 'on' ? 'checked="checked"' : '' }}>
                                                     </div>
-                                                </div>
-                                                <div class="setting-card setting-logo-box p-3">
-                                                    <div class="row">
-                                                        <h5>{{ __('Theme Customizer') }}</h5>
-                                                        <div class="col-md-4 my-auto">
-                                                            <h6 class="mt-2">
-                                                                <i data-feather="credit-card"
-                                                                    class="me-2"></i>{{ __('Primary Color Settings') }}
-                                                            </h6>
-                                                            <hr class="my-2" />
+                                                <div class="col-12">
+                                                    <div class="setting-card setting-logo-box p-3">
+                                                        <div class="row">
+                                                            <h5>{{ __('Theme Customizer') }}</h5>
+                                                            <div class="col-md-4 my-auto">
+                                                                <h6 class="mt-2">
+                                                                    <i data-feather="credit-card"
+                                                                        class="me-2"></i>{{ __('Primary Color Settings') }}
+                                                                </h6>
+                                                                <hr class="my-2" />
 
-                                                            <div class="color-wrp">
-                                                                <div class="theme-color color-setting-wrp themes-color">
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-1' ? 'active_color' : '' }}" data-value="theme-1"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-1"{{ $color == 'theme-1' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-2' ? 'active_color' : '' }}" data-value="theme-2"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-2"{{ $color == 'theme-2' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-3' ? 'active_color' : '' }}" data-value="theme-3"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-3"{{ $color == 'theme-3' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-4' ? 'active_color' : '' }}" data-value="theme-4"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-4"{{ $color == 'theme-4' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-5' ? 'active_color' : '' }}" data-value="theme-5"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-5"{{ $color == 'theme-5' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-6' ? 'active_color' : '' }}" data-value="theme-6"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-6"{{ $color == 'theme-6' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-7' ? 'active_color' : '' }}" data-value="theme-7"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-7"{{ $color == 'theme-7' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-8' ? 'active_color' : '' }}" data-value="theme-8"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-8"{{ $color == 'theme-8' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-9' ? 'active_color' : '' }}" data-value="theme-9"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-9"{{ $color == 'theme-9' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-10' ? 'active_color' : '' }}" data-value="theme-10"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-10"{{ $color == 'theme-10' ? 'checked' : '' }}>
-                                                                </div>
-                                                                <div class="color-picker-wrp ">
-                                                                        <input type="color" value="{{ $color ? $color : '' }}" class="colorPicker {{ isset($flag) && $flag == 'true' ? 'active_color' : '' }}" name="custom_color" id="color-picker">
-                                                                        <input type='hidden' name="color_flag" value = {{  isset($flag) && $flag == 'true' ? 'true' : 'false' }}>
+                                                                <div class="color-wrp">
+                                                                    <div class="theme-color color-setting-wrp themes-color">
+                                                                        <a href="#!" class="themes-color-change {{ $color == 'theme-1' ? 'active_color' : '' }}" data-value="theme-1"></a>
+                                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-1"{{ $color == 'theme-1' ? 'checked' : '' }}>
+                                                                        <a href="#!" class="themes-color-change {{ $color == 'theme-2' ? 'active_color' : '' }}" data-value="theme-2"></a>
+                                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-2"{{ $color == 'theme-2' ? 'checked' : '' }}>
+                                                                        <a href="#!" class="themes-color-change {{ $color == 'theme-3' ? 'active_color' : '' }}" data-value="theme-3"></a>
+                                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-3"{{ $color == 'theme-3' ? 'checked' : '' }}>
+                                                                        <a href="#!" class="themes-color-change {{ $color == 'theme-4' ? 'active_color' : '' }}" data-value="theme-4"></a>
+                                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-4"{{ $color == 'theme-4' ? 'checked' : '' }}>
+                                                                        <a href="#!" class="themes-color-change {{ $color == 'theme-5' ? 'active_color' : '' }}" data-value="theme-5"></a>
+                                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-5"{{ $color == 'theme-5' ? 'checked' : '' }}>
+                                                                        <a href="#!" class="themes-color-change {{ $color == 'theme-6' ? 'active_color' : '' }}" data-value="theme-6"></a>
+                                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-6"{{ $color == 'theme-6' ? 'checked' : '' }}>
+                                                                        <a href="#!" class="themes-color-change {{ $color == 'theme-7' ? 'active_color' : '' }}" data-value="theme-7"></a>
+                                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-7"{{ $color == 'theme-7' ? 'checked' : '' }}>
+                                                                        <a href="#!" class="themes-color-change {{ $color == 'theme-8' ? 'active_color' : '' }}" data-value="theme-8"></a>
+                                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-8"{{ $color == 'theme-8' ? 'checked' : '' }}>
+                                                                        <a href="#!" class="themes-color-change {{ $color == 'theme-9' ? 'active_color' : '' }}" data-value="theme-9"></a>
+                                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-9"{{ $color == 'theme-9' ? 'checked' : '' }}>
+                                                                        <a href="#!" class="themes-color-change {{ $color == 'theme-10' ? 'active_color' : '' }}" data-value="theme-10"></a>
+                                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-10"{{ $color == 'theme-10' ? 'checked' : '' }}>
+                                                                    </div>
+                                                                    <div class="color-picker-wrp ">
+                                                                            <input type="color" value="{{ $color ? $color : '' }}" class="colorPicker {{ isset($flag) && $flag == 'true' ? 'active_color' : '' }}" name="custom_color" id="color-picker">
+                                                                            <input type='hidden' name="color_flag" value = {{  isset($flag) && $flag == 'true' ? 'true' : 'false' }}>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-4 my-auto mt-2">
-                                                            <h6 class="">
-                                                                <i data-feather="layout"
-                                                                    class="me-2"></i>{{ __('Sidebar Settings') }}
-                                                            </h6>
-                                                            <hr class="my-2" />
-                                                            <div class="form-check form-switch">
-                                                                <input type="checkbox" class="form-check-input"
-                                                                    id="cust-theme-bg" name="cust_theme_bg"
-                                                                    {{ Utility::getValByName('cust_theme_bg') == 'on' ? 'checked' : '' }} />
-                                                                <label class="form-check-label f-w-600 pl-1"
-                                                                    for="cust-theme-bg">{{ __('Transparent layout') }}</label>
+                                                            <div class="col-md-4 my-auto mt-2">
+                                                                <h6 class="">
+                                                                    <i data-feather="layout"
+                                                                        class="me-2"></i>{{ __('Sidebar Settings') }}
+                                                                </h6>
+                                                                <hr class="my-2" />
+                                                                <div class="form-check form-switch">
+                                                                    <input type="checkbox" class="form-check-input"
+                                                                        id="cust-theme-bg" name="cust_theme_bg"
+                                                                        {{ Utility::getValByName('cust_theme_bg') == 'on' ? 'checked' : '' }} />
+                                                                    <label class="form-check-label f-w-600 pl-1"
+                                                                        for="cust-theme-bg">{{ __('Transparent layout') }}</label>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
