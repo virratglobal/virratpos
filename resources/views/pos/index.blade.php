@@ -430,7 +430,7 @@
                     <a href="{{ route('orders.index') }}" class="px-3.5 py-2 bg-purple-50 text-purple-600 rounded-lg text-xs font-semibold flex items-center gap-1.5 border border-purple-100 hover:bg-purple-100 transition-colors text-decoration-none">
                         <i class="ti ti-chart-bar text-sm"></i> {{ __('Today Sales') }}
                     </a>
-                    <button type="button" class="px-3.5 py-2 bg-blue-50 text-blue-600 rounded-lg text-xs font-semibold flex items-center gap-1.5 border border-blue-100 hover:bg-blue-100 transition-colors cursor-pointer" onclick="alert('Calculator widget coming soon')">
+                    <button type="button" class="px-3.5 py-2 bg-blue-50 text-blue-600 rounded-lg text-xs font-semibold flex items-center gap-1.5 border border-blue-100 hover:bg-blue-100 transition-colors cursor-pointer" onclick="toggleCalculator()">
                         <i class="ti ti-calculator text-sm"></i> {{ __('Calculator') }}
                     </button>
                     <a href="{{ route('dashboard') }}" class="px-3.5 py-2 bg-rose-50 text-rose-600 rounded-lg text-xs font-semibold flex items-center gap-1.5 border border-rose-100 hover:bg-rose-100 transition-colors text-decoration-none">
@@ -664,6 +664,56 @@
 
         </div>
 
+        <!-- Calculator Modal -->
+        <div id="calculatorModal" class="fixed inset-0 z-[1050] hidden items-center justify-center bg-black/40 backdrop-blur-sm" style="display: none; align-items: center; justify-content: center;">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-xl w-72 overflow-hidden flex flex-col">
+                <!-- Header -->
+                <div class="bg-slate-50 px-4 py-3 border-b border-slate-200 flex items-center justify-between">
+                    <div class="flex items-center gap-1.5 text-slate-700 font-semibold text-sm">
+                        <i class="ti ti-calculator text-base text-indigo-600"></i>
+                        <span>{{ __('Calculator') }}</span>
+                    </div>
+                    <button type="button" class="text-slate-400 hover:text-slate-600 cursor-pointer border-none bg-transparent p-0 flex" onclick="toggleCalculator()">
+                        <span class="material-symbols-outlined text-lg">close</span>
+                    </button>
+                </div>
+                <!-- Display Screen -->
+                <div class="bg-slate-900 p-4 text-right flex flex-col justify-end min-h-[80px]">
+                    <div id="calc-expression" class="text-slate-400 text-xs font-mono break-all leading-tight mb-1 h-4"></div>
+                    <div id="calc-display" class="text-white text-2xl font-bold font-mono truncate leading-none">0</div>
+                </div>
+                <!-- Keypad -->
+                <div class="p-3 grid grid-cols-4 gap-2 bg-slate-50">
+                    <!-- Row 1 -->
+                    <button onclick="clearCalc()" class="col-span-2 py-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-lg text-sm font-bold border border-rose-100 transition-colors cursor-pointer">C</button>
+                    <button onclick="backspaceCalc()" class="py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg text-sm font-bold border-none transition-colors cursor-pointer">⌫</button>
+                    <button onclick="inputOperator('/')" class="py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 rounded-lg text-sm font-bold border border-indigo-100 transition-colors cursor-pointer">÷</button>
+                    
+                    <!-- Row 2 -->
+                    <button onclick="inputNumber('7')" class="py-2 bg-white hover:bg-slate-100 text-slate-800 rounded-lg text-sm font-semibold border border-slate-200 transition-colors cursor-pointer">7</button>
+                    <button onclick="inputNumber('8')" class="py-2 bg-white hover:bg-slate-100 text-slate-800 rounded-lg text-sm font-semibold border border-slate-200 transition-colors cursor-pointer">8</button>
+                    <button onclick="inputNumber('9')" class="py-2 bg-white hover:bg-slate-100 text-slate-800 rounded-lg text-sm font-semibold border border-slate-200 transition-colors cursor-pointer">9</button>
+                    <button onclick="inputOperator('*')" class="py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 rounded-lg text-sm font-bold border border-indigo-100 transition-colors cursor-pointer">×</button>
+                    
+                    <!-- Row 3 -->
+                    <button onclick="inputNumber('4')" class="py-2 bg-white hover:bg-slate-100 text-slate-800 rounded-lg text-sm font-semibold border border-slate-200 transition-colors cursor-pointer">4</button>
+                    <button onclick="inputNumber('5')" class="py-2 bg-white hover:bg-slate-100 text-slate-800 rounded-lg text-sm font-semibold border border-slate-200 transition-colors cursor-pointer">5</button>
+                    <button onclick="inputNumber('6')" class="py-2 bg-white hover:bg-slate-100 text-slate-800 rounded-lg text-sm font-semibold border border-slate-200 transition-colors cursor-pointer">6</button>
+                    <button onclick="inputOperator('-')" class="py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 rounded-lg text-sm font-bold border border-indigo-100 transition-colors cursor-pointer">-</button>
+                    
+                    <!-- Row 4 -->
+                    <button onclick="inputNumber('1')" class="py-2 bg-white hover:bg-slate-100 text-slate-800 rounded-lg text-sm font-semibold border border-slate-200 transition-colors cursor-pointer">1</button>
+                    <button onclick="inputNumber('2')" class="py-2 bg-white hover:bg-slate-100 text-slate-800 rounded-lg text-sm font-semibold border border-slate-200 transition-colors cursor-pointer">2</button>
+                    <button onclick="inputNumber('3')" class="py-2 bg-white hover:bg-slate-100 text-slate-800 rounded-lg text-sm font-semibold border border-slate-200 transition-colors cursor-pointer">3</button>
+                    <button onclick="inputOperator('+')" class="py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 rounded-lg text-sm font-bold border border-indigo-100 transition-colors cursor-pointer">+</button>
+                    
+                    <!-- Row 5 -->
+                    <button onclick="inputNumber('0')" class="col-span-2 py-2 bg-white hover:bg-slate-100 text-slate-800 rounded-lg text-sm font-semibold border border-slate-200 transition-colors cursor-pointer">0</button>
+                    <button onclick="inputDecimal()" class="py-2 bg-white hover:bg-slate-100 text-slate-800 rounded-lg text-sm font-semibold border border-slate-200 transition-colors cursor-pointer">.</button>
+                    <button onclick="calculateResult()" class="py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-bold border-none transition-colors cursor-pointer">=</button>
+                </div>
+            </div>
+        </div>
     </div>
 </x-ui.page-container>
 @endsection
@@ -677,6 +727,92 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        // Calculator Variables & Logic
+        let calcCurrentInput = '0';
+        let calcExpression = '';
+
+        window.toggleCalculator = function() {
+            const modal = document.getElementById('calculatorModal');
+            if (modal.style.display === 'none') {
+                modal.style.display = 'flex';
+                resetCalculator();
+            } else {
+                modal.style.display = 'none';
+            }
+        };
+
+        window.resetCalculator = function() {
+            calcCurrentInput = '0';
+            calcExpression = '';
+            updateCalcDisplay();
+        };
+
+        window.updateCalcDisplay = function() {
+            document.getElementById('calc-display').innerText = calcCurrentInput;
+            document.getElementById('calc-expression').innerText = calcExpression;
+        };
+
+        window.clearCalc = function() {
+            resetCalculator();
+        };
+
+        window.backspaceCalc = function() {
+            if (calcCurrentInput.length > 1) {
+                calcCurrentInput = calcCurrentInput.slice(0, -1);
+            } else {
+                calcCurrentInput = '0';
+            }
+            updateCalcDisplay();
+        };
+
+        window.inputNumber = function(num) {
+            if (calcCurrentInput === '0') {
+                calcCurrentInput = num;
+            } else {
+                calcCurrentInput += num;
+            }
+            updateCalcDisplay();
+        };
+
+        window.inputDecimal = function() {
+            if (!calcCurrentInput.includes('.')) {
+                calcCurrentInput += '.';
+            }
+            updateCalcDisplay();
+        };
+
+        window.inputOperator = function(op) {
+            calcExpression = calcCurrentInput + ' ' + op + ' ';
+            calcCurrentInput = '0';
+            updateCalcDisplay();
+        };
+
+        window.calculateResult = function() {
+            if (calcExpression === '') return;
+            
+            let fullExpr = calcExpression + calcCurrentInput;
+            // Replace visual operators with math operators
+            let evalExpr = fullExpr.replace('÷', '/').replace('×', '*');
+            
+            try {
+                let result = Function('"use strict";return (' + evalExpr + ')')();
+                
+                if (result % 1 !== 0) {
+                    result = parseFloat(result.toFixed(8));
+                }
+                
+                calcExpression = fullExpr + ' =';
+                calcCurrentInput = String(result);
+                updateCalcDisplay();
+                calcExpression = ''; // Reset expression for next calculation
+            } catch (e) {
+                calcCurrentInput = 'Error';
+                updateCalcDisplay();
+                calcCurrentInput = '0';
+                calcExpression = '';
+            }
+        };
 
         $( document ).ready(function() {
 
