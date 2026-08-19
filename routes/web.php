@@ -52,7 +52,6 @@ use App\Http\Controllers\OzowController;
 use App\Http\Controllers\PaiementProController;
 use App\Http\Controllers\PayHereController;
 use App\Http\Controllers\PaytrController;
-use App\Http\Controllers\ReferralProgramController;
 use App\Http\Controllers\TapPaymentController;
 use App\Http\Controllers\YooKassaController;
 use Illuminate\Support\Facades\Route;
@@ -755,13 +754,7 @@ Route::delete('custom_domain_request/{id}/destroy', [CustomDomainRequestControll
 Route::get('custom_domain_request/{id}/{response}', [CustomDomainRequestController::class, 'updateRequestStatus'])->name('custom_domain_request.request')->middleware(['auth', 'XSS']);
 
 
-// Reffral Code
-Route::get('referral-program/company', [ReferralProgramController::class, 'companyIndex'])->name('referral-program.company')->middleware(['auth', 'XSS','verified']);
-Route::resource('referral-program', ReferralProgramController::class)->middleware(['auth', 'XSS']);
-Route::get('request-amount-sent/{id}', [ReferralProgramController::class, 'requestedAmountSent'])->name('request.amount.sent')->middleware(['auth', 'XSS']);
-Route::get('request-amount-cancel/{id}', [ReferralProgramController::class, 'requestCancel'])->name('request.amount.cancel')->middleware(['auth', 'XSS']);
-Route::post('request-amount-store/{id}', [ReferralProgramController::class, 'requestedAmountStore'])->name('request.amount.store')->middleware(['auth', 'XSS']);
-Route::get('request-amount/{id}/{status}', [ReferralProgramController::class, 'requestedAmount'])->name('amount.request')->middleware(['auth', 'XSS']);
+
 
 
 Route::get('order/pdf/{id}', [OrderController::class, 'invoicePdf'])->name('invoice.pdf')->middleware(['XSS']);

@@ -115,11 +115,6 @@
                 <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Plan Requests') }}</span>
             </a>
 
-            <a href="{{ route('referral-program.index') }}"
-                class="sg-nav-link {{ request()->is('referral-program*') ? 'sg-active' : '' }}">
-                <span class="material-symbols-outlined" style="font-size: 20px;">share</span>
-                <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Referral Program') }}</span>
-            </a>
 
             <a href="{{ route('custom_domain_request.index') }}"
                 class="sg-nav-link {{ request()->is('custom_domain_request*') ? 'sg-active' : '' }}">
@@ -281,13 +276,6 @@
             </a>
             @endcan
 
-            @if (Auth::user()->type == 'Owner')
-            <a href="{{ route('referral-program.company') }}"
-                class="sg-nav-link {{ request()->is('referral-program*') ? 'sg-active' : '' }}">
-                <span class="material-symbols-outlined" style="font-size: 20px;">share</span>
-                <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Referral Program') }}</span>
-            </a>
-            @endif
 
             {{-- Staff Dropdown --}}
             <div x-data="{ open: {{ Request::segment(1) == 'users' || Request::segment(1) == 'roles' ? 'true' : 'false' }} }">

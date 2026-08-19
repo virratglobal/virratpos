@@ -81,12 +81,6 @@
                         </li>
                     @endcan
 
-                    <li class="dash-item dash-hasmenu  {{ Request::segment(1) == 'referral-program' ? 'active' : '' }}">
-                        <a href="{{ route('referral-program.index') }}" class="dash-link">
-                            <span class="dash-micon"><i class="ti ti-discount-2"></i></span><span
-                                class="dash-mtext">{{ __('Referral Program') }}</span>
-                        </a>
-                    </li>
 
                     <li
                         class="dash-item dash-hasmenu {{ Request::segment(1) == 'custom_domain_request' ? ' active' : 'collapsed' }}">
@@ -302,14 +296,6 @@
                         </li>
                     @endcan
 
-                    @if (Auth::user()->type == 'Owner')
-                        <li class="dash-item dash-hasmenu  {{ Request::segment(1) == 'referral-program' ? 'active' : '' }}">
-                            <a href="{{ route('referral-program.company') }}" class="dash-link">
-                                <span class="dash-micon"><i class="ti ti-discount-2"></i></span><span
-                                    class="dash-mtext">{{ __('Referral Program') }}</span>
-                            </a>
-                        </li>
-                    @endif
 
                     @can('Manage Settings')
                     <li class="dash-item dash-hasmenu {{ Request::segment(1) == 'settings' || Request::route()->getName() == 'store.editproducts' ? ' active dash-trigger' : 'collapsed' }}">
