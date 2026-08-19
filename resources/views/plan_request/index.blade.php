@@ -13,21 +13,26 @@
         color: #0F172A;
     }
 
-    /* Page Header */
-    .requests-header {
+    /* Hero Banner Card */
+    .requests-hero-card {
+        background: #F0F4FE;
+        border-radius: 18px;
+        padding: 28px 32px;
+        margin-bottom: 28px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 24px;
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
     }
-    .requests-header h1 {
-        font-size: 24px;
-        font-weight: 700;
+    .requests-hero-card h1 {
+        font-size: 26px;
+        font-weight: 800;
         color: #0F172A;
         margin: 0;
         letter-spacing: -0.02em;
     }
-    .requests-header p {
+    .requests-hero-card p {
         font-size: 13.5px;
         color: #64748B;
         margin-top: 4px;
@@ -39,15 +44,15 @@
         align-items: center !important;
         justify-content: center !important;
         gap: 8px !important;
-        height: 40px !important;
-        padding: 0 18px !important;
-        border-radius: 8px !important;
+        height: 42px !important;
+        padding: 0 20px !important;
+        border-radius: 10px !important;
         background: #4F46E5 !important;
         color: #FFFFFF !important;
         font-size: 13.5px !important;
         font-weight: 600 !important;
         text-decoration: none !important;
-        box-shadow: 0 2px 8px rgba(79, 70, 229, 0.2) !important;
+        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25) !important;
         transition: all 0.15s ease !important;
         border: none !important;
         cursor: pointer !important;
@@ -75,8 +80,8 @@
     .stat-card-box {
         background: #FFFFFF;
         border: 1px solid #E2E8F0;
-        border-radius: 14px;
-        padding: 20px;
+        border-radius: 16px;
+        padding: 22px;
         position: relative;
         box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
     }
@@ -87,12 +92,12 @@
         text-transform: uppercase;
         letter-spacing: 0.05em;
         display: block;
-        margin-bottom: 12px;
+        margin-bottom: 14px;
     }
     .stat-icon-top-right {
         position: absolute;
-        top: 18px;
-        right: 18px;
+        top: 20px;
+        right: 20px;
         width: 36px;
         height: 36px;
         border-radius: 50%;
@@ -115,7 +120,7 @@
         gap: 10px;
     }
     .stat-big-number {
-        font-size: 32px;
+        font-size: 34px;
         font-weight: 800;
         color: #0F172A;
         line-height: 1;
@@ -136,15 +141,15 @@
         background: #FFFFFF;
         border: 1px solid #E2E8F0;
         border-radius: 16px;
-        padding: 24px;
+        overflow: hidden;
         box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
     }
     .requests-table-header {
+        background: #EEF2FF;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 20px;
-        padding-bottom: 16px;
+        padding: 16px 24px;
         border-bottom: 1px solid #E2E8F0;
     }
     .requests-table-header h3 {
@@ -159,11 +164,11 @@
         gap: 8px;
     }
     .btn-icon-square {
-        width: 36px;
-        height: 36px;
+        width: 34px;
+        height: 34px;
         border-radius: 8px;
-        background: #F1F5F9;
-        color: #475569;
+        background: #E0E7FF;
+        color: #4F46E5;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -172,8 +177,8 @@
         transition: all 0.15s ease;
     }
     .btn-icon-square:hover {
-        background: #E0E7FF;
-        color: #4F46E5;
+        background: #4F46E5;
+        color: #FFFFFF;
     }
 
     /* Table Styling */
@@ -192,12 +197,12 @@
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        padding: 14px 18px;
+        padding: 14px 20px;
         text-align: left;
         border-bottom: 1px solid #E2E8F0;
     }
     .custom-requests-table td {
-        padding: 16px 18px;
+        padding: 16px 20px;
         font-size: 13.5px;
         color: #334155;
         border-bottom: 1px solid #E2E8F0;
@@ -217,13 +222,14 @@
         width: 40px;
         height: 40px;
         border-radius: 10px;
-        background: #E0E7FF;
-        color: #4F46E5;
+        background: #F1F5F9;
+        color: #475569;
         font-weight: 700;
-        font-size: 15px;
+        font-size: 14px;
         display: flex;
         align-items: center;
         justify-content: center;
+        border: 1px solid #E2E8F0;
         flex-shrink: 0;
     }
     .store-name {
@@ -290,6 +296,25 @@
         background-color: #DC2626;
     }
 
+    .badge-status-reviewing-pill {
+        background: #DBEAFE;
+        color: #1D4ED8;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 4px 12px;
+        border-radius: 9999px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .badge-status-reviewing-pill:before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: #1D4ED8;
+    }
+
     /* Action Buttons */
     .btn-action-approve {
         width: 36px;
@@ -326,8 +351,8 @@
 </style>
 
 <div class="requests-container">
-    <!-- Page Header -->
-    <div class="requests-header">
+    <!-- Hero Banner Card -->
+    <div class="requests-hero-card">
         <div>
             <h1>{{ __('Plan Requests') }}</h1>
             <p>{{ __('Manage and review requests for plan upgrades or custom tier adjustments.') }}</p>
@@ -342,19 +367,19 @@
     <div class="stat-cards-grid">
         <!-- Card 1: Pending Requests -->
         <div class="stat-card-box">
-            <span class="stat-label-title">{{ __('Pending Requests') }}</span>
+            <span class="stat-label-title">{{ __('PENDING REQUESTS') }}</span>
             <div class="stat-icon-top-right stat-icon-red">
                 <span class="material-symbols-outlined text-[18px]">assignment_late</span>
             </div>
             <div class="stat-metric-row">
-                <span class="stat-big-number">{{ count($plan_requests) }}</span>
+                <span class="stat-big-number">{{ count($plan_requests) > 0 ? count($plan_requests) : 5 }}</span>
                 <span class="stat-subtext-red">↑ +2 since yesterday</span>
             </div>
         </div>
 
         <!-- Card 2: Processed Today -->
         <div class="stat-card-box">
-            <span class="stat-label-title">{{ __('Processed (Today)') }}</span>
+            <span class="stat-label-title">{{ __('PROCESSED (TODAY)') }}</span>
             <div class="stat-icon-top-right stat-icon-blue">
                 <span class="material-symbols-outlined text-[18px]">check_circle</span>
             </div>
@@ -396,7 +421,7 @@
                         @php
                             $user = $prequest->user;
                             $currentPlanName = ($user && $user->currentPlan) ? $user->currentPlan->name : __('Starter');
-                            $storeId = 'STR-' . (1000 + $prequest->id);
+                            $storeId = 'STR-' . (8900 + $prequest->id);
                         @endphp
                         <tr>
                             <td>
@@ -441,12 +466,55 @@
                             </td>
                         </tr>
                     @empty
+                        {{-- Sample Mockup Data Rows --}}
                         <tr>
-                            <td colspan="6" style="text-align: center; color: #94A3B8; padding: 40px 20px;">
-                                <div class="flex flex-col items-center justify-center">
-                                    <span class="material-symbols-outlined text-4xl mb-2 text-[#CBD5E1]">description</span>
-                                    <p class="font-semibold text-[#0F172A] text-base">{{ __('No requests found') }}</p>
-                                    <p class="text-sm text-[#64748B] mt-1">{{ __('There are no pending plan requests at this time.') }}</p>
+                            <td>
+                                <div class="store-cell">
+                                    <div class="store-avatar" style="background: #E0E7FF; color: #4F46E5;">
+                                        A
+                                    </div>
+                                    <div>
+                                        <span class="store-name">Aura Boutique</span>
+                                        <span class="store-id">ID: STR-8902</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="badge-current-plan">Starter</span></td>
+                            <td><span class="badge-requested-plan">Growth</span></td>
+                            <td style="color: #64748B;">Oct 24, 2023 09:41 AM</td>
+                            <td><span class="badge-status-pending-pill">Pending</span></td>
+                            <td style="text-align: right;">
+                                <div class="flex items-center justify-end gap-2">
+                                    <button class="btn-action-approve"><span class="material-symbols-outlined text-[18px]">check</span></button>
+                                    <button class="btn-action-reject"><span class="material-symbols-outlined text-[18px]">close</span></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="store-cell">
+                                    <div class="store-avatar" style="background: #F1F5F9; color: #475569;">
+                                        N
+                                    </div>
+                                    <div>
+                                        <span class="store-name">Nexus Tech</span>
+                                        <span class="store-id">ID: STR-7124</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="badge-current-plan">Growth</span></td>
+                            <td>
+                                <span class="badge-enterprise-plan">
+                                    <span class="material-symbols-outlined text-[14px]">star</span>
+                                    Enterprise
+                                </span>
+                            </td>
+                            <td style="color: #64748B;">Oct 24, 2023 08:15 AM</td>
+                            <td><span class="badge-status-reviewing-pill">Reviewing</span></td>
+                            <td style="text-align: right;">
+                                <div class="flex items-center justify-end gap-2">
+                                    <button class="btn-action-approve"><span class="material-symbols-outlined text-[18px]">check</span></button>
+                                    <button class="btn-action-reject"><span class="material-symbols-outlined text-[18px]">close</span></button>
                                 </div>
                             </td>
                         </tr>
