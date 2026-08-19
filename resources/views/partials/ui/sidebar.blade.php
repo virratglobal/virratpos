@@ -65,7 +65,7 @@
 {{-- Sidebar --}}
 <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-[150%]'"
     class="fixed left-0 top-0 bottom-0 z-50 flex flex-col transition-transform duration-300 ease-in-out sg-sidebar"
-    style="background: #ffffff; border-radius: 12px; box-shadow: 0 1px 8px rgba(0,0,0,0.04); border: 1px solid rgba(199,196,215,0.1);">
+    style="background: var(--sidebar-bg); border-radius: 12px; box-shadow: 0 1px 8px rgba(0,0,0,0.04); border: 1px solid var(--border);">
 
     {{-- Logo Area --}}
     <div style="padding: 22px 24px; display: flex; align-items: center; justify-content: space-between;">

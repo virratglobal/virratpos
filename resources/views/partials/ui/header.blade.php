@@ -16,17 +16,16 @@
 {{-- Header: fixed, floating, matching Stitch design --}}
 <header class="fixed z-40 flex items-center justify-between px-4 lg:px-6 sg-header transition-all duration-300 ease-in-out" style="
     height: 64px;
-    background: #ffffff;
+    background: var(--header-bg);
     border-radius: 12px;
     box-shadow: 0 1px 8px rgba(0,0,0,0.04);
-    border: 1px solid rgba(199,196,215,0.1);
+    border: 1px solid var(--border);
 ">
     {{-- Left: Mobile menu button + Search --}}
     <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
         {{-- Menu toggle button --}}
         <button @click="sidebarOpen = !sidebarOpen; if(!sidebarOpen) document.body.classList.add('sidebar-closed-manual'); else document.body.classList.remove('sidebar-closed-manual');"
-            style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 8px; color: #464554; background: none; border: none; cursor: pointer; transition: background 0.2s;"
-            onmouseover="this.style.background='#dce9ff';" onmouseout="this.style.background='';">
+            class="hdr-btn" title="{{ __('Toggle Sidebar') }}">
             <span class="material-symbols-outlined">menu</span>
         </button>
 
@@ -36,20 +35,20 @@
             align-items: center;
             gap: 12px;
             padding: 8px 16px;
-            background: #F8FAFC;
+            background: var(--input-bg);
             border-radius: 8px;
-            color: #0F172A;
+            color: var(--text-primary);
             font-family: Inter, sans-serif;
             font-size: 14px;
             line-height: 20px;
             width: 320px;
-            border: 1px solid #E2E8F0;
+            border: 1px solid var(--border);
             cursor: pointer;
             transition: all 0.2s;
         "
-        onmouseover="this.style.borderColor='#4648d4';" onmouseout="this.style.borderColor='#E2E8F0';">
-            <span class="material-symbols-outlined" style="font-size: 18px; color: #64748B;">search</span>
-            <span style="color: #64748B;">{{ __('Search or press ⌘K') }}</span>
+        title="{{ __('Search or press ⌘K') }}">
+            <span class="material-symbols-outlined" style="font-size: 18px; color: var(--text-muted);">search</span>
+            <span style="color: var(--text-muted);">{{ __('Search or press ⌘K') }}</span>
         </button>
     </div>
 

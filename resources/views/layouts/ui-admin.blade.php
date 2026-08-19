@@ -107,22 +107,52 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
     </script>
 
     <style>
+        :root {
+            --app-bg: #F8FAFC;
+            --surface: #FFFFFF;
+            --surface-2: #F8FAFC;
+            --surface-elevated: #FFFFFF;
+            --surface-dropdown: #FFFFFF;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --border-strong: #CBD5E1;
+            --input-bg: #FFFFFF;
+            --primary: #2563EB;
+            --primary-hover: #1D4ED8;
+            --sidebar-bg: #FFFFFF;
+            --header-bg: #FFFFFF;
+            --metric-bg: #EFF6FF;
+        }
+
+        .dark,
+        html.dark,
+        html[data-theme="dark"],
+        body.dark {
+            --app-bg: #0B1120;
+            --surface: #111827;
+            --surface-2: #172033;
+            --surface-elevated: #1E293B;
+            --surface-dropdown: #1E293B;
+            --text-primary: #F8FAFC;
+            --text-secondary: #CBD5E1;
+            --text-muted: #94A3B8;
+            --border: #263449;
+            --border-strong: #334155;
+            --input-bg: #0F172A;
+            --primary: #3B82F6;
+            --primary-hover: #60A5FA;
+            --sidebar-bg: #0F172A;
+            --header-bg: #111827;
+            --metric-bg: #111827;
+        }
+
         /* Reset and base */
         body {
             font-family: 'Inter', sans-serif !important;
-            background-color: #f8f9ff !important;
-            color: #0b1c30 !important;
-        }
-
-        /* ==========================================================================
-           GLOBAL DARK THEME ENGINE — VIRRATPOS SAAS
-           ========================================================================== */
-
-        html.dark,
-        body.dark,
-        html[data-theme="dark"] body {
-            background-color: #0B1120 !important;
-            color: #F8FAFC !important;
+            background-color: var(--app-bg) !important;
+            color: var(--text-primary) !important;
         }
 
         html.dark .sg-main-content,
