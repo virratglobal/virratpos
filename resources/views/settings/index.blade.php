@@ -213,30 +213,32 @@
 @endpush
 @section('content')
     <style>
-        /* Modern Super Admin Settings Design System - Mockup Design Purple #4648d4 */
+        /* Premium Modern SaaS Settings Design System - True Professional Blue #2563EB */
         .settings-layout-wrapper {
             max-width: 1360px;
             margin: 0 auto;
             padding: 8px 20px 40px 20px;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, sans-serif;
             color: #0F172A;
+            background-color: #F8FAFC;
         }
 
+        /* Page Header */
         .settings-header {
-            margin-bottom: 24px;
+            margin-bottom: 28px;
         }
         .settings-header h1 {
             font-family: 'Inter', sans-serif;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
             color: #0F172A;
             margin: 0;
             letter-spacing: -0.02em;
         }
         .settings-header p {
-            font-size: 13.5px;
+            font-size: 14.5px;
             color: #64748B;
-            margin-top: 4px;
+            margin-top: 6px;
             margin-bottom: 0;
             font-weight: 400;
         }
@@ -245,18 +247,20 @@
         .settings-horizontal-tabs {
             display: flex;
             align-items: center;
-            gap: 24px;
+            gap: 28px;
             border-bottom: 1px solid #E2E8F0;
-            margin-bottom: 28px;
+            margin-bottom: 32px;
             padding-bottom: 0;
+            overflow-x: auto;
+            white-space: nowrap;
         }
         .settings-horizontal-tabs .nav-link {
-            font-size: 12px;
-            font-weight: 700;
+            font-size: 13px;
+            font-weight: 600;
             color: #64748B;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            padding: 10px 0;
+            padding: 12px 0;
             border: none;
             background: transparent;
             position: relative;
@@ -265,10 +269,11 @@
             transition: color 0.15s ease;
         }
         .settings-horizontal-tabs .nav-link:hover {
-            color: #4648d4;
+            color: #2563EB;
         }
         .settings-horizontal-tabs .nav-link.active {
-            color: #4648d4;
+            color: #2563EB;
+            font-weight: 600;
         }
         .settings-horizontal-tabs .nav-link.active::after {
             content: '';
@@ -276,8 +281,8 @@
             bottom: -1px;
             left: 0;
             right: 0;
-            height: 2.5px;
-            background-color: #4648d4;
+            height: 2px;
+            background-color: #2563EB;
             border-radius: 2px 2px 0 0;
         }
 
@@ -285,7 +290,7 @@
         .settings-sidebar .setting-nav-wrp {
             background: #FFFFFF !important;
             border: 1px solid #E2E8F0 !important;
-            border-radius: 12px !important;
+            border-radius: 14px !important;
             padding: 16px !important;
             box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
             gap: 6px !important;
@@ -297,11 +302,11 @@
             align-items: center !important;
             gap: 12px !important;
             height: 42px !important;
-            padding: 0 12px !important;
+            padding: 0 14px !important;
             border-radius: 8px !important;
             font-size: 13.5px !important;
             font-weight: 500 !important;
-            color: #475569 !important;
+            color: #64748B !important;
             background: transparent !important;
             border: none !important;
             transition: all 0.15s ease-in-out !important;
@@ -310,23 +315,16 @@
             text-align: left !important;
         }
         .settings-sidebar .nav-link:hover {
-            background-color: #e5eeff !important;
-            color: #4648d4 !important;
+            background-color: #EFF6FF !important;
+            color: #2563EB !important;
         }
         .settings-sidebar .nav-link.active {
-            background-color: #e5eeff !important;
-            color: #4648d4 !important;
+            background-color: #2563EB !important;
+            color: #FFFFFF !important;
             font-weight: 600 !important;
         }
         .settings-sidebar .nav-link.active::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 6px;
-            bottom: 6px;
-            width: 3.5px;
-            background-color: #4648d4;
-            border-radius: 0 4px 4px 0;
+            display: none !important;
         }
         .settings-sidebar .nav-link .material-symbols-outlined,
         .settings-sidebar .nav-link svg {
@@ -337,39 +335,44 @@
             transition: color 0.15s ease !important;
             flex-shrink: 0;
         }
-        .settings-sidebar .nav-link:hover .material-symbols-outlined,
+        .settings-sidebar .nav-link:hover .material-symbols-outlined {
+            color: #2563EB !important;
+        }
         .settings-sidebar .nav-link.active .material-symbols-outlined,
         .settings-sidebar .nav-link.active svg {
-            color: #4648d4 !important;
+            color: #FFFFFF !important;
         }
 
-        /* Soft Blue Settings Card Tiles */
+        /* Clean White Settings Card Tiles */
         .settings-layout-wrapper .card,
         .settings-layout-wrapper .setting-card {
-            background-color: #F0F4FE !important;
-            border-radius: 16px !important;
-            border: 1px solid rgba(226, 232, 240, 0.8) !important;
-            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03) !important;
+            background-color: #FFFFFF !important;
+            border-radius: 14px !important;
+            border: 1px solid #E2E8F0 !important;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
             padding: 24px !important;
             margin-bottom: 24px !important;
         }
 
         /* Right Sidebar Cards */
         .system-info-card {
-            background: #E0E7FF;
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
         }
         .critical-actions-card {
-            background: #78350F;
-            color: #FFFFFF !important;
-            border-radius: 16px;
-            padding: 20px;
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-left: 4px solid #DC2626;
+            border-radius: 14px;
+            padding: 24px;
             position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 14px rgba(120, 53, 15, 0.25);
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
         }
+
         .settings-layout-wrapper .card-header {
             background-color: transparent !important;
             padding: 0 0 16px 0 !important;
@@ -426,10 +429,10 @@
             }
         }
         .upload-asset-card {
-            background: #FFFFFF;
-            border: 1px solid #E2E8F0;
-            border-radius: 12px;
-            padding: 20px;
+            background: #F8FAFC;
+            border: 1px dashed #CBD5E1;
+            border-radius: 10px;
+            padding: 16px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -440,15 +443,15 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             width: 100%;
         }
         .upload-asset-header .icon-badge {
             width: 32px;
             height: 32px;
             border-radius: 8px;
-            background: #e5eeff;
-            color: #4648d4;
+            background: #EFF6FF;
+            color: #2563EB;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -456,31 +459,28 @@
             flex-shrink: 0;
         }
         .upload-asset-header h6 {
-            font-size: 15px !important;
+            font-size: 14px !important;
             font-weight: 600 !important;
             color: #0F172A !important;
             margin: 0 !important;
-            text-transform: none !important;
-            letter-spacing: normal !important;
-            line-height: 1.2 !important;
         }
         .upload-preview-box {
             width: 100%;
-            height: 120px;
-            background: #F8FAFC;
-            border: 1px dashed #CBD5E1;
-            border-radius: 10px;
+            height: 110px;
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             position: relative;
             overflow: hidden;
         }
         .upload-preview-box img {
-            max-height: 80px;
+            max-height: 75px;
             max-width: 90%;
             object-fit: contain;
         }
@@ -490,19 +490,19 @@
             justify-content: center !important;
             gap: 8px !important;
             width: 100% !important;
-            height: 40px !important;
+            height: 38px !important;
             padding: 0 16px !important;
-            background-color: #4648d4 !important;
+            background-color: #2563EB !important;
             color: #FFFFFF !important;
-            font-size: 13.5px !important;
-            font-weight: 500 !important;
+            font-size: 13px !important;
+            font-weight: 600 !important;
             border-radius: 8px !important;
             border: none !important;
             cursor: pointer !important;
             transition: background-color 0.15s ease !important;
         }
         .btn-upload-blue:hover {
-            background-color: #3a3cb5 !important;
+            background-color: #1D4ED8 !important;
             color: #FFFFFF !important;
         }
 
@@ -526,8 +526,8 @@
         }
         .settings-layout-wrapper .form-control:focus,
         .settings-layout-wrapper select.form-control:focus {
-            border-color: #4648d4 !important;
-            box-shadow: 0 0 0 3px rgba(70, 72, 212, 0.12) !important;
+            border-color: #2563EB !important;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10) !important;
             outline: none !important;
         }
 
@@ -588,7 +588,7 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.15);
         }
         .ios-toggle input:checked + .ios-toggle-slider {
-            background-color: #4648d4;
+            background-color: #2563EB;
         }
         .ios-toggle input:checked + .ios-toggle-slider:before {
             transform: translateX(20px);
@@ -617,8 +617,8 @@
             transform: translateY(-2px);
         }
         .theme-swatch-btn.active_color {
-            border-color: #4648d4 !important;
-            box-shadow: 0 0 0 3px rgba(70, 72, 212, 0.25) !important;
+            border-color: #2563EB !important;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25) !important;
         }
         .theme-swatch-btn.active_color::after {
             content: '✓';
@@ -627,7 +627,7 @@
             font-weight: bold;
         }
 
-        /* Sticky Action Bar */
+        /* Sticky Save Action Bar */
         .settings-sticky-actions {
             position: sticky;
             bottom: 16px;
@@ -637,18 +637,18 @@
             padding: 14px 20px;
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: space-between;
             gap: 12px;
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
             z-index: 30;
             margin-top: 24px;
         }
         .btn-cancel-gray {
-            padding: 9px 18px;
+            padding: 9px 20px;
             border-radius: 8px;
             background: #FFFFFF;
-            border: 1px solid #CBD5E1;
-            color: #334155;
+            border: 1px solid #E2E8F0;
+            color: #475569;
             font-size: 13.5px;
             font-weight: 500;
             transition: all 0.15s;
@@ -662,19 +662,20 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 9px 22px;
+            height: 44px;
+            padding: 0 24px;
             border-radius: 8px;
-            background: #4648d4 !important;
+            background: #2563EB !important;
             color: #FFFFFF !important;
             font-size: 13.5px;
             font-weight: 600;
             border: none;
             cursor: pointer;
-            box-shadow: 0 2px 4px rgba(70, 72, 212, 0.2);
+            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
             transition: background 0.15s;
         }
         .btn-save-blue:hover {
-            background: #3a3cb5 !important;
+            background: #1D4ED8 !important;
             color: #FFFFFF !important;
         }
     </style>
@@ -7803,35 +7804,35 @@
                 <!-- System Information Card -->
                 <div class="system-info-card">
                     <div class="flex items-center gap-2 mb-4">
-                        <span class="material-symbols-outlined text-[#4F46E5]">info</span>
-                        <h4 style="font-size: 17px; font-weight: 700; color: #0F172A; margin: 0;">{{ __('System Information') }}</h4>
+                        <span class="material-symbols-outlined text-[#2563EB]">info</span>
+                        <h4 style="font-size: 16px; font-weight: 700; color: #0F172A; margin: 0;">{{ __('System Information') }}</h4>
                     </div>
 
-                    <div class="flex flex-col gap-3 text-xs">
-                        <div class="flex justify-between py-1.5 border-b border-indigo-100">
-                            <span style="color: #64748B;">{{ __('Version') }}</span>
+                    <div class="flex flex-col gap-2.5 text-xs">
+                        <div class="flex justify-between py-2 border-b border-gray-100">
+                            <span style="color: #64748B; font-weight: 500;">{{ __('Version') }}</span>
                             <span style="font-weight: 600; color: #0F172A;">v2.4.1-stable</span>
                         </div>
-                        <div class="flex justify-between py-1.5 border-b border-indigo-100">
-                            <span style="color: #64748B;">{{ __('Environment') }}</span>
+                        <div class="flex justify-between py-2 border-b border-gray-100">
+                            <span style="color: #64748B; font-weight: 500;">{{ __('Environment') }}</span>
                             <span style="font-weight: 600; color: #0F172A;">Production</span>
                         </div>
-                        <div class="flex justify-between py-1.5">
-                            <span style="color: #64748B;">{{ __('Last Update') }}</span>
+                        <div class="flex justify-between py-2">
+                            <span style="color: #64748B; font-weight: 500;">{{ __('Last Update') }}</span>
                             <span style="font-weight: 600; color: #0F172A;">2 hours ago</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Critical Actions Card (Bronze/Brown Card) -->
+                <!-- Critical Actions Card (Clean Warning/Danger Card) -->
                 <div class="critical-actions-card">
-                    <h4 style="font-size: 18px; font-weight: 700; color: #FFFFFF; margin: 0 0 8px 0;">{{ __('Critical Actions') }}</h4>
-                    <p style="font-size: 12.5px; color: rgba(255,255,255,0.85); margin-bottom: 20px; line-height: 1.5;">
-                        {{ __('These actions have permanent effects on the platform infrastructure.') }}
+                    <h4 style="font-size: 16px; font-weight: 700; color: #0F172A; margin: 0 0 6px 0;">{{ __('Critical Actions') }}</h4>
+                    <p style="font-size: 12.5px; color: #64748B; margin-bottom: 18px; line-height: 1.5;">
+                        {{ __('These actions can have permanent effects on the platform infrastructure.') }}
                     </p>
 
-                    <a href="{{ url('/config-cache') }}" class="btn w-full text-center py-2.5 px-4 font-bold text-xs uppercase tracking-wider rounded-lg transition-colors" style="background: #FFFFFF; color: #78350F; text-decoration: none; display: block;">
-                        {{ __('CLEAR CACHE') }}
+                    <a href="{{ url('/config-cache') }}" class="btn w-full text-center py-2.5 px-4 font-semibold text-xs uppercase tracking-wider rounded-lg transition-colors" style="background: #DC2626; color: #FFFFFF; text-decoration: none; display: block;">
+                        {{ __('Clear Cache') }}
                     </a>
                 </div>
             </div>
