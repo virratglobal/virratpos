@@ -86,19 +86,21 @@ if (empty($getStoreThemeSetting)) {
     <link rel="stylesheet" href="{{ asset('assets/theme14/css/main-style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/theme14/css/responsive.css') }}">
     @endif
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --theme-color: #84cc16 !important;
-            --theme-color-hover: #84cc16cc !important;
-            --bg-color: #f7f7f5 !important;
+            --theme-color: #b45309 !important;
+            --theme-color-hover: #b45309cc !important;
+            --bg-color: #f5f2eb !important;
             font-family: 'Outfit', sans-serif !important;
         }
         body, p, span, a, button, input, select, textarea {
             font-family: 'Outfit', sans-serif !important;
         }
-        body { background-color: #f7f7f5 !important; } .card, .product-box { border-radius: 16px !important; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05) !important; }
+        body { background-color: #f5f2eb !important; color: #2d2a26 !important; } .wrapper { background-color: #f5f2eb !important; } .product-box, .card, .about-promotions { background: #ffffff !important; border-radius: 12px !important; border: 1px solid #e1dbcd !important; box-shadow: 0 4px 10px rgba(45,42,38,0.03) !important; } .btn, .cart-btns .btn, .btn-primary { background-color: #b45309 !important; border-color: #b45309 !important; color: #fff !important; border-radius: 8px !important; } .btn:hover, .btn-primary:hover { background-color: #92400e !important; } h1, h2, h3, h4, h5, h6 { font-family: 'Cinzel', serif !important; color: #2d2a26 !important; }
     </style>
+
+    
 
 
                 {{-- pwa customer app --}}

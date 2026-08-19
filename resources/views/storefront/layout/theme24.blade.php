@@ -89,16 +89,18 @@ if (empty($getStoreThemeSetting)) {
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --theme-color: #b91c1c !important;
-            --theme-color-hover: #b91c1ccc !important;
-            --bg-color: #121214 !important;
+            --theme-color: #ff5722 !important;
+            --theme-color-hover: #ff5722cc !important;
+            --bg-color: #0f0f10 !important;
             font-family: 'Inter', sans-serif !important;
         }
         body, p, span, a, button, input, select, textarea {
             font-family: 'Inter', sans-serif !important;
         }
-        body { background-color: #121214 !important; color: #e4e4e7 !important; } h1, h2, h3, h4, h5, h6 { font-family: 'Syne', sans-serif !important; text-transform: uppercase !important; }
+        body { background-color: #0f0f10 !important; color: #fafafa !important; } .wrapper { background-color: #0f0f10 !important; } .product-box, .card, .about-promotions { background: #17181c !important; border: 2px solid #2e3035 !important; border-radius: 12px !important; } .btn, .cart-btns .btn, .btn-primary { background-color: #ff5722 !important; border-color: #ff5722 !important; color: #fff !important; text-transform: uppercase; font-weight: 800; border-radius: 6px !important; } h1, h2, h3, h4, h5, h6 { font-family: 'Syne', sans-serif !important; }
     </style>
+
+    
 
 
                 {{-- pwa customer app --}}

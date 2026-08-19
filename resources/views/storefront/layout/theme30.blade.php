@@ -86,16 +86,18 @@ $data = $data
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --theme-color: #3b82f6 !important;
-            --theme-color-hover: #3b82f6cc !important;
+            --theme-color: #4f46e5 !important;
+            --theme-color-hover: #4f46e5cc !important;
             --bg-color: #f8fafc !important;
             font-family: 'Plus Jakarta Sans', sans-serif !important;
         }
         body, p, span, a, button, input, select, textarea {
             font-family: 'Plus Jakarta Sans', sans-serif !important;
         }
-        body { background-color: #f8fafc !important; }
+        body { background-color: #f8fafc !important; color: #0f172a !important; } .wrapper { background-color: #f8fafc !important; } .product-box, .card, .about-promotions { background: #ffffff !important; border-radius: 8px !important; border: 1px solid #e2e8f0 !important; } .btn, .cart-btns .btn, .btn-primary { background-color: #4f46e5 !important; border-color: #4f46e5 !important; color: #fff !important; border-radius: 6px !important; }
     </style>
+
+    
 
                     {{-- pwa customer app --}}
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />

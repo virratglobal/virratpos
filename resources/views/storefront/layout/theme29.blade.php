@@ -86,16 +86,18 @@ $data = $data
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --theme-color: #7c3aed !important;
-            --theme-color-hover: #7c3aedcc !important;
+            --theme-color: #a855f7 !important;
+            --theme-color-hover: #a855f7cc !important;
             --bg-color: #09090b !important;
             font-family: 'Outfit', sans-serif !important;
         }
         body, p, span, a, button, input, select, textarea {
             font-family: 'Outfit', sans-serif !important;
         }
-        body { background-color: #09090b !important; color: #fafafa !important; } .card, .product-box { background: rgba(255,255,255,0.03) !important; backdrop-filter: blur(10px) !important; border: 1px solid rgba(255,255,255,0.1) !important; }
+        body { background-color: #09090b !important; color: #fafafa !important; } .wrapper { background-color: #09090b !important; } .product-box, .card, .about-promotions { background: rgba(255,255,255,0.02) !important; backdrop-filter: blur(12px) !important; border: 1px solid rgba(255,255,255,0.08) !important; border-radius: 12px !important; } .btn, .cart-btns .btn, .btn-primary { background-color: #a855f7 !important; border-color: #a855f7 !important; color: #fff !important; border-radius: 8px !important; }
     </style>
+
+    
 
                 {{-- pwa customer app --}}
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />

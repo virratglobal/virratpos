@@ -81,7 +81,7 @@ if (empty($getStoreThemeSetting)) {
     <link rel="stylesheet" href="{{ asset('assets/theme15/css/main-style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/theme15/css/responsive.css') }}">
     @endif
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --theme-color: #db2777 !important;
@@ -92,8 +92,10 @@ if (empty($getStoreThemeSetting)) {
         body, p, span, a, button, input, select, textarea {
             font-family: 'Quicksand', sans-serif !important;
         }
-        body { background-color: #fffbfb !important; } h1, h2, h3, h4, h5, h6, .logo, .navbar-brand { font-family: 'Cinzel', serif !important; color: #db2777 !important; }
+        body { background-color: #fffbfb !important; color: #4c1d95 !important; } .wrapper { background-color: #fffbfb !important; } .product-box, .card, .about-promotions { background: #ffffff !important; border-radius: 20px !important; border: 1px solid #fce7f3 !important; } .btn, .cart-btns .btn, .btn-primary { background-color: #db2777 !important; border-color: #db2777 !important; color: #fff !important; border-radius: 30px !important; } .btn:hover, .btn-primary:hover { background-color: #be185d !important; } h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif !important; color: #db2777 !important; }
     </style>
+
+    
 
 
                     {{-- pwa customer app --}}

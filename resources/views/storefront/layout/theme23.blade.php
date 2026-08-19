@@ -81,19 +81,21 @@
         <link rel="stylesheet" href="{{ asset('assets/theme23/css/main-style.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/theme23/css/responsive.css') }}">
     @endif
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --theme-color: #ca8a04 !important;
             --theme-color-hover: #ca8a04cc !important;
-            --bg-color: #fbfaf7 !important;
-            font-family: 'Inter', sans-serif !important;
+            --bg-color: #fcfbfa !important;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
         }
         body, p, span, a, button, input, select, textarea {
-            font-family: 'Inter', sans-serif !important;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
         }
-        body { background-color: #fbfaf7 !important; } h1, h2, h3, h4, h5, h6 { font-family: 'Lora', serif !important; }
+        body { background-color: #fcfbfa !important; color: #27272a !important; } .wrapper { background-color: #fcfbfa !important; } .product-box, .card, .about-promotions { background: #ffffff !important; border: 1px solid #e4e4e7 !important; border-radius: 4px !important; } .btn, .cart-btns .btn, .btn-primary { background-color: #ca8a04 !important; border-color: #ca8a04 !important; color: #fff !important; border-radius: 4px !important; } h1, h2, h3, h4, h5, h6 { font-family: 'Lora', serif !important; }
     </style>
+
+    
 
 
     {{-- pwa customer app --}}

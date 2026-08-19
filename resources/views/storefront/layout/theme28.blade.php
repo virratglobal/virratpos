@@ -95,8 +95,10 @@ $metaImage = \App\Models\Utility::get_file('uploads/metaImage');
         body, p, span, a, button, input, select, textarea {
             font-family: 'Inter', sans-serif !important;
         }
-        body { background-color: #ffffff !important; } .card, .product-box { border-radius: 0px !important; border: 1px solid #000000 !important; }
+        body { background-color: #ffffff !important; color: #000000 !important; } .wrapper { background-color: #ffffff !important; } .product-box, .card, .about-promotions { background: #ffffff !important; border-radius: 0px !important; border: 1px solid #000000 !important; box-shadow: none !important; } .btn, .cart-btns .btn, .btn-primary { background-color: #000000 !important; border-color: #000000 !important; color: #fff !important; border-radius: 0px !important; text-transform: uppercase; font-size: 11px; }
     </style>
+
+    
 
 
             {{-- pwa customer app --}}

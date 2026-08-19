@@ -89,14 +89,16 @@ $metaImage = \App\Models\Utility::get_file('uploads/metaImage');
         :root {
             --theme-color: #dc2626 !important;
             --theme-color-hover: #dc2626cc !important;
-            --bg-color: #1e293b !important;
+            --bg-color: #0f0f11 !important;
             font-family: 'Barlow', sans-serif !important;
         }
         body, p, span, a, button, input, select, textarea {
             font-family: 'Barlow', sans-serif !important;
         }
-        body { background-color: #1e293b !important; color: #f8fafc !important; } h1, h2, h3, h4, h5, h6 { font-family: 'Oswald', sans-serif !important; text-transform: uppercase; font-style: italic; }
+        body { background-color: #0f0f11 !important; color: #f1f5f9 !important; } .wrapper { background-color: #0f0f11 !important; } .product-box, .card, .about-promotions { background: #18191d !important; border: 1px solid #2d2f36 !important; border-radius: 0px !important; } .btn, .cart-btns .btn, .btn-primary { background-color: #dc2626 !important; border-color: #dc2626 !important; color: #fff !important; text-transform: uppercase; font-style: italic; font-weight: 800; border-radius: 0px !important; } .btn:hover, .btn-primary:hover { background-color: #b91c1c !important; } h1, h2, h3, h4, h5, h6 { font-family: 'Oswald', sans-serif !important; font-style: italic; text-transform: uppercase; }
     </style>
+
+    
 
 
             {{-- pwa customer app --}}

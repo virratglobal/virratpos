@@ -84,16 +84,18 @@ if (empty($getStoreThemeSetting)) {
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --theme-color: #ea580c !important;
-            --theme-color-hover: #ea580ccc !important;
-            --bg-color: #fefbf3 !important;
+            --theme-color: #f97316 !important;
+            --theme-color-hover: #f97316cc !important;
+            --bg-color: #fdfbf7 !important;
             font-family: 'Fredoka', sans-serif !important;
         }
         body, p, span, a, button, input, select, textarea {
             font-family: 'Fredoka', sans-serif !important;
         }
-        body { background-color: #fefbf3 !important; } .card, .product-box { border-radius: 24px !important; }
+        body { background-color: #fdfbf7 !important; color: #431407 !important; } .wrapper { background-color: #fdfbf7 !important; } .product-box, .card, .about-promotions { background: #ffffff !important; border-radius: 24px !important; border: 2px solid #ffedd5 !important; } .btn, .cart-btns .btn, .btn-primary { background-color: #f97316 !important; border-color: #f97316 !important; color: #fff !important; border-radius: 20px !important; font-weight: bold; }
     </style>
+
+    
 
 
     {{-- pwa customer app --}}

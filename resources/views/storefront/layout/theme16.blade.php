@@ -81,19 +81,21 @@ if (empty($getStoreThemeSetting)) {
     <link rel="stylesheet" href="{{ asset('assets/theme16/css/main-style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/theme16/css/responsive.css') }}">
     @endif
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --theme-color: #16a34a !important;
             --theme-color-hover: #16a34acc !important;
-            --bg-color: #f4fbf7 !important;
-            font-family: 'DM Sans', sans-serif !important;
+            --bg-color: #f2faf5 !important;
+            font-family: 'Quicksand', sans-serif !important;
         }
         body, p, span, a, button, input, select, textarea {
-            font-family: 'DM Sans', sans-serif !important;
+            font-family: 'Quicksand', sans-serif !important;
         }
-        body { background-color: #f4fbf7 !important; } .card, .product-box { border: 1px solid #d1fae5 !important; }
+        body { background-color: #f2faf5 !important; color: #166534 !important; } .wrapper { background-color: #f2faf5 !important; } .product-box, .card, .about-promotions { background: #ffffff !important; border-radius: 16px !important; border: 2px solid #dcfce7 !important; } .btn, .cart-btns .btn, .btn-primary { background-color: #16a34a !important; border-color: #16a34a !important; color: #fff !important; border-radius: 12px !important; } .btn:hover, .btn-primary:hover { background-color: #15803d !important; } h1, h2, h3, h4, h5, h6 { font-family: 'Fredoka', sans-serif !important; }
     </style>
+
+    
 
 
     {{-- pwa customer app --}}

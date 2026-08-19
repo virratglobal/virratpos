@@ -83,19 +83,21 @@ $data = $data
         <link rel="stylesheet" href="{{ asset('assets/theme19/css/main-style.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/theme19/css/responsive.css') }}">
     @endif
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --theme-color: #ea580c !important;
             --theme-color-hover: #ea580ccc !important;
-            --bg-color: #18181b !important;
-            font-family: 'Roboto', sans-serif !important;
+            --bg-color: #121315 !important;
+            font-family: 'Inter', sans-serif !important;
         }
         body, p, span, a, button, input, select, textarea {
-            font-family: 'Roboto', sans-serif !important;
+            font-family: 'Inter', sans-serif !important;
         }
-        body { background-color: #18181b !important; color: #f4f4f5 !important; } h1, h2, h3, h4, h5, h6 { font-family: 'Rajdhani', sans-serif !important; font-weight: 700 !important; }
+        body { background-color: #121315 !important; color: #e4e4e7 !important; } .wrapper { background-color: #121315 !important; } .product-box, .card, .about-promotions { background: #1a1c1e !important; border: 1px solid #2a2e33 !important; } .btn, .cart-btns .btn, .btn-primary { background-color: #ea580c !important; border-color: #ea580c !important; color: #fff !important; font-weight: bold; border-radius: 4px !important; } .btn:hover, .btn-primary:hover { background-color: #c2410c !important; } h1, h2, h3, h4, h5, h6 { font-family: 'Rajdhani', sans-serif !important; font-weight: 700 !important; color: #ea580c !important; }
     </style>
+
+    
 
                 {{-- pwa customer app --}}
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />

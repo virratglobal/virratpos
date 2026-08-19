@@ -84,16 +84,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --theme-color: #0f172a !important;
-            --theme-color-hover: #0f172acc !important;
-            --bg-color: #faf9f6 !important;
+            --theme-color: #1c1c1c !important;
+            --theme-color-hover: #1c1c1ccc !important;
+            --bg-color: #fcfbfa !important;
             font-family: 'Inter', sans-serif !important;
         }
         body, p, span, a, button, input, select, textarea {
             font-family: 'Inter', sans-serif !important;
         }
-        body { background-color: #faf9f6 !important; } h1, h2, h3, h4, h5, h6, .logo, .navbar-brand { font-family: 'Playfair Display', serif !important; }
+        body { background-color: #fcfbfa !important; color: #1c1c1c !important; } .wrapper { background-color: #fcfbfa !important; } .product-box, .card, .about-promotions { background: #ffffff !important; border-radius: 0px !important; border: 1px solid #e5e5e0 !important; } .btn, .cart-btns .btn, .btn-primary { background-color: #1c1c1c !important; border-color: #1c1c1c !important; color: #fff !important; border-radius: 0px !important; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; } .btn:hover, .btn-primary:hover { background-color: #333333 !important; } h1, h2, h3, h4, h5, h6, .logo, .navbar-brand { font-family: 'Playfair Display', serif !important; }
     </style>
+
+    
 
     <link rel="stylesheet" href="{{ asset('assets/theme12/fonts/fontawesome-free/css/all.min.css') }}">
 

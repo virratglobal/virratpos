@@ -87,16 +87,18 @@ $data = $data
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,400&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --theme-color: #b91c1c !important;
-            --theme-color-hover: #b91c1ccc !important;
-            --bg-color: #1a0f0f !important;
+            --theme-color: #991b1b !important;
+            --theme-color-hover: #991b1bcc !important;
+            --bg-color: #150d0d !important;
             font-family: 'Montserrat', sans-serif !important;
         }
         body, p, span, a, button, input, select, textarea {
             font-family: 'Montserrat', sans-serif !important;
         }
-        body { background-color: #1a0f0f !important; color: #f5f5f5 !important; } h1, h2, h3, h4, h5, h6 { font-family: 'Cormorant Garamond', serif !important; }
+        body { background-color: #150d0d !important; color: #f5f5f5 !important; } .wrapper { background-color: #150d0d !important; } .product-box, .card, .about-promotions { background: #1e1313 !important; border: 1px solid #3b2323 !important; border-radius: 0px !important; } .btn, .cart-btns .btn, .btn-primary { background-color: transparent !important; border: 1px solid #991b1b !important; color: #f5f5f5 !important; border-radius: 0px !important; } .btn:hover, .btn-primary:hover { background-color: #991b1b !important; } h1, h2, h3, h4, h5, h6 { font-family: 'Cormorant Garamond', serif !important; color: #eab308 !important; }
     </style>
+
+    
 
 
         {{-- pwa customer app --}}

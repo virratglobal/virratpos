@@ -84,19 +84,21 @@ $data = $data
         <link rel="stylesheet" href="{{ asset('assets/theme17/css/main-style.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/theme17/css/responsive.css') }}">
     @endif
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --theme-color: #ca8a04 !important;
-            --theme-color-hover: #ca8a04cc !important;
-            --bg-color: #0b0f19 !important;
-            font-family: 'Lato', sans-serif !important;
+            --theme-color: #eab308 !important;
+            --theme-color-hover: #eab308cc !important;
+            --bg-color: #08090b !important;
+            font-family: 'Space Grotesk', sans-serif !important;
         }
         body, p, span, a, button, input, select, textarea {
-            font-family: 'Lato', sans-serif !important;
+            font-family: 'Space Grotesk', sans-serif !important;
         }
-        body { background-color: #0b0f19 !important; color: #e5e7eb !important; } h1, h2, h3, h4, h5, h6 { font-family: 'Lora', serif !important; }
+        body { background-color: #08090b !important; color: #e2e8f0 !important; } .wrapper { background-color: #08090b !important; } .product-box, .card, .about-promotions { background: #111317 !important; border: 1px solid #1e293b !important; border-radius: 4px !important; } .btn, .cart-btns .btn, .btn-primary { background-color: #eab308 !important; border-color: #eab308 !important; color: #000 !important; font-weight: bold; border-radius: 2px !important; } .btn:hover, .btn-primary:hover { background-color: #ca8a04 !important; } h1, h2, h3, h4, h5, h6 { font-family: 'Lora', serif !important; color: #eab308 !important; }
     </style>
+
+    
 
 
         {{-- pwa customer app --}}

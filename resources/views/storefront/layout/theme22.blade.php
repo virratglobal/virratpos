@@ -81,19 +81,21 @@
         <link rel="stylesheet" href="{{ asset('assets/theme22/css/main-style.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/theme22/css/responsive.css') }}">
     @endif
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
-            --theme-color: #4f46e5 !important;
-            --theme-color-hover: #4f46e5cc !important;
-            --bg-color: #fafafa !important;
+            --theme-color: #8b5cf6 !important;
+            --theme-color-hover: #8b5cf6cc !important;
+            --bg-color: #0a0b10 !important;
             font-family: 'Space Grotesk', sans-serif !important;
         }
         body, p, span, a, button, input, select, textarea {
             font-family: 'Space Grotesk', sans-serif !important;
         }
-        body { background-color: #fafafa !important; } .card, .product-box { border: 2px solid #e5e7eb !important; box-shadow: 4px 4px 0px 0px #4f46e5 !important; }
+        body { background-color: #0a0b10 !important; color: #f3f4f6 !important; } .wrapper { background-color: #0a0b10 !important; } .product-box, .card, .about-promotions { background: #12131c !important; border: 1px solid #2e3047 !important; box-shadow: 4px 4px 0px 0px #8b5cf6 !important; } .btn, .cart-btns .btn, .btn-primary { background-color: #8b5cf6 !important; border-color: #8b5cf6 !important; color: #fff !important; text-transform: uppercase; font-weight: bold; border-radius: 0px !important; } h1, h2, h3, h4, h5, h6 { font-family: 'Space Grotesk', sans-serif !important; color: #8b5cf6 !important; }
     </style>
+
+    
 
     <link rel="stylesheet" href="{{ asset('assets/theme22/fonts/fontawesome-free/css/all.min.css') }}">
 

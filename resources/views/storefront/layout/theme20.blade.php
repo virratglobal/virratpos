@@ -88,14 +88,16 @@ $data = $data
         :root {
             --theme-color: #047857 !important;
             --theme-color-hover: #047857cc !important;
-            --bg-color: #fdfdfa !important;
+            --bg-color: #fcfdfa !important;
             font-family: 'Nunito', sans-serif !important;
         }
         body, p, span, a, button, input, select, textarea {
             font-family: 'Nunito', sans-serif !important;
         }
-        body { background-color: #fdfdfa !important; } .card, .product-box { border-radius: 20px !important; border: 2px solid #ecfdf5 !important; }
+        body { background-color: #fcfdfa !important; color: #064e3b !important; } .wrapper { background-color: #fcfdfa !important; } .product-box, .card, .about-promotions { background: #ffffff !important; border-radius: 24px !important; border: 2px solid #f0fdf4 !important; } .btn, .cart-btns .btn, .btn-primary { background-color: #047857 !important; border-color: #047857 !important; color: #fff !important; border-radius: 20px !important; }
     </style>
+
+    
 
                     {{-- pwa customer app --}}
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />

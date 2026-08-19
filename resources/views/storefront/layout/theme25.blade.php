@@ -92,8 +92,10 @@ if (empty($getStoreThemeSetting)) {
         body, p, span, a, button, input, select, textarea {
             font-family: 'Montserrat', sans-serif !important;
         }
-        body { background-color: #ffffff !important; } h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif !important; }
+        body { background-color: #ffffff !important; color: #1c1c1c !important; } .wrapper { background-color: #ffffff !important; } .product-box, .card, .about-promotions { background: #ffffff !important; border: 1px solid #1c1c1c !important; border-radius: 0px !important; } .btn, .cart-btns .btn, .btn-primary { background-color: #1c1c1c !important; border-color: #1c1c1c !important; color: #fff !important; border-radius: 0px !important; text-transform: uppercase; letter-spacing: 2px; font-size: 10px; } h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif !important; }
     </style>
+
+    
 
 
                     {{-- pwa customer app --}}

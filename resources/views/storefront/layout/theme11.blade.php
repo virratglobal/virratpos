@@ -73,7 +73,6 @@
         href="{{ asset(Storage::url('uploads/logo/') . (!empty($setting->value) ? $setting->value : 'favicon.png' . '?timestamp='. time())) }}"
         type="image/png">
     <link rel="stylesheet" href="{{ asset('assets/theme11/fonts/fontawesome-free/css/all.min.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     @if (isset($data->value) && $data->value == 'on')
         <link rel="stylesheet" href="{{ asset('assets/theme11/css/rtl-main-style.css') }}">
@@ -93,8 +92,10 @@
         body, p, span, a, button, input, select, textarea {
             font-family: 'Plus Jakarta Sans', sans-serif !important;
         }
-        body { background-color: #f8fafc !important; } .pro-card { border-radius: 8px !important; border: 1px solid #e2e8f0 !important; box-shadow: none !important; }
+        body { background-color: #f8fafc !important; color: #1e293b !important; } .wrapper { background-color: #f8fafc !important; } .product-box, .card, .about-promotions { background: #ffffff !important; border-radius: 8px !important; border: 1px solid #e2e8f0 !important; box-shadow: 0 1px 3px rgba(0,0,0,0.02) !important; } .btn, .cart-btns .btn, .btn-primary { background-color: #256dff !important; border-color: #256dff !important; color: #fff !important; border-radius: 6px !important; } .btn:hover, .btn-primary:hover { background-color: #1d4ed8 !important; }
     </style>
+
+    
 
 
     {{-- pwa customer app --}}
