@@ -1,5 +1,5 @@
 
-@extends('storefront.layout.theme111')
+@extends('storefront.layout.theme11')
 @section('page-title')
     {{__('Home')}}
 @endsection

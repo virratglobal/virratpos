@@ -1,4 +1,4 @@
-@extends('storefront.layout.theme222')
+@extends('storefront.layout.theme22')
 @section('page-title')
     {{ __('Cart') }}
 @endsection
