@@ -215,15 +215,15 @@
     <style>
         /* Modern Super Admin Settings Design System - Mockup Design Purple #4648d4 */
         .settings-layout-wrapper {
-            max-width: 1400px;
+            max-width: 1360px;
             margin: 0 auto;
-            padding: 0 16px;
+            padding: 8px 20px 40px 20px;
             font-family: 'Inter', sans-serif;
             color: #0F172A;
         }
 
         .settings-header {
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
         .settings-header h1 {
             font-family: 'Inter', sans-serif;
@@ -231,14 +231,54 @@
             font-weight: 700;
             color: #0F172A;
             margin: 0;
-            letter-spacing: -0.01em;
+            letter-spacing: -0.02em;
         }
         .settings-header p {
-            font-size: 14px;
+            font-size: 13.5px;
             color: #64748B;
-            margin-top: 6px;
+            margin-top: 4px;
             margin-bottom: 0;
             font-weight: 400;
+        }
+
+        /* Top Horizontal Navigation Tabs Bar */
+        .settings-horizontal-tabs {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            border-bottom: 1px solid #E2E8F0;
+            margin-bottom: 28px;
+            padding-bottom: 0;
+        }
+        .settings-horizontal-tabs .nav-link {
+            font-size: 12px;
+            font-weight: 700;
+            color: #64748B;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 10px 0;
+            border: none;
+            background: transparent;
+            position: relative;
+            cursor: pointer;
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+        .settings-horizontal-tabs .nav-link:hover {
+            color: #4648d4;
+        }
+        .settings-horizontal-tabs .nav-link.active {
+            color: #4648d4;
+        }
+        .settings-horizontal-tabs .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2.5px;
+            background-color: #4648d4;
+            border-radius: 2px 2px 0 0;
         }
 
         /* Sidebar Navigation Card */
@@ -246,7 +286,7 @@
             background: #FFFFFF !important;
             border: 1px solid #E2E8F0 !important;
             border-radius: 12px !important;
-            padding: 20px !important;
+            padding: 16px !important;
             box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
             gap: 6px !important;
             display: flex !important;
@@ -256,7 +296,7 @@
             display: flex !important;
             align-items: center !important;
             gap: 12px !important;
-            height: 44px !important;
+            height: 42px !important;
             padding: 0 12px !important;
             border-radius: 8px !important;
             font-size: 13.5px !important;
@@ -303,15 +343,32 @@
             color: #4648d4 !important;
         }
 
-        /* Settings Card Container */
+        /* Soft Blue Settings Card Tiles */
         .settings-layout-wrapper .card,
         .settings-layout-wrapper .setting-card {
-            background-color: #FFFFFF !important;
-            border-radius: 14px !important;
-            border: 1px solid #E2E8F0 !important;
-            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+            background-color: #F0F4FE !important;
+            border-radius: 16px !important;
+            border: 1px solid rgba(226, 232, 240, 0.8) !important;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03) !important;
             padding: 24px !important;
             margin-bottom: 24px !important;
+        }
+
+        /* Right Sidebar Cards */
+        .system-info-card {
+            background: #E0E7FF;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .critical-actions-card {
+            background: #78350F;
+            color: #FFFFFF !important;
+            border-radius: 16px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 14px rgba(120, 53, 15, 0.25);
         }
         .settings-layout-wrapper .card-header {
             background-color: transparent !important;
@@ -7731,6 +7788,45 @@
                     </div>
                 </div>
             @endif
+            </div>
+
+            <!-- Settings Right Sidebar Column -->
+            <div class="w-full lg:w-80 shrink-0">
+                <!-- System Information Card -->
+                <div class="system-info-card">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="material-symbols-outlined text-[#4F46E5]">info</span>
+                        <h4 style="font-size: 17px; font-weight: 700; color: #0F172A; margin: 0;">{{ __('System Information') }}</h4>
+                    </div>
+
+                    <div class="flex flex-col gap-3 text-xs">
+                        <div class="flex justify-between py-1.5 border-b border-indigo-100">
+                            <span style="color: #64748B;">{{ __('Version') }}</span>
+                            <span style="font-weight: 600; color: #0F172A;">v2.4.1-stable</span>
+                        </div>
+                        <div class="flex justify-between py-1.5 border-b border-indigo-100">
+                            <span style="color: #64748B;">{{ __('Environment') }}</span>
+                            <span style="font-weight: 600; color: #0F172A;">Production</span>
+                        </div>
+                        <div class="flex justify-between py-1.5">
+                            <span style="color: #64748B;">{{ __('Last Update') }}</span>
+                            <span style="font-weight: 600; color: #0F172A;">2 hours ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Critical Actions Card (Bronze/Brown Card) -->
+                <div class="critical-actions-card">
+                    <h4 style="font-size: 18px; font-weight: 700; color: #FFFFFF; margin: 0 0 8px 0;">{{ __('Critical Actions') }}</h4>
+                    <p style="font-size: 12.5px; color: rgba(255,255,255,0.85); margin-bottom: 20px; line-height: 1.5;">
+                        {{ __('These actions have permanent effects on the platform infrastructure.') }}
+                    </p>
+
+                    <a href="{{ route('cache.clear') }}" class="btn w-full text-center py-2.5 px-4 font-bold text-xs uppercase tracking-wider rounded-lg transition-colors" style="background: #FFFFFF; color: #78350F; text-decoration: none; display: block;">
+                        {{ __('CLEAR CACHE') }}
+                    </a>
+                </div>
+            </div>
         </div>
         <!-- [ sample-page ] end -->
     </x-ui.page-container>
