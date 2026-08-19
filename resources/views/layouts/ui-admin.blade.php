@@ -90,12 +90,353 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
+    <!-- Flash-prevention script -->
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem('virratpos_theme');
+            var serverTheme = "{{ isset($settings['cust_darklayout']) ? $settings['cust_darklayout'] : 'off' }}";
+            var isDark = savedTheme === 'dark' || (savedTheme !== 'light' && serverTheme === 'on');
+            if (isDark) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+    </script>
+
     <style>
         /* Reset and base */
         body {
             font-family: 'Inter', sans-serif !important;
             background-color: #f8f9ff !important;
             color: #0b1c30 !important;
+        }
+
+        /* ==========================================================================
+           GLOBAL DARK THEME ENGINE — VIRRATPOS SAAS
+           ========================================================================== */
+
+        html.dark,
+        body.dark,
+        html[data-theme="dark"] body {
+            background-color: #0B1120 !important;
+            color: #F8FAFC !important;
+        }
+
+        html.dark .sg-main-content,
+        html.dark .sg-content-body,
+        html.dark .dash-container,
+        html.dark .dash-content,
+        html.dark .requests-container,
+        html.dark .coupons-container,
+        html.dark .stores-container,
+        html.dark .landing-container,
+        html.dark .settings-layout-wrapper {
+            background-color: #0B1120 !important;
+            color: #F8FAFC !important;
+        }
+
+        /* 2. Sidebar Dark Theme (Surface 1 & 2) */
+        html.dark .sg-sidebar {
+            background-color: #0F172A !important;
+            border-color: #1E293B !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+        }
+        html.dark .sg-nav-heading {
+            color: #94A3B8 !important;
+        }
+        html.dark .sg-nav-link,
+        html.dark .sg-dropdown-link {
+            color: #CBD5E1 !important;
+            background-color: transparent !important;
+        }
+        html.dark .sg-nav-link:hover,
+        html.dark .sg-dropdown-link:hover {
+            background-color: rgba(59, 130, 246, 0.10) !important;
+            color: #60A5FA !important;
+        }
+        html.dark .sg-nav-link.sg-active,
+        html.dark .sg-dropdown-link.sg-active {
+            background-color: #2563EB !important;
+            color: #FFFFFF !important;
+            font-weight: 600 !important;
+        }
+
+        /* 3. Header Dark Theme (Surface 2) */
+        html.dark .sg-header {
+            background-color: #111827 !important;
+            border-color: #1E293B !important;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3) !important;
+        }
+        html.dark .sg-header button,
+        html.dark .sg-header a {
+            color: #CBD5E1 !important;
+        }
+        html.dark .sg-header button:hover,
+        html.dark .sg-header a:hover {
+            background-color: #1E293B !important;
+            color: #FFFFFF !important;
+        }
+        html.dark .sg-header button[style*="background: #F8FAFC"],
+        html.dark .sg-header button[style*="background:#F8FAFC"],
+        html.dark .search-stores-input,
+        html.dark .search-codes-input {
+            background-color: #0F172A !important;
+            border-color: #263449 !important;
+            color: #F8FAFC !important;
+        }
+        html.dark .sg-header button[style*="background: #F8FAFC"] span,
+        html.dark .search-icon-inside {
+            color: #94A3B8 !important;
+        }
+
+        /* 4. Cards & Container Tiles (Surface 2) */
+        html.dark .card,
+        html.dark .landing-card,
+        html.dark .requests-table-card,
+        html.dark .coupons-table-card,
+        html.dark .stores-table-card,
+        html.dark .stat-card-box,
+        html.dark .coupon-stat-tile,
+        html.dark .store-stat-tile,
+        html.dark .requests-hero-card,
+        html.dark .inner-soft-tile,
+        html.dark .repeater-item-box,
+        html.dark .og-image-preview-card,
+        html.dark .x-ui-card {
+            background-color: #111827 !important;
+            border-color: #263449 !important;
+            color: #F8FAFC !important;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25) !important;
+        }
+
+        /* Elevated Surfaces (Surface 3 & 4) */
+        html.dark .store-stat-tile,
+        html.dark .coupon-stat-tile,
+        html.dark .stat-card-box,
+        html.dark .inner-soft-tile,
+        html.dark .repeater-item-box {
+            background-color: #172033 !important;
+            border-color: #263449 !important;
+        }
+
+        /* Attention / Red Tile in Dark Mode */
+        html.dark .store-stat-tile-attention {
+            background-color: #2A1115 !important;
+            border-color: #991B1B !important;
+        }
+
+        /* 5. Headings & Typography in Dark Mode */
+        html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6,
+        html.dark .requests-header h1,
+        html.dark .requests-hero-card h1,
+        html.dark .coupons-header h1,
+        html.dark .stores-header h1,
+        html.dark .landing-header-title-box h1,
+        html.dark .stat-big-number,
+        html.dark .coupon-stat-big-number,
+        html.dark .store-stat-big-number,
+        html.dark .store-name,
+        html.dark .store-name-text,
+        html.dark .card-header,
+        html.dark .modal-title {
+            color: #F8FAFC !important;
+        }
+
+        html.dark p,
+        html.dark .requests-header p,
+        html.dark .requests-hero-card p,
+        html.dark .coupons-header p,
+        html.dark .stores-header p,
+        html.dark .landing-header-title-box p,
+        html.dark .stat-subtext,
+        html.dark .coupon-stat-subtext,
+        html.dark .store-stat-subtext,
+        html.dark .store-id,
+        html.dark .store-id-subtext,
+        html.dark .footer-count-text,
+        html.dark .field-label,
+        html.dark .field-char-count {
+            color: #CBD5E1 !important;
+        }
+
+        /* 6. Form Controls, Inputs & Textareas (Surface 5) */
+        html.dark input.form-control,
+        html.dark textarea.form-control,
+        html.dark select.form-control,
+        html.dark .form-input-white,
+        html.dark .form-textarea-white,
+        html.dark .search-codes-input,
+        html.dark .search-stores-input,
+        html.dark .choices__inner {
+            background-color: #0F172A !important;
+            border-color: #334155 !important;
+            color: #F8FAFC !important;
+        }
+
+        html.dark input.form-control:focus,
+        html.dark textarea.form-control:focus,
+        html.dark select.form-control:focus,
+        html.dark .form-input-white:focus,
+        html.dark .form-textarea-white:focus,
+        html.dark .search-codes-input:focus,
+        html.dark .search-stores-input:focus {
+            background-color: #111827 !important;
+            border-color: #3B82F6 !important;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
+        }
+
+        html.dark ::placeholder {
+            color: #64748B !important;
+            opacity: 1 !important;
+        }
+
+        /* 7. Tables & Headers */
+        html.dark .table,
+        html.dark .custom-requests-table,
+        html.dark .custom-coupons-table,
+        html.dark .custom-stores-table {
+            background-color: #111827 !important;
+            color: #F8FAFC !important;
+        }
+
+        html.dark .table th,
+        html.dark .custom-requests-table th,
+        html.dark .custom-coupons-table th,
+        html.dark .custom-stores-table th,
+        html.dark .requests-table-header,
+        html.dark .coupons-table-header,
+        html.dark .stores-table-header,
+        html.dark thead {
+            background-color: #0F172A !important;
+            border-color: #263449 !important;
+            color: #94A3B8 !important;
+        }
+
+        html.dark .table td,
+        html.dark .custom-requests-table td,
+        html.dark .custom-coupons-table td,
+        html.dark .custom-stores-table td,
+        html.dark tbody tr {
+            border-color: #1E293B !important;
+            color: #CBD5E1 !important;
+            background-color: #111827 !important;
+        }
+
+        html.dark .table tbody tr:hover,
+        html.dark .custom-requests-table tr:hover td,
+        html.dark .custom-coupons-table tr:hover td,
+        html.dark .custom-stores-table tr:hover td {
+            background-color: #172033 !important;
+        }
+
+        /* 8. Dropdowns, Modals, Drawers & Popups (Surface 4) */
+        html.dark .dropdown-menu,
+        html.dark .choices__list--dropdown,
+        html.dark .modal-content {
+            background-color: #1E293B !important;
+            border-color: #334155 !important;
+            color: #F8FAFC !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        html.dark .dropdown-item {
+            color: #CBD5E1 !important;
+        }
+        html.dark .dropdown-item:hover {
+            background-color: rgba(59, 130, 246, 0.12) !important;
+            color: #FFFFFF !important;
+        }
+
+        /* 9. Buttons in Dark Mode */
+        html.dark .btn-primary,
+        html.dark .btn-publish-build,
+        html.dark .btn-create-coupon,
+        html.dark .btn-create-store,
+        html.dark .btn-export-csv {
+            background-color: #2563EB !important;
+            color: #FFFFFF !important;
+            border: none !important;
+        }
+        html.dark .btn-primary:hover,
+        html.dark .btn-publish-build:hover,
+        html.dark .btn-create-coupon:hover,
+        html.dark .btn-create-store:hover,
+        html.dark .btn-export-csv:hover {
+            background-color: #1D4ED8 !important;
+            color: #FFFFFF !important;
+        }
+
+        html.dark .btn-discard-changes,
+        html.dark .btn-secondary,
+        html.dark .btn-icon-square,
+        html.dark .btn-filter-action,
+        html.dark .btn-action-icon {
+            background-color: #1E293B !important;
+            border-color: #334155 !important;
+            color: #CBD5E1 !important;
+        }
+        html.dark .btn-discard-changes:hover,
+        html.dark .btn-secondary:hover,
+        html.dark .btn-icon-square:hover,
+        html.dark .btn-filter-action:hover,
+        html.dark .btn-action-icon:hover {
+            background-color: #263449 !important;
+            color: #FFFFFF !important;
+        }
+
+        /* 10. Badges & Pills */
+        html.dark .badge-current-plan,
+        html.dark .badge-requested-plan,
+        html.dark .badge-coupon-active,
+        html.dark .badge-store-active,
+        html.dark .badge-status-reviewing-pill {
+            background-color: rgba(59, 130, 246, 0.15) !important;
+            color: #60A5FA !important;
+        }
+
+        html.dark .badge-status-pending-pill,
+        html.dark .badge-store-limit,
+        html.dark .btn-action-delete {
+            background-color: rgba(239, 68, 68, 0.15) !important;
+            color: #F87171 !important;
+        }
+
+        html.dark .badge-enterprise-plan {
+            background-color: rgba(245, 158, 11, 0.15) !important;
+            color: #FBBF24 !important;
+        }
+
+        html.dark .badge-coupon-expired {
+            background-color: #1E293B !important;
+            color: #94A3B8 !important;
+        }
+
+        /* 11. Pagination */
+        html.dark .page-pill,
+        html.dark .pagination .page-item .page-link {
+            background-color: #172033 !important;
+            color: #CBD5E1 !important;
+            border-color: #263449 !important;
+        }
+        html.dark .page-pill.active,
+        html.dark .pagination .page-item.active .page-link {
+            background-color: #2563EB !important;
+            color: #FFFFFF !important;
+        }
+
+        /* 12. Scrollbars */
+        html.dark ::-webkit-scrollbar-track {
+            background: #0F172A !important;
+        }
+        html.dark ::-webkit-scrollbar-thumb {
+            background: #334155 !important;
+            border-radius: 4px !important;
+        }
+        html.dark ::-webkit-scrollbar-thumb:hover {
+            background: #475569 !important;
         }
 
         /* Force brand purple color variables and override legacy themes */
@@ -747,7 +1088,7 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
     </style>
     @stack('style')
 </head>
-<body class="{{ $themeColor }} text-on-surface antialiased" x-data="{ sidebarOpen: window.innerWidth >= 1024 }" :class="{ 'sidebar-closed': !sidebarOpen }" style="background-color: #f8f9ff !important;" @resize.window="if(window.innerWidth >= 1024 && !sidebarOpen && !document.body.classList.contains('sidebar-closed-manual')) { sidebarOpen = true }">
+<body class="{{ $themeColor }} {{ (isset($settings['cust_darklayout']) && $settings['cust_darklayout'] == 'on') ? 'dark' : '' }} text-on-surface antialiased" x-data="{ sidebarOpen: window.innerWidth >= 1024 }" :class="{ 'sidebar-closed': !sidebarOpen }" @resize.window="if(window.innerWidth >= 1024 && !sidebarOpen && !document.body.classList.contains('sidebar-closed-manual')) { sidebarOpen = true }">
 
     <!-- [ Pre-loader ] start -->
     <div class="loader-bg">
@@ -756,7 +1097,7 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
         </div>
     </div>
 
-    <div style="display: flex; min-height: 100vh; background: #f8f9ff; overflow-x: hidden;">
+    <div style="display: flex; min-height: 100vh; overflow-x: hidden;">
         
         <!-- Sidebar (Stitch floating card) -->
         @include('partials.ui.sidebar')

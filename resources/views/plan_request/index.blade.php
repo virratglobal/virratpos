@@ -348,6 +348,41 @@
         background: #DC2626;
         color: #FFFFFF;
     }
+
+    /* Dark Mode Overrides for Plan Requests Page */
+    html.dark .requests-hero-card {
+        background: #172033 !important;
+        border-color: #263449 !important;
+    }
+    html.dark .requests-hero-card h1 { color: #F8FAFC !important; }
+    html.dark .requests-hero-card p { color: #CBD5E1 !important; }
+    html.dark .stat-card-box {
+        background: #111827 !important;
+        border-color: #263449 !important;
+    }
+    html.dark .stat-subtext { color: #94A3B8 !important; }
+    html.dark .stat-big-number { color: #F8FAFC !important; }
+    html.dark .requests-table-card {
+        background: #111827 !important;
+        border-color: #263449 !important;
+    }
+    html.dark .requests-table-header { border-bottom-color: #263449 !important; }
+    html.dark .requests-table-header h3 { color: #F8FAFC !important; }
+    html.dark .requests-table-header p { color: #CBD5E1 !important; }
+    html.dark .custom-requests-table th {
+        background-color: #0F172A !important;
+        color: #94A3B8 !important;
+        border-bottom-color: #263449 !important;
+    }
+    html.dark .custom-requests-table td {
+        color: #CBD5E1 !important;
+        border-bottom-color: #1E293B !important;
+    }
+    html.dark .custom-requests-table tr:hover td {
+        background-color: #172033 !important;
+    }
+    html.dark .store-name-text { color: #F8FAFC !important; }
+    html.dark .store-id-subtext { color: #94A3B8 !important; }
 </style>
 
 <div class="requests-container">

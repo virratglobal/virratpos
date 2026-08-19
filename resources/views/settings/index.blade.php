@@ -658,6 +658,82 @@
             background: #F8FAFC;
             color: #0F172A;
         }
+
+        /* Dark Mode Overrides for Settings Page */
+        html.dark .settings-layout-wrapper {
+            background-color: #0B1120 !important;
+            color: #F8FAFC !important;
+        }
+        html.dark .settings-header h1 { color: #F8FAFC !important; }
+        html.dark .settings-header p { color: #CBD5E1 !important; }
+        html.dark .settings-horizontal-tabs { border-bottom-color: #263449 !important; }
+        html.dark .settings-horizontal-tabs .nav-link { color: #94A3B8 !important; }
+        html.dark .settings-horizontal-tabs .nav-link.active { color: #60A5FA !important; }
+        html.dark .settings-sidebar .setting-nav-wrp {
+            background: #111827 !important;
+            border-color: #263449 !important;
+        }
+        html.dark .settings-sidebar .nav-link { color: #CBD5E1 !important; }
+        html.dark .settings-sidebar .nav-link:hover {
+            background-color: rgba(59, 130, 246, 0.12) !important;
+            color: #60A5FA !important;
+        }
+        html.dark .settings-sidebar .nav-link.active {
+            background-color: #2563EB !important;
+            color: #FFFFFF !important;
+        }
+        html.dark .settings-layout-wrapper .card,
+        html.dark .settings-layout-wrapper .setting-card,
+        html.dark .system-info-card,
+        html.dark .critical-actions-card {
+            background-color: #111827 !important;
+            border-color: #263449 !important;
+            color: #F8FAFC !important;
+        }
+        html.dark .settings-layout-wrapper .card-header { border-bottom-color: #263449 !important; }
+        html.dark .settings-layout-wrapper .card-header h5,
+        html.dark .settings-layout-wrapper .card-header h4 { color: #F8FAFC !important; }
+        html.dark .settings-layout-wrapper .card-header p,
+        html.dark .settings-layout-wrapper .card-header small { color: #CBD5E1 !important; }
+        html.dark .upload-asset-card {
+            background: #0F172A !important;
+            border-color: #334155 !important;
+        }
+        html.dark .upload-asset-title { color: #F8FAFC !important; }
+        html.dark .upload-asset-subtext { color: #94A3B8 !important; }
+        html.dark .upload-preview-box {
+            background: #172033 !important;
+            border-color: #263449 !important;
+        }
+        html.dark .settings-layout-wrapper .form-label { color: #CBD5E1 !important; }
+        html.dark .settings-layout-wrapper .form-control,
+        html.dark .settings-layout-wrapper select.form-control {
+            background-color: #0F172A !important;
+            border-color: #334155 !important;
+            color: #F8FAFC !important;
+        }
+        html.dark .toggle-setting-card {
+            background: #0F172A !important;
+            border-color: #334155 !important;
+        }
+        html.dark .toggle-setting-info h6 { color: #F8FAFC !important; }
+        html.dark .toggle-setting-info p { color: #CBD5E1 !important; }
+        html.dark .ios-toggle-slider { background-color: #334155 !important; }
+        html.dark .settings-sticky-actions {
+            background: #111827 !important;
+            border-color: #263449 !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+        }
+        html.dark .btn-cancel-gray {
+            background: #1E293B !important;
+            border-color: #334155 !important;
+            color: #CBD5E1 !important;
+        }
+        html.dark .btn-cancel-gray:hover {
+            background: #263449 !important;
+            color: #FFFFFF !important;
+        }
+
         .btn-save-blue {
             display: inline-flex;
             align-items: center;

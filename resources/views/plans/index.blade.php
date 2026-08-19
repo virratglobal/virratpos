@@ -386,6 +386,57 @@
         align-items: center;
         gap: 4px;
     }
+
+    /* Dark Mode Overrides for Plans Page */
+    html.dark .plans-header h1 { color: #F8FAFC !important; }
+    html.dark .plans-header p { color: #CBD5E1 !important; }
+    html.dark .plan-card-standard {
+        background: #111827 !important;
+        border-color: #263449 !important;
+    }
+    html.dark .plan-card-title { color: #F8FAFC !important; }
+    html.dark .plan-card-subtitle { color: #CBD5E1 !important; }
+    html.dark .plan-price-amount { color: #F8FAFC !important; }
+    html.dark .plan-price-period { color: #94A3B8 !important; }
+    html.dark .feature-row { color: #CBD5E1 !important; }
+    html.dark .subscriber-bar-standard {
+        background: #172033 !important;
+        box-shadow: none !important;
+    }
+    html.dark .subscriber-label { color: #94A3B8 !important; }
+    html.dark .subscriber-count { color: #F8FAFC !important; }
+    html.dark .btn-circle-edit {
+        background: #1E293B !important;
+        color: #60A5FA !important;
+    }
+    html.dark .btn-circle-edit:hover {
+        background: #2563EB !important;
+        color: #FFFFFF !important;
+    }
+    html.dark .revenue-card {
+        background: #111827 !important;
+        border-color: #263449 !important;
+    }
+    html.dark .revenue-header { border-bottom-color: #263449 !important; }
+    html.dark .revenue-header h3 { color: #F8FAFC !important; }
+    html.dark .revenue-header p { color: #CBD5E1 !important; }
+    html.dark .revenue-table th {
+        background-color: #0F172A !important;
+        color: #94A3B8 !important;
+        border-bottom-color: #263449 !important;
+    }
+    html.dark .revenue-table td {
+        color: #CBD5E1 !important;
+        border-bottom-color: #1E293B !important;
+    }
+    html.dark .revenue-table tr:hover td {
+        background-color: #172033 !important;
+    }
+    html.dark .revenue-table tfoot tr td {
+        background-color: #0F172A !important;
+        border-top-color: #263449 !important;
+        color: #F8FAFC !important;
+    }
 </style>
 
 <div class="plans-container">

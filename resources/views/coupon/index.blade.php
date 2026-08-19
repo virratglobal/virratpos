@@ -359,10 +359,53 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 16px 24px;
-        background: #FFFFFF;
+        padding-top: 20px;
+        margin-top: 16px;
         border-top: 1px solid #E2E8F0;
     }
+
+    /* Dark Mode Overrides for Coupons Page */
+    html.dark .coupons-header h1 { color: #F8FAFC !important; }
+    html.dark .coupons-header p { color: #CBD5E1 !important; }
+    html.dark .coupon-stat-tile {
+        background: #111827 !important;
+        border-color: #263449 !important;
+    }
+    html.dark .coupon-stat-subtext { color: #94A3B8 !important; }
+    html.dark .coupon-stat-big-number { color: #F8FAFC !important; }
+    html.dark .coupons-table-card {
+        background: #111827 !important;
+        border-color: #263449 !important;
+    }
+    html.dark .coupons-table-toolbar { border-bottom-color: #263449 !important; }
+    html.dark .search-codes-input {
+        background-color: #0F172A !important;
+        border-color: #334155 !important;
+        color: #F8FAFC !important;
+    }
+    html.dark .custom-coupons-table th {
+        background-color: #0F172A !important;
+        color: #94A3B8 !important;
+        border-bottom-color: #263449 !important;
+    }
+    html.dark .custom-coupons-table td {
+        color: #CBD5E1 !important;
+        border-bottom-color: #1E293B !important;
+    }
+    html.dark .custom-coupons-table tr:hover td {
+        background-color: #172033 !important;
+    }
+    html.dark .code-title-text { color: #60A5FA !important; }
+    html.dark .coupons-table-footer { border-top-color: #263449 !important; }
+    html.dark .btn-action-icon {
+        background: #1E293B !important;
+        color: #CBD5E1 !important;
+    }
+    html.dark .btn-action-icon:hover {
+        background: #2563EB !important;
+        color: #FFFFFF !important;
+    }
+
     .footer-count-text {
         font-size: 13px;
         color: #64748B;

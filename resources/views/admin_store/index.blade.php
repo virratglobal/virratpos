@@ -378,6 +378,44 @@
         letter-spacing: 0.04em;
     }
 
+    /* Dark Mode Overrides for Stores Page */
+    html.dark .stores-header h1 { color: #F8FAFC !important; }
+    html.dark .stores-header p { color: #CBD5E1 !important; }
+    html.dark .store-stat-tile {
+        background: #111827 !important;
+        border-color: #263449 !important;
+    }
+    html.dark .store-stat-subtext { color: #94A3B8 !important; }
+    html.dark .store-stat-big-number { color: #F8FAFC !important; }
+    html.dark .stores-table-card {
+        background: #111827 !important;
+        border-color: #263449 !important;
+    }
+    html.dark .stores-table-toolbar { border-bottom-color: #263449 !important; }
+    html.dark .search-stores-input {
+        background-color: #0F172A !important;
+        border-color: #334155 !important;
+        color: #F8FAFC !important;
+    }
+    html.dark .custom-stores-table th {
+        background-color: #0F172A !important;
+        color: #94A3B8 !important;
+        border-bottom-color: #263449 !important;
+    }
+    html.dark .custom-stores-table td {
+        color: #CBD5E1 !important;
+        border-bottom-color: #1E293B !important;
+    }
+    html.dark .custom-stores-table tr:hover td {
+        background-color: #172033 !important;
+    }
+    html.dark .store-name-text,
+    html.dark .plan-usage-header { color: #F8FAFC !important; }
+    html.dark .store-id-subtext,
+    html.dark .plan-usage-percent { color: #94A3B8 !important; }
+    html.dark .plan-progress-track { background: #1E293B !important; }
+    html.dark .stores-table-footer { border-top-color: #263449 !important; }
+
     /* Action Buttons */
     .btn-action-icon {
         width: 32px;

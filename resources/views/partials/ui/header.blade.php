@@ -149,9 +149,8 @@
 
         {{-- Theme Button --}}
         <button id="theme-toggle-btn" type="button"
-            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #475569; background: none; border: none; cursor: pointer; transition: background 0.2s;"
-            onmouseover="this.style.background='#e5eeff'; this.style.color='#4648d4';" onmouseout="this.style.background=''; this.style.color='#475569';"
-            title="{{ __('Toggle Theme') }}">
+            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #475569; background: none; border: none; cursor: pointer; transition: all 0.2s;"
+            title="{{ isset($settings['cust_darklayout']) && $settings['cust_darklayout'] == 'on' ? __('Switch to light mode') : __('Switch to dark mode') }}">
             <span class="material-symbols-outlined" id="theme-toggle-icon">
                 {{ isset($settings['cust_darklayout']) && $settings['cust_darklayout'] == 'on' ? 'light_mode' : 'dark_mode' }}
             </span>
@@ -295,8 +294,42 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var themeBtn = document.getElementById('theme-toggle-btn');
+        var themeIcon = document.getElementById('theme-toggle-icon');
+
+        function applyTheme(isDark) {
+            if (isDark) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.documentElement.classList.add('dark');
+                document.body.classList.add('dark');
+                if (themeIcon) {
+                    themeIcon.textContent = 'light_mode';
+                }
+                if (themeBtn) {
+                    themeBtn.setAttribute('title', '{{ __("Switch to light mode") }}');
+                }
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                document.documentElement.classList.remove('dark');
+                document.body.classList.remove('dark');
+                if (themeIcon) {
+                    themeIcon.textContent = 'dark_mode';
+                }
+                if (themeBtn) {
+                    themeBtn.setAttribute('title', '{{ __("Switch to dark mode") }}');
+                }
+            }
+        }
+
+        // Initialize state
+        var isCurrentlyDark = document.documentElement.classList.contains('dark') || document.body.classList.contains('dark');
+        applyTheme(isCurrentlyDark);
+
         if (themeBtn) {
             themeBtn.addEventListener('click', function () {
+                var nextIsDark = !(document.documentElement.classList.contains('dark') || document.body.classList.contains('dark'));
+                localStorage.setItem('virratpos_theme', nextIsDark ? 'dark' : 'light');
+                applyTheme(nextIsDark);
+
                 fetch('{{ route('toggle.theme') }}', {
                     method: 'POST',
                     headers: {
@@ -304,12 +337,6 @@
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     },
                     body: JSON.stringify({})
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        window.location.reload();
-                    }
                 })
                 .catch(err => console.error(err));
             });

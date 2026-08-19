@@ -140,6 +140,67 @@
         transform: translateY(-2px) !important;
         box-shadow: 0 4px 12px rgba(70, 72, 212, 0.05) !important;
     }
+
+    /* Dark Mode Dashboard Overrides */
+    html.dark .dashboard-card,
+    html.dark .dashboard-custom-card {
+        background-color: #111827 !important;
+        border-color: #263449 !important;
+        color: #F8FAFC !important;
+    }
+    html.dark .dashboard-custom-title,
+    html.dark .timeline-text-main,
+    html.dark .plan-name {
+        color: #F8FAFC !important;
+    }
+    html.dark .timeline-text-sub,
+    html.dark .plan-users,
+    html.dark .plan-revenue,
+    html.dark .status-row-item span {
+        color: #CBD5E1 !important;
+    }
+    html.dark .timeline-dot-wrapper {
+        background-color: #1E293B !important;
+        border-color: #111827 !important;
+    }
+    html.dark .timeline-line {
+        background-color: #263449 !important;
+    }
+    html.dark .plan-progress-track {
+        background-color: #1E293B !important;
+    }
+    html.dark .timeframe-select-wrap select {
+        background-color: #0F172A !important;
+        border-color: #334155 !important;
+        color: #F8FAFC !important;
+    }
+    html.dark .status-row-item:hover {
+        background-color: #172033 !important;
+    }
+    html.dark .store-link-box {
+        background-color: #0F172A !important;
+        border-color: #263449 !important;
+    }
+    html.dark .btn-copy-link {
+        background-color: #1E293B !important;
+        border-color: #334155 !important;
+        color: #CBD5E1 !important;
+    }
+    html.dark .btn-copy-link:hover {
+        background-color: #2563EB !important;
+        color: #FFFFFF !important;
+        border-color: #2563EB !important;
+    }
+    html.dark .btn-add-shortcut {
+        background-color: #0F172A !important;
+        border-color: #334155 !important;
+        color: #CBD5E1 !important;
+    }
+    html.dark .btn-add-shortcut:hover {
+        background-color: #172033 !important;
+        border-color: #3B82F6 !important;
+        color: #60A5FA !important;
+    }
 </style>
 @endpush
 @push('script-page')
