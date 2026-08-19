@@ -439,6 +439,86 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
             background: #475569 !important;
         }
 
+        /* 13. Smooth Global Theme Transition */
+        html, body, .sg-sidebar, .sg-header, .card, .landing-card, .requests-table-card, .coupons-table-card, .stores-table-card, .stat-card-box, input, select, textarea, .dropdown-menu, .hdr-dropdown {
+            transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease, box-shadow 180ms ease !important;
+        }
+
+        /* 14. Header Control Buttons & Dropdowns Theme Architecture */
+        .hdr-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: transparent !important;
+            border: none !important;
+            cursor: pointer;
+            color: #475569 !important;
+            transition: all 0.18s ease !important;
+        }
+        .hdr-btn:hover {
+            background-color: #F1F5F9 !important;
+            color: #2563EB !important;
+        }
+
+        .hdr-dropdown {
+            background: #FFFFFF !important;
+            border: 1px solid #E2E8F0 !important;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1) !important;
+        }
+        .hdr-dropdown-item {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            padding: 8px 12px !important;
+            border-radius: 8px !important;
+            font-family: Inter, sans-serif !important;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            color: #475569 !important;
+            text-decoration: none !important;
+            transition: background-color 0.18s, color 0.18s !important;
+        }
+        .hdr-dropdown-item:hover {
+            background-color: #EFF6FF !important;
+            color: #2563EB !important;
+        }
+
+        /* Dark Mode Overrides for Header Controls */
+        html.dark .hdr-btn {
+            color: #CBD5E1 !important;
+            background: transparent !important;
+        }
+        html.dark .hdr-btn:hover {
+            background-color: #1E293B !important;
+            color: #60A5FA !important;
+        }
+        html.dark .hdr-dropdown {
+            background-color: #1E293B !important;
+            border-color: #334155 !important;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
+        }
+        html.dark .hdr-dropdown-header {
+            background-color: #172033 !important;
+            border-bottom-color: #263449 !important;
+        }
+        html.dark .hdr-dropdown-header h4,
+        html.dark .hdr-dropdown-header h5 {
+            color: #F8FAFC !important;
+        }
+        html.dark .hdr-dropdown-header p {
+            color: #CBD5E1 !important;
+        }
+        html.dark .hdr-dropdown-item {
+            color: #CBD5E1 !important;
+        }
+        html.dark .hdr-dropdown-item:hover {
+            background-color: rgba(59, 130, 246, 0.12) !important;
+            color: #FFFFFF !important;
+        }
+
         /* Force brand purple color variables and override legacy themes */
         .nav-pills .nav-link.active,
         .nav-pills .show > .nav-link {

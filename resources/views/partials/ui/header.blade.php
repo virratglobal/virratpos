@@ -130,7 +130,7 @@
         @endif
 
         {{-- Full Screen Button --}}
-        <button type="button" x-data="{ isFullScreen: false }"
+        <button type="button" class="hdr-btn" x-data="{ isFullScreen: false }"
             @click="
                 if (!document.fullscreenElement) {
                     document.documentElement.requestFullscreen().then(() => isFullScreen = true).catch(err => console.error(err));
@@ -141,15 +141,12 @@
                 }
             "
             @fullscreenchange.window="isFullScreen = !!document.fullscreenElement"
-            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #464554; background: none; border: none; cursor: pointer; transition: background 0.2s;"
-            onmouseover="this.style.background='#dce9ff';" onmouseout="this.style.background='';"
-            title="{{ __('Toggle Fullscreen') }}">
+            :title="isFullScreen ? '{{ __('Exit fullscreen') }}' : '{{ __('Enter fullscreen') }}'">
             <span class="material-symbols-outlined" x-text="isFullScreen ? 'fullscreen_exit' : 'fullscreen'">fullscreen</span>
         </button>
 
         {{-- Theme Button --}}
-        <button id="theme-toggle-btn" type="button"
-            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #475569; background: none; border: none; cursor: pointer; transition: all 0.2s;"
+        <button id="theme-toggle-btn" type="button" class="hdr-btn"
             title="{{ isset($settings['cust_darklayout']) && $settings['cust_darklayout'] == 'on' ? __('Switch to light mode') : __('Switch to dark mode') }}">
             <span class="material-symbols-outlined" id="theme-toggle-icon">
                 {{ isset($settings['cust_darklayout']) && $settings['cust_darklayout'] == 'on' ? 'light_mode' : 'dark_mode' }}
@@ -158,34 +155,30 @@
 
         {{-- Language Button --}}
         <div x-data="{ open: false }" class="relative">
-            <button @click="open = !open" @click.away="open = false" type="button"
-                style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #475569; background: none; border: none; cursor: pointer; transition: background 0.2s;"
-                onmouseover="this.style.background='#e5eeff'; this.style.color='#4648d4';" onmouseout="this.style.background=''; this.style.color='#475569';"
-                title="{{ ucFirst($LangName) }}">
+            <button @click="open = !open" @click.away="open = false" type="button" class="hdr-btn"
+                title="{{ __('Language') }} ({{ ucFirst($LangName) }})">
                 <span class="material-symbols-outlined">language</span>
             </button>
-            <div x-show="open" style="display: none; position: absolute; right: 0; z-index: 50; margin-top: 8px; width: 224px; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.1); border: 1px solid #E2E8F0; padding: 6px;">
+            <div x-show="open" style="display: none; position: absolute; right: 0; z-index: 50; margin-top: 8px; width: 224px; border-radius: 12px; padding: 6px;" class="hdr-dropdown">
                 @foreach ($languages as $code => $lang)
-                    <a href="{{ route('change.language', $code) }}"
-                        style="display: block; padding: 8px 12px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; transition: background 0.2s; {{ $currantLang == $code ? 'background: #e5eeff; color: #4648d4; font-weight: 500;' : 'color: #475569;' }}"
-                        onmouseover="if(!this.style.background.includes('#e5eeff')) { this.style.background='#F8FAFC'; }"
-                        onmouseout="if(!this.style.background.includes('#e5eeff')) { this.style.background=''; }">
+                    <a href="{{ route('change.language', $code) }}" class="hdr-dropdown-item">
+                        <span class="material-symbols-outlined" style="font-size: 16px; color: {{ $currantLang == $code ? '#2563EB' : 'inherit' }};">
+                            {{ $currantLang == $code ? 'check' : 'translate' }}
+                        </span>
                         {{ ucFirst($lang) }}
                     </a>
                 @endforeach
                 @if (Auth::user()->type == 'super admin')
                     <div style="height: 1px; background: #E2E8F0; margin: 4px 0;"></div>
                     @can('Create Language')
-                        <a href="#" data-url="{{ route('create.language') }}" data-size="md" data-ajax-popup="true" data-title="{{ __('Create New Language') }}" class="cust-btn"
-                            style="display: block; padding: 8px 12px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; color: #4648d4; transition: background 0.2s;"
-                            onmouseover="this.style.background='#e5eeff';" onmouseout="this.style.background='';">
+                        <a href="#" data-url="{{ route('create.language') }}" data-size="md" data-ajax-popup="true" data-title="{{ __('Create New Language') }}" class="cust-btn hdr-dropdown-item" style="color: #2563EB !important;">
+                            <span class="material-symbols-outlined" style="font-size: 16px;">add</span>
                             {{ __('Create Language') }}
                         </a>
                     @endcan
                     @can('Manage Language')
-                        <a href="{{ route('manage.language', [$currantLang]) }}"
-                            style="display: block; padding: 8px 12px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; color: #4648d4; transition: background 0.2s;"
-                            onmouseover="this.style.background='#e5eeff';" onmouseout="this.style.background='';">
+                        <a href="{{ route('manage.language', [$currantLang]) }}" class="hdr-dropdown-item" style="color: #2563EB !important;">
+                            <span class="material-symbols-outlined" style="font-size: 16px;">settings_applications</span>
                             {{ __('Manage Languages') }}
                         </a>
                     @endcan
@@ -194,65 +187,41 @@
         </div>
 
         {{-- Notifications --}}
-        <button style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #475569; background: none; border: none; cursor: pointer; transition: background 0.2s;"
-            onmouseover="this.style.background='#e5eeff'; this.style.color='#4648d4';" onmouseout="this.style.background=''; this.style.color='#475569';">
-            <span class="material-symbols-outlined">notifications</span>
-        </button>
+        <div x-data="{ open: false }" class="relative">
+            <button @click="open = !open" @click.away="open = false" type="button" class="hdr-btn" title="{{ __('Notifications') }}">
+                <span class="material-symbols-outlined">notifications</span>
+            </button>
+            <div x-show="open" style="display: none; position: absolute; right: 0; z-index: 50; margin-top: 8px; width: 320px; border-radius: 12px; overflow: hidden;" class="hdr-dropdown">
+                <div class="hdr-dropdown-header" style="padding: 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #E2E8F0;">
+                    <h4 style="margin: 0; font-size: 15px; font-weight: 700; color: #0F172A;">{{ __('Notifications') }}</h4>
+                    <span style="font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 9999px; background: rgba(59,130,246,0.12); color: #2563EB;">{{ __('System Active') }}</span>
+                </div>
+                <div style="padding: 24px 16px; text-align: center;">
+                    <div style="width: 44px; height: 44px; border-radius: 50%; background: rgba(59,130,246,0.12); color: #2563EB; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+                        <span class="material-symbols-outlined" style="font-size: 22px;">notifications_active</span>
+                    </div>
+                    <h5 style="margin: 0 0 4px 0; font-size: 14px; font-weight: 600; color: #0F172A;">{{ __('No new notifications') }}</h5>
+                    <p style="margin: 0; font-size: 12.5px; color: #64748B; line-height: 1.4;">{{ __('You are all caught up! System updates and store alerts will appear here.') }}</p>
+                </div>
+            </div>
+        </div>
 
         {{-- Divider --}}
         <div style="width: 1px; height: 24px; background: #E2E8F0; margin: 0 4px;"></div>
 
         {{-- User Profile --}}
-        <style>
-            .sg-profile-link {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                padding: 10px 16px;
-                border-radius: 8px;
-                font-family: Inter, sans-serif;
-                font-size: 13px;
-                font-weight: 500;
-                text-decoration: none !important;
-                color: #475569 !important;
-                transition: all 0.2s;
-            }
-            .sg-profile-link:hover {
-                background: {{ $primaryColor }} !important;
-                color: #ffffff !important;
-            }
-            .sg-profile-logout {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                padding: 10px 16px;
-                border-radius: 8px;
-                font-family: Inter, sans-serif;
-                font-size: 13px;
-                font-weight: 600;
-                text-decoration: none !important;
-                color: #dc2626 !important;
-                transition: all 0.2s;
-            }
-            .sg-profile-logout:hover {
-                background: #fef2f2 !important;
-                color: #dc2626 !important;
-            }
-        </style>
         <div x-data="{ open: false }" class="relative">
-            <button @click="open = !open" @click.away="open = false" type="button"
-                style="width: 36px; height: 36px; border-radius: 50%; padding: 0; background: transparent; display: flex; align-items: center; justify-content: center; border: 2px solid transparent; cursor: pointer; overflow: hidden; transition: all 0.2s;"
-                onmouseover="this.style.borderColor='#e5eeff';" onmouseout="this.style.borderColor='transparent';">
+            <button @click="open = !open" @click.away="open = false" type="button" class="hdr-btn" style="width: 36px; height: 36px; border-radius: 50%; padding: 0; overflow: hidden; border: 2px solid transparent !important;" title="{{ __('Account') }}">
                 @if(!empty($users->avatar))
                     <img src="{{ $profile . '/' . $users->avatar }}" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%;">
                 @else
                     <img src="{{ asset('assets/images/user/avatar-2.jpg') }}" alt="Placeholder" style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%;">
                 @endif
             </button>
-            <div x-show="open" style="display: none; position: absolute; right: 0; z-index: 50; margin-top: 12px; width: 280px; background: #ffffff; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border: 1px solid rgba(199,196,215,0.2); overflow: hidden;">
+            <div x-show="open" style="display: none; position: absolute; right: 0; z-index: 50; margin-top: 12px; width: 280px; border-radius: 12px; overflow: hidden;" class="hdr-dropdown">
                 
                 {{-- Profile Context --}}
-                <div style="padding: 20px; background: #f8f9ff; border-bottom: 1px solid rgba(199,196,215,0.2); display: flex; align-items: center; gap: 16px;">
+                <div class="hdr-dropdown-header" style="padding: 20px; background: #f8f9ff; border-bottom: 1px solid rgba(199,196,215,0.2); display: flex; align-items: center; gap: 16px;">
                     <div style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden; background: #e5eeff; flex-shrink: 0;">
                         @if(!empty($users->avatar))
                             <img src="{{ $profile . '/' . $users->avatar }}" alt="" style="width: 100%; height: 100%; object-fit: cover;">
@@ -268,20 +237,20 @@
 
                 {{-- Quick Actions Hub --}}
                 <div style="padding: 8px;">
-                    <a href="{{ route('profile') }}" class="sg-profile-link">
+                    <a href="{{ route('profile') }}" class="hdr-dropdown-item">
                         <span class="material-symbols-outlined" style="font-size: 18px;">account_circle</span>
                         {{ __('My Profile') }}
                     </a>
-                    <a href="{{ route('settings') }}" class="sg-profile-link">
+                    <a href="{{ route('settings') }}" class="hdr-dropdown-item">
                         <span class="material-symbols-outlined" style="font-size: 18px;">settings</span>
                         {{ __('Account Settings') }}
                     </a>
                 </div>
 
                 {{-- Clear Exit Intent --}}
-                <div style="padding: 8px; border-top: 1px solid rgba(199,196,215,0.2); background: #fafafa;">
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('frm-logout').submit();" class="sg-profile-logout">
-                        <span class="material-symbols-outlined" style="font-size: 18px;">logout</span>
+                <div style="padding: 8px; border-top: 1px solid rgba(199,196,215,0.2);" class="hdr-dropdown-header">
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('frm-logout').submit();" class="hdr-dropdown-item" style="color: #dc2626 !important;">
+                        <span class="material-symbols-outlined" style="font-size: 18px; color: #dc2626;">logout</span>
                         {{ __('Logout') }}
                     </a>
                     <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
