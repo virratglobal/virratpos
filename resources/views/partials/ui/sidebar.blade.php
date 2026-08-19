@@ -13,11 +13,11 @@
     cursor: pointer;
 }
 .sg-nav-link:hover, .sg-nav-link.w-full:hover {
-    background-color: #dce9ff !important;
-    color: #0b1c30 !important;
+    background-color: #EFF6FF !important;
+    color: #2563EB !important;
 }
 .sg-nav-link.sg-active, .sg-nav-link.w-full.sg-active {
-    background-color: #6063ee !important;
+    background-color: #2563EB !important;
     color: #ffffff !important;
     font-weight: 500 !important;
 }
@@ -34,11 +34,11 @@
     background: transparent !important;
 }
 .sg-dropdown-link:hover {
-    background-color: #dce9ff !important;
-    color: #0b1c30 !important;
+    background-color: #EFF6FF !important;
+    color: #2563EB !important;
 }
 .sg-dropdown-link.sg-active {
-    background-color: #6063ee !important;
+    background-color: #2563EB !important;
     color: #ffffff !important;
     font-weight: 500 !important;
 }
@@ -52,14 +52,15 @@
     style="background: #ffffff; border-radius: 12px; box-shadow: 0 1px 8px rgba(0,0,0,0.04); border: 1px solid rgba(199,196,215,0.1);">
 
     {{-- Logo Area --}}
-    <div style="padding: 24px; display: flex; align-items: center; justify-content: space-between;">
-        <a href="{{ route('dashboard') }}" style="display: block; max-width: 150px;">
+    <div style="padding: 22px 24px; display: flex; align-items: center; justify-content: space-between;">
+        <a href="{{ route('dashboard') }}" style="display: flex; align-items: center; width: 180px; height: 42px; text-decoration: none;">
             @php
                 $logo = \App\Models\Utility::get_file('uploads/logo/');
-                $company_logo = \App\Models\Utility::getValByName('company_logo');
-                $logo_img = isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png';
+                $company_logo = \App\Models\Utility::getValByName('company_logo_light');
+                $logo_img = (!empty($company_logo) && $company_logo != 'logo-dark.png') ? $company_logo : 'logo-light.png';
+                $lightFallback = asset('uploads/logo/logo-light.png');
             @endphp
-            <img src="{{ $logo . '/' . $logo_img . '?timestamp='. time() }}" alt="{{ config('app.name') }}" style="width: 100%; height: auto; object-fit: contain;">
+            <img src="{{ $logo . '/' . $logo_img . '?timestamp='. time() }}" alt="{{ config('app.name') }}" style="width: 180px; height: 42px; max-width: 180px; max-height: 42px; object-fit: contain; display: block; background: transparent !important; border: none !important; box-shadow: none !important; margin: 0; padding: 0;" onerror="this.src='{{ $lightFallback }}';">
         </a>
         <button @click="sidebarOpen = false" class="ml-auto lg:hidden" style="color: #767586;">
             <span class="material-symbols-outlined">close</span>

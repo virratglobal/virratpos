@@ -264,6 +264,16 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
         .badge-warning { background-color: #fff3e0 !important; color: #904900 !important; }
         .badge-info { background-color: #dae2fd !important; color: #565e74 !important; }
 
+        /* Custom Blue Form Switches & Toggles */
+        .form-switch .form-check-input:checked,
+        .form-check-input:checked {
+            background-color: #4648d4 !important;
+            border-color: #4648d4 !important;
+        }
+        .form-switch .form-check-input:focus {
+            box-shadow: 0 0 0 3px rgba(70,72,212,0.15) !important;
+        }
+
         /* Tables */
         .table {
             font-family: 'Inter', sans-serif !important;
@@ -273,30 +283,30 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
         .table th {
             font-family: 'Geist', sans-serif !important;
             font-size: 11px !important;
-            font-weight: 500 !important;
-            letter-spacing: 0.08em !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.05em !important;
             text-transform: uppercase !important;
             color: #767586 !important;
             background-color: #eff4ff !important;
-            border-bottom: 1px solid rgba(199,196,215,0.2) !important;
+            border-bottom: 1px solid #E2E8F0 !important;
             padding: 12px 16px !important;
         }
         .table td {
             padding: 12px 16px !important;
             vertical-align: middle !important;
-            border-bottom: 1px solid rgba(199,196,215,0.1) !important;
+            border-bottom: 1px solid #E2E8F0 !important;
             color: #0b1c30 !important;
         }
         .table tbody tr:hover {
-            background-color: #f8f9ff !important;
+            background-color: #eff4ff !important;
         }
         .table-bordered {
-            border: 1px solid rgba(199,196,215,0.15) !important;
+            border: 1px solid #E2E8F0 !important;
         }
         .table-bordered th,
         .table-bordered td {
             border: none !important;
-            border-bottom: 1px solid rgba(199,196,215,0.1) !important;
+            border-bottom: 1px solid #E2E8F0 !important;
         }
 
         /* Nav Tabs */

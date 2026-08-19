@@ -213,640 +213,823 @@
 @endpush
 @section('content')
     <style>
-        /* Store Settings Design System Tokens - Stitch */
+        /* Modern Super Admin Settings Design System - Mockup Design Purple #4648d4 */
         .settings-layout-wrapper {
-            --color-text-primary: #0b1c30;
-            --color-text-secondary: #767586;
-            --color-text-tertiary: #ffffff;
-            --color-text-inverse: #dce9ff;
-            --color-surface-base: #f8f9ff;
-            --color-surface-raised: #4648d4;
-            --color-surface-strong: #f9fafb;
-
-            --font-family-primary: 'Inter', sans-serif;
-            --font-family-header: 'Geist', sans-serif;
-            --font-size-sm: 14px;
-            --font-size-md: 15px;
-            --font-size-lg: 16px;
-
-            --space-1: 4px;
-            --space-2: 8px;
-            --space-3: 12px;
-            --space-4: 16px;
-            --space-5: 20px;
-            --space-6: 24px;
-            
-            --radius-xs: 8px;
-            --shadow-1: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --motion-instant: 200ms;
-
-            font-family: var(--font-family-primary);
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 16px;
+            font-family: 'Inter', sans-serif;
+            color: #0F172A;
         }
 
-        /* Settings Typography */
-        .settings-layout-wrapper {
-            color: var(--color-text-primary);
-            font-size: var(--font-size-sm);
+        .settings-header {
+            margin-bottom: 28px;
         }
-        
-        .settings-layout-wrapper h1, 
-        .settings-layout-wrapper h2, 
-        .settings-layout-wrapper h3, 
-        .settings-layout-wrapper h4, 
-        .settings-layout-wrapper h5 {
-            color: var(--color-text-primary);
-            font-family: var(--font-family-header);
-            font-weight: 600;
+        .settings-header h1 {
+            font-family: 'Inter', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #0F172A;
+            margin: 0;
+            letter-spacing: -0.01em;
         }
-
-        /* Component: Cards */
-        .settings-layout-wrapper .card, 
-        .settings-layout-wrapper .setting-card {
-            background-color: var(--color-text-tertiary) !important;
-            border-radius: var(--radius-xs) !important;
-            box-shadow: var(--shadow-1) !important;
-            padding: var(--space-6) !important;
-            border: 1px solid var(--color-text-inverse) !important;
-            margin-bottom: var(--space-6) !important;
-        }
-        .settings-layout-wrapper .card-header, 
-        .settings-layout-wrapper .card-body,
-        .settings-layout-wrapper .card-footer {
-            background-color: transparent !important;
-            padding: 0 !important;
-            border: none !important;
-            box-shadow: none !important;
-        }
-        .settings-layout-wrapper .card-header { margin-bottom: var(--space-6) !important; border-bottom: 1px solid var(--color-text-inverse) !important; padding-bottom: var(--space-4) !important;}
-        .settings-layout-wrapper .card-footer { margin-top: var(--space-6) !important; border-top: 1px solid var(--color-text-inverse) !important; padding-top: var(--space-4) !important;}
-
-        /* Component: Inputs (Forms) */
-        .settings-layout-wrapper .form-label {
-            color: var(--color-text-primary);
-            font-weight: 500;
-            margin-bottom: var(--space-2);
-            font-size: var(--font-size-sm);
-        }
-        .settings-layout-wrapper .form-control, .settings-layout-wrapper .custom-select {
-            padding: var(--space-3) !important;
-            border-radius: var(--radius-xs) !important;
-            border: 1px solid #d1d5db !important;
-            background-color: var(--color-text-tertiary) !important;
-            color: var(--color-text-primary) !important;
-            font-size: var(--font-size-sm) !important;
-            transition: all var(--motion-instant) ease;
-        }
-        .settings-layout-wrapper .form-control:hover, .settings-layout-wrapper .custom-select:hover {
-            border-color: #9ca3af !important;
-        }
-        .settings-layout-wrapper .form-control:focus, .settings-layout-wrapper .custom-select:focus {
-            outline: none !important;
-            border-color: var(--color-surface-raised) !important;
-            box-shadow: 0 0 0 1px var(--color-surface-raised) !important;
-        }
-        .settings-layout-wrapper .form-control:disabled {
-            background-color: var(--color-surface-strong) !important;
-            color: var(--color-text-secondary) !important;
-            cursor: not-allowed;
+        .settings-header p {
+            font-size: 14px;
+            color: #64748B;
+            margin-top: 6px;
+            margin-bottom: 0;
+            font-weight: 400;
         }
 
-        /* Component: Buttons */
-        .settings-layout-wrapper .btn-primary {
-            padding: 8px 16px !important;
-            border-radius: 6px !important;
-            background-color: var(--color-surface-raised) !important;
-            color: var(--color-text-tertiary) !important;
-            font-size: var(--font-size-sm) !important;
-            font-weight: 500;
-            border: none !important;
-            transition: all var(--motion-instant) ease;
+        /* Sidebar Navigation Card */
+        .settings-sidebar .setting-nav-wrp {
+            background: #FFFFFF !important;
+            border: 1px solid #E2E8F0 !important;
+            border-radius: 12px !important;
+            padding: 20px !important;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+            gap: 6px !important;
+            display: flex !important;
+            flex-direction: column !important;
         }
-        .settings-layout-wrapper .btn-primary:hover {
-            opacity: 0.9;
-        }
-        .settings-layout-wrapper .btn-primary:focus-visible {
-            outline: 2px solid var(--color-surface-raised) !important;
-            outline-offset: 2px !important;
-        }
-        
-        .settings-layout-wrapper .btn-danger {
-            padding: 8px 16px !important;
-            border-radius: 6px !important;
-            font-size: var(--font-size-sm) !important;
-            font-weight: 500;
-        }
-
-        /* Component: Navigation (Sidebar) */
-        .settings-sidebar .nav-pills { 
-            display: flex !important; 
-            flex-direction: column !important; 
-            background: var(--color-text-tertiary) !important;
-            border: 1px solid var(--color-text-inverse) !important;
-            border-radius: var(--radius-xs) !important;
-            padding: 8px !important;
-            margin: 0 !important;
-            gap: 4px !important;
-            box-shadow: var(--shadow-1) !important;
-        }
-        .settings-sidebar .nav-pills .nav-item { margin: 0 !important; padding: 0 !important; width: 100%; }
-        .settings-sidebar .nav-pills .nav-link { 
-            color: var(--color-text-secondary) !important; 
-            padding: 12px 16px !important; 
-            margin-bottom: 0 !important; 
-            font-weight: 500 !important; 
-            font-size: var(--font-size-sm) !important;
-            border-radius: 6px !important;
-            background: transparent !important;
-            border: none !important;
+        .settings-sidebar .nav-link {
             display: flex !important;
             align-items: center !important;
-            box-shadow: none !important;
-            justify-content: flex-start !important;
+            gap: 12px !important;
+            height: 44px !important;
+            padding: 0 12px !important;
+            border-radius: 8px !important;
+            font-size: 13.5px !important;
+            font-weight: 500 !important;
+            color: #475569 !important;
+            background: transparent !important;
+            border: none !important;
+            transition: all 0.15s ease-in-out !important;
+            position: relative !important;
             width: 100% !important;
-            transition: all var(--motion-instant) ease;
+            text-align: left !important;
         }
-        .settings-sidebar .nav-pills .nav-link:hover { 
-            background-color: var(--color-surface-strong) !important; 
-            color: var(--color-text-primary) !important; 
+        .settings-sidebar .nav-link:hover {
+            background-color: #e5eeff !important;
+            color: #4648d4 !important;
         }
-        .settings-sidebar .nav-pills .nav-link.active { 
-            color: var(--color-surface-raised) !important; 
-            font-weight: 600 !important; 
-            background: #e5eeff !important; 
+        .settings-sidebar .nav-link.active {
+            background-color: #e5eeff !important;
+            color: #4648d4 !important;
+            font-weight: 600 !important;
         }
-        .settings-sidebar .nav-pills .nav-link svg { 
-            width: 18px !important; 
-            height: 18px !important; 
-            margin-right: 12px !important; 
-            stroke: currentColor; 
-            transition: stroke var(--motion-instant); 
-            flex-shrink: 0; 
+        .settings-sidebar .nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 6px;
+            bottom: 6px;
+            width: 3.5px;
+            background-color: #4648d4;
+            border-radius: 0 4px 4px 0;
+        }
+        .settings-sidebar .nav-link .material-symbols-outlined,
+        .settings-sidebar .nav-link svg {
+            font-size: 20px !important;
+            width: 20px !important;
+            height: 20px !important;
+            color: #64748B !important;
+            transition: color 0.15s ease !important;
+            flex-shrink: 0;
+        }
+        .settings-sidebar .nav-link:hover .material-symbols-outlined,
+        .settings-sidebar .nav-link.active .material-symbols-outlined,
+        .settings-sidebar .nav-link.active svg {
+            color: #4648d4 !important;
+        }
+
+        /* Settings Card Container */
+        .settings-layout-wrapper .card,
+        .settings-layout-wrapper .setting-card {
+            background-color: #FFFFFF !important;
+            border-radius: 14px !important;
+            border: 1px solid #E2E8F0 !important;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+            padding: 24px !important;
+            margin-bottom: 24px !important;
+        }
+        .settings-layout-wrapper .card-header {
+            background-color: transparent !important;
+            padding: 0 0 16px 0 !important;
+            border: none !important;
+            border-bottom: 1px solid #E2E8F0 !important;
+            margin-bottom: 20px !important;
+            box-shadow: none !important;
+            position: relative !important;
+        }
+        .card .card-header h5:after,
+        .card .card-header .h5:after,
+        .card .card-header:not(.border-0) h5:after,
+        .card .card-header:not(.border-0) .h5:after,
+        body[class*="theme-"] .card .card-header h5:after,
+        body[class*="theme-"] .card .card-header .h5:after {
+            display: none !important;
+            content: none !important;
+            background: transparent !important;
+            width: 0 !important;
+            height: 0 !important;
+        }
+        .settings-layout-wrapper .card-header h5,
+        .settings-layout-wrapper .card-header h4 {
+            font-family: 'Inter', sans-serif !important;
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            color: #0F172A !important;
+            margin: 0 !important;
+        }
+        .settings-layout-wrapper .card-header p,
+        .settings-layout-wrapper .card-header small {
+            font-size: 13.5px !important;
+            color: #64748B !important;
+            margin-top: 5px !important;
+            display: block !important;
+            font-weight: 400 !important;
+        }
+        .settings-layout-wrapper .card-body {
+            padding: 0 !important;
+            background: transparent !important;
+            border: none !important;
+        }
+
+        /* Upload Grid */
+        .upload-grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+        @media (max-width: 991px) {
+            .upload-grid-container {
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+            }
+        }
+        .upload-asset-card {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+        .upload-asset-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            width: 100%;
+        }
+        .upload-asset-header .icon-badge {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: #e5eeff;
+            color: #4648d4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .upload-asset-header h6 {
+            font-size: 15px !important;
+            font-weight: 600 !important;
+            color: #0F172A !important;
+            margin: 0 !important;
+            text-transform: none !important;
+            letter-spacing: normal !important;
+            line-height: 1.2 !important;
+        }
+        .upload-preview-box {
+            width: 100%;
+            height: 120px;
+            background: #F8FAFC;
+            border: 1px dashed #CBD5E1;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        .upload-preview-box img {
+            max-height: 80px;
+            max-width: 90%;
+            object-fit: contain;
+        }
+        .btn-upload-blue {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            width: 100% !important;
+            height: 40px !important;
+            padding: 0 16px !important;
+            background-color: #4648d4 !important;
+            color: #FFFFFF !important;
+            font-size: 13.5px !important;
+            font-weight: 500 !important;
+            border-radius: 8px !important;
+            border: none !important;
+            cursor: pointer !important;
+            transition: background-color 0.15s ease !important;
+        }
+        .btn-upload-blue:hover {
+            background-color: #3a3cb5 !important;
+            color: #FFFFFF !important;
+        }
+
+        /* Inputs & Form Controls */
+        .settings-layout-wrapper .form-label {
+            font-size: 13.5px !important;
+            font-weight: 500 !important;
+            color: #0F172A !important;
+            margin-bottom: 8px !important;
+        }
+        .settings-layout-wrapper .form-control,
+        .settings-layout-wrapper select.form-control {
+            height: 44px !important;
+            padding: 0 14px !important;
+            border-radius: 8px !important;
+            border: 1px solid #E2E8F0 !important;
+            background-color: #FFFFFF !important;
+            color: #0F172A !important;
+            font-size: 14px !important;
+            transition: border-color 0.15s, box-shadow 0.15s !important;
+        }
+        .settings-layout-wrapper .form-control:focus,
+        .settings-layout-wrapper select.form-control:focus {
+            border-color: #4648d4 !important;
+            box-shadow: 0 0 0 3px rgba(70, 72, 212, 0.12) !important;
+            outline: none !important;
+        }
+
+        /* Setting Toggles Grid */
+        .toggle-setting-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            border: 1px solid #E2E8F0;
+            border-radius: 10px;
+            background: #FFFFFF;
+            margin-bottom: 12px;
+        }
+        .toggle-setting-info h6 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0F172A;
+            margin: 0;
+        }
+        .toggle-setting-info p {
+            font-size: 12.5px;
+            color: #64748B;
+            margin: 2px 0 0 0;
+        }
+
+        /* iOS Style Toggles */
+        .ios-toggle {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+        .ios-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .ios-toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #CBD5E1;
+            transition: .2s;
+            border-radius: 24px;
+        }
+        .ios-toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .2s;
+            border-radius: 50%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+        .ios-toggle input:checked + .ios-toggle-slider {
+            background-color: #4648d4;
+        }
+        .ios-toggle input:checked + .ios-toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Theme Color Swatches */
+        .theme-swatch-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        .theme-swatch-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.15s, box-shadow 0.15s;
+            border: 2px solid transparent;
+        }
+        .theme-swatch-btn:hover {
+            transform: translateY(-2px);
+        }
+        .theme-swatch-btn.active_color {
+            border-color: #4648d4 !important;
+            box-shadow: 0 0 0 3px rgba(70, 72, 212, 0.25) !important;
+        }
+        .theme-swatch-btn.active_color::after {
+            content: '✓';
+            color: #FFFFFF;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        /* Sticky Action Bar */
+        .settings-sticky-actions {
+            position: sticky;
+            bottom: 16px;
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+            z-index: 30;
+            margin-top: 24px;
+        }
+        .btn-cancel-gray {
+            padding: 9px 18px;
+            border-radius: 8px;
+            background: #FFFFFF;
+            border: 1px solid #CBD5E1;
+            color: #334155;
+            font-size: 13.5px;
+            font-weight: 500;
+            transition: all 0.15s;
+            text-decoration: none;
+        }
+        .btn-cancel-gray:hover {
+            background: #F8FAFC;
+            color: #0F172A;
+        }
+        .btn-save-blue {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 22px;
+            border-radius: 8px;
+            background: #4648d4 !important;
+            color: #FFFFFF !important;
+            font-size: 13.5px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(70, 72, 212, 0.2);
+            transition: background 0.15s;
+        }
+        .btn-save-blue:hover {
+            background: #3a3cb5 !important;
+            color: #FFFFFF !important;
         }
     </style>
-    <x-ui.page-container class="settings-layout-wrapper pt-6">
-        <div class="w-full lg:w-64 shrink-0 settings-sidebar">
-            <div class="sticky top-6">
-                <ul class="nav setting-nav-wrp nav-pills" id="pills-tab" role="tablist">
-                    @if (Auth::user()->type == 'super admin')
-            <li class="nav-item col-12">
-                <a class="nav-link active" id="site_setting_tab" data-bs-toggle="pill" href="#pills-brand-setting"
-                    role="tab" aria-controls="pills-brand-setting" aria-selected="true">{{ __('Brand Settings') }}</a>
-            </li>
-            <li class="nav-item col-12">
-                <a class="nav-link" id="pills-payment-setting_tab" data-bs-toggle="pill" href="#pills-payment-setting"
-                    role="tab" aria-controls="pills-payment-setting"
-                    aria-selected="false">{{ __('Payment Settings') }}</a>
-            </li>
-            <li class="nav-item col-12">
-                <a class="nav-link" id="pills-email-settings_tab" data-bs-toggle="pill" href="#pills-email-settings"
-                    role="tab" aria-controls="pills-email-settings"
-                    aria-selected="false">{{ __('Email Settings') }}</a>
-            </li>
-            <li class="nav-item col-12">
-                <a class="nav-link" id="recaptcha-settings_tab" data-bs-toggle="pill" href="#pills-recaptcha-settings"
-                    role="tab" aria-controls="pills-recaptcha-settings-tab"
-                    aria-selected="false">{{ __('ReCaptcha Settings') }}</a>
-            </li>
-            <li class="nav-item col-12">
-                <a class="nav-link" id="storage_settings_tab" data-bs-toggle="pill" href="#storage_settings"
-                    role="tab" aria-controls="pills-storage_settings-tab"
-                    aria-selected="false">{{ __('Storage Settings') }}</a>
-            </li>
-            <li class="nav-item col-12">
-                <a class="nav-link" id="pills-cache_settings-tab" data-bs-toggle="pill" href="#pills-cache-settings"
-                    role="tab" aria-controls="pills-cache_settings-tab"
-                    aria-selected="false">{{ __('Cache Settings') }}</a>
-            </li>
-            <li class="nav-item col-12">
-                <a class="nav-link" id="pills-cookie_settings-tab" data-bs-toggle="pill" href="#pills-cookie-settings"
-                    role="tab" aria-controls="pills-cookie_settings-tab"
-                    aria-selected="false">{{ __('Cookie Settings') }}</a>
-            </li>
-            <li class="nav-item col-12">
-                <a class="nav-link" id="pills-chatgpt-tab" data-bs-toggle="pill" href="#pills-chatgpt-settings"
-                    role="tab" aria-controls="pills-chatgpt-tab"
-                    aria-selected="false">{{ __('Chat GPT Settings') }}</a>
-            </li>
-        @else
-            <!-- Store Details -->
-            <li class="nav-item w-100">
-                <a class="nav-link active" id="pills-store_setting-tab" data-bs-toggle="pill" href="#pills-store_setting"
-                    role="tab" aria-controls="pills-store_setting" aria-selected="true">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                    <span>{{ __('Store Details') }}</span>
-                </a>
-            </li>
-            <!-- Brand Details -->
-            <li class="nav-item w-100">
-                <a class="nav-link" id="pills-brand_details-tab" data-bs-toggle="pill" href="#pills-brand_details"
-                    role="tab" aria-controls="pills-brand_details" aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
-                    <span>{{ __('Brand Details') }}</span>
-                </a>
-            </li>
-            <!-- SEO Settings -->
-            <li class="nav-item w-100">
-                <a class="nav-link" id="pills-seo_setting-tab" data-bs-toggle="pill" href="#pills-seo_setting"
-                    role="tab" aria-controls="pills-seo_setting" aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    <span>{{ __('SEO Settings') }}</span>
-                </a>
-            </li>
-            <!-- Domain Settings -->
-            <li class="nav-item w-100">
-                <a class="nav-link" id="pills-domain_setting-tab" data-bs-toggle="pill" href="#pills-domain_setting"
-                    role="tab" aria-controls="pills-domain_setting" aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
-                    <span>{{ __('Domain Settings') }}</span>
-                </a>
-            </li>
-            <!-- Payment Settings -->
-            <li class="nav-item w-100">
-                <a class="nav-link" id="pills-store_payment-setting-tab" data-bs-toggle="pill"
-                    href="#pills-store_payment-setting" role="tab" aria-controls="pills-store_payment-setting"
-                    aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
-                    <span>{{ __('Payment Settings') }}</span>
-                </a>
-            </li>
-            <!-- Email Settings -->
-            <li class="nav-item w-100">
-                <a class="nav-link" id="pills-store_email_setting-tab" data-bs-toggle="pill"
-                    href="#pills-store_email_setting" role="tab" aria-controls="pills-store_email_setting"
-                    aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                    <span>{{ __('Email Settings') }}</span>
-                </a>
-            </li>
-            <!-- Whatsapp Settings -->
-            <li class="nav-item w-100">
-                <a class="nav-link" id="pills-whatsapp_custom_massage-tab" data-bs-toggle="pill"
-                    href="#pills-whatsapp_custom_massage" role="tab" aria-controls="pills-whatsapp_custom_massage"
-                    aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-                    <span>{{ __('Whatsapp Settings') }}</span>
-                </a>
-            </li>
-            <!-- Twilio Settings -->
-            <li class="nav-item w-100">
-                <a class="nav-link" id="pills-twilio_setting-tab" data-bs-toggle="pill" href="#pills-twilio_setting"
-                    role="tab" aria-controls="pills-twilio_setting"
-                    aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
-                    <span>{{ __('Twilio Settings') }}</span>
-                </a>
-            </li>
-            <!-- Pixel Settings -->
-            <li class="nav-item w-100">
-                <a class="nav-link" id="pills-pixel_setting-tab" data-bs-toggle="pill" href="#pixel_settings"
-                    role="tab" aria-controls="pixel_settings"
-                    aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                    <span>{{ __('Pixel Settings') }}</span>
-                </a>
-            </li>
-            <!-- App Settings -->
-            @if ($plan->pwa_store == 'on')
-                <li class="nav-item w-100">
-                    <a class="nav-link" id="pills-pwa_setting-tab" data-bs-toggle="pill" href="#pwa_settings"
-                        role="tab" aria-controls="pwa_settings"
-                        aria-selected="false">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                        <span>{{ __('App Settings') }}</span>
-                    </a>
-                </li>
-            @endif
-            <!-- Webhook Settings -->
-            <li class="nav-item w-100">
-                <a class="nav-link" id="pills-webhook_setting-tab" data-bs-toggle="pill" href="#webhook_settings"
-                        role="tab" aria-controls="webhook_settings"
-                        aria-selected="false">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                        <span>{{ __('Webhook Settings') }}</span>
-                </a>
-            </li>
-        @endif
-        </ul>
-            </div>
+    <x-ui.page-container class="settings-layout-wrapper pt-4">
+        <!-- Settings Top Header -->
+        <div class="settings-header">
+            <h1>{{ __('Settings') }}</h1>
+            <p>{{ __('Manage your platform configuration, branding, integrations, and system preferences.') }}</p>
         </div>
-        <!-- [ sample-page ] start -->
-        <div class="flex-1 min-w-0 settings-content">
-            @if (Auth::user()->type == 'super admin')
-                <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade active show" id="pills-brand-setting" role="tabpanel" aria-labelledby="pills-brand_setting-tab">
-                        {{ Form::model($settings, ['route' => 'business.setting', 'method' => 'POST', 'enctype' => 'multipart/form-data']) }}
-                            <div class="row">
-                                <div class="col-lg-12 col-sm-12 col-md-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5>{{ __('Brand Settings') }}</h5>
+
+        <div class="flex flex-col lg:flex-row gap-6">
+            <div class="w-full lg:w-64 shrink-0 settings-sidebar">
+                <div class="sticky top-6">
+                    <ul class="nav setting-nav-wrp nav-pills" id="pills-tab" role="tablist">
+                        @if (Auth::user()->type == 'super admin')
+                            <li class="nav-item w-100">
+                                <a class="nav-link active" id="site_setting_tab" data-bs-toggle="pill" href="#pills-brand-setting" role="tab" aria-controls="pills-brand-setting" aria-selected="true">
+                                    <span class="material-symbols-outlined">brush</span>
+                                    <span>{{ __('Brand Settings') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item w-100">
+                                <a class="nav-link" id="pills-payment-setting_tab" data-bs-toggle="pill" href="#pills-payment-setting" role="tab" aria-controls="pills-payment-setting" aria-selected="false">
+                                    <span class="material-symbols-outlined">credit_card</span>
+                                    <span>{{ __('Payment Settings') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item w-100">
+                                <a class="nav-link" id="pills-email-settings_tab" data-bs-toggle="pill" href="#pills-email-settings" role="tab" aria-controls="pills-email-settings" aria-selected="false">
+                                    <span class="material-symbols-outlined">mail</span>
+                                    <span>{{ __('Email Settings') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item w-100">
+                                <a class="nav-link" id="recaptcha-settings_tab" data-bs-toggle="pill" href="#pills-recaptcha-settings" role="tab" aria-controls="pills-recaptcha-settings" aria-selected="false">
+                                    <span class="material-symbols-outlined">verified_user</span>
+                                    <span>{{ __('ReCaptcha Settings') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item w-100">
+                                <a class="nav-link" id="storage_settings_tab" data-bs-toggle="pill" href="#storage_settings" role="tab" aria-controls="storage_settings" aria-selected="false">
+                                    <span class="material-symbols-outlined">cloud_upload</span>
+                                    <span>{{ __('Storage Settings') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item w-100">
+                                <a class="nav-link" id="pills-cache_settings-tab" data-bs-toggle="pill" href="#pills-cache-settings" role="tab" aria-controls="pills-cache-settings" aria-selected="false">
+                                    <span class="material-symbols-outlined">memory</span>
+                                    <span>{{ __('Cache Settings') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item w-100">
+                                <a class="nav-link" id="pills-cookie_settings-tab" data-bs-toggle="pill" href="#pills-cookie-settings" role="tab" aria-controls="pills-cookie-settings" aria-selected="false">
+                                    <span class="material-symbols-outlined">cookie</span>
+                                    <span>{{ __('Cookie Settings') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item w-100">
+                                <a class="nav-link" id="pills-chatgpt-tab" data-bs-toggle="pill" href="#pills-chatgpt-settings" role="tab" aria-controls="pills-chatgpt-settings" aria-selected="false">
+                                    <span class="material-symbols-outlined">smart_toy</span>
+                                    <span>{{ __('Chat GPT Settings') }}</span>
+                                </a>
+                            </li>
+                        @else
+                            <!-- Store Owner Section -->
+                            <li class="nav-item w-100">
+                                <a class="nav-link active" id="pills-store_setting-tab" data-bs-toggle="pill" href="#pills-store_setting" role="tab" aria-controls="pills-store_setting" aria-selected="true">
+                                    <span class="material-symbols-outlined">storefront</span>
+                                    <span>{{ __('Store Details') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item w-100">
+                                <a class="nav-link" id="pills-brand_details-tab" data-bs-toggle="pill" href="#pills-brand_details" role="tab" aria-controls="pills-brand_details" aria-selected="false">
+                                    <span class="material-symbols-outlined">brush</span>
+                                    <span>{{ __('Brand Details') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item w-100">
+                                <a class="nav-link" id="pills-seo_setting-tab" data-bs-toggle="pill" href="#pills-seo_setting" role="tab" aria-controls="pills-seo_setting" aria-selected="false">
+                                    <span class="material-symbols-outlined">search</span>
+                                    <span>{{ __('SEO Settings') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item w-100">
+                                <a class="nav-link" id="pills-domain_setting-tab" data-bs-toggle="pill" href="#pills-domain_setting" role="tab" aria-controls="pills-domain_setting" aria-selected="false">
+                                    <span class="material-symbols-outlined">language</span>
+                                    <span>{{ __('Domain Settings') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item w-100">
+                                <a class="nav-link" id="pills-store_payment-setting-tab" data-bs-toggle="pill" href="#pills-store_payment-setting" role="tab" aria-controls="pills-store_payment-setting" aria-selected="false">
+                                    <span class="material-symbols-outlined">credit_card</span>
+                                    <span>{{ __('Payment Settings') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item w-100">
+                                <a class="nav-link" id="pills-store_email_setting-tab" data-bs-toggle="pill" href="#pills-store_email_setting" role="tab" aria-controls="pills-store_email_setting" aria-selected="false">
+                                    <span class="material-symbols-outlined">mail</span>
+                                    <span>{{ __('Email Settings') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item w-100">
+                                <a class="nav-link" id="pills-whatsapp_custom_massage-tab" data-bs-toggle="pill" href="#pills-whatsapp_custom_massage" role="tab" aria-controls="pills-whatsapp_custom_massage" aria-selected="false">
+                                    <span class="material-symbols-outlined">chat</span>
+                                    <span>{{ __('Whatsapp Settings') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item w-100">
+                                <a class="nav-link" id="pills-twilio_setting-tab" data-bs-toggle="pill" href="#pills-twilio_setting" role="tab" aria-controls="pills-twilio_setting" aria-selected="false">
+                                    <span class="material-symbols-outlined">sms</span>
+                                    <span>{{ __('Twilio Settings') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item w-100">
+                                <a class="nav-link" id="pills-pixel_setting-tab" data-bs-toggle="pill" href="#pixel_settings" role="tab" aria-controls="pixel_settings" aria-selected="false">
+                                    <span class="material-symbols-outlined">code</span>
+                                    <span>{{ __('Pixel Settings') }}</span>
+                                </a>
+                            </li>
+                            @if ($plan->pwa_store == 'on')
+                                <li class="nav-item w-100">
+                                    <a class="nav-link" id="pills-pwa_setting-tab" data-bs-toggle="pill" href="#pwa_settings" role="tab" aria-controls="pwa_settings" aria-selected="false">
+                                        <span class="material-symbols-outlined">mobile_friendly</span>
+                                        <span>{{ __('App Settings') }}</span>
+                                    </a>
+                                </li>
+                            @endif
+                            <li class="nav-item w-100">
+                                <a class="nav-link" id="pills-webhook_setting-tab" data-bs-toggle="pill" href="#webhook_settings" role="tab" aria-controls="webhook_settings" aria-selected="false">
+                                    <span class="material-symbols-outlined">webhook</span>
+                                    <span>{{ __('Webhook Settings') }}</span>
+                                </a>
+                            </li>
+                        @endif
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Settings Main Content -->
+            <div class="flex-1 min-w-0 settings-content">
+                @if (Auth::user()->type == 'super admin')
+                    <div class="tab-content" id="pills-tabContent">
+                        <!-- Brand Settings Tab -->
+                        <div class="tab-pane fade active show" id="pills-brand-setting" role="tabpanel" aria-labelledby="pills-brand_setting-tab">
+                            {{ Form::model($settings, ['route' => 'business.setting', 'method' => 'POST', 'enctype' => 'multipart/form-data']) }}
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>{{ __('Brand Settings') }}</h5>
+                                        <p>{{ __('Configure your platform identity, branding assets, and default application preferences.') }}</p>
+                                    </div>
+                                    <div class="card-body">
+                                        <!-- Three-Column Logo Upload Grid -->
+                                        <div class="upload-grid-container">
+                                            <!-- Dark Logo Card -->
+                                            <div class="upload-asset-card">
+                                                <div class="upload-asset-header">
+                                                    <div class="icon-badge">
+                                                        <span class="material-symbols-outlined">dark_mode</span>
+                                                    </div>
+                                                    <h6>{{ __('Dark Logo') }}</h6>
+                                                </div>
+                                                <div class="upload-preview-box">
+                                                    @php
+                                                        $darkPath = $logo . '/' . (isset($logo_img) && !empty($logo_img) ? $logo_img : 'logo-dark.png');
+                                                        $defaultDark = asset('uploads/logo/logo-dark.png');
+                                                    @endphp
+                                                    <img id="logoDark" alt="Dark Logo" src="{{ $darkPath . '?timestamp=' . time() }}"
+                                                        onerror="if(!this.dataset.tried){ this.dataset.tried='1'; this.src='{{ $defaultDark }}'; } else { this.style.display='none'; this.nextElementSibling.style.display='flex'; }">
+                                                    <div class="upload-empty-state" style="display: none; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+                                                        <span class="material-symbols-outlined" style="font-size: 28px; color: #94A3B8;">image</span>
+                                                        <span style="font-size: 13px; font-weight: 500; color: #64748B;">{{ __('No image uploaded') }}</span>
+                                                        <span style="font-size: 11.5px; color: #94A3B8;">{{ __('Upload your brand asset') }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="w-100">
+                                                    <label for="logo_dark" class="btn-upload-blue mb-0">
+                                                        <span class="material-symbols-outlined text-[18px]">upload</span>
+                                                        <span>{{ __('Upload Image') }}</span>
+                                                        <input type="file" name="logo_dark" id="logo_dark" class="form-control file d-none" data-filename="logo_dark" onchange="var img = document.getElementById('logoDark'); img.src = window.URL.createObjectURL(this.files[0]); img.style.display='block'; if(img.nextElementSibling) img.nextElementSibling.style.display='none';">
+                                                    </label>
+                                                </div>
+                                                @error('logo_dark')
+                                                    <span class="invalid-logo text-danger text-xs mt-2">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <!-- Light Logo Card -->
+                                            <div class="upload-asset-card">
+                                                <div class="upload-asset-header">
+                                                    <div class="icon-badge">
+                                                        <span class="material-symbols-outlined">light_mode</span>
+                                                    </div>
+                                                    <h6>{{ __('Light Logo') }}</h6>
+                                                </div>
+                                                <div class="upload-preview-box">
+                                                    @php
+                                                        $lightPath = $logo . '/' . 'logo-light.png';
+                                                        $defaultLight = asset('uploads/logo/logo-light.png');
+                                                    @endphp
+                                                    <img id="adminLogoLight" alt="Light Logo" src="{{ $lightPath . '?timestamp=' . time() }}"
+                                                        onerror="if(!this.dataset.tried){ this.dataset.tried='1'; this.src='{{ $defaultLight }}'; } else { this.style.display='none'; this.nextElementSibling.style.display='flex'; }">
+                                                    <div class="upload-empty-state" style="display: none; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+                                                        <span class="material-symbols-outlined" style="font-size: 28px; color: #94A3B8;">image</span>
+                                                        <span style="font-size: 13px; font-weight: 500; color: #64748B;">{{ __('No image uploaded') }}</span>
+                                                        <span style="font-size: 11.5px; color: #94A3B8;">{{ __('Upload your brand asset') }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="w-100">
+                                                    <label for="logo_light" class="btn-upload-blue mb-0">
+                                                        <span class="material-symbols-outlined text-[18px]">upload</span>
+                                                        <span>{{ __('Upload Image') }}</span>
+                                                        <input type="file" name="logo_light" id="logo_light" class="form-control file d-none" data-filename="logo_light" onchange="var img = document.getElementById('adminLogoLight'); img.src = window.URL.createObjectURL(this.files[0]); img.style.display='block'; if(img.nextElementSibling) img.nextElementSibling.style.display='none';">
+                                                    </label>
+                                                </div>
+                                                @error('logo_light')
+                                                    <span class="invalid-logo text-danger text-xs mt-2">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <!-- Favicon Card -->
+                                            <div class="upload-asset-card">
+                                                <div class="upload-asset-header">
+                                                    <div class="icon-badge">
+                                                        <span class="material-symbols-outlined">badge</span>
+                                                    </div>
+                                                    <h6>{{ __('Favicon') }}</h6>
+                                                </div>
+                                                <div class="upload-preview-box">
+                                                    @php
+                                                        $favPath = $logo . '/' . 'favicon.png';
+                                                        $defaultFav = asset('uploads/logo/favicon.png');
+                                                    @endphp
+                                                    <img id="adminfavicon" alt="Favicon" src="{{ $favPath . '?timestamp=' . time() }}" style="width: 44px; height: 44px;"
+                                                        onerror="if(!this.dataset.tried){ this.dataset.tried='1'; this.src='{{ $defaultFav }}'; } else { this.style.display='none'; this.nextElementSibling.style.display='flex'; }">
+                                                    <div class="upload-empty-state" style="display: none; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+                                                        <span class="material-symbols-outlined" style="font-size: 28px; color: #94A3B8;">image</span>
+                                                        <span style="font-size: 13px; font-weight: 500; color: #64748B;">{{ __('No image uploaded') }}</span>
+                                                        <span style="font-size: 11.5px; color: #94A3B8;">{{ __('Upload your brand asset') }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="w-100">
+                                                    <label for="favicon" class="btn-upload-blue mb-0">
+                                                        <span class="material-symbols-outlined text-[18px]">upload</span>
+                                                        <span>{{ __('Upload Image') }}</span>
+                                                        <input type="file" name="favicon" id="favicon" class="form-control file d-none" data-filename="favicon_update" onchange="var img = document.getElementById('adminfavicon'); img.src = window.URL.createObjectURL(this.files[0]); img.style.display='block'; if(img.nextElementSibling) img.nextElementSibling.style.display='none';">
+                                                    </label>
+                                                </div>
+                                                @error('favicon')
+                                                    <span class="invalid-logo text-danger text-xs mt-2">{{ $message }}</span>
+                                                @enderror
+                                            </div>
                                         </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-lg-4 col-sm-6 col-md-6">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h5>{{ __('Logo dark') }}</h5>
-                                                        </div>
-                                                        <div class="card-body pt-0">
-                                                            <div class=" setting-card">
-                                                                <div class="mt-4">  {{-- logo-content --}}
-                                                                    {{-- <a href="{{ asset(Storage::url('uploads/logo/logo-dark.png')) }}"
-                                                                        target="_blank">
-                                                                        <img src="{{ asset(Storage::url('uploads/logo/logo-dark.png')) }}"
-                                                                            width="170px" class="img_setting"
-                                                                            id="logoDark">
-                                                                    </a> --}}
-                                                                    <a href="{{$logo. '/' . (isset($logo_img) && !empty($logo_img)? $logo_img:'logo-dark.png')}}" target="_blank">
-                                                                        <img id="logoDark" alt="your image" src="{{$logo. '/' . (isset($logo_img) && !empty($logo_img)? $logo_img:'logo-dark.png') . '?timestamp='. time()}}  " width="150px" class="img_setting fix-logo">
-                                                                    </a>
-                                                                </div>
-                                                                <div class="choose-files mt-5">
-                                                                    <label for="logo_dark">
-                                                                        <div class=" bg-primary full_logo"> <i
-                                                                                class="ti ti-upload px-1"></i>{{ __('Choose file here') }}
-                                                                        </div>
-                                                                        <input type="file" name="logo_dark"
-                                                                            id="logo_dark" class="form-control file"
-                                                                            data-filename="logo_dark"
-                                                                            onchange="document.getElementById('logoDark').src = window.URL.createObjectURL(this.files[0])">
-                                                                    </label>
-                                                                </div>
-                                                                @error('logo_dark')
-                                                                    <div class="row">
-                                                                        <span class="invalid-logo" role="alert">
-                                                                            <strong
-                                                                                class="text-danger">{{ $message }}</strong>
-                                                                        </span>
-                                                                    </div>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-sm-6 col-md-6">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h5>{{ __('Logo Light') }}</h5>
-                                                        </div>
-                                                        <div class="card-body pt-0">
-                                                            <div class=" setting-card">
-                                                                <div class="mt-4">  {{-- logo-content --}}
-                                                                    {{-- <a href="{{ asset(Storage::url('uploads/logo/logo-light.png')) }}"
-                                                                        target="_blank">
-                                                                        <img src="{{ asset(Storage::url('uploads/logo/logo-light.png')) }}"
-                                                                            width="170px" class=" img_setting"
-                                                                            id="logoLight">
-                                                                    </a> --}}
 
-                                                                    <a href="{{$logo. '/' . 'logo-light.png'}}" target="_blank">
-                                                                        <img id="adminLogoLight" alt="your image" src="{{$logo. '/' . 'logo-light.png' . '?timestamp='. time()}}" width="170px" class="img_setting fix-logo">
-                                                                    </a>
-                                                                </div>
-                                                                <div class="choose-files mt-5">
-                                                                    <label for="logo_light">
-                                                                        <div class=" bg-primary"> <i
-                                                                                class="ti ti-upload px-1"></i>{{ __('Choose file here') }}
-                                                                        </div>
-                                                                        <input type="file" class="form-control file"
-                                                                            name="logo_light" id="logo_light"
-                                                                            data-filename="logo_light"
-                                                                            onchange="document.getElementById('adminLogoLight').src = window.URL.createObjectURL(this.files[0])">
-                                                                    </label>
-                                                                </div>
-                                                                @error('logo_light')
-                                                                    <div class="row">
-                                                                        <span class="invalid-logo" role="alert">
-                                                                            <strong
-                                                                                class="text-danger">{{ $message }}</strong>
-                                                                        </span>
-                                                                    </div>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-sm-6 col-md-6">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h5>{{ __('Favicon') }}</h5>
-                                                        </div>
-                                                        <div class="card-body pt-0">
-                                                            <div class=" setting-card">
-                                                                <div class="logo-content mt-3">
-                                                                    <a href="{{ $logo . '/' . 'favicon.png' }}"
-                                                                        target="_blank">
-                                                                        <img src="{{ $logo . '/' . 'favicon.png' . '?timestamp='. time() }}"
-                                                                        {{-- <img src="{{ $logo . 'favicon.png' . '?timestamp='. time() }}" --}}
-                                                                            width="50px" height="50px"
-                                                                            class="img_setting favicon" id="adminfavicon">
-                                                                    </a>
-                                                                </div>
-                                                                {{-- <div class="logo-content logo-set-bg  text-center py-2">
-                                                                    <img src="{{ $logo . '/' . (isset($company_favicon) && !empty($company_favicon) ? $company_favicon : 'favicon.png') }}"  width="50px" class="img_setting">
-                                                                </div> --}}
-                                                                <div class="choose-files mt-5">
-                                                                    <label for="favicon">
-                                                                        <div class=" bg-primary favicon_update"> <i
-                                                                                class="ti ti-upload px-1"></i>{{ __('Choose file here') }}
-                                                                        </div>
-                                                                        <input type="file" class="form-control file"
-                                                                            id="favicon" name="favicon"
-                                                                            data-filename="favicon_update"
-                                                                            onchange="document.getElementById('adminfavicon').src = window.URL.createObjectURL(this.files[0])">
-                                                                    </label>
-                                                                </div>
-                                                                @error('favicon')
-                                                                    <div class="row">
-                                                                        <span class="invalid-logo" role="alert">
-                                                                            <strong
-                                                                                class="text-danger">{{ $message }}</strong>
-                                                                        </span>
-                                                                    </div>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                        <!-- Branding Form Inputs -->
+                                        <div class="row g-4 mb-4">
+                                            <div class="col-md-6">
+                                                {{ Form::label('title_text', __('Title Text'), ['class' => 'form-label']) }}
+                                                {{ Form::text('title_text', null, ['class' => 'form-control', 'placeholder' => __('Enter application title')]) }}
+                                                @error('title_text')
+                                                    <span class="invalid-title_text text-danger text-xs mt-1">{{ $message }}</span>
+                                                @enderror
+                                            </div>
 
-                                                <div class="form-group col-md-6">
-                                                    {{ Form::label('title_text', __('Title Text'), ['class' => 'form-label']) }}
-                                                    {{ Form::text('title_text', null, ['class' => 'form-control', 'placeholder' => __('Title Text')]) }}
-                                                    @error('title_text')
-                                                        <span class="invalid-title_text" role="alert">
-                                                            <strong class="text-danger">{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    {{ Form::label('footer_text', __('Footer Text'), ['class' => 'form-label']) }}
-                                                    {{ Form::text('footer_text', null, ['class' => 'form-control', 'placeholder' => __('Footer Text')]) }}
-                                                    @error('footer_text')
-                                                        <span class="invalid-footer_text" role="alert">
-                                                            <strong class="text-danger">{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group col-md-4">
-                                                    {{ Form::label('default_language', __('Default Language'), ['class' => 'form-label']) }}
-                                                    <div class="changeLanguage">
-                                                        <select name="default_language" id="default_language"
-                                                            class="form-control" data-toggle="select">
-                                                            @foreach ($languages as $code => $language)
-                                                                <option @if ($lang == $code) selected @endif
-                                                                    value="{{ $code }}">
-                                                                    {{ ucFirst($language) }}</option>
-                                                            @endforeach
-                                                        </select>
+                                            <div class="col-md-6">
+                                                {{ Form::label('footer_text', __('Footer Text'), ['class' => 'form-label']) }}
+                                                {{ Form::text('footer_text', null, ['class' => 'form-control', 'placeholder' => __('Enter footer text')]) }}
+                                                @error('footer_text')
+                                                    <span class="invalid-footer_text text-danger text-xs mt-1">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                {{ Form::label('default_language', __('Default Language'), ['class' => 'form-label']) }}
+                                                <select name="default_language" id="default_language" class="form-control">
+                                                    @foreach ($languages as $code => $language)
+                                                        <option @if ($lang == $code) selected @endif value="{{ $code }}">
+                                                            {{ ucFirst($language) }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                {{ Form::label('currency_symbol', __('Currency Symbol*'), ['class' => 'form-label']) }}
+                                                {{ Form::text('currency_symbol', $settings['currency_symbol'], ['class' => 'form-control', 'placeholder' => __('Enter currency symbol')]) }}
+                                                <small class="text-xs text-muted">{{ __('Note: Assigned when creating new stores.') }}</small>
+                                                @error('currency_symbol')
+                                                    <span class="invalid-currency_symbol text-danger text-xs mt-1">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                {{ Form::label('currency', __('Currency*'), ['class' => 'form-label']) }}
+                                                {{ Form::text('currency', $settings['currency'], ['class' => 'form-control', 'placeholder' => __('Enter currency')]) }}
+                                                <small class="text-xs text-muted">{{ __('Note: Assigned when creating new stores.') }}</small>
+                                                @error('currency')
+                                                    <span class="invalid-currency text-danger text-xs mt-1">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <!-- Feature Toggles Grid -->
+                                        <div class="row g-3 mb-4">
+                                            <div class="col-md-6">
+                                                <div class="toggle-setting-card">
+                                                    <div class="toggle-setting-info">
+                                                        <h6>{{ __('Enable Landing Page') }}</h6>
+                                                        <p>{{ __('Allow stores to use the landing page.') }}</p>
                                                     </div>
+                                                    <label class="ios-toggle">
+                                                        <input type="checkbox" name="display_landing_page" id="display_landing_page" {{ $settings['display_landing_page'] == 'on' ? 'checked' : '' }}>
+                                                        <span class="ios-toggle-slider"></span>
+                                                    </label>
                                                 </div>
-                                                <div class="form-group col-md-4">
-                                                    <div class="form-group">
-                                                        {{ Form::label('currency_symbol', __('Currency Symbol*'), ['class' => 'form-label']) }}
-                                                        {{ Form::text('currency_symbol', $settings['currency_symbol'], ['class' => 'form-control', 'placeholder' => __('Enter Currency Symbol')]) }}
-                                                        <small>{{ __('Note: This value will be automatically assigned whenever a new store is created.') }}</small>
-                                                        @error('currency_symbol')
-                                                            <span class="invalid-currency_symbol" role="alert">
-                                                                <strong class="text-danger">{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="toggle-setting-card">
+                                                    <div class="toggle-setting-info">
+                                                        <h6>{{ __('Enable RTL') }}</h6>
+                                                        <p>{{ __('Enable right-to-left layout support.') }}</p>
                                                     </div>
+                                                    <label class="ios-toggle">
+                                                        <input type="checkbox" name="SITE_RTL" id="SITE_RTL" {{ $settings['SITE_RTL'] == 'on' ? 'checked' : '' }}>
+                                                        <span class="ios-toggle-slider"></span>
+                                                    </label>
                                                 </div>
-                                                <div class="form-group col-md-4 mb-0">
-                                                    <div class="form-group">
-                                                        {{ Form::label('currency', __('Currency *'), ['class' => 'form-label']) }}
-                                                        {{ Form::text('currency', $settings['currency'], ['class' => 'form-control font-style', 'placeholder' => __('Enter Currency')]) }}
-                                                        <small>{{ __('Note: This value will be automatically assigned whenever a new store is created.') }}</small>
-                                                        <small>
-                                                            <a href="https://stripe.com/docs/currencies"
-                                                                target="_blank">{{ __('you can find out how to do that here..') }}</a>
-                                                        </small>
-                                                        <br>
+                                            </div>
 
+                                            <div class="col-md-6">
+                                                <div class="toggle-setting-card">
+                                                    <div class="toggle-setting-info">
+                                                        <h6>{{ __('Enable Sign-Up Page') }}</h6>
+                                                        <p>{{ __('Allow new users to create accounts.') }}</p>
+                                                    </div>
+                                                    <label class="ios-toggle">
+                                                        <input type="checkbox" name="signup_button" id="signup_button" {{ Utility::getValByName('signup_button') == 'on' ? 'checked' : '' }}>
+                                                        <span class="ios-toggle-slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
 
-                                                        @error('currency')
-                                                            <span class="invalid-currency" role="alert">
-                                                                <strong class="text-danger">{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
+                                            <div class="col-md-6">
+                                                <div class="toggle-setting-card">
+                                                    <div class="toggle-setting-info">
+                                                        <h6>{{ __('Enable Email Verification') }}</h6>
+                                                        <p>{{ __('Require users to verify their email address.') }}</p>
+                                                    </div>
+                                                    <label class="ios-toggle">
+                                                        <input type="checkbox" name="email_verification" id="email_verification" {{ Utility::getValByName('email_verification') == 'on' ? 'checked' : '' }}>
+                                                        <span class="ios-toggle-slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
 
+                                        <!-- Theme Customizer Section -->
+                                        <div class="card p-4 border mt-4" style="background: #F8FAFC; border-color: #E2E8F0 !important;">
+                                            <div class="mb-3">
+                                                <h5 class="m-0" style="font-size: 16px; font-weight: 600; color: #0F172A;">{{ __('Theme Customizer') }}</h5>
+                                                <p style="font-size: 13px; color: #64748B; margin-top: 2px;">{{ __('Customize the appearance of your VirratPOS dashboard.') }}</p>
+                                            </div>
+
+                                            <div class="row g-4">
+                                                <div class="col-md-6">
+                                                    <h6 style="font-size: 13.5px; font-weight: 600; color: #0F172A;">{{ __('Primary Color') }}</h6>
+                                                    <div class="theme-swatch-list">
+                                                        <a href="#!" class="theme-swatch-btn {{ $color == 'theme-1' ? 'active_color' : '' }}" data-value="theme-1" style="background: #2563EB;" title="Virrat Blue"></a>
+                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-1" {{ $color == 'theme-1' ? 'checked' : '' }}>
+
+                                                        <a href="#!" class="theme-swatch-btn {{ $color == 'theme-2' ? 'active_color' : '' }}" data-value="theme-2" style="background: #0F172A;" title="Navy"></a>
+                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-2" {{ $color == 'theme-2' ? 'checked' : '' }}>
+
+                                                        <a href="#!" class="theme-swatch-btn {{ $color == 'theme-3' ? 'active_color' : '' }}" data-value="theme-3" style="background: #0EA5E9;" title="Sky Blue"></a>
+                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-3" {{ $color == 'theme-3' ? 'checked' : '' }}>
+
+                                                        <a href="#!" class="theme-swatch-btn {{ $color == 'theme-4' ? 'active_color' : '' }}" data-value="theme-4" style="background: #6366F1;" title="Indigo Blue"></a>
+                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-4" {{ $color == 'theme-4' ? 'checked' : '' }}>
+
+                                                        <a href="#!" class="theme-swatch-btn {{ $color == 'theme-5' ? 'active_color' : '' }}" data-value="theme-5" style="background: #64748B;" title="Slate Blue"></a>
+                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-5" {{ $color == 'theme-5' ? 'checked' : '' }}>
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group col-6 col-md-3">
-                                                    <div class="custom-control form-switch p-0">
-                                                        <label class="form-check-label"
-                                                            for="display_landing_page">{{ __('Enable Landing Page') }}</label><br>
-                                                        <input type="checkbox" name="display_landing_page"
-                                                            class="form-check-input" id="display_landing_page"
-                                                            data-toggle="switchbutton"
-                                                            {{ $settings['display_landing_page'] == 'on' ? 'checked="checked"' : '' }}
-                                                            data-onstyle="primary">
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group col-6 col-md-3">
-                                                    <div class="custom-control form-switch p-0">
-                                                        <label class="form-check-label"
-                                                            for="SITE_RTL">{{ __('Enable RTL') }}</label><br>
-                                                        <input type="checkbox" class="form-check-input"
-                                                            data-toggle="switchbutton" data-onstyle="primary"
-                                                            name="SITE_RTL" id="SITE_RTL"
-                                                            {{ $settings['SITE_RTL'] == 'on' ? 'checked="checked"' : '' }}>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group col-6 col-md-3">
-                                                    <div class="custom-control form-switch p-0">
-                                                        <label class="form-check-label"
-                                                            for="signup_button">{{ __('Enable Sign-Up Page') }}</label><br>
-                                                        <input type="checkbox" name="signup_button"
-                                                            class="form-check-input" id="signup_button"
-                                                            data-toggle="switchbutton"
-                                                            {{ Utility::getValByName('signup_button') == 'on' ? 'checked="checked"' : '' }}
-                                                            data-onstyle="primary">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group col-6 col-md-3">
-                                                    <div class="custom-control form-switch p-0">
-                                                        <label class="form-check-label"
-                                                            for="email_verification">{{ __('Enable Email Verification') }}</label><br>
-                                                        <input type="checkbox" name="email_verification"
-                                                            class="form-check-input" id="email_verification"
-                                                            data-toggle="switchbutton"
-                                                            {{ Utility::getValByName('email_verification') == 'on' ? 'checked="checked"' : '' }}
-                                                            data-onstyle="primary">
-                                                    </div>
-                                                </div>
-                                                <div class="setting-card setting-logo-box p-3">
-                                                    <div class="row">
-                                                        <h5>{{ __('Theme Customizer') }}</h5>
-                                                        <div class="col-md-4 my-auto">
-                                                            <h6 class="mt-2">
-                                                                <i data-feather="credit-card"
-                                                                    class="me-2"></i>{{ __('Primary Color Settings') }}
-                                                            </h6>
-                                                            <hr class="my-2" />
-                                                            <div class="color-wrp">
-                                                                <div class="theme-color themes-color">
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-1' ? 'active_color' : '' }}" data-value="theme-1"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-1"{{ $color == 'theme-1' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-2' ? 'active_color' : '' }}" data-value="theme-2"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-2"{{ $color == 'theme-2' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-3' ? 'active_color' : '' }}" data-value="theme-3"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-3"{{ $color == 'theme-3' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-4' ? 'active_color' : '' }}" data-value="theme-4"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-4"{{ $color == 'theme-4' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-5' ? 'active_color' : '' }}" data-value="theme-5"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-5"{{ $color == 'theme-5' ? 'checked' : '' }}>
-                                                                    <br>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-6' ? 'active_color' : '' }}" data-value="theme-6"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-6"{{ $color == 'theme-6' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-7' ? 'active_color' : '' }}" data-value="theme-7"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-7"{{ $color == 'theme-7' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-8' ? 'active_color' : '' }}" data-value="theme-8"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-8"{{ $color == 'theme-8' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-9' ? 'active_color' : '' }}" data-value="theme-9"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-9"{{ $color == 'theme-9' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-10' ? 'active_color' : '' }}" data-value="theme-10"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-10"{{ $color == 'theme-10' ? 'checked' : '' }}>
-                                                                </div>
-                                                                <div class="color-picker-wrp ">
-                                                                        <input type="color" value="{{ $color ? $color : '' }}" class="colorPicker {{ isset($flag) && $flag == 'true' ? 'active_color' : '' }}" name="custom_color" id="color-picker">
-                                                                        <input type='hidden' name="color_flag" value = {{  isset($flag) && $flag == 'true' ? 'true' : 'false' }}>
-                                                                </div>
-                                                            </div>
+                                                <div class="col-md-6">
+                                                    <h6 style="font-size: 13.5px; font-weight: 600; color: #0F172A;">{{ __('Sidebar Settings') }}</h6>
+                                                    <div class="toggle-setting-card mt-2 mb-0">
+                                                        <div class="toggle-setting-info">
+                                                            <h6>{{ __('Transparent Sidebar') }}</h6>
+                                                            <p>{{ __('Use a transparent sidebar style across the dashboard.') }}</p>
                                                         </div>
-                                                        <div class="col-md-4 my-auto mt-2">
-                                                            <h6 class="">
-                                                                <i data-feather="layout"
-                                                                    class="me-2"></i>{{ __('Sidebar Settings') }}
-                                                            </h6>
-                                                            <hr class="my-2" />
-                                                            <div class="form-check form-switch">
-                                                                <input type="checkbox" class="form-check-input"
-                                                                    id="cust-theme-bg" name="cust_theme_bg"
-                                                                    {{ Utility::getValByName('cust_theme_bg') == 'on' ? 'checked' : '' }} />
-                                                                <label class="form-check-label f-w-600 pl-1"
-                                                                    for="cust-theme-bg">{{ __('Transparent layout') }}</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="card-footer p-0">
-                                                    <div class="col-sm-12 mt-3 px-2">
-                                                        <div class="text-end">
-                                                            {{ Form::submit(__('Save Changes'), ['class' => 'btn btn-xs btn-primary']) }}
-                                                        </div>
+                                                        <label class="ios-toggle">
+                                                            <input type="checkbox" id="cust-theme-bg" name="cust_theme_bg" {{ Utility::getValByName('cust_theme_bg') == 'on' ? 'checked' : '' }}>
+                                                            <span class="ios-toggle-slider"></span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <!-- Sticky / Prominent Save Action Bar -->
+                                        <div class="settings-sticky-actions">
+                                            <button type="button" class="btn-cancel-gray" onclick="window.location.reload();">{{ __('Cancel') }}</button>
+                                            <button type="submit" class="btn-save-blue">
+                                                <span class="material-symbols-outlined text-[18px]">save</span>
+                                                <span>{{ __('Save Changes') }}</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             {!! Form::close() !!}
-                    </div>
+                        </div>
                     <div class="tab-pane fade" id="pills-payment-setting" role="tabpanel" aria-labelledby="pills-brand_setting-tab">
                         <div class="card">
                             <div class="card-header">

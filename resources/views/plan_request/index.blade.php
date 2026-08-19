@@ -11,44 +11,47 @@
         </div>
     </div>
 
-    <x-ui.card class="overflow-hidden">
-        <div class="p-6 border-b" style="border-color: #dce9ff;">
-            <h3 style="font-family: 'Geist', sans-serif; font-size: 24px; line-height: 32px; letter-spacing: -0.02em; font-weight: 600; color: #0b1c30; margin: 0;">{{ __('Recent Requests') }}</h3>
+    <x-ui.card class="overflow-hidden" style="border: 1px solid #E2E8F0; box-shadow: 0 1px 3px 0 rgba(11,28,48,0.04);">
+        <div class="px-6 py-4 border-b flex items-center justify-between" style="border-color: #E2E8F0; background: #ffffff;">
+            <div>
+                <h3 style="font-family: 'Geist', sans-serif; font-size: 18px; line-height: 24px; font-weight: 600; color: #0b1c30; margin: 0;">{{ __('Recent Requests') }}</h3>
+                <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #767586; margin-top: 2px;">{{ __('Review and process merchant plan upgrade requests.') }}</p>
+            </div>
         </div>
         <div class="overflow-x-auto">
             <x-ui.table>
-                <thead>
+                <thead style="background-color: #eff4ff; border-bottom: 1px solid #E2E8F0;">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Name') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Plan Name') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Max Products') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Max Stores') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Duration') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Date') }}</th>
-                        <th class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Action') }}</th>
+                        <th class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Name') }}</th>
+                        <th class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Plan Name') }}</th>
+                        <th class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Max Products') }}</th>
+                        <th class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Max Stores') }}</th>
+                        <th class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Duration') }}</th>
+                        <th class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Date') }}</th>
+                        <th class="px-5 py-3.5 text-right text-xs font-semibold uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Action') }}</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y" style="border-color: #dce9ff;">
+                <tbody class="bg-white divide-y" style="border-color: #E2E8F0;">
                     @forelse($plan_requests as $prequest)
-                        <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $prequest->user->name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $prequest->plan->name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                <span class="font-medium text-gray-900">{{ $prequest->plan->max_products }}</span>
-                                <span class="text-xs">{{ __('Products') }}</span>
+                        <tr class="hover:bg-[#eff4ff]/60 transition-colors duration-150">
+                            <td class="px-5 py-3.5 whitespace-nowrap text-sm font-semibold" style="color: #0b1c30; font-family: 'Geist', sans-serif;">{{ $prequest->user->name }}</td>
+                            <td class="px-5 py-3.5 whitespace-nowrap text-sm font-semibold" style="color: #0b1c30; font-family: 'Geist', sans-serif;">{{ $prequest->plan->name }}</td>
+                            <td class="px-5 py-3.5 whitespace-nowrap text-sm" style="color: #464554; font-family: 'Inter', sans-serif;">
+                                <span class="font-semibold" style="color: #0b1c30;">{{ $prequest->plan->max_products }}</span>
+                                <span class="text-xs text-[#767586]">{{ __('Products') }}</span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                <span class="font-medium text-gray-900">{{ $prequest->plan->max_stores }}</span>
-                                <span class="text-xs">{{ __('Stores') }}</span>
+                            <td class="px-5 py-3.5 whitespace-nowrap text-sm" style="color: #464554; font-family: 'Inter', sans-serif;">
+                                <span class="font-semibold" style="color: #0b1c30;">{{ $prequest->plan->max_stores }}</span>
+                                <span class="text-xs text-[#767586]">{{ __('Stores') }}</span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ ($prequest->duration == 'Lifetime') ? __('Lifetime') : 'One '.$prequest->duration }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ \App\Models\Utility::getDateFormated($prequest->created_at,false) }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-right font-medium">
-                                <div class="flex items-center justify-end space-x-2">
-                                    <a href="{{route('response.request',[$prequest->id,1])}}" class="text-green-600 hover:text-green-900 p-1.5 rounded hover:bg-green-50 transition-colors" title="{{ __('Approve') }}">
+                            <td class="px-5 py-3.5 whitespace-nowrap text-sm font-semibold" style="color: #0b1c30; font-family: 'Geist', sans-serif;">{{ ($prequest->duration == 'Lifetime') ? __('Lifetime') : 'One '.$prequest->duration }}</td>
+                            <td class="px-5 py-3.5 whitespace-nowrap text-sm" style="color: #767586; font-family: 'Inter', sans-serif;">{{ \App\Models\Utility::getDateFormated($prequest->created_at,false) }}</td>
+                            <td class="px-5 py-3.5 whitespace-nowrap text-sm text-right font-medium">
+                                <div class="flex items-center justify-end space-x-1.5">
+                                    <a href="{{route('response.request',[$prequest->id,1])}}" class="w-8 h-8 rounded-lg bg-[#e8f5e9] text-[#1a7431] hover:bg-[#1a7431] hover:text-white flex items-center justify-center transition-all duration-150" title="{{ __('Approve') }}">
                                         <span class="material-symbols-outlined text-[18px]">check_circle</span>
                                     </a>
-                                    <a href="{{route('response.request',[$prequest->id,0])}}" class="text-red-600 hover:text-red-900 p-1.5 rounded hover:bg-red-50 transition-colors" title="{{ __('Reject') }}">
+                                    <a href="{{route('response.request',[$prequest->id,0])}}" class="w-8 h-8 rounded-lg bg-[#ffdad6] text-[#ba1a1a] hover:bg-[#ba1a1a] hover:text-white flex items-center justify-center transition-all duration-150" title="{{ __('Reject') }}">
                                         <span class="material-symbols-outlined text-[18px]">cancel</span>
                                     </a>
                                 </div>

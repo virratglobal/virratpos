@@ -37,20 +37,20 @@
             align-items: center;
             gap: 12px;
             padding: 8px 16px;
-            background: #eff4ff;
+            background: #F8FAFC;
             border-radius: 8px;
-            color: #464554;
+            color: #0F172A;
             font-family: Inter, sans-serif;
             font-size: 14px;
             line-height: 20px;
             width: 320px;
-            border: none;
+            border: 1px solid #E2E8F0;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s;
         "
-        onmouseover="this.style.background='#dce9ff';" onmouseout="this.style.background='#eff4ff';">
-            <span class="material-symbols-outlined" style="font-size: 18px; color: #767586;">search</span>
-            <span style="color: #767586;">{{ __('Search or press ⌘K') }}</span>
+        onmouseover="this.style.borderColor='#4648d4';" onmouseout="this.style.borderColor='#E2E8F0';">
+            <span class="material-symbols-outlined" style="font-size: 18px; color: #64748B;">search</span>
+            <span style="color: #64748B;">{{ __('Search or press ⌘K') }}</span>
         </button>
     </div>
 
@@ -60,7 +60,7 @@
         {{-- Exit Owner Login --}}
         @impersonating($guard = null)
             <a href="{{ route('exit.owner') }}"
-                style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: #ba1a1a; color: #ffffff; border-radius: 8px; font-family: Geist, sans-serif; font-size: 12px; font-weight: 500; text-decoration: none; transition: opacity 0.2s;"
+                style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: #dc2626; color: #ffffff; border-radius: 8px; font-family: Inter, sans-serif; font-size: 12px; font-weight: 500; text-decoration: none; transition: opacity 0.2s;"
                 onmouseover="this.style.opacity='0.85';" onmouseout="this.style.opacity='1';">
                 <span class="material-symbols-outlined" style="font-size: 16px;">logout</span>
                 {{ __('Exit Owner Login') }}
@@ -76,8 +76,8 @@
                         data-url="{{ route('store-resource.create') }}"
                         data-ajax-popup="true"
                         data-title="{{ __('Create New Store') }}"
-                        style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; background: #e5eeff; color: #4648d4; border-radius: 8px; font-family: Geist, sans-serif; font-size: 12px; font-weight: 500; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s;"
-                        onmouseover="this.style.background='#dce9ff';" onmouseout="this.style.background='#e5eeff';">
+                        style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; background: #4648d4; color: #FFFFFF; border-radius: 8px; font-family: Inter, sans-serif; font-size: 12px; font-weight: 500; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s;"
+                        onmouseover="this.style.background='#3a3cb5';" onmouseout="this.style.background='#4648d4';">
                         <span class="material-symbols-outlined" style="font-size: 16px;">add</span>
                         <span class="hidden sm:inline">{{ __('New Store') }}</span>
                     </a>
@@ -89,22 +89,22 @@
         @if (Auth::user()->type !== 'super admin' && $current_store)
             <div x-data="{ open: false }" class="relative">
                 <button @click="open = !open" @click.away="open = false" type="button"
-                    style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; background: #eff4ff; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; color: #0b1c30; border: none; cursor: pointer; transition: background 0.2s;"
-                    onmouseover="this.style.background='#dce9ff';" onmouseout="this.style.background='#eff4ff';">
-                    <span class="material-symbols-outlined" style="font-size: 18px; color: #767586;">storefront</span>
+                    style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; background: #e5eeff; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; color: #0F172A; border: 1px solid #E2E8F0; cursor: pointer; transition: background 0.2s;"
+                    onmouseover="this.style.background='#dce9ff';" onmouseout="this.style.background='#e5eeff';">
+                    <span class="material-symbols-outlined" style="font-size: 18px; color: #4648d4;">storefront</span>
                     <span class="hidden sm:block">{{ ucfirst($current_store->name) }}</span>
-                    <span class="material-symbols-outlined" style="font-size: 16px; color: #767586;">expand_more</span>
+                    <span class="material-symbols-outlined" style="font-size: 16px; color: #64748B;">expand_more</span>
                 </button>
                 <div x-show="open" style="display: none;"
                     class="absolute right-0 z-50 mt-2 w-56 origin-top-right"
-                    style="background: #ffffff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.1); border: 1px solid rgba(199,196,215,0.2);">
+                    style="background: #ffffff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.1); border: 1px solid #E2E8F0;">
                     <div style="padding: 6px;">
                         @php $userStores = \Auth::user()->currentuser()->stores; @endphp
                         @foreach ($userStores as $store)
                             @if ($store->is_store_enabled == 1)
                                 <a href="{{ Auth::user()->current_store == $store->id ? '#' : route('change_store', $store->id) }}"
-                                    style="display: flex; align-items: center; padding: 8px 12px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; transition: background 0.2s; {{ Auth::user()->current_store == $store->id ? 'background: #e5eeff; color: #4648d4;' : 'color: #464554;' }}"
-                                    onmouseover="if(!this.style.background.includes('#e5eeff')) { this.style.background='#eff4ff'; }"
+                                    style="display: flex; align-items: center; padding: 8px 12px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; transition: background 0.2s; {{ Auth::user()->current_store == $store->id ? 'background: #e5eeff; color: #4648d4;' : 'color: #475569;' }}"
+                                    onmouseover="if(!this.style.background.includes('#e5eeff')) { this.style.background='#F8FAFC'; }"
                                     onmouseout="if(!this.style.background.includes('#e5eeff')) { this.style.background=''; }">
                                     @if (Auth::user()->current_store == $store->id)
                                         <span class="material-symbols-outlined" style="font-size: 16px; margin-right: 8px; color: #4648d4;" >check</span>
@@ -114,7 +114,7 @@
                                     {{ $store->name }}
                                 </a>
                             @else
-                                <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; font-family: Inter, sans-serif; font-size: 13px; color: #767586; cursor: not-allowed;">
+                                <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; font-family: Inter, sans-serif; font-size: 13px; color: #94A3B8; cursor: not-allowed;">
                                     <div style="display: flex; align-items: center; gap: 8px;">
                                         <span class="material-symbols-outlined" style="font-size: 16px;">lock</span>
                                         {{ $store->name }}
@@ -132,8 +132,8 @@
 
         {{-- Theme Button --}}
         <button id="theme-toggle-btn" type="button"
-            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #464554; background: none; border: none; cursor: pointer; transition: background 0.2s;"
-            onmouseover="this.style.background='#dce9ff';" onmouseout="this.style.background='';"
+            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #475569; background: none; border: none; cursor: pointer; transition: background 0.2s;"
+            onmouseover="this.style.background='#e5eeff'; this.style.color='#4648d4';" onmouseout="this.style.background=''; this.style.color='#475569';"
             title="{{ __('Toggle Theme') }}">
             <span class="material-symbols-outlined" id="theme-toggle-icon">
                 {{ isset($settings['cust_darklayout']) && $settings['cust_darklayout'] == 'on' ? 'light_mode' : 'dark_mode' }}
@@ -143,33 +143,33 @@
         {{-- Language Button --}}
         <div x-data="{ open: false }" class="relative">
             <button @click="open = !open" @click.away="open = false" type="button"
-                style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #464554; background: none; border: none; cursor: pointer; transition: background 0.2s;"
-                onmouseover="this.style.background='#dce9ff';" onmouseout="this.style.background='';"
+                style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #475569; background: none; border: none; cursor: pointer; transition: background 0.2s;"
+                onmouseover="this.style.background='#e5eeff'; this.style.color='#4648d4';" onmouseout="this.style.background=''; this.style.color='#475569';"
                 title="{{ ucFirst($LangName) }}">
                 <span class="material-symbols-outlined">language</span>
             </button>
-            <div x-show="open" style="display: none; position: absolute; right: 0; z-index: 50; margin-top: 8px; width: 224px; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.1); border: 1px solid rgba(199,196,215,0.2); padding: 6px;">
+            <div x-show="open" style="display: none; position: absolute; right: 0; z-index: 50; margin-top: 8px; width: 224px; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.1); border: 1px solid #E2E8F0; padding: 6px;">
                 @foreach ($languages as $code => $lang)
                     <a href="{{ route('change.language', $code) }}"
-                        style="display: block; padding: 8px 12px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; transition: background 0.2s; {{ $currantLang == $code ? 'background: #e5eeff; color: #4648d4; font-weight: 500;' : 'color: #464554;' }}"
-                        onmouseover="if(!this.style.background.includes('#e5eeff')) { this.style.background='#eff4ff'; }"
+                        style="display: block; padding: 8px 12px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; transition: background 0.2s; {{ $currantLang == $code ? 'background: #e5eeff; color: #4648d4; font-weight: 500;' : 'color: #475569;' }}"
+                        onmouseover="if(!this.style.background.includes('#e5eeff')) { this.style.background='#F8FAFC'; }"
                         onmouseout="if(!this.style.background.includes('#e5eeff')) { this.style.background=''; }">
                         {{ ucFirst($lang) }}
                     </a>
                 @endforeach
                 @if (Auth::user()->type == 'super admin')
-                    <div style="height: 1px; background: rgba(199,196,215,0.3); margin: 4px 0;"></div>
+                    <div style="height: 1px; background: #E2E8F0; margin: 4px 0;"></div>
                     @can('Create Language')
                         <a href="#" data-url="{{ route('create.language') }}" data-size="md" data-ajax-popup="true" data-title="{{ __('Create New Language') }}" class="cust-btn"
                             style="display: block; padding: 8px 12px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; color: #4648d4; transition: background 0.2s;"
-                            onmouseover="this.style.background='#eff4ff';" onmouseout="this.style.background='';">
+                            onmouseover="this.style.background='#e5eeff';" onmouseout="this.style.background='';">
                             {{ __('Create Language') }}
                         </a>
                     @endcan
                     @can('Manage Language')
                         <a href="{{ route('manage.language', [$currantLang]) }}"
                             style="display: block; padding: 8px 12px; border-radius: 8px; font-family: Inter, sans-serif; font-size: 13px; text-decoration: none; color: #4648d4; transition: background 0.2s;"
-                            onmouseover="this.style.background='#eff4ff';" onmouseout="this.style.background='';">
+                            onmouseover="this.style.background='#e5eeff';" onmouseout="this.style.background='';">
                             {{ __('Manage Languages') }}
                         </a>
                     @endcan
@@ -178,13 +178,13 @@
         </div>
 
         {{-- Notifications --}}
-        <button style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #464554; background: none; border: none; cursor: pointer; transition: background 0.2s;"
-            onmouseover="this.style.background='#dce9ff';" onmouseout="this.style.background='';">
+        <button style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #475569; background: none; border: none; cursor: pointer; transition: background 0.2s;"
+            onmouseover="this.style.background='#e5eeff'; this.style.color='#4648d4';" onmouseout="this.style.background=''; this.style.color='#475569';">
             <span class="material-symbols-outlined">notifications</span>
         </button>
 
         {{-- Divider --}}
-        <div style="width: 1px; height: 24px; background: rgba(199,196,215,0.2); margin: 0 4px;"></div>
+        <div style="width: 1px; height: 24px; background: #E2E8F0; margin: 0 4px;"></div>
 
         {{-- User Profile --}}
         <style>
@@ -198,7 +198,7 @@
                 font-size: 13px;
                 font-weight: 500;
                 text-decoration: none !important;
-                color: #464554 !important;
+                color: #475569 !important;
                 transition: all 0.2s;
             }
             .sg-profile-link:hover {

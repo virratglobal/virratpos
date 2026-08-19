@@ -78,103 +78,113 @@
             </div>
         </div>
 
-        <x-ui.card class="overflow-hidden">
-        <x-ui.table>
-            <thead>
-                <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('User Name') }}</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Email') }}</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Stores') }}</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Plan') }}</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Created At') }}</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Store Display') }}</th>
-                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Action') }}</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-                @foreach ($users as $usr)
+        <x-ui.card class="overflow-hidden" style="border: 1px solid #E2E8F0; box-shadow: 0 1px 3px 0 rgba(11,28,48,0.04);">
+            <div class="px-6 py-4 border-b flex items-center justify-between" style="border-color: #E2E8F0; background: #ffffff;">
+                <div>
+                    <h3 style="font-family: 'Geist', sans-serif; font-size: 18px; line-height: 24px; font-weight: 600; color: #0b1c30; margin: 0;">
+                        {{ __('All Stores') }}
+                    </h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #767586; margin-top: 2px;">
+                        {{ __('Overview and account control of all registered storefronts.') }}
+                    </p>
+                </div>
+            </div>
+            <x-ui.table>
+                <thead style="background-color: #eff4ff; border-bottom: 1px solid #E2E8F0;">
                     <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $usr->name }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $usr->email }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $usr->stores->count() }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-primary-100 text-primary-800">
-                                {{ !empty($usr->currentPlan->name) ? $usr->currentPlan->name : '-' }}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ \App\Models\Utility::dateFormat($usr->created_at) }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            <div class="form-check form-switch disabled-form-switch cursor-pointer">
-                                <a href="#" data-size="md" data-url="{{ route('store-resource.edit.display', $usr->id) }}" data-ajax-popup="true" data-title="{{ __('Are You Sure?') }}" title="{{ $usr->store_display == 1 ? 'Store disable' : 'Store enable' }}">
-                                    <input type="checkbox" class="form-check-input" disabled="disabled" name="store_display" id="{{ $usr->id }}" {{ $usr->store_display == 1 ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="{{ $usr->id }}"></label>
-                                </a>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-right">
-                            <div class="flex justify-end items-center space-x-2">
-                                @if(Auth::user()->type == "super admin")
-                                    <a href="#" data-url="{{route('owner.info', $usr->id)}}" data-size="lg" data-ajax-popup="true" class="text-orange-600 hover:text-orange-900" data-title="{{__('Owner Info')}}" title="{{ __('Owner Info') }}">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                    </a>
-
-                                    <a href="{{ route('login.with.owner', $usr->id) }}" class="text-indigo-600 hover:text-indigo-900" title="{{ __('Login As Owner') }}">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
-                                    </a>
-
-                                    <a href="#" data-size="lg" data-url="{{ route('store.links', $usr->id) }}" data-ajax-popup="true" data-title="{{ __('Store Links') }}" class="text-blue-600 hover:text-blue-900" title="{{ __('Store Links') }}">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                                    </a>
-                                @endif
-
-                                @if ($usr->is_enable_login == 1)
-                                    <a href="{{ route('users.login', \Crypt::encrypt($usr->id)) }}" class="text-red-600 hover:text-red-900" title="{{ __('Login Disable') }}">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path></svg>
-                                    </a>
-                                @elseif ($usr->is_enable_login == 0 && $usr->password == null)
-                                    <a href="#" data-url="{{ route('user.reset', \Crypt::encrypt($usr->id)) }}" class="text-green-600 hover:text-green-900 login_enable" data-ajax-popup="true" data-title="{{ __('New Password') }}" title="{{ __('Login Enable') }}">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                    </a>
-                                @else
-                                    <a href="{{ route('users.login', \Crypt::encrypt($usr->id)) }}" class="text-green-600 hover:text-green-900 login_enable" title="{{ __('Login Enable') }}">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                    </a>
-                                @endif
-
-                                @can('Upgrade Plans')
-                                    <a href="#" data-url="{{ route('plan.upgrade', $usr->id) }}" data-ajax-popup="true" data-title="{{ __('Upgrade Plan') }}" class="text-yellow-600 hover:text-yellow-900" title="{{ __('Upgrade Plan') }}">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-                                    </a>
-                                @endcan
-
-                                @can('Reset Password')
-                                    <a href="#" data-url="{{ route('user.reset', \Crypt::encrypt($usr->id)) }}" data-ajax-popup="true" data-title="{{ __('Reset Password') }}" class="text-gray-600 hover:text-gray-900" title="{{ __('Reset Password') }}">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4v-4l5.659-5.659A6 6 0 1115 7z"></path></svg>
-                                    </a>
-                                @endcan
-
-                                @can('Edit Store')
-                                    <a href="#" data-url="{{ route('store-resource.edit', $usr->id) }}" data-ajax-popup="true" data-title="{{ __('Edit Store') }}" class="text-blue-600 hover:text-blue-900" title="{{ __('Edit') }}">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                                    </a>
-                                @endcan
-
-                                @if($usr->id != 2)
-                                    @can('Delete Store')
-                                        <a href="#" class="text-red-600 hover:text-red-900 bs-pass-para" data-confirm="{{ __('Are You Sure?') }}" data-text="{{ __('This action can not be undone. Do you want to continue?') }}" data-confirm-yes="delete-form-{{ $usr->id }}" title="{{ __('Delete') }}">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                        </a>
-                                        {!! Form::open(['method' => 'DELETE', 'route' => ['store-resource.destroy', $usr->id], 'id' => 'delete-form-' . $usr->id, 'class' => 'hidden']) !!}
-                                        {!! Form::close() !!}
-                                    @endcan
-                                @endif
-                            </div>
-                        </td>
+                        <th class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('User Name') }}</th>
+                        <th class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Email') }}</th>
+                        <th class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Stores') }}</th>
+                        <th class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Plan') }}</th>
+                        <th class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Created At') }}</th>
+                        <th class="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Store Display') }}</th>
+                        <th class="px-5 py-3.5 text-right text-xs font-semibold uppercase tracking-wider" style="color: #767586; font-family: 'Geist', sans-serif;">{{ __('Action') }}</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </x-ui.table>
-    </x-ui.card>
+                </thead>
+                <tbody class="bg-white divide-y" style="border-color: #E2E8F0;">
+                    @foreach ($users as $usr)
+                        <tr class="hover:bg-[#eff4ff]/60 transition-colors duration-150">
+                            <td class="px-5 py-3.5 whitespace-nowrap text-sm font-semibold" style="color: #0b1c30; font-family: 'Geist', sans-serif;">{{ $usr->name }}</td>
+                            <td class="px-5 py-3.5 whitespace-nowrap text-sm" style="color: #464554; font-family: 'Inter', sans-serif;">{{ $usr->email }}</td>
+                            <td class="px-5 py-3.5 whitespace-nowrap text-sm font-semibold" style="color: #0b1c30; font-family: 'Geist', sans-serif;">{{ $usr->stores->count() }}</td>
+                            <td class="px-5 py-3.5 whitespace-nowrap text-sm">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold" style="background-color: #e5eeff; color: #4648d4; font-family: 'Geist', sans-serif;">
+                                    {{ !empty($usr->currentPlan->name) ? $usr->currentPlan->name : '-' }}
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 whitespace-nowrap text-sm" style="color: #767586; font-family: 'Inter', sans-serif;">{{ \App\Models\Utility::dateFormat($usr->created_at) }}</td>
+                            <td class="px-5 py-3.5 whitespace-nowrap text-sm">
+                                <div class="form-check form-switch disabled-form-switch cursor-pointer inline-block">
+                                    <a href="#" data-size="md" data-url="{{ route('store-resource.edit.display', $usr->id) }}" data-ajax-popup="true" data-title="{{ __('Are You Sure?') }}" title="{{ $usr->store_display == 1 ? __('Store disable') : __('Store enable') }}">
+                                        <input type="checkbox" class="form-check-input" disabled="disabled" name="store_display" id="{{ $usr->id }}" {{ $usr->store_display == 1 ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="{{ $usr->id }}"></label>
+                                    </a>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5 whitespace-nowrap text-sm font-medium text-right">
+                                <div class="flex justify-end items-center space-x-1.5">
+                                    @if(Auth::user()->type == "super admin")
+                                        <a href="#" data-url="{{route('owner.info', $usr->id)}}" data-size="lg" data-ajax-popup="true" class="w-8 h-8 rounded-lg bg-[#e5eeff] text-[#4648d4] hover:bg-[#4648d4] hover:text-white flex items-center justify-center transition-all duration-150" data-title="{{__('Owner Info')}}" title="{{ __('Owner Info') }}">
+                                            <span class="material-symbols-outlined text-[18px]">info</span>
+                                        </a>
+
+                                        <a href="{{ route('login.with.owner', $usr->id) }}" class="w-8 h-8 rounded-lg bg-[#e5eeff] text-[#4648d4] hover:bg-[#4648d4] hover:text-white flex items-center justify-center transition-all duration-150" title="{{ __('Login As Owner') }}">
+                                            <span class="material-symbols-outlined text-[18px]">login</span>
+                                        </a>
+
+                                        <a href="#" data-size="lg" data-url="{{ route('store.links', $usr->id) }}" data-ajax-popup="true" data-title="{{ __('Store Links') }}" class="w-8 h-8 rounded-lg bg-[#e5eeff] text-[#4648d4] hover:bg-[#4648d4] hover:text-white flex items-center justify-center transition-all duration-150" title="{{ __('Store Links') }}">
+                                            <span class="material-symbols-outlined text-[18px]">link</span>
+                                        </a>
+                                    @endif
+
+                                    @if ($usr->is_enable_login == 1)
+                                        <a href="{{ route('users.login', \Crypt::encrypt($usr->id)) }}" class="w-8 h-8 rounded-lg bg-[#e5eeff] text-[#4648d4] hover:bg-[#4648d4] hover:text-white flex items-center justify-center transition-all duration-150" title="{{ __('Login Disable') }}">
+                                            <span class="material-symbols-outlined text-[18px]">lock</span>
+                                        </a>
+                                    @elseif ($usr->is_enable_login == 0 && $usr->password == null)
+                                        <a href="#" data-url="{{ route('user.reset', \Crypt::encrypt($usr->id)) }}" class="w-8 h-8 rounded-lg bg-[#e5eeff] text-[#4648d4] hover:bg-[#4648d4] hover:text-white flex items-center justify-center transition-all duration-150 login_enable" data-ajax-popup="true" data-title="{{ __('New Password') }}" title="{{ __('Login Enable') }}">
+                                            <span class="material-symbols-outlined text-[18px]">lock_open</span>
+                                        </a>
+                                    @else
+                                        <a href="{{ route('users.login', \Crypt::encrypt($usr->id)) }}" class="w-8 h-8 rounded-lg bg-[#e5eeff] text-[#4648d4] hover:bg-[#4648d4] hover:text-white flex items-center justify-center transition-all duration-150 login_enable" title="{{ __('Login Enable') }}">
+                                            <span class="material-symbols-outlined text-[18px]">lock_open</span>
+                                        </a>
+                                    @endif
+
+                                    @can('Upgrade Plans')
+                                        <a href="#" data-url="{{ route('plan.upgrade', $usr->id) }}" data-ajax-popup="true" data-title="{{ __('Upgrade Plan') }}" class="w-8 h-8 rounded-lg bg-[#e5eeff] text-[#4648d4] hover:bg-[#4648d4] hover:text-white flex items-center justify-center transition-all duration-150" title="{{ __('Upgrade Plan') }}">
+                                            <span class="material-symbols-outlined text-[18px]">military_tech</span>
+                                        </a>
+                                    @endcan
+
+                                    @can('Reset Password')
+                                        <a href="#" data-url="{{ route('user.reset', \Crypt::encrypt($usr->id)) }}" data-ajax-popup="true" data-title="{{ __('Reset Password') }}" class="w-8 h-8 rounded-lg bg-[#e5eeff] text-[#4648d4] hover:bg-[#4648d4] hover:text-white flex items-center justify-center transition-all duration-150" title="{{ __('Reset Password') }}">
+                                            <span class="material-symbols-outlined text-[18px]">key</span>
+                                        </a>
+                                    @endcan
+
+                                    @can('Edit Store')
+                                        <a href="#" data-url="{{ route('store-resource.edit', $usr->id) }}" data-ajax-popup="true" data-title="{{ __('Edit Store') }}" class="w-8 h-8 rounded-lg bg-[#e5eeff] text-[#4648d4] hover:bg-[#4648d4] hover:text-white flex items-center justify-center transition-all duration-150" title="{{ __('Edit') }}">
+                                            <span class="material-symbols-outlined text-[18px]">edit</span>
+                                        </a>
+                                    @endcan
+
+                                    @if($usr->id != 2)
+                                        @can('Delete Store')
+                                            <a href="#" class="w-8 h-8 rounded-lg bg-[#ffdad6] text-[#ba1a1a] hover:bg-[#ba1a1a] hover:text-white flex items-center justify-center transition-all duration-150 bs-pass-para" data-confirm="{{ __('Are You Sure?') }}" data-text="{{ __('This action can not be undone. Do you want to continue?') }}" data-confirm-yes="delete-form-{{ $usr->id }}" title="{{ __('Delete') }}">
+                                                <span class="material-symbols-outlined text-[18px]">delete</span>
+                                            </a>
+                                            {!! Form::open(['method' => 'DELETE', 'route' => ['store-resource.destroy', $usr->id], 'id' => 'delete-form-' . $usr->id, 'class' => 'hidden']) !!}
+                                            {!! Form::close() !!}
+                                        @endcan
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </x-ui.table>
+        </x-ui.card>
 </x-ui.page-container>
 @endsection
 
