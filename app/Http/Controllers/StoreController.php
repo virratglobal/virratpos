@@ -976,10 +976,18 @@ class StoreController extends Controller
 
         if (!empty($store)) {
             if (!Auth::check()) {
-                visitor()->visit($store);
+                $visit = visitor()->visit($store);
+                if ($visit) {
+                    $visit->slug = $slug;
+                    $visit->save();
+                }
             }
             if (Utility::CustomerAuthCheck($slug) == false) {
-                visitor()->visit($store);
+                $visit = visitor()->visit($store);
+                if ($visit) {
+                    $visit->slug = $slug;
+                    $visit->save();
+                }
             }
             $userstore = UserStore::where('store_id', $store->id)->first();
             $settings = \DB::table('settings')->where('name', 'company_favicon')->where('created_by', $userstore->user_id)->first();
