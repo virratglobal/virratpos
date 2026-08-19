@@ -213,90 +213,92 @@
 @endpush
 @section('content')
     <style>
-        /* Premium Modern SaaS Settings Design System - True Professional Blue #2563EB */
+        /* Full-Width Desktop Settings Page Container */
         .settings-layout-wrapper {
-            max-width: 1360px;
-            margin: 0 auto;
-            padding: 8px 20px 40px 20px;
+            width: 100% !important;
+            max-width: none !important;
+            margin: 0 !important;
+            padding: 8px 24px 40px 24px !important;
             font-family: 'Inter', -apple-system, sans-serif;
-            color: #0F172A;
-            background-color: #F8FAFC;
+            color: var(--text-primary);
         }
 
         /* Page Header */
         .settings-header {
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
         .settings-header h1 {
             font-family: 'Inter', sans-serif;
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 700;
-            color: #0F172A;
+            color: var(--text-primary);
             margin: 0;
             letter-spacing: -0.02em;
         }
         .settings-header p {
-            font-size: 14.5px;
-            color: #64748B;
-            margin-top: 6px;
+            font-size: 13.5px;
+            color: var(--text-secondary);
+            margin-top: 4px;
             margin-bottom: 0;
             font-weight: 400;
         }
 
-        /* Top Horizontal Navigation Tabs Bar */
-        .settings-horizontal-tabs {
-            display: flex;
-            align-items: center;
-            gap: 28px;
-            border-bottom: 1px solid #E2E8F0;
-            margin-bottom: 32px;
-            padding-bottom: 0;
-            overflow-x: auto;
-            white-space: nowrap;
-        }
-        .settings-horizontal-tabs .nav-link {
-            font-size: 13px;
-            font-weight: 600;
-            color: #64748B;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            padding: 12px 0;
-            border: none;
-            background: transparent;
-            position: relative;
-            cursor: pointer;
-            text-decoration: none;
-            transition: color 0.15s ease;
-        }
-        .settings-horizontal-tabs .nav-link:hover {
-            color: #2563EB;
-        }
-        .settings-horizontal-tabs .nav-link.active {
-            color: #2563EB;
-            font-weight: 600;
-        }
-        .settings-horizontal-tabs .nav-link.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background-color: #2563EB;
-            border-radius: 2px 2px 0 0;
+        /* 3-Column Settings Layout Grid */
+        .settings-layout-grid {
+            display: grid !important;
+            grid-template-columns: 260px minmax(0, 1fr) 320px !important;
+            gap: 24px !important;
+            align-items: start !important;
+            width: 100% !important;
         }
 
-        /* Sidebar Navigation Card - Matching User Mockup */
+        @media (max-width: 1199px) {
+            .settings-layout-grid {
+                grid-template-columns: 260px minmax(0, 1fr) !important;
+            }
+            .settings-right-sidebar {
+                grid-column: 1 / -1 !important;
+                display: grid !important;
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                gap: 20px !important;
+                position: static !important;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .settings-layout-grid {
+                grid-template-columns: 1fr !important;
+            }
+            .settings-sidebar {
+                width: 100% !important;
+                position: static !important;
+            }
+            .settings-right-sidebar {
+                grid-column: auto !important;
+                grid-template-columns: 1fr !important;
+                width: 100% !important;
+            }
+        }
+
+        /* Sticky Left Sidebar Navigation */
+        .settings-sidebar {
+            position: sticky !important;
+            top: 24px !important;
+            align-self: start !important;
+            width: 260px !important;
+        }
+
         .settings-sidebar .setting-nav-wrp {
             background: var(--surface) !important;
             border: 1px solid var(--border) !important;
             border-radius: 16px !important;
-            padding: 14px !important;
+            padding: 12px !important;
             box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03) !important;
             gap: 4px !important;
             display: flex !important;
             flex-direction: column !important;
         }
+
         .settings-sidebar .nav-link {
             display: flex !important;
             align-items: center !important;
@@ -315,6 +317,7 @@
             text-align: left !important;
             cursor: pointer !important;
             text-decoration: none !important;
+            white-space: nowrap !important;
         }
         .settings-sidebar .nav-link:hover {
             background-color: var(--surface-2) !important;
@@ -338,12 +341,11 @@
             transition: color 0.15s ease !important;
             flex-shrink: 0;
         }
-        .settings-sidebar .nav-link:hover .material-symbols-outlined {
-            color: var(--primary) !important;
-        }
-        .settings-sidebar .nav-link.active .material-symbols-outlined,
-        .settings-sidebar .nav-link.active svg {
-            color: #FFFFFF !important;
+
+        /* Flexible Middle Main Settings Content */
+        .settings-content {
+            width: 100% !important;
+            min-width: 0 !important;
         }
 
         /* Settings Card Tiles */
@@ -355,60 +357,57 @@
             box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03) !important;
             padding: 28px !important;
             margin-bottom: 24px !important;
+            width: 100% !important;
         }
 
-        /* Right Sidebar Cards */
+        /* Sticky Right Sidebar */
+        .settings-right-sidebar {
+            position: sticky !important;
+            top: 24px !important;
+            align-self: start !important;
+            width: 320px !important;
+        }
+
         .system-info-card {
-            background: #FFFFFF;
-            border: 1px solid #E2E8F0;
-            border-radius: 14px;
-            padding: 24px;
-            margin-bottom: 24px;
-            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+            background: var(--surface) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 14px !important;
+            padding: 24px !important;
+            margin-bottom: 24px !important;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03) !important;
+            color: var(--text-primary) !important;
         }
         .critical-actions-card {
-            background: #FFFFFF;
-            border: 1px solid #E2E8F0;
-            border-left: 4px solid #DC2626;
-            border-radius: 14px;
-            padding: 24px;
-            position: relative;
-            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+            background: var(--surface) !important;
+            border: 1px solid var(--border) !important;
+            border-left: 4px solid #DC2626 !important;
+            border-radius: 14px !important;
+            padding: 24px !important;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03) !important;
+            color: var(--text-primary) !important;
         }
 
         .settings-layout-wrapper .card-header {
             background-color: transparent !important;
             padding: 0 0 16px 0 !important;
             border: none !important;
-            border-bottom: 1px solid #E2E8F0 !important;
+            border-bottom: 1px solid var(--border) !important;
             margin-bottom: 20px !important;
             box-shadow: none !important;
             position: relative !important;
-        }
-        .card .card-header h5:after,
-        .card .card-header .h5:after,
-        .card .card-header:not(.border-0) h5:after,
-        .card .card-header:not(.border-0) .h5:after,
-        body[class*="theme-"] .card .card-header h5:after,
-        body[class*="theme-"] .card .card-header .h5:after {
-            display: none !important;
-            content: none !important;
-            background: transparent !important;
-            width: 0 !important;
-            height: 0 !important;
         }
         .settings-layout-wrapper .card-header h5,
         .settings-layout-wrapper .card-header h4 {
             font-family: 'Inter', sans-serif !important;
             font-size: 18px !important;
             font-weight: 600 !important;
-            color: #0F172A !important;
+            color: var(--text-primary) !important;
             margin: 0 !important;
         }
         .settings-layout-wrapper .card-header p,
         .settings-layout-wrapper .card-header small {
             font-size: 13.5px !important;
-            color: #64748B !important;
+            color: var(--text-secondary) !important;
             margin-top: 5px !important;
             display: block !important;
             font-weight: 400 !important;
@@ -421,91 +420,69 @@
 
         /* Upload Grid */
         .upload-grid-container {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 20px;
-            margin-bottom: 24px;
+            display: grid !important;
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            gap: 16px !important;
+            margin-bottom: 24px !important;
+            width: 100% !important;
         }
         @media (max-width: 991px) {
             .upload-grid-container {
-                grid-template-columns: repeat(1, minmax(0, 1fr));
+                grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
             }
         }
+
         .upload-asset-card {
-            background: #F8FAFC;
-            border: 1px dashed #CBD5E1;
-            border-radius: 10px;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            height: 100%;
+            background: var(--surface) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 14px !important;
+            padding: 18px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            width: 100% !important;
         }
-        .upload-asset-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 14px;
-            width: 100%;
-        }
-        .upload-asset-header .icon-badge {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            background: #EFF6FF;
-            color: #2563EB;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-        .upload-asset-header h6 {
-            font-size: 14px !important;
-            font-weight: 600 !important;
-            color: #0F172A !important;
-            margin: 0 !important;
-        }
+
         .upload-preview-box {
-            width: 100%;
-            height: 110px;
-            background: #FFFFFF;
-            border: 1px solid #E2E8F0;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 12px;
-            margin-bottom: 14px;
-            position: relative;
-            overflow: hidden;
+            width: 100% !important;
+            min-height: 140px !important;
+            background: var(--surface-2) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 12px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 16px !important;
+            margin-bottom: 16px !important;
+            position: relative !important;
+            overflow: hidden !important;
         }
         .upload-preview-box img {
-            max-height: 75px;
-            max-width: 90%;
-            object-fit: contain;
+            max-height: 75px !important;
+            max-width: 85% !important;
+            object-fit: contain !important;
         }
+
         .btn-upload-blue {
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
-            gap: 8px !important;
+            gap: 6px !important;
             width: 100% !important;
-            height: 38px !important;
+            height: 40px !important;
             padding: 0 16px !important;
-            background-color: #2563EB !important;
+            background-color: #4F46E5 !important;
             color: #FFFFFF !important;
             font-size: 13px !important;
             font-weight: 600 !important;
             border-radius: 8px !important;
             border: none !important;
             cursor: pointer !important;
+            white-space: nowrap !important;
             transition: background-color 0.15s ease !important;
         }
         .btn-upload-blue:hover {
-            background-color: #1D4ED8 !important;
+            background-color: #4338CA !important;
             color: #FFFFFF !important;
         }
 
@@ -513,7 +490,7 @@
         .settings-layout-wrapper .form-label {
             font-size: 13.5px !important;
             font-weight: 500 !important;
-            color: #0F172A !important;
+            color: var(--text-primary) !important;
             margin-bottom: 8px !important;
         }
         .settings-layout-wrapper .form-control,
@@ -521,40 +498,41 @@
             height: 44px !important;
             padding: 0 14px !important;
             border-radius: 8px !important;
-            border: 1px solid #E2E8F0 !important;
-            background-color: #FFFFFF !important;
-            color: #0F172A !important;
+            border: 1px solid var(--border) !important;
+            background-color: var(--input-bg) !important;
+            color: var(--text-primary) !important;
             font-size: 14px !important;
             transition: border-color 0.15s, box-shadow 0.15s !important;
         }
         .settings-layout-wrapper .form-control:focus,
         .settings-layout-wrapper select.form-control:focus {
-            border-color: #2563EB !important;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10) !important;
+            border-color: #4F46E5 !important;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15) !important;
             outline: none !important;
         }
 
         /* Setting Toggles Grid */
         .toggle-setting-card {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px;
-            border: 1px solid #E2E8F0;
-            border-radius: 10px;
-            background: #FFFFFF;
-            margin-bottom: 12px;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            padding: 16px !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 12px !important;
+            background: var(--surface) !important;
+            margin-bottom: 12px !important;
+            width: 100% !important;
         }
         .toggle-setting-info h6 {
-            font-size: 14px;
-            font-weight: 600;
-            color: #0F172A;
-            margin: 0;
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            color: var(--text-primary) !important;
+            margin: 0 !important;
         }
         .toggle-setting-info p {
-            font-size: 12.5px;
-            color: #64748B;
-            margin: 2px 0 0 0;
+            font-size: 12.5px !important;
+            color: var(--text-secondary) !important;
+            margin: 2px 0 0 0 !important;
         }
 
         /* iOS Style Toggles */
@@ -591,7 +569,7 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.15);
         }
         .ios-toggle input:checked + .ios-toggle-slider {
-            background-color: #2563EB;
+            background-color: #4F46E5;
         }
         .ios-toggle input:checked + .ios-toggle-slider:before {
             transform: translateX(20px);
@@ -599,29 +577,29 @@
 
         /* Theme Color Swatches */
         .theme-swatch-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 10px;
+            display: grid !important;
+            grid-template-columns: repeat(5, 48px) !important;
+            gap: 8px !important;
+            margin-top: 10px !important;
         }
         .theme-swatch-btn {
-            width: 42px;
-            height: 42px;
-            border-radius: 10px;
-            cursor: pointer;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.15s, box-shadow 0.15s;
-            border: 2px solid transparent;
+            width: 48px !important;
+            height: 48px !important;
+            border-radius: 10px !important;
+            cursor: pointer !important;
+            position: relative !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            transition: transform 0.15s, box-shadow 0.15s !important;
+            border: 2px solid transparent !important;
         }
         .theme-swatch-btn:hover {
             transform: translateY(-2px);
         }
         .theme-swatch-btn.active_color {
-            border-color: #2563EB !important;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25) !important;
+            border-color: #4F46E5 !important;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3) !important;
         }
         .theme-swatch-btn.active_color::after {
             content: '✓';
@@ -632,129 +610,60 @@
 
         /* Sticky Save Action Bar */
         .settings-sticky-actions {
-            position: sticky;
-            bottom: 16px;
-            background: #FFFFFF;
-            border: 1px solid #E2E8F0;
-            border-radius: 12px;
-            padding: 14px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
-            z-index: 30;
-            margin-top: 24px;
+            position: sticky !important;
+            bottom: 16px !important;
+            background: var(--surface-elevated) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 12px !important;
+            padding: 14px 20px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: flex-end !important;
+            gap: 12px !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+            z-index: 30 !important;
+            margin-top: 24px !important;
+            width: 100% !important;
         }
         .btn-cancel-gray {
-            padding: 9px 20px;
-            border-radius: 8px;
-            background: #FFFFFF;
-            border: 1px solid #E2E8F0;
-            color: #475569;
-            font-size: 13.5px;
-            font-weight: 500;
-            transition: all 0.15s;
-            text-decoration: none;
+            padding: 0 20px !important;
+            height: 44px !important;
+            border-radius: 8px !important;
+            background: var(--surface) !important;
+            border: 1px solid var(--border) !important;
+            color: var(--text-secondary) !important;
+            font-size: 13.5px !important;
+            font-weight: 500 !important;
+            transition: all 0.15s !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            cursor: pointer !important;
         }
         .btn-cancel-gray:hover {
-            background: #F8FAFC;
-            color: #0F172A;
+            background: var(--surface-2) !important;
+            color: var(--text-primary) !important;
         }
-
-        /* Dark Mode Overrides for Settings Page */
-        html.dark .settings-layout-wrapper {
-            background-color: #0B1120 !important;
-            color: #F8FAFC !important;
-        }
-        html.dark .settings-header h1 { color: #F8FAFC !important; }
-        html.dark .settings-header p { color: #CBD5E1 !important; }
-        html.dark .settings-horizontal-tabs { border-bottom-color: #263449 !important; }
-        html.dark .settings-horizontal-tabs .nav-link { color: #94A3B8 !important; }
-        html.dark .settings-horizontal-tabs .nav-link.active { color: #60A5FA !important; }
-        html.dark .settings-sidebar .setting-nav-wrp {
-            background: #111827 !important;
-            border-color: #263449 !important;
-        }
-        html.dark .settings-sidebar .nav-link { color: #CBD5E1 !important; }
-        html.dark .settings-sidebar .nav-link:hover {
-            background-color: rgba(59, 130, 246, 0.12) !important;
-            color: #60A5FA !important;
-        }
-        html.dark .settings-sidebar .nav-link.active {
-            background-color: #2563EB !important;
-            color: #FFFFFF !important;
-        }
-        html.dark .settings-layout-wrapper .card,
-        html.dark .settings-layout-wrapper .setting-card,
-        html.dark .system-info-card,
-        html.dark .critical-actions-card {
-            background-color: #111827 !important;
-            border-color: #263449 !important;
-            color: #F8FAFC !important;
-        }
-        html.dark .settings-layout-wrapper .card-header { border-bottom-color: #263449 !important; }
-        html.dark .settings-layout-wrapper .card-header h5,
-        html.dark .settings-layout-wrapper .card-header h4 { color: #F8FAFC !important; }
-        html.dark .settings-layout-wrapper .card-header p,
-        html.dark .settings-layout-wrapper .card-header small { color: #CBD5E1 !important; }
-        html.dark .upload-asset-card {
-            background: #0F172A !important;
-            border-color: #334155 !important;
-        }
-        html.dark .upload-asset-title { color: #F8FAFC !important; }
-        html.dark .upload-asset-subtext { color: #94A3B8 !important; }
-        html.dark .upload-preview-box {
-            background: #172033 !important;
-            border-color: #263449 !important;
-        }
-        html.dark .settings-layout-wrapper .form-label { color: #CBD5E1 !important; }
-        html.dark .settings-layout-wrapper .form-control,
-        html.dark .settings-layout-wrapper select.form-control {
-            background-color: #0F172A !important;
-            border-color: #334155 !important;
-            color: #F8FAFC !important;
-        }
-        html.dark .toggle-setting-card {
-            background: #0F172A !important;
-            border-color: #334155 !important;
-        }
-        html.dark .toggle-setting-info h6 { color: #F8FAFC !important; }
-        html.dark .toggle-setting-info p { color: #CBD5E1 !important; }
-        html.dark .ios-toggle-slider { background-color: #334155 !important; }
-        html.dark .settings-sticky-actions {
-            background: #111827 !important;
-            border-color: #263449 !important;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
-        }
-        html.dark .btn-cancel-gray {
-            background: #1E293B !important;
-            border-color: #334155 !important;
-            color: #CBD5E1 !important;
-        }
-        html.dark .btn-cancel-gray:hover {
-            background: #263449 !important;
-            color: #FFFFFF !important;
-        }
-
         .btn-save-blue {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            height: 44px;
-            padding: 0 24px;
-            border-radius: 8px;
-            background: #2563EB !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            height: 44px !important;
+            padding: 0 24px !important;
+            border-radius: 8px !important;
+            background: #4F46E5 !important;
             color: #FFFFFF !important;
-            font-size: 13.5px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
-            transition: background 0.15s;
+            font-size: 13.5px !important;
+            font-weight: 600 !important;
+            border: none !important;
+            cursor: pointer !important;
+            box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3) !important;
+            transition: background 0.15s !important;
         }
         .btn-save-blue:hover {
-            background: #1D4ED8 !important;
+            background: #4338CA !important;
             color: #FFFFFF !important;
         }
     </style>
@@ -777,9 +686,9 @@
             </p>
         </div>
 
-        <div class="flex flex-col lg:flex-row gap-6 mt-6">
+        <div class="settings-layout-grid mt-6">
             <!-- Left Navigation Sidebar Card -->
-            <div class="w-full lg:w-72 flex-shrink-0 settings-sidebar">
+            <div class="settings-sidebar">
                 <div class="setting-nav-wrp">
                     @if (Auth::user()->type == 'super admin')
                         <a class="nav-link active" id="pills-brand_setting-tab" data-bs-toggle="pill" href="#pills-brand-setting" role="tab" aria-controls="pills-brand-setting" aria-selected="true">
@@ -858,7 +767,7 @@
             </div>
 
             <!-- Settings Main Content -->
-            <div class="flex-1 min-w-0 settings-content">
+            <div class="settings-content">
                 @if (Auth::user()->type == 'super admin')
                     <div class="tab-content" id="pills-tabContent">
                         <!-- Brand Settings Tab -->
@@ -7826,7 +7735,7 @@
             </div>
 
             <!-- Settings Right Sidebar Column -->
-            <div class="w-full lg:w-80 shrink-0">
+            <div class="settings-right-sidebar">
                 <!-- System Information Card -->
                 <div class="system-info-card">
                     <div class="flex items-center gap-2 mb-4">
