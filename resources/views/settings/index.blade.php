@@ -682,7 +682,15 @@
         <!-- Settings Top Header -->
         <div class="settings-header">
             <h1>{{ __('Settings') }}</h1>
-            <p>{{ __('Manage your platform configuration, branding, integrations, and system preferences.') }}</p>
+            <p>{{ __('Global platform configuration and administrative preferences.') }}</p>
+        </div>
+
+        <!-- Horizontal Navigation Tabs Bar -->
+        <div class="settings-horizontal-tabs">
+            <a class="nav-link active" id="pill-general-tab" data-bs-toggle="pill" href="#pills-brand-setting" role="tab">{{ __('GENERAL') }}</a>
+            <a class="nav-link" id="pill-security-tab" data-bs-toggle="pill" href="#pills-recaptcha-settings" role="tab">{{ __('SECURITY') }}</a>
+            <a class="nav-link" id="pill-payments-tab" data-bs-toggle="pill" href="#pills-payment-setting" role="tab">{{ __('PAYMENTS') }}</a>
+            <a class="nav-link" id="pill-maintenance-tab" data-bs-toggle="pill" href="#pills-cache-settings" role="tab">{{ __('MAINTENANCE') }}</a>
         </div>
 
         <div class="flex flex-col lg:flex-row gap-6">
@@ -8044,12 +8052,38 @@
                $(`input[value=${color_val}]`).prop('checked', true);
            });
 
-           $.fn.removeClassRegex = function(regex) {
-       return $(this).removeClass(function(index, classes) {
-           return classes.split(/\s+/).filter(function(c) {
-               return regex.test(c);
-           }).join(' ');
-       });
-   };
-   </script>
+            $.fn.removeClassRegex = function(regex) {
+                return $(this).removeClass(function(index, classes) {
+                    return classes.split(/\s+/).filter(function(c) {
+                        return regex.test(c);
+                    }).join(' ');
+                });
+            };
+
+            // Sync Horizontal Tabs with Sidebar Navigation
+            $('.settings-horizontal-tabs .nav-link').on('click', function(e) {
+                $('.settings-horizontal-tabs .nav-link').removeClass('active');
+                $(this).addClass('active');
+
+                var targetHash = $(this).attr('href');
+                if (targetHash) {
+                    var sidebarLink = $('.settings-sidebar a[href="' + targetHash + '"]');
+                    if (sidebarLink.length) {
+                        $('.settings-sidebar .nav-link').removeClass('active');
+                        sidebarLink.addClass('active');
+                    }
+                }
+            });
+
+            $('.settings-sidebar .nav-link').on('click', function(e) {
+                var targetHash = $(this).attr('href');
+                if (targetHash) {
+                    var topTab = $('.settings-horizontal-tabs a[href="' + targetHash + '"]');
+                    $('.settings-horizontal-tabs .nav-link').removeClass('active');
+                    if (topTab.length) {
+                        topTab.addClass('active');
+                    }
+                }
+            });
+    </script>
 @endpush
