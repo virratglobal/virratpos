@@ -7822,7 +7822,7 @@
                         {{ __('These actions have permanent effects on the platform infrastructure.') }}
                     </p>
 
-                    <a href="{{ route('cache.clear') }}" class="btn w-full text-center py-2.5 px-4 font-bold text-xs uppercase tracking-wider rounded-lg transition-colors" style="background: #FFFFFF; color: #78350F; text-decoration: none; display: block;">
+                    <a href="{{ url('/config-cache') }}" class="btn w-full text-center py-2.5 px-4 font-bold text-xs uppercase tracking-wider rounded-lg transition-colors" style="background: #FFFFFF; color: #78350F; text-decoration: none; display: block;">
                         {{ __('CLEAR CACHE') }}
                     </a>
                 </div>
