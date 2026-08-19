@@ -42,6 +42,22 @@
     color: #ffffff !important;
     font-weight: 500 !important;
 }
+
+.sg-nav-heading {
+    padding: 14px 12px 4px 12px !important;
+    font-family: 'Inter', -apple-system, sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    color: #94A3B8 !important;
+    text-transform: uppercase !important;
+    line-height: 1.2 !important;
+    margin-top: 6px !important;
+}
+.sg-nav-heading:first-of-type {
+    margin-top: 0 !important;
+    padding-top: 6px !important;
+}
 </style>
 {{-- Mobile sidebar backdrop --}}
 <div x-show="sidebarOpen" class="fixed inset-0 z-40 bg-on-surface/50 lg:hidden" @click="sidebarOpen = false" style="display:none;"></div>
@@ -71,7 +87,7 @@
     <div style="flex: 1; overflow-y: auto; padding: 8px 12px; display: flex; flex-direction: column; gap: 4px;">
         
         {{-- Nav Section Label --}}
-        <div style="padding: 8px 12px 4px; font-family: Geist, sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; color: rgba(70,69,84,0.6); text-transform: uppercase;">
+        <div class="sg-nav-heading">
             {{ __('Main') }}
         </div>
 
@@ -84,7 +100,7 @@
 
         @if (Auth::user()->type == 'super admin')
             {{-- Super Admin Section --}}
-            <div style="padding: 16px 12px 4px; font-family: Geist, sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; color: rgba(70,69,84,0.6); text-transform: uppercase; margin-top: 8px;">
+            <div class="sg-nav-heading">
                 {{ __('Store Management') }}
             </div>
 
@@ -100,7 +116,7 @@
                 <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Coupons') }}</span>
             </a>
 
-            <div style="padding: 16px 12px 4px; font-family: Geist, sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; color: rgba(70,69,84,0.6); text-transform: uppercase; margin-top: 8px;">
+            <div class="sg-nav-heading">
                 {{ __('Subscriptions') }}
             </div>
 
@@ -128,7 +144,7 @@
                 <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Domain Requests') }}</span>
             </a>
 
-            <div style="padding: 16px 12px 4px; font-family: Geist, sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; color: rgba(70,69,84,0.6); text-transform: uppercase; margin-top: 8px;">
+            <div class="sg-nav-heading">
                 {{ __('System') }}
             </div>
 
