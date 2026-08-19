@@ -1107,7 +1107,7 @@ class StoreController extends Controller
                 }
             }
 
-            return view('storefront.' . $store->theme_dir . '.index', compact('pixelScript','mostPurchasedDetail','theme3_product_random', 'blogs', 'theme3_product_image', 'theme3_product', 'theme6_product_random', 'wishlist', 'products', 'settings', 'store', 'categories', 'total_item', 'page_slug_urls', 'blog', 'pro_categories', 'topRatedProducts', 'product_count', 'getStoreThemeSetting', 'getStoreThemeSetting1', 'theme7_product', 'theme7_product_image','theme7_product_byId','mostPurchased','latestProduct','theme9_product_random','latest2category','latestProduct10'));
+            return view('storefront.' . Utility::resolveTheme($store) . '.index', compact('pixelScript','mostPurchasedDetail','theme3_product_random', 'blogs', 'theme3_product_image', 'theme3_product', 'theme6_product_random', 'wishlist', 'products', 'settings', 'store', 'categories', 'total_item', 'page_slug_urls', 'blog', 'pro_categories', 'topRatedProducts', 'product_count', 'getStoreThemeSetting', 'getStoreThemeSetting1', 'theme7_product', 'theme7_product_image','theme7_product_byId','mostPurchased','latestProduct','theme9_product_random','latest2category','latestProduct10'));
 
         } else {
 
@@ -1193,7 +1193,7 @@ class StoreController extends Controller
             $wishlist = [];
         }
 
-        return view('storefront.' . $store->theme_dir . '.product', compact('wishlist', 'products', 'categorie_name', 'settings', 'store', 'categories', 'total_item', 'page_slug_urls', 'blog', 'storethemesetting', 'pro_categories', 'topRatedProducts', 'product_count'));
+        return view('storefront.' . Utility::resolveTheme($store) . '.product', compact('wishlist', 'products', 'categorie_name', 'settings', 'store', 'categories', 'total_item', 'page_slug_urls', 'blog', 'storethemesetting', 'pro_categories', 'topRatedProducts', 'product_count'));
     }
 
     public function pageOptionSlug($slug)
@@ -1248,7 +1248,7 @@ class StoreController extends Controller
 
                 $getStoreThemeSetting = json_decode(file_get_contents($path), true);
             }
-            return view('storefront.' . $store->theme_dir . '.pageslug', compact('pageoption', 'store', 'page_slug_urls', 'blog', 'total_item','wishlist'));
+            return view('storefront.' . Utility::resolveTheme($store) . '.pageslug', compact('pageoption', 'store', 'page_slug_urls', 'blog', 'total_item','wishlist'));
         }
         else{
             return redirect()->back()->with('error','page not found');
@@ -1310,7 +1310,7 @@ class StoreController extends Controller
 
             $getStoreThemeSetting = json_decode(file_get_contents($path), true);
         }
-        return view('storefront.' . $store->theme_dir . '.store_blog', compact('store', 'page_slug_urls', 'blog', 'blogs', 'total_item','wishlist'));
+        return view('storefront.' . Utility::resolveTheme($store) . '.store_blog', compact('store', 'page_slug_urls', 'blog', 'blogs', 'total_item','wishlist'));
     }
 
     public function StoreBlogView($slug, $blog_id)
@@ -1370,7 +1370,7 @@ class StoreController extends Controller
 
         $socialblogsarr = json_encode($socialblogsarr);
         if (!empty($blogs)) {
-            return view('storefront.' . $store->theme_dir . '.store_blog_view', compact('store', 'blog', 'page_slug_urls', 'blogs', 'socialblogs', 'socialblogsarr','total_item','wishlist'));
+            return view('storefront.' . Utility::resolveTheme($store) . '.store_blog_view', compact('store', 'blog', 'page_slug_urls', 'blogs', 'socialblogs', 'socialblogsarr','total_item','wishlist'));
 
         } else {
             return redirect()->route('store.slug', $store->slug);
@@ -1452,7 +1452,7 @@ class StoreController extends Controller
         }
         $product_categorie = ProductCategorie::where('id', $products->product_categorie)->pluck('name')->first();
 
-        return view('storefront.' . $store->theme_dir . '.view', compact('wishlist', 'products', 'store', 'user_count', 'avg_rating', 'products_image', 'total_item', 'product_ratings', 'store_setting', 'product_variant_names', 'page_slug_urls', 'blog', 'all_products', 'product_categorie'));
+        return view('storefront.' . Utility::resolveTheme($store) . '.view', compact('wishlist', 'products', 'store', 'user_count', 'avg_rating', 'products_image', 'total_item', 'product_ratings', 'store_setting', 'product_variant_names', 'page_slug_urls', 'blog', 'all_products', 'product_categorie'));
     }
 
     public function StoreCart($slug ,$product_id = null, $quantity = null,$variant_name = null)
@@ -1623,7 +1623,7 @@ class StoreController extends Controller
             $path = storage_path() . "/uploads/" . $store->theme_dir . "/" . $store->theme_dir . ".json";
             $getStoreThemeSetting = json_decode(file_get_contents($path), true);
         }
-        return view('storefront.' . $store->theme_dir . '.cart', compact('wishlist', 'products', 'total_item', 'store', 'page_slug_urls', 'blog', 'store_settings', 'getStoreThemeSetting', 'getStoreThemeSetting1'));
+        return view('storefront.' . Utility::resolveTheme($store) . '.cart', compact('wishlist', 'products', 'total_item', 'store', 'page_slug_urls', 'blog', 'store_settings', 'getStoreThemeSetting', 'getStoreThemeSetting1'));
 
     }
 
@@ -1719,10 +1719,10 @@ class StoreController extends Controller
                 {
                     $wishlist = [];
                 }
-                return view('storefront.' . $store->theme_dir . '.shipping', compact('countries','store_payment_setting', 'products', 'store', 'taxArr', 'total_item', 'cust_details', 'locations', 'shippings', 'page_slug_urls', 'blog','wishlist'));
+                return view('storefront.' . Utility::resolveTheme($store) . '.shipping', compact('countries','store_payment_setting', 'products', 'store', 'taxArr', 'total_item', 'cust_details', 'locations', 'shippings', 'page_slug_urls', 'blog','wishlist'));
             } else {
                 $is_cart = true;
-                return view('storefront.' . $store->theme_dir . '.user.login', compact('blog', 'slug', 'store', 'page_slug_urls', 'is_cart'));
+                return view('storefront.' . Utility::resolveTheme($store) . '.user.login', compact('blog', 'slug', 'store', 'page_slug_urls', 'is_cart'));
             }
 
         } else {
@@ -1938,7 +1938,7 @@ class StoreController extends Controller
                 $total_item = $i;
                 $taxArr['tax'] = $tax_name;
                 $taxArr['rate'] = $tax_price;
-                return view('storefront.' . $store->theme_dir . '.payment', compact('coupon_id', 'discount_price', 'coupon_price', 'products', 'order', 'cust_details', 'store', 'taxArr', 'total_item', 'encode_product', 'shipping_price', 'page_slug_urls', 'store_payments', 'blog', 'cart'));
+                return view('storefront.' . Utility::resolveTheme($store) . '.payment', compact('coupon_id', 'discount_price', 'coupon_price', 'products', 'order', 'cust_details', 'store', 'taxArr', 'total_item', 'encode_product', 'shipping_price', 'page_slug_urls', 'store_payments', 'blog', 'cart'));
             } else {
                 return redirect()->back()->with('error', __('Please fill your details.'));
             }
@@ -2733,7 +2733,7 @@ class StoreController extends Controller
         }
 
         // custuserorder.blade.php
-        return view('storefront.' . $store->theme_dir . '.customer.custuserorder', compact('slug', 'storethemesetting', 'store_payment_setting', 'store', 'order', 'grand_total', 'order_products', 'sub_total', 'total_taxs', 'user_details', 'shipping_data', 'location_data', 'discount_price', 'discount_value', 'final_taxs','total_item','wishlist','blog','page_slug_urls'));
+        return view('storefront.' . Utility::resolveTheme($store) . '.customer.custuserorder', compact('slug', 'storethemesetting', 'store_payment_setting', 'store', 'order', 'grand_total', 'order_products', 'sub_total', 'total_taxs', 'user_details', 'shipping_data', 'location_data', 'discount_price', 'discount_value', 'final_taxs','total_item','wishlist','blog','page_slug_urls'));
     }
 
     public function userorder($slug, $order_id)
@@ -4480,7 +4480,7 @@ class StoreController extends Controller
                 }
             }
 
-            return view('storefront.' . $store->theme_dir . '.wishlist', compact('page_slug_urls', 'blog', 'wishlist', 'total_item', 'store', 'products'));
+            return view('storefront.' . Utility::resolveTheme($store) . '.wishlist', compact('page_slug_urls', 'blog', 'wishlist', 'total_item', 'store', 'products'));
         }
     }
 
@@ -4610,7 +4610,7 @@ class StoreController extends Controller
         return redirect()->back()->with('error', __('Store not available'));
         }*/
 
-        return view('storefront.' . $store->theme_dir . '.user.create', compact('blog', 'total_item', 'slug', 'store', 'page_slug_urls'));
+        return view('storefront.' . Utility::resolveTheme($store) . '.user.create', compact('blog', 'total_item', 'slug', 'store', 'page_slug_urls'));
     }
 
     protected function userStore($slug, Request $request)
@@ -4753,7 +4753,7 @@ class StoreController extends Controller
         {
             $wishlist = [];
         }
-        return view('storefront.' . $store->theme_dir . '.customer.index', compact('orders', 'storethemesetting', 'store','total_item','wishlist','blog','page_slug_urls'));
+        return view('storefront.' . Utility::resolveTheme($store) . '.customer.index', compact('orders', 'storethemesetting', 'store','total_item','wishlist','blog','page_slug_urls'));
     }
 
     public function remcoup(Request $request)

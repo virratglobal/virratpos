@@ -295,6 +295,16 @@ class Utility extends Model
         }
     }
 
+    public static function resolveTheme($store)
+    {
+        $theme = $store->theme_dir;
+        if (empty($theme) || !view()->exists("storefront.{$theme}.index")) {
+            \Log::warning("Theme '{$theme}' is invalid or missing view files for store {$store->id}. Falling back to theme1.");
+            return 'theme1';
+        }
+        return $theme;
+    }
+
     public static function demoStoreThemeSetting($store_id = null, $theme_name = null)
     {
         if(is_null(self::$themeSetting)){

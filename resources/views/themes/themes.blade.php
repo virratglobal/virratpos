@@ -153,6 +153,10 @@
             $('#themefile').val(eleParent);
             var imgpath = $(this).attr('data-imgpath');
             $('.' + eleParent + '_img').attr('src', imgpath);
+            
+            // Keep card selection border highlight in sync
+            $(".theme-card").removeClass('selected border-primary shadow-sm').addClass('border-outline-variant/30');
+            $('.' + eleParent).addClass('selected border-primary shadow-sm').removeClass('border-outline-variant/30');
         });
         $(document).ready(function() {
             setTimeout(function(e) {
@@ -180,12 +184,8 @@
         });
         $(".color1").click(function() {
             var dataId = $(this).attr("data-id");
-            $('#' + dataId).trigger('click');
-            var first_check = $('#' + dataId).find('.color-0').trigger("click");
-            $( ".theme-card" ).each(function() {
-                $(".theme-card").removeClass('selected border-primary shadow-sm').addClass('border-outline-variant/30');
-            });
-            $('.' +dataId).addClass('selected border-primary shadow-sm').removeClass('border-outline-variant/30');
+            // Trigger click on the first radio button of this theme
+            $('#' + dataId).find('.colorinput-input').first().trigger("click");
         });
     </script>
 @endpush
