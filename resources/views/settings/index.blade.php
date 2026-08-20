@@ -243,10 +243,10 @@
             font-weight: 400;
         }
 
-        /* 3-Column 2-Row Settings Layout Grid (240px Nav, Flexible Center, 300px Right Sidebar) */
+        /* 3-Column 2-Row Settings Layout Grid (240px Nav, minmax(500px, 1fr) Center, 300px Right Sidebar) */
         .settings-layout-grid {
             display: grid !important;
-            grid-template-columns: 240px minmax(0, 1fr) 300px !important;
+            grid-template-columns: 240px minmax(500px, 1fr) 300px !important;
             gap: 20px !important;
             align-items: start !important;
             width: 100% !important;
@@ -271,12 +271,14 @@
             width: 240px !important;
         }
 
-        /* Row 1 Column 2: Logo Upload Card */
+        /* Row 1 Column 2: Logo Upload Card (Natural Content Height, No Vertical Stretching) */
         .brand-settings-logos-card {
             grid-column: 2 !important;
             grid-row: 1 !important;
             width: 100% !important;
             min-width: 0 !important;
+            height: auto !important;
+            align-self: start !important;
             margin-bottom: 0 !important;
         }
 
@@ -288,6 +290,7 @@
             flex-direction: column !important;
             gap: 20px !important;
             width: 300px !important;
+            align-self: start !important;
         }
 
         /* Row 2 Full Width: Lower Brand Settings Form Card */
@@ -451,10 +454,10 @@
 
         .settings-layout-wrapper .card-header {
             background-color: transparent !important;
-            padding: 0 0 16px 0 !important;
+            padding: 0 0 14px 0 !important;
             border: none !important;
             border-bottom: 1px solid var(--border) !important;
-            margin-bottom: 20px !important;
+            margin-bottom: 0 !important;
             box-shadow: none !important;
             position: relative !important;
         }
@@ -466,21 +469,23 @@
             color: var(--text-primary) !important;
             margin: 0 !important;
         }
-        .settings-layout-wrapper .card-header p,
         .settings-layout-wrapper .card-header small {
             font-size: 13.5px !important;
             color: var(--text-secondary) !important;
-            margin-top: 5px !important;
+            margin-top: 4px !important;
             display: block !important;
             font-weight: 400 !important;
         }
-        /* Brand Settings Card Container */
+        /* Brand Settings Card Container (Natural Height, No Blank Space Below) */
         .brand-settings-card {
             padding: 24px !important;
             background: var(--surface) !important;
             border: 1px solid var(--border) !important;
             border-radius: 16px !important;
             box-sizing: border-box !important;
+            height: auto !important;
+            min-height: 0 !important;
+            align-self: start !important;
         }
 
         .brand-settings-header {
@@ -490,18 +495,18 @@
         }
 
         .brand-settings-divider {
-            margin: 14px 0 18px 0 !important;
+            margin: 14px 0 20px 0 !important;
             border: 0 !important;
             border-top: 1px solid var(--border) !important;
             opacity: 0.6 !important;
         }
 
-        /* Upload Grid Layout (3 Equal Columns, minmax(0, 1fr), gap 14px) */
+        /* Upload Grid Layout (3 Equal Columns, minmax(0, 1fr), gap 16px) */
         .brand-upload-grid,
         .upload-grid-container {
             display: grid !important;
             grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-            gap: 14px !important;
+            gap: 16px !important;
             margin-bottom: 0 !important;
             width: 100% !important;
             box-sizing: border-box !important;
@@ -521,20 +526,19 @@
             }
         }
 
-        /* Brand Upload Asset Card */
+        /* Brand Upload Asset Card (Natural Content Height) */
         .brand-upload-card,
         .upload-asset-card {
             background: var(--surface) !important;
             border: 1px solid var(--border) !important;
             border-radius: 14px !important;
-            padding: 14px 12px !important;
+            padding: 14px !important;
             display: flex !important;
             flex-direction: column !important;
-            justify-content: space-between !important;
             width: 100% !important;
             min-width: 0 !important;
             box-sizing: border-box !important;
-            height: 100% !important;
+            height: auto !important;
         }
 
         .upload-card-header {
@@ -559,18 +563,18 @@
             font-weight: 600 !important;
             color: var(--text-primary) !important;
             margin: 0 !important;
-            line-height: 1.25 !important;
+            line-height: 1.3 !important;
             white-space: nowrap !important;
             overflow: visible !important;
             text-overflow: clip !important;
         }
 
-        /* Preview Container (Height 140px, Margins 10px top, 12px bottom) */
+        /* Preview Container (Height 135px, Margins 12px top, 12px bottom) */
         .brand-upload-preview,
         .upload-preview-box {
             width: 100% !important;
-            height: 140px !important;
-            margin-top: 10px !important;
+            height: 135px !important;
+            margin-top: 12px !important;
             margin-bottom: 12px !important;
             background: var(--surface-2) !important;
             border: 1px solid var(--border) !important;
@@ -601,22 +605,23 @@
             object-fit: contain !important;
         }
 
-        /* Full Width Upload Button (Fully Visible, No Truncation) */
+        /* Full Width Upload Button (Fully Visible "Upload Image", No Truncation) */
         .btn-upload-blue,
         .brand-upload-card label,
-        .brand-upload-card button {
+        .brand-upload-card button,
+        .brand-upload-card .upload-button {
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
             gap: 6px !important;
             width: 100% !important;
             min-width: 0 !important;
-            height: 38px !important;
-            padding: 0 8px !important;
+            height: 40px !important;
+            padding: 0 10px !important;
             background-color: #4F46E5 !important;
             color: #FFFFFF !important;
             border-radius: 8px !important;
-            font-size: 13.5px !important;
+            font-size: 14px !important;
             font-weight: 600 !important;
             cursor: pointer !important;
             border: none !important;
