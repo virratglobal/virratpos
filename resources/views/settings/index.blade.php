@@ -243,10 +243,10 @@
             font-weight: 400;
         }
 
-        /* 3-Column 2-Row Settings Layout Grid */
+        /* 3-Column 2-Row Settings Layout Grid (240px Nav, Flexible Center, 300px Right Sidebar) */
         .settings-layout-grid {
             display: grid !important;
-            grid-template-columns: 260px minmax(0, 1fr) 320px !important;
+            grid-template-columns: 240px minmax(0, 1fr) 300px !important;
             gap: 20px !important;
             align-items: start !important;
             width: 100% !important;
@@ -268,7 +268,7 @@
             position: sticky !important;
             top: 24px !important;
             align-self: start !important;
-            width: 260px !important;
+            width: 240px !important;
         }
 
         /* Row 1 Column 2: Logo Upload Card */
@@ -287,7 +287,7 @@
             display: flex !important;
             flex-direction: column !important;
             gap: 20px !important;
-            width: 320px !important;
+            width: 300px !important;
         }
 
         /* Row 2 Full Width: Lower Brand Settings Form Card */
@@ -309,7 +309,7 @@
 
         @media (max-width: 1199px) {
             .settings-layout-grid {
-                grid-template-columns: 260px minmax(0, 1fr) !important;
+                grid-template-columns: 240px minmax(0, 1fr) !important;
             }
             .settings-right-sidebar {
                 grid-column: 1 / -1 !important;
@@ -417,7 +417,7 @@
             border-radius: 16px !important;
             border: 1px solid var(--border) !important;
             box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03) !important;
-            padding: 28px !important;
+            padding: 24px !important;
             margin-bottom: 24px !important;
             width: 100% !important;
         }
@@ -427,7 +427,7 @@
             position: sticky !important;
             top: 24px !important;
             align-self: start !important;
-            width: 320px !important;
+            width: 300px !important;
         }
 
         .system-info-card {
@@ -476,10 +476,11 @@
         }
         /* Brand Settings Card Container */
         .brand-settings-card {
-            padding: 28px !important;
+            padding: 24px !important;
             background: var(--surface) !important;
             border: 1px solid var(--border) !important;
             border-radius: 16px !important;
+            box-sizing: border-box !important;
         }
 
         .brand-settings-header {
@@ -489,18 +490,18 @@
         }
 
         .brand-settings-divider {
-            margin: 16px 0 20px 0 !important;
+            margin: 14px 0 18px 0 !important;
             border: 0 !important;
             border-top: 1px solid var(--border) !important;
             opacity: 0.6 !important;
         }
 
-        /* Upload Grid Layout (3 Equal Columns, gap 18px) */
+        /* Upload Grid Layout (3 Equal Columns, minmax(0, 1fr), gap 14px) */
         .brand-upload-grid,
         .upload-grid-container {
             display: grid !important;
-            grid-template-columns: repeat(3, 1fr) !important;
-            gap: 18px !important;
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            gap: 14px !important;
             margin-bottom: 0 !important;
             width: 100% !important;
             box-sizing: border-box !important;
@@ -526,7 +527,7 @@
             background: var(--surface) !important;
             border: 1px solid var(--border) !important;
             border-radius: 14px !important;
-            padding: 16px !important;
+            padding: 14px 12px !important;
             display: flex !important;
             flex-direction: column !important;
             justify-content: space-between !important;
@@ -539,8 +540,9 @@
         .upload-card-header {
             display: flex !important;
             align-items: center !important;
-            gap: 8px !important;
-            margin-bottom: 12px !important;
+            gap: 6px !important;
+            margin-bottom: 10px !important;
+            min-width: 0 !important;
         }
 
         .upload-card-indicator {
@@ -551,21 +553,25 @@
             flex-shrink: 0 !important;
         }
 
+        .brand-upload-card-title,
         .upload-card-title {
             font-size: 15px !important;
-            font-weight: 700 !important;
+            font-weight: 600 !important;
             color: var(--text-primary) !important;
             margin: 0 !important;
-            line-height: 1.2 !important;
+            line-height: 1.25 !important;
+            white-space: nowrap !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
         }
 
-        /* Preview Container (Height 135px, Margins 12px top, 14px bottom) */
+        /* Preview Container (Height 140px, Margins 10px top, 12px bottom) */
         .brand-upload-preview,
         .upload-preview-box {
             width: 100% !important;
-            height: 135px !important;
-            margin-top: 12px !important;
-            margin-bottom: 14px !important;
+            height: 140px !important;
+            margin-top: 10px !important;
+            margin-bottom: 12px !important;
             background: var(--surface-2) !important;
             border: 1px solid var(--border) !important;
             border-radius: 12px !important;
@@ -573,7 +579,7 @@
             flex-direction: column !important;
             align-items: center !important;
             justify-content: center !important;
-            padding: 12px !important;
+            padding: 10px !important;
             box-sizing: border-box !important;
             overflow: hidden !important;
             position: relative !important;
@@ -595,26 +601,31 @@
             object-fit: contain !important;
         }
 
-        /* Full Width Upload Button */
-        .btn-upload-blue {
+        /* Full Width Upload Button (Fully Visible, No Truncation) */
+        .btn-upload-blue,
+        .brand-upload-card label,
+        .brand-upload-card button {
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
             gap: 6px !important;
             width: 100% !important;
-            height: 40px !important;
-            padding: 0 14px !important;
+            min-width: 0 !important;
+            height: 38px !important;
+            padding: 0 8px !important;
             background-color: #4F46E5 !important;
             color: #FFFFFF !important;
-            font-size: 13px !important;
-            font-weight: 600 !important;
             border-radius: 8px !important;
-            border: none !important;
+            font-size: 13.5px !important;
+            font-weight: 600 !important;
             cursor: pointer !important;
-            white-space: nowrap !important;
+            border: none !important;
+            text-decoration: none !important;
             box-sizing: border-box !important;
+            white-space: nowrap !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
             transition: background-color 0.15s ease !important;
-            margin-top: auto !important;
         }
         .btn-upload-blue:hover {
             background-color: #4338CA !important;
