@@ -609,14 +609,14 @@
 
         .payment-setting-title-bar h5 {
             font-size: 18px !important;
-            font-weight: 700 !important;
+            font-weight: 600 !important;
             color: var(--text-primary) !important;
             margin: 0 !important;
             letter-spacing: -0.01em !important;
         }
 
         .payment-setting-description {
-            font-size: 13.5px !important;
+            font-size: 13px !important;
             color: var(--text-secondary) !important;
             margin-top: 4px !important;
             margin-bottom: 0 !important;
@@ -709,6 +709,7 @@
             border: none !important;
             border-radius: 8px !important;
             margin-bottom: 0 !important;
+            margin-top: 0 !important;
             overflow: hidden !important;
             box-shadow: none !important;
             width: 100% !important;
@@ -730,9 +731,9 @@
             background: #f8fafc !important;
             border: 1px solid #d9deea !important;
             border-radius: 8px !important;
-            height: 66px !important;
-            min-height: 66px !important;
-            max-height: 66px !important;
+            height: 64px !important;
+            min-height: 64px !important;
+            max-height: 64px !important;
             padding: 0 24px !important;
             box-shadow: none !important;
             display: flex !important;
@@ -761,6 +762,8 @@
             font-size: 15px !important;
             font-weight: 600 !important;
             color: #0f172a !important;
+            min-width: 0 !important;
+            overflow-wrap: break-word !important;
         }
 
         #pills-payment-setting .payment-method-actions,
@@ -768,8 +771,8 @@
             display: flex !important;
             align-items: center !important;
             justify-content: flex-end !important;
-            gap: 12px !important;
-            flex-shrink: 0 !important;
+            gap: 10px !important;
+            flex: 0 0 auto !important;
         }
 
         #pills-payment-setting .accordion-button::after {
