@@ -251,133 +251,182 @@
             font-weight: 400;
         }
 
-        /* Desktop 2-Column Settings Layout Grid (260px Navigation Sidebar, minmax(0, 1fr) Main Content) */
-        .upper-settings-grid,
+        /* 1. OVERALL SETTINGS LAYOUT (Clean 2-Column Grid) */
+        .settings-layout,
         .settings-layout-grid {
             display: grid !important;
-            grid-template-columns: 260px minmax(0, 1fr) !important;
+            grid-template-columns: 256px minmax(0, 1fr) !important;
             gap: 24px !important;
-            align-items: stretch !important;
+            align-items: start !important;
             width: 100% !important;
             max-width: 100% !important;
             box-sizing: border-box !important;
         }
 
-        /* Hide 3rd column for Super Admin settings view */
         .settings-right-sidebar {
             display: none !important;
         }
 
-        /* Allow active brand setting tab pane & form to participate directly in grid */
-        .settings-content,
-        .tab-content,
-        .tab-pane#pills-brand-setting.active.show,
-        .tab-pane#pills-brand-setting.active,
-        .brand-settings-form-wrapper {
-            display: contents !important;
-        }
-
-        /* Column 1: Equal-Height Settings Navigation Sidebar */
+        /* 2. LEFT SETTINGS NAVIGATION (256px Width) */
         .settings-navigation-column,
         .settings-sidebar {
+            width: 256px !important;
+            max-width: 256px !important;
+            min-width: 256px !important;
+            box-sizing: border-box !important;
             grid-column: 1 !important;
-            grid-row: 1 !important;
-            align-self: stretch !important;
-            display: flex !important;
-            flex-direction: column !important;
-            align-items: stretch !important;
-            width: 260px !important;
-            max-width: 100% !important;
-            min-width: 0 !important;
-            box-sizing: border-box !important;
-            margin-top: 0 !important;
-            margin-bottom: 24px !important;
         }
 
-        /* Column 2: Brand Settings Main Card */
-        .brand-settings-logos-card,
-        .brand-settings-card,
-        .brand-settings-main {
-            grid-column: 2 !important;
-            grid-row: 1 !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            min-width: 0 !important;
-            height: auto !important;
-            min-height: 0 !important;
-            max-height: none !important;
-            align-self: stretch !important;
-            flex: 0 0 auto !important;
-            margin-bottom: 24px !important;
-            padding: 28px !important;
-            background: var(--surface) !important;
-            border: 1px solid var(--border) !important;
-            border-radius: 12px !important;
-            box-sizing: border-box !important;
-            overflow: hidden !important;
-        }
-
-        /* Lower Full-Width Form Card Spanning 100% of Entire Content Area (From Left Edge to Right Edge) */
-        .brand-settings-form-card,
-        .brand-settings-form {
-            grid-column: 1 / -1 !important;
-            grid-row: 2 !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            min-width: 0 !important;
-            margin-top: 0 !important;
-            padding: 28px !important;
-            background: var(--surface) !important;
-            border: 1px solid var(--border) !important;
-            border-radius: 12px !important;
-            box-sizing: border-box !important;
-            overflow: hidden !important;
-        }
-
-        /* Form Inputs & Select Containment */
-        .brand-settings-form-card input,
-        .brand-settings-form-card select,
-        .brand-settings-form input,
-        .brand-settings-form select,
-        .settings-layout-wrapper input,
-        .settings-layout-wrapper select {
-            width: 100% !important;
-            max-width: 100% !important;
-            min-width: 0 !important;
-            box-sizing: border-box !important;
-        }
-
-        /* Handle non-brand tab panes (Payment, Email, Storage, etc.) */
-        .tab-content > .tab-pane:not(#pills-brand-setting) {
-            grid-column: 2 !important;
-            grid-row: 1 !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            min-width: 0 !important;
-        }
-
-        /* Settings Navigation Outer Card (Stretches to 100% Height of Row 1) */
         .settings-navigation-card,
         .settings-sidebar .setting-nav-wrp {
-            width: 100% !important;
-            max-width: 100% !important;
-            min-width: 0 !important;
-            height: 100% !important;
-            min-height: 100% !important;
+            width: 256px !important;
             box-sizing: border-box !important;
             padding: 8px !important;
-            background: var(--surface) !important;
-            border: 1px solid var(--border) !important;
-            border-radius: 10px !important;
+            background: #FFFFFF !important;
+            border: 1px solid #E2E8F0 !important;
+            border-radius: 12px !important;
             box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03) !important;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: flex-start !important;
-            align-items: stretch !important;
         }
 
-        /* Settings Navigation Inner Menu (Grouped at Top, Natural Content Height) */
         .settings-navigation-menu,
+        .setting-nav-wrp .nav-pills {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 4px !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .settings-navigation-item,
+        .settings-sidebar .nav-link {
+            width: 100% !important;
+            height: 44px !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 14px !important;
+            padding: 0 16px !important;
+            border-radius: 8px !important;
+            box-sizing: border-box !important;
+            background: transparent !important;
+            color: #64748B !important;
+            border: none !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            text-decoration: none !important;
+            white-space: nowrap !important;
+            transition: background-color 0.15s ease, color 0.15s ease !important;
+        }
+
+        .settings-navigation-item:hover,
+        .settings-sidebar .nav-link:not(.active):hover {
+            background-color: #F1F5F9 !important;
+            color: #0F172A !important;
+        }
+
+        /* 3. ACTIVE SETTINGS ITEM */
+        .settings-navigation-item.active,
+        .settings-sidebar .nav-link.active {
+            background-color: #5146E5 !important;
+            color: #FFFFFF !important;
+            font-weight: 600 !important;
+            box-shadow: 0 4px 12px rgba(81, 70, 229, 0.25) !important;
+        }
+
+        .settings-navigation-item.active .label,
+        .settings-sidebar .nav-link.active .label,
+        .settings-sidebar .nav-link.active span {
+            color: #FFFFFF !important;
+        }
+
+        .settings-navigation-item .material-symbols-outlined,
+        .settings-sidebar .nav-link .material-symbols-outlined {
+            font-size: 20px !important;
+            width: 20px !important;
+            height: 20px !important;
+            color: inherit !important;
+            flex-shrink: 0 !important;
+        }
+
+        /* 4. RIGHT CONTENT CARD (Column 2) */
+        .settings-content {
+            grid-column: 2 !important;
+            width: 100% !important;
+            min-width: 0 !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .settings-content .tab-content {
+            width: 100% !important;
+            min-width: 0 !important;
+        }
+
+        .settings-content .tab-pane {
+            width: 100% !important;
+            min-width: 0 !important;
+        }
+
+        .settings-content-card,
+        .settings-content .card {
+            width: 100% !important;
+            min-width: 0 !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            padding: 24px !important;
+            background: #FFFFFF !important;
+            border: 1px solid #E2E8F0 !important;
+            border-radius: 12px !important;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03) !important;
+            margin-bottom: 24px !important;
+        }
+
+        /* 5. CONTENT HEADER */
+        .settings-content-title {
+            display: flex !important;
+            align-items: center !important;
+            gap: 12px !important;
+            margin-bottom: 4px !important;
+        }
+
+        .settings-content-title .accent-bar {
+            width: 4px !important;
+            height: 18px !important;
+            background: #5146E5 !important;
+            border-radius: 2px !important;
+            display: inline-block !important;
+            flex-shrink: 0 !important;
+        }
+
+        .settings-content-title h5,
+        .settings-content-title h1,
+        .settings-content-title h2 {
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            color: #0F172A !important;
+            margin: 0 !important;
+            letter-spacing: -0.01em !important;
+        }
+
+        /* 15. RESPONSIVE BEHAVIOR */
+        @media (max-width: 900px) {
+            .settings-layout,
+            .settings-layout-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .settings-navigation-column,
+            .settings-sidebar,
+            .settings-navigation-card {
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+            }
+
+            .settings-content {
+                grid-column: 1 !important;
+            }
+        }
         .setting-nav-wrp .nav-pills {
             display: flex !important;
             flex-direction: column !important;
