@@ -221,42 +221,43 @@
             box-sizing: border-box !important;
         }
 
-        /* Full-Width Desktop Settings Page Container */
+        /* Small, Compact Desktop Settings Page Container (max-width: 1140px) */
         .settings-layout-wrapper {
             width: 100% !important;
-            max-width: 100% !important;
+            max-width: 1140px !important;
             margin: 0 !important;
             padding: 8px 24px 40px 24px !important;
-            font-family: 'Inter', -apple-system, sans-serif;
-            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, sans-serif !important;
+            color: var(--text-primary) !important;
+            box-sizing: border-box !important;
         }
 
         /* Page Header */
         .settings-header {
-            margin-bottom: 24px;
+            margin-bottom: 20px !important;
         }
         .settings-header h1 {
-            font-family: 'Inter', sans-serif;
-            font-size: 26px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin: 0;
-            letter-spacing: -0.02em;
+            font-family: 'Inter', sans-serif !important;
+            font-size: 24px !important;
+            font-weight: 700 !important;
+            color: var(--text-primary) !important;
+            margin: 0 !important;
+            letter-spacing: -0.02em !important;
         }
         .settings-header p {
-            font-size: 13.5px;
-            color: var(--text-secondary);
-            margin-top: 4px;
-            margin-bottom: 0;
-            font-weight: 400;
+            font-size: 13.5px !important;
+            color: var(--text-secondary) !important;
+            margin-top: 4px !important;
+            margin-bottom: 0 !important;
+            font-weight: 400 !important;
         }
 
-        /* 1. OVERALL SETTINGS LAYOUT (Clean 2-Column Grid) */
+        /* 1. OVERALL SETTINGS LAYOUT (Compact 2-Column Grid) */
         .settings-layout,
         .settings-layout-grid {
             display: grid !important;
-            grid-template-columns: 256px minmax(0, 1fr) !important;
-            gap: 24px !important;
+            grid-template-columns: 240px minmax(0, 1fr) !important;
+            gap: 20px !important;
             align-items: start !important;
             width: 100% !important;
             max-width: 100% !important;
@@ -267,21 +268,21 @@
             display: none !important;
         }
 
-        /* 2. LEFT SETTINGS NAVIGATION (256px Width) */
+        /* 2. LEFT SETTINGS NAVIGATION (240px Compact Width) */
         .settings-navigation-column,
         .settings-sidebar {
-            width: 256px !important;
-            max-width: 256px !important;
-            min-width: 256px !important;
+            width: 240px !important;
+            max-width: 240px !important;
+            min-width: 240px !important;
             box-sizing: border-box !important;
             grid-column: 1 !important;
         }
 
         .settings-navigation-card,
         .settings-sidebar .setting-nav-wrp {
-            width: 256px !important;
+            width: 240px !important;
             box-sizing: border-box !important;
-            padding: 8px !important;
+            padding: 6px !important;
             background: #FFFFFF !important;
             border: 1px solid #E2E8F0 !important;
             border-radius: 12px !important;
