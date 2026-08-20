@@ -356,8 +356,7 @@
             min-width: 0 !important;
         }
 
-        /* Settings Navigation Card Container (Stretches to 100% Height of Row 1) */
-        .settings-navigation,
+        /* Settings Navigation Outer Card (Stretches to 100% Height of Row 1) */
         .settings-navigation-card,
         .settings-sidebar .setting-nav-wrp {
             width: 100% !important;
@@ -371,43 +370,119 @@
             border: 1px solid var(--border) !important;
             border-radius: 10px !important;
             box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03) !important;
-            gap: 4px !important;
             display: flex !important;
             flex-direction: column !important;
             justify-content: flex-start !important;
             align-items: stretch !important;
         }
 
+        /* Settings Navigation Inner Menu (Grouped at Top, Natural Content Height) */
+        .settings-navigation-menu,
+        .setting-nav-wrp .nav-pills {
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: flex-start !important;
+            align-items: stretch !important;
+            gap: 4px !important;
+            width: 100% !important;
+            height: auto !important;
+            min-height: 0 !important;
+            flex: 0 0 auto !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        /* Menu Item (Fixed 44px Height, 14px Gap, 16px Padding) */
+        .settings-navigation-item,
         .settings-sidebar .nav-link {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            height: 44px !important;
+            min-height: 44px !important;
+            max-height: 44px !important;
+            padding: 0 16px !important;
             display: flex !important;
             align-items: center !important;
-            gap: 12px !important;
-            height: 44px !important;
-            padding: 0 16px !important;
+            gap: 14px !important;
             border-radius: 8px !important;
-            font-size: 14px !important;
-            font-weight: 500 !important;
-            color: var(--text-secondary) !important;
+            box-sizing: border-box !important;
             background: transparent !important;
+            color: #64748B !important;
             border: none !important;
-            transition: all 0.15s ease-in-out !important;
+            outline: none !important;
+            transition: background-color 0.15s ease, color 0.15s ease !important;
             position: relative !important;
-            width: 100% !important;
-            text-align: left !important;
             cursor: pointer !important;
             text-decoration: none !important;
+            margin: 0 !important;
+            box-shadow: none !important;
+        }
+
+        /* Icon Container */
+        .settings-navigation-item .icon,
+        .settings-sidebar .nav-link .icon {
+            width: 20px !important;
+            min-width: 20px !important;
+            height: 20px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex-shrink: 0 !important;
+            color: inherit !important;
+        }
+
+        .settings-navigation-item .material-symbols-outlined,
+        .settings-sidebar .nav-link .material-symbols-outlined,
+        .settings-sidebar .nav-link svg {
+            font-size: 20px !important;
+            width: 20px !important;
+            height: 20px !important;
+            color: inherit !important;
+            flex-shrink: 0 !important;
+        }
+
+        /* Text Label */
+        .settings-navigation-item .label,
+        .settings-sidebar .nav-link .label,
+        .settings-sidebar .nav-link span:not(.material-symbols-outlined):not(.icon) {
+            flex: 1 1 auto !important;
+            min-width: 0 !important;
             white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            line-height: 1.2 !important;
+            color: inherit !important;
         }
-        .settings-sidebar .nav-link:hover {
-            background-color: var(--surface-2) !important;
-            color: var(--primary) !important;
+
+        /* Hover State for Non-Active Items */
+        .settings-navigation-item:not(.active):hover,
+        .settings-sidebar .nav-link:not(.active):hover {
+            background-color: #F6F7FB !important;
+            color: #0F172A !important;
         }
+        .settings-navigation-item:not(.active):hover .label,
+        .settings-sidebar .nav-link:not(.active):hover .label {
+            color: #0F172A !important;
+        }
+
+        /* Active Item State (Purple #5146E5, Spans Full Card Width) */
+        .settings-navigation-item.active,
         .settings-sidebar .nav-link.active {
-            background-color: #5C59E8 !important;
+            width: 100% !important;
+            background-color: #5146E5 !important;
             color: #FFFFFF !important;
             font-weight: 600 !important;
-            box-shadow: 0 4px 14px rgba(92, 89, 232, 0.3) !important;
+            box-shadow: 0 4px 14px rgba(81, 70, 229, 0.3) !important;
         }
+        .settings-navigation-item.active .label,
+        .settings-sidebar .nav-link.active .label {
+            color: #FFFFFF !important;
+            font-weight: 600 !important;
+        }
+        .settings-navigation-item.active::before,
         .settings-sidebar .nav-link.active::before {
             display: none !important;
         }
@@ -1041,81 +1116,83 @@
 
         <div class="settings-layout-grid mt-6">
             <!-- Left Navigation Sidebar Card -->
-            <div class="settings-sidebar">
-                <div class="setting-nav-wrp">
-                    @if (Auth::user()->type == 'super admin')
-                        <a class="nav-link active" id="pills-brand_setting-tab" data-bs-toggle="pill" href="#pills-brand-setting" role="tab" aria-controls="pills-brand-setting" aria-selected="true">
-                            <span class="material-symbols-outlined">palette</span>
-                            <span>{{ __('Brand Settings') }}</span>
-                        </a>
-                        <a class="nav-link" id="pills-payment-setting_tab" data-bs-toggle="pill" href="#pills-payment-setting" role="tab" aria-controls="pills-payment-setting" aria-selected="false">
-                            <span class="material-symbols-outlined">credit_card</span>
-                            <span>{{ __('Payment Settings') }}</span>
-                        </a>
-                        <a class="nav-link" id="pills-email-settings_tab" data-bs-toggle="pill" href="#pills-email-settings" role="tab" aria-controls="pills-email-settings" aria-selected="false">
-                            <span class="material-symbols-outlined">mail</span>
-                            <span>{{ __('Email Settings') }}</span>
-                        </a>
-                        <a class="nav-link" id="recaptcha-settings_tab" data-bs-toggle="pill" href="#pills-recaptcha-settings" role="tab" aria-controls="pills-recaptcha-settings-tab" aria-selected="false">
-                            <span class="material-symbols-outlined">verified_user</span>
-                            <span>{{ __('ReCaptcha Settings') }}</span>
-                        </a>
-                        <a class="nav-link" id="storage_settings_tab" data-bs-toggle="pill" href="#storage_settings" role="tab" aria-controls="pills-storage_settings-tab" aria-selected="false">
-                            <span class="material-symbols-outlined">database</span>
-                            <span>{{ __('Storage Settings') }}</span>
-                        </a>
-                        <a class="nav-link" id="pills-cache_settings-tab" data-bs-toggle="pill" href="#pills-cache-settings" role="tab" aria-controls="pills-cache_settings-tab" aria-selected="false">
-                            <span class="material-symbols-outlined">bolt</span>
-                            <span>{{ __('Cache Settings') }}</span>
-                        </a>
-                        <a class="nav-link" id="pills-cookie_settings-tab" data-bs-toggle="pill" href="#pills-cookie-settings" role="tab" aria-controls="pills-cookie_settings-tab" aria-selected="false">
-                            <span class="material-symbols-outlined">cookie</span>
-                            <span>{{ __('Cookie Settings') }}</span>
-                        </a>
-                        <a class="nav-link" id="pills-chatgpt-tab" data-bs-toggle="pill" href="#pills-chatgpt-settings" role="tab" aria-controls="pills-chatgpt-tab" aria-selected="false">
-                            <span class="material-symbols-outlined">smart_toy</span>
-                            <span>{{ __('Chat GPT Settings') }}</span>
-                        </a>
-                    @else
-                        <a class="nav-link active" id="pills-brand_setting-tab" data-bs-toggle="pill" href="#pills-brand-setting" role="tab" aria-controls="pills-brandsetting" aria-selected="true">
-                            <span class="material-symbols-outlined">palette</span>
-                            <span>{{ __('Brand Settings') }}</span>
-                        </a>
-                        <a class="nav-link" id="pills-store_setting-tab" data-bs-toggle="pill" href="#pills-store_setting" role="tab" aria-controls="pills-store_setting" aria-selected="false">
-                            <span class="material-symbols-outlined">storefront</span>
-                            <span>{{ __('Store Settings') }}</span>
-                        </a>
-                        <a class="nav-link" id="pills-store_payment-setting-tab" data-bs-toggle="pill" href="#pills-store_payment-setting" role="tab" aria-controls="pills-store_payment-setting" aria-selected="false">
-                            <span class="material-symbols-outlined">credit_card</span>
-                            <span>{{ __('Payment Settings') }}</span>
-                        </a>
-                        <a class="nav-link" id="pills-store_email_setting-tab" data-bs-toggle="pill" href="#pills-store_email_setting" role="tab" aria-controls="pills-store_email_setting" aria-selected="false">
-                            <span class="material-symbols-outlined">mail</span>
-                            <span>{{ __('Email Settings') }}</span>
-                        </a>
-                        <a class="nav-link" id="pills-whatsapp_custom_massage-tab" data-bs-toggle="pill" href="#pills-whatsapp_custom_massage" role="tab" aria-controls="pills-whatsapp_custom_massage" aria-selected="false">
-                            <span class="material-symbols-outlined">chat</span>
-                            <span>{{ __('Whatsapp Message Settings') }}</span>
-                        </a>
-                        <a class="nav-link" id="pills-twilio_setting-tab" data-bs-toggle="pill" href="#pills-twilio_setting" role="tab" aria-controls="pills-twilio_setting" aria-selected="false">
-                            <span class="material-symbols-outlined">sms</span>
-                            <span>{{ __('Twilio Settings') }}</span>
-                        </a>
-                        <a class="nav-link" id="pills-pixel_setting-tab" data-bs-toggle="pill" href="#pixel_settings" role="tab" aria-controls="pixel_settings" aria-selected="false">
-                            <span class="material-symbols-outlined">analytics</span>
-                            <span>{{ __('Pixel Settings') }}</span>
-                        </a>
-                        @if ($plan->pwa_store == 'on')
-                            <a class="nav-link" id="pills-pwa_setting-tab" data-bs-toggle="pill" href="#pwa_settings" role="tab" aria-controls="pwa_settings" aria-selected="false">
-                                <span class="material-symbols-outlined">install_mobile</span>
-                                <span>{{ __('PWA Settings') }}</span>
+            <div class="settings-sidebar settings-navigation-column">
+                <div class="setting-nav-wrp settings-navigation-card">
+                    <div class="settings-navigation-menu">
+                        @if (Auth::user()->type == 'super admin')
+                            <a class="nav-link settings-navigation-item active" id="pills-brand_setting-tab" data-bs-toggle="pill" href="#pills-brand-setting" role="tab" aria-controls="pills-brand-setting" aria-selected="true">
+                                <span class="icon"><span class="material-symbols-outlined">palette</span></span>
+                                <span class="label">{{ __('Brand Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="pills-payment-setting_tab" data-bs-toggle="pill" href="#pills-payment-setting" role="tab" aria-controls="pills-payment-setting" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">credit_card</span></span>
+                                <span class="label">{{ __('Payment Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="pills-email-settings_tab" data-bs-toggle="pill" href="#pills-email-settings" role="tab" aria-controls="pills-email-settings" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">mail</span></span>
+                                <span class="label">{{ __('Email Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="recaptcha-settings_tab" data-bs-toggle="pill" href="#pills-recaptcha-settings" role="tab" aria-controls="pills-recaptcha-settings-tab" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">verified_user</span></span>
+                                <span class="label">{{ __('ReCaptcha Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="storage_settings_tab" data-bs-toggle="pill" href="#storage_settings" role="tab" aria-controls="pills-storage_settings-tab" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">database</span></span>
+                                <span class="label">{{ __('Storage Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="pills-cache_settings-tab" data-bs-toggle="pill" href="#pills-cache-settings" role="tab" aria-controls="pills-cache_settings-tab" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">bolt</span></span>
+                                <span class="label">{{ __('Cache Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="pills-cookie_settings-tab" data-bs-toggle="pill" href="#pills-cookie-settings" role="tab" aria-controls="pills-cookie_settings-tab" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">cookie</span></span>
+                                <span class="label">{{ __('Cookie Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="pills-chatgpt-tab" data-bs-toggle="pill" href="#pills-chatgpt-settings" role="tab" aria-controls="pills-chatgpt-tab" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">smart_toy</span></span>
+                                <span class="label">{{ __('Chat GPT Settings') }}</span>
+                            </a>
+                        @else
+                            <a class="nav-link settings-navigation-item active" id="pills-brand_setting-tab" data-bs-toggle="pill" href="#pills-brand-setting" role="tab" aria-controls="pills-brandsetting" aria-selected="true">
+                                <span class="icon"><span class="material-symbols-outlined">palette</span></span>
+                                <span class="label">{{ __('Brand Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="pills-store_setting-tab" data-bs-toggle="pill" href="#pills-store_setting" role="tab" aria-controls="pills-store_setting" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">storefront</span></span>
+                                <span class="label">{{ __('Store Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="pills-store_payment-setting-tab" data-bs-toggle="pill" href="#pills-store_payment-setting" role="tab" aria-controls="pills-store_payment-setting" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">credit_card</span></span>
+                                <span class="label">{{ __('Payment Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="pills-store_email_setting-tab" data-bs-toggle="pill" href="#pills-store_email_setting" role="tab" aria-controls="pills-store_email_setting" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">mail</span></span>
+                                <span class="label">{{ __('Email Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="pills-whatsapp_custom_massage-tab" data-bs-toggle="pill" href="#pills-whatsapp_custom_massage" role="tab" aria-controls="pills-whatsapp_custom_massage" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">chat</span></span>
+                                <span class="label">{{ __('Whatsapp Message Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="pills-twilio_setting-tab" data-bs-toggle="pill" href="#pills-twilio_setting" role="tab" aria-controls="pills-twilio_setting" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">sms</span></span>
+                                <span class="label">{{ __('Twilio Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="pills-pixel_setting-tab" data-bs-toggle="pill" href="#pixel_settings" role="tab" aria-controls="pixel_settings" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">analytics</span></span>
+                                <span class="label">{{ __('Pixel Settings') }}</span>
+                            </a>
+                            @if ($plan->pwa_store == 'on')
+                                <a class="nav-link settings-navigation-item" id="pills-pwa_setting-tab" data-bs-toggle="pill" href="#pwa_settings" role="tab" aria-controls="pwa_settings" aria-selected="false">
+                                    <span class="icon"><span class="material-symbols-outlined">install_mobile</span></span>
+                                    <span class="label">{{ __('PWA Settings') }}</span>
+                                </a>
+                            @endif
+                            <a class="nav-link settings-navigation-item" id="pills-webhook_setting-tab" data-bs-toggle="pill" href="#webhook_settings" role="tab" aria-controls="webhook_settings" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">webhook</span></span>
+                                <span class="label">{{ __('Webhook Settings') }}</span>
                             </a>
                         @endif
-                        <a class="nav-link" id="pills-webhook_setting-tab" data-bs-toggle="pill" href="#webhook_settings" role="tab" aria-controls="webhook_settings" aria-selected="false">
-                            <span class="material-symbols-outlined">webhook</span>
-                            <span>{{ __('Webhook Settings') }}</span>
-                        </a>
-                    @endif
+                    </div>
                 </div>
             </div>
 
