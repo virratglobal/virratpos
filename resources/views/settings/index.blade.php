@@ -213,10 +213,18 @@
 @endpush
 @section('content')
     <style>
+        /* Global Box Sizing & Min-Width Containment */
+        .settings-layout-wrapper,
+        .settings-layout-wrapper *,
+        .settings-layout-wrapper *::before,
+        .settings-layout-wrapper *::after {
+            box-sizing: border-box !important;
+        }
+
         /* Full-Width Desktop Settings Page Container */
         .settings-layout-wrapper {
             width: 100% !important;
-            max-width: none !important;
+            max-width: 100% !important;
             margin: 0 !important;
             padding: 8px 24px 40px 24px !important;
             font-family: 'Inter', -apple-system, sans-serif;
@@ -243,16 +251,18 @@
             font-weight: 400;
         }
 
-        /* Desktop 2-Column Settings Layout Grid (260px Navigation Sidebar, Flexible Right Main Content) */
+        /* Desktop 2-Column Settings Layout Grid (260px Navigation Sidebar, minmax(0, 1fr) Main Content) */
         .settings-layout-grid {
             display: grid !important;
             grid-template-columns: 260px minmax(0, 1fr) !important;
             gap: 24px !important;
             align-items: start !important;
             width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
         }
 
-        /* Hide 3rd column (System Info / Critical Actions) for Super Admin settings view */
+        /* Hide 3rd column for Super Admin settings view */
         .settings-right-sidebar {
             display: none !important;
         }
@@ -274,6 +284,8 @@
             top: 24px !important;
             align-self: start !important;
             width: 260px !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
         }
 
         /* Column 2: Brand Settings Main Card (Occupies 100% of remaining right-side width) */
@@ -283,6 +295,7 @@
             grid-column: 2 !important;
             grid-row: 1 !important;
             width: 100% !important;
+            max-width: 100% !important;
             min-width: 0 !important;
             height: auto !important;
             min-height: 0 !important;
@@ -295,6 +308,7 @@
             border: 1px solid var(--border) !important;
             border-radius: 12px !important;
             box-sizing: border-box !important;
+            overflow: hidden !important;
         }
 
         /* Lower Full-Width Form Card in Right Column */
@@ -303,12 +317,27 @@
             grid-column: 2 !important;
             grid-row: 2 !important;
             width: 100% !important;
+            max-width: 100% !important;
             min-width: 0 !important;
             margin-top: 0 !important;
             padding: 28px !important;
             background: var(--surface) !important;
             border: 1px solid var(--border) !important;
             border-radius: 12px !important;
+            box-sizing: border-box !important;
+            overflow: hidden !important;
+        }
+
+        /* Form Inputs & Select Containment */
+        .brand-settings-form-card input,
+        .brand-settings-form-card select,
+        .brand-settings-form input,
+        .brand-settings-form select,
+        .settings-layout-wrapper input,
+        .settings-layout-wrapper select {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
             box-sizing: border-box !important;
         }
 
@@ -317,23 +346,8 @@
             grid-column: 2 !important;
             grid-row: 1 !important;
             width: 100% !important;
+            max-width: 100% !important;
             min-width: 0 !important;
-        }
-
-        @media (max-width: 991px) {
-            .settings-layout-grid {
-                grid-template-columns: 1fr !important;
-            }
-            .settings-sidebar {
-                width: 100% !important;
-                grid-column: auto !important;
-                position: static !important;
-            }
-            .brand-settings-logos-card,
-            .brand-settings-form-card {
-                grid-column: auto !important;
-                grid-row: auto !important;
-            }
         }
 
         .settings-sidebar .setting-nav-wrp {
@@ -393,6 +407,7 @@
         /* Flexible Middle Main Settings Content */
         .settings-content {
             width: 100% !important;
+            max-width: 100% !important;
             min-width: 0 !important;
         }
 
@@ -406,6 +421,9 @@
             padding: 28px !important;
             margin-bottom: 24px !important;
             width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
         }
 
         .settings-layout-wrapper .card-header {
@@ -463,21 +481,9 @@
             margin-top: 24px !important;
             margin-bottom: 0 !important;
             width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
             box-sizing: border-box !important;
-        }
-
-        @media (max-width: 991px) {
-            .brand-upload-grid,
-            .upload-grid-container {
-                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-            }
-        }
-
-        @media (max-width: 575px) {
-            .brand-upload-grid,
-            .upload-grid-container {
-                grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
-            }
         }
 
         /* Brand Upload Asset Card */
@@ -490,6 +496,7 @@
             display: flex !important;
             flex-direction: column !important;
             width: 100% !important;
+            max-width: 100% !important;
             min-width: 0 !important;
             box-sizing: border-box !important;
             height: auto !important;
@@ -531,6 +538,8 @@
         .brand-upload-preview,
         .upload-preview-box {
             width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
             height: 135px !important;
             margin-top: 14px !important;
             margin-bottom: 14px !important;
@@ -576,6 +585,7 @@
             justify-content: center !important;
             gap: 6px !important;
             width: 100% !important;
+            max-width: 100% !important;
             min-width: 0 !important;
             height: 40px !important;
             margin-top: 14px !important;
@@ -600,57 +610,157 @@
             color: #FFFFFF !important;
         }
 
-        /* Brand Settings Form Layout Grids */
+        /* Brand Settings Form Layout Grids (minmax(0, 1fr)) */
         .form-row-two,
-        .branding-inputs-grid-2 {
+        .branding-inputs-grid-2,
+        .title-footer-row {
             display: grid !important;
-            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-            gap: 24px !important;
-            margin-bottom: 24px !important;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+            gap: 20px !important;
+            margin-bottom: 20px !important;
             width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
             box-sizing: border-box !important;
         }
 
         .form-row-three,
-        .branding-inputs-grid-3 {
+        .branding-inputs-grid-3,
+        .currency-row {
             display: grid !important;
-            grid-template-columns: 1.2fr 1fr 1fr !important;
-            gap: 24px !important;
-            margin-bottom: 24px !important;
+            grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr) !important;
+            gap: 20px !important;
+            margin-bottom: 20px !important;
             width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
             box-sizing: border-box !important;
-        }
-
-        @media (max-width: 991px) {
-            .form-row-three,
-            .branding-inputs-grid-3 {
-                grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
-            }
         }
 
         /* 4 Horizontal Toggle Cards Row */
         .toggle-grid,
-        .toggle-cards-row {
+        .toggle-cards-row,
+        .settings-toggle-grid {
             display: grid !important;
             grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-            gap: 20px !important;
-            margin-top: 24px !important;
-            margin-bottom: 24px !important;
+            gap: 16px !important;
+            margin-top: 20px !important;
+            margin-bottom: 20px !important;
             width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
             box-sizing: border-box !important;
         }
 
-        @media (max-width: 1199px) {
+        .toggle-setting-card,
+        .settings-toggle-card {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+            padding: 16px !important;
+            background: var(--surface) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 10px !important;
+            display: flex !important;
+            align-items: flex-start !important;
+            justify-content: space-between !important;
+            gap: 12px !important;
+        }
+
+        .toggle-setting-info,
+        .settings-toggle-info {
+            flex: 1 1 auto !important;
+            min-width: 0 !important;
+        }
+
+        .toggle-setting-info h6,
+        .settings-toggle-title {
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            line-height: 1.3 !important;
+            color: var(--text-primary) !important;
+            margin: 0 0 4px 0 !important;
+            word-break: break-word !important;
+        }
+
+        .ios-toggle,
+        .settings-toggle-switch {
+            flex: 0 0 auto !important;
+        }
+
+        /* Theme Customizer & Swatches */
+        .theme-customizer {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            overflow: hidden !important;
+            box-sizing: border-box !important;
+        }
+
+        .theme-customizer-content {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+        }
+
+        .theme-swatch-list,
+        .theme-color-options {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            gap: 10px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+        }
+
+        .theme-swatch-btn,
+        .theme-color-option {
+            flex: 0 0 36px !important;
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 50% !important;
+        }
+
+        /* Responsive Breakpoints (1100px & 640px) */
+        @media (max-width: 1100px) {
+            .settings-layout-grid {
+                grid-template-columns: 1fr !important;
+            }
+            .settings-sidebar {
+                width: 100% !important;
+                position: static !important;
+                grid-column: auto !important;
+            }
+            .brand-settings-logos-card,
+            .brand-settings-form-card {
+                grid-column: auto !important;
+                grid-row: auto !important;
+            }
+            .brand-upload-grid,
+            .upload-grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            }
             .toggle-grid,
-            .toggle-cards-row {
+            .toggle-cards-row,
+            .settings-toggle-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
             }
         }
 
-        @media (max-width: 575px) {
+        @media (max-width: 640px) {
+            .brand-upload-grid,
+            .upload-grid-container,
+            .form-row-two,
+            .branding-inputs-grid-2,
+            .title-footer-row,
+            .form-row-three,
+            .branding-inputs-grid-3,
+            .currency-row,
             .toggle-grid,
-            .toggle-cards-row {
-                grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+            .toggle-cards-row,
+            .settings-toggle-grid {
+                grid-template-columns: 1fr !important;
             }
         }
 
@@ -1163,96 +1273,88 @@
                                         </div>
 
                                         <!-- Feature Toggles Grid (4 Horizontal Cards Row) -->
-                                        <div class="toggle-grid toggle-cards-row mb-4">
-                                            <div class="toggle-setting-card">
-                                                <div class="toggle-setting-info">
-                                                    <h6>{{ __('Enable Landing Page') }}</h6>
+                                        <div class="toggle-grid toggle-cards-row settings-toggle-grid mb-4">
+                                            <div class="toggle-setting-card settings-toggle-card">
+                                                <div class="toggle-setting-info settings-toggle-info">
+                                                    <h6 class="settings-toggle-title">{{ __('Enable Landing Page') }}</h6>
                                                     <p>{{ __('Allow stores to use the landing page.') }}</p>
                                                 </div>
-                                                <label class="ios-toggle">
+                                                <label class="ios-toggle settings-toggle-switch">
                                                     <input type="checkbox" name="display_landing_page" id="display_landing_page" {{ $settings['display_landing_page'] == 'on' ? 'checked' : '' }}>
                                                     <span class="ios-toggle-slider"></span>
                                                 </label>
                                             </div>
 
-                                            <div class="toggle-setting-card">
-                                                <div class="toggle-setting-info">
-                                                    <h6>{{ __('Enable RTL') }}</h6>
+                                            <div class="toggle-setting-card settings-toggle-card">
+                                                <div class="toggle-setting-info settings-toggle-info">
+                                                    <h6 class="settings-toggle-title">{{ __('Enable RTL') }}</h6>
                                                     <p>{{ __('Enable right-to-left layout support.') }}</p>
                                                 </div>
-                                                <label class="ios-toggle">
+                                                <label class="ios-toggle settings-toggle-switch">
                                                     <input type="checkbox" name="SITE_RTL" id="SITE_RTL" {{ $settings['SITE_RTL'] == 'on' ? 'checked' : '' }}>
                                                     <span class="ios-toggle-slider"></span>
                                                 </label>
                                             </div>
 
-                                            <div class="toggle-setting-card">
-                                                <div class="toggle-setting-info">
-                                                    <h6>{{ __('Enable Sign-Up Page') }}</h6>
+                                            <div class="toggle-setting-card settings-toggle-card">
+                                                <div class="toggle-setting-info settings-toggle-info">
+                                                    <h6 class="settings-toggle-title">{{ __('Enable Sign-Up Page') }}</h6>
                                                     <p>{{ __('Allow new users to create accounts.') }}</p>
                                                 </div>
-                                                <label class="ios-toggle">
+                                                <label class="ios-toggle settings-toggle-switch">
                                                     <input type="checkbox" name="signup_button" id="signup_button" {{ Utility::getValByName('signup_button') == 'on' ? 'checked' : '' }}>
                                                     <span class="ios-toggle-slider"></span>
                                                 </label>
                                             </div>
 
-                                            <div class="toggle-setting-card">
-                                                <div class="toggle-setting-info">
-                                                    <h6>{{ __('Enable Email Verification') }}</h6>
+                                            <div class="toggle-setting-card settings-toggle-card">
+                                                <div class="toggle-setting-info settings-toggle-info">
+                                                    <h6 class="settings-toggle-title">{{ __('Enable Email Verification') }}</h6>
                                                     <p>{{ __('Require users to verify their email address.') }}</p>
                                                 </div>
-                                                <label class="ios-toggle">
+                                                <label class="ios-toggle settings-toggle-switch">
                                                     <input type="checkbox" name="email_verification" id="email_verification" {{ Utility::getValByName('email_verification') == 'on' ? 'checked' : '' }}>
                                                     <span class="ios-toggle-slider"></span>
                                                 </label>
                                             </div>
                                         </div>
-                                                    </div>
-                                                    <label class="ios-toggle">
-                                                        <input type="checkbox" name="email_verification" id="email_verification" {{ Utility::getValByName('email_verification') == 'on' ? 'checked' : '' }}>
-                                                        <span class="ios-toggle-slider"></span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
 
                                         <!-- Theme Customizer Section -->
-                                        <div class="card p-4 border mt-4" style="background: #F8FAFC; border-color: #E2E8F0 !important;">
+                                        <div class="card p-4 border mt-4 theme-customizer" style="background: #F8FAFC; border-color: #E2E8F0 !important;">
                                             <div class="mb-3">
                                                 <h5 class="m-0" style="font-size: 16px; font-weight: 600; color: #0F172A;">{{ __('Theme Customizer') }}</h5>
                                                 <p style="font-size: 13px; color: #64748B; margin-top: 2px;">{{ __('Customize the appearance of your VirratPOS dashboard.') }}</p>
                                             </div>
 
-                                            <div class="row g-4">
+                                            <div class="row g-4 theme-customizer-content">
                                                 <div class="col-md-6">
-                                                    <h6 style="font-size: 13.5px; font-weight: 600; color: #0F172A;">{{ __('Primary Color') }}</h6>
-                                                    <div class="theme-swatch-list">
-                                                        <a href="#!" class="theme-swatch-btn {{ $color == 'theme-1' ? 'active_color' : '' }}" data-value="theme-1" style="background: #2563EB;" title="Virrat Blue"></a>
+                                                    <h6 style="font-size: 13.5px; font-weight: 600; color: #0F172A; margin-bottom: 8px;">{{ __('Primary Color') }}</h6>
+                                                    <div class="theme-swatch-list theme-color-options">
+                                                        <a href="#!" class="theme-swatch-btn theme-color-option {{ $color == 'theme-1' ? 'active_color' : '' }}" data-value="theme-1" style="background: #2563EB;" title="Virrat Blue"></a>
                                                         <input type="radio" class="theme_color d-none" name="color" value="theme-1" {{ $color == 'theme-1' ? 'checked' : '' }}>
 
-                                                        <a href="#!" class="theme-swatch-btn {{ $color == 'theme-2' ? 'active_color' : '' }}" data-value="theme-2" style="background: #0F172A;" title="Navy"></a>
+                                                        <a href="#!" class="theme-swatch-btn theme-color-option {{ $color == 'theme-2' ? 'active_color' : '' }}" data-value="theme-2" style="background: #0F172A;" title="Navy"></a>
                                                         <input type="radio" class="theme_color d-none" name="color" value="theme-2" {{ $color == 'theme-2' ? 'checked' : '' }}>
 
-                                                        <a href="#!" class="theme-swatch-btn {{ $color == 'theme-3' ? 'active_color' : '' }}" data-value="theme-3" style="background: #0EA5E9;" title="Sky Blue"></a>
+                                                        <a href="#!" class="theme-swatch-btn theme-color-option {{ $color == 'theme-3' ? 'active_color' : '' }}" data-value="theme-3" style="background: #0EA5E9;" title="Sky Blue"></a>
                                                         <input type="radio" class="theme_color d-none" name="color" value="theme-3" {{ $color == 'theme-3' ? 'checked' : '' }}>
 
-                                                        <a href="#!" class="theme-swatch-btn {{ $color == 'theme-4' ? 'active_color' : '' }}" data-value="theme-4" style="background: #6366F1;" title="Indigo Blue"></a>
+                                                        <a href="#!" class="theme-swatch-btn theme-color-option {{ $color == 'theme-4' ? 'active_color' : '' }}" data-value="theme-4" style="background: #6366F1;" title="Indigo Blue"></a>
                                                         <input type="radio" class="theme_color d-none" name="color" value="theme-4" {{ $color == 'theme-4' ? 'checked' : '' }}>
 
-                                                        <a href="#!" class="theme-swatch-btn {{ $color == 'theme-5' ? 'active_color' : '' }}" data-value="theme-5" style="background: #64748B;" title="Slate Blue"></a>
+                                                        <a href="#!" class="theme-swatch-btn theme-color-option {{ $color == 'theme-5' ? 'active_color' : '' }}" data-value="theme-5" style="background: #64748B;" title="Slate Blue"></a>
                                                         <input type="radio" class="theme_color d-none" name="color" value="theme-5" {{ $color == 'theme-5' ? 'checked' : '' }}>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
-                                                    <h6 style="font-size: 13.5px; font-weight: 600; color: #0F172A;">{{ __('Sidebar Settings') }}</h6>
-                                                    <div class="toggle-setting-card mt-2 mb-0">
-                                                        <div class="toggle-setting-info">
-                                                            <h6>{{ __('Transparent Sidebar') }}</h6>
+                                                    <h6 style="font-size: 13.5px; font-weight: 600; color: #0F172A; margin-bottom: 8px;">{{ __('Sidebar Settings') }}</h6>
+                                                    <div class="toggle-setting-card settings-toggle-card mt-2 mb-0">
+                                                        <div class="toggle-setting-info settings-toggle-info">
+                                                            <h6 class="settings-toggle-title">{{ __('Transparent Sidebar') }}</h6>
                                                             <p>{{ __('Use a transparent sidebar style across the dashboard.') }}</p>
                                                         </div>
-                                                        <label class="ios-toggle">
+                                                        <label class="ios-toggle settings-toggle-switch">
                                                             <input type="checkbox" id="cust-theme-bg" name="cust_theme_bg" {{ Utility::getValByName('cust_theme_bg') == 'on' ? 'checked' : '' }}>
                                                             <span class="ios-toggle-slider"></span>
                                                         </label>
