@@ -553,7 +553,15 @@
             min-width: 0 !important;
         }
 
-        /* Payment Setting Card Styling */
+        /* Payment Setting Card & Viewport Width Styling */
+        #pills-payment-setting,
+        .payment-settings-page {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+        }
+
         #pills-payment-setting .card,
         .payment-setting-card {
             background: var(--surface) !important;
@@ -563,20 +571,24 @@
             box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03) !important;
             width: 100% !important;
             max-width: 100% !important;
+            min-width: 0 !important;
             box-sizing: border-box !important;
             margin-bottom: 24px !important;
         }
 
         #pills-payment-setting .card-header,
         .payment-setting-card-header {
-            border-bottom: 1px solid var(--border) !important;
+            border-bottom: 1px solid #e5e7eb !important;
             padding-bottom: 16px !important;
-            margin-bottom: 24px !important;
+            margin-bottom: 20px !important;
             background: transparent !important;
             padding-left: 0 !important;
             padding-right: 0 !important;
             padding-top: 0 !important;
             border-top: none !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
         }
 
         .payment-setting-title-bar {
@@ -585,6 +597,7 @@
             gap: 10px !important;
             margin-bottom: 4px !important;
         }
+
         .payment-setting-title-bar .accent-bar {
             width: 4px !important;
             height: 18px !important;
@@ -593,6 +606,7 @@
             display: inline-block !important;
             flex-shrink: 0 !important;
         }
+
         .payment-setting-title-bar h5 {
             font-size: 18px !important;
             font-weight: 700 !important;
@@ -604,53 +618,69 @@
         .payment-setting-description {
             font-size: 13.5px !important;
             color: var(--text-secondary) !important;
-            margin-top: 6px !important;
+            margin-top: 4px !important;
             margin-bottom: 0 !important;
             line-height: 1.5 !important;
             font-weight: 400 !important;
         }
 
         /* Payment Currency 2-Column Grid */
-        .payment-currency-row {
+        .payment-currency-row,
+        .payment-currency-grid {
             display: grid !important;
             grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
-            gap: 24px !important;
-            margin-bottom: 24px !important;
+            column-gap: 24px !important;
+            margin-bottom: 32px !important;
             width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
         }
 
         #pills-payment-setting label.col-form-label,
         #pills-payment-setting label.form-label {
-            font-size: 13.5px !important;
-            font-weight: 600 !important;
-            color: #475569 !important;
-            margin-bottom: 6px !important;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            line-height: 18px !important;
+            color: #1f2937 !important;
+            margin-bottom: 8px !important;
             display: block !important;
         }
 
-        #pills-payment-setting input.form-control {
-            height: 44px !important;
-            border: 1px solid #E2E8F0 !important;
+        #pills-payment-setting input.form-control,
+        #pills-payment-setting input[type="text"] {
+            height: 48px !important;
+            min-height: 48px !important;
+            max-height: 48px !important;
+            border: 1px solid #d9deea !important;
             border-radius: 8px !important;
             padding: 0 14px !important;
             font-size: 14px !important;
-            color: #0F172A !important;
-            background: #FFFFFF !important;
+            line-height: 48px !important;
+            color: #1f2937 !important;
+            background: #ffffff !important;
             width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
             box-shadow: none !important;
         }
 
         #pills-payment-setting input.form-control:focus {
+            outline: none !important;
             border-color: #5146E5 !important;
-            box-shadow: 0 0 0 3px rgba(81, 70, 229, 0.15) !important;
+            box-shadow: 0 0 0 3px rgba(81, 70, 229, 0.12) !important;
         }
 
-        #pills-payment-setting small {
+        #pills-payment-setting small,
+        #pills-payment-setting small.text-xs {
             font-size: 12px !important;
             color: #64748B !important;
-            margin-top: 6px !important;
+            margin-top: 8px !important;
             display: block !important;
-            line-height: 1.4 !important;
+            line-height: 1.45 !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            overflow-wrap: break-word !important;
         }
 
         #pills-payment-setting small a {
@@ -659,78 +689,118 @@
         }
 
         /* Payment Gateways Accordion Card List */
+        #pills-payment-setting .payment-method-list,
         #pills-payment-setting .setting-faq-wrp,
         #pills-payment-setting .setting-accordion,
         #pills-payment-setting .accordion {
             display: flex !important;
             flex-direction: column !important;
-            gap: 12px !important;
+            gap: 16px !important;
             width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
             margin: 0 !important;
             padding: 0 !important;
         }
 
+        #pills-payment-setting .payment-method-row,
         #pills-payment-setting .accordion-item {
-            background: #F8FAFC !important;
-            border: 1px solid #E2E8F0 !important;
-            border-radius: 10px !important;
-            margin-bottom: 12px !important;
+            background: transparent !important;
+            border: none !important;
+            border-radius: 8px !important;
+            margin-bottom: 0 !important;
             overflow: hidden !important;
             box-shadow: none !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
         }
 
         #pills-payment-setting .accordion-header {
             margin: 0 !important;
             background: transparent !important;
             padding: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
         }
 
         #pills-payment-setting .accordion-button {
-            background: #F8FAFC !important;
-            padding: 16px 24px !important;
-            border: none !important;
+            background: #f8fafc !important;
+            border: 1px solid #d9deea !important;
+            border-radius: 8px !important;
+            height: 66px !important;
+            min-height: 66px !important;
+            max-height: 66px !important;
+            padding: 0 24px !important;
             box-shadow: none !important;
             display: flex !important;
             align-items: center !important;
             justify-content: space-between !important;
             width: 100% !important;
-            color: #0F172A !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            color: #1f2937 !important;
             font-size: 15px !important;
             font-weight: 600 !important;
             cursor: pointer !important;
-            border-radius: 10px !important;
+            box-sizing: border-box !important;
         }
 
         #pills-payment-setting .accordion-button:not(.collapsed) {
-            background: #F8FAFC !important;
-            color: #0F172A !important;
+            background: #f8fafc !important;
+            color: #1f2937 !important;
             box-shadow: none !important;
             border-bottom-left-radius: 0 !important;
             border-bottom-right-radius: 0 !important;
         }
 
+        #pills-payment-setting .accordion-button span.d-flex,
+        #pills-payment-setting .accordion-button > span:first-child {
+            font-size: 15px !important;
+            font-weight: 600 !important;
+            color: #0f172a !important;
+        }
+
+        #pills-payment-setting .payment-method-actions,
+        #pills-payment-setting .accordion-button > div.d-flex {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: flex-end !important;
+            gap: 12px !important;
+            flex-shrink: 0 !important;
+        }
+
         #pills-payment-setting .accordion-button::after {
             content: '' !important;
-            width: 32px !important;
-            height: 32px !important;
+            width: 36px !important;
+            height: 36px !important;
+            min-width: 36px !important;
             border-radius: 50% !important;
-            background: #E2E8F0 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") center no-repeat !important;
-            margin-left: 12px !important;
+            background: #ffffff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") center no-repeat !important;
+            border: 1px solid #e2e8f0 !important;
+            margin-left: 8px !important;
             flex-shrink: 0 !important;
             transition: transform 0.2s ease, background-color 0.2s ease !important;
         }
 
         #pills-payment-setting .accordion-button:not(.collapsed)::after {
             transform: rotate(180deg) !important;
-            background-color: #CBD5E1 !important;
+            background-color: #f1f5f9 !important;
         }
 
         #pills-payment-setting .accordion-body {
-            background: #FFFFFF !important;
-            border-top: 1px solid #E2E8F0 !important;
-            padding: 24px !important;
-            border-bottom-left-radius: 10px !important;
-            border-bottom-right-radius: 10px !important;
+            background: #ffffff !important;
+            border: 1px solid #d9deea !important;
+            border-top: none !important;
+            padding: 20px 24px !important;
+            border-bottom-left-radius: 8px !important;
+            border-bottom-right-radius: 8px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
         }
 
         #pills-payment-setting .custom-switch-v1,
@@ -744,7 +814,8 @@
         #pills-payment-setting .form-check-input {
             width: 44px !important;
             height: 24px !important;
-            background-color: #CBD5E1 !important;
+            min-width: 44px !important;
+            background-color: #cbd5e1 !important;
             border: none !important;
             border-radius: 12px !important;
             cursor: pointer !important;
@@ -755,7 +826,7 @@
         }
 
         #pills-payment-setting .form-check-input:checked {
-            background-color: #5146E5 !important;
+            background-color: #5146e5 !important;
         }
 
         /* Settings Card Tiles */
@@ -2080,7 +2151,7 @@
                                 </div>
                             {!! Form::close() !!}
                         </div>
-                    <div class="tab-pane fade" id="pills-payment-setting" role="tabpanel" aria-labelledby="pills-payment-setting_tab">
+                    <div class="tab-pane fade payment-settings-page" id="pills-payment-setting" role="tabpanel" aria-labelledby="pills-payment-setting_tab">
                         <div class="card payment-setting-card">
                             <div class="card-header payment-setting-card-header">
                                 <div class="payment-setting-title-bar">
