@@ -311,15 +311,15 @@
             overflow: hidden !important;
         }
 
-        /* Lower Full-Width Form Card in Right Column */
+        /* Lower Full-Width Form Card Spanning 100% of Entire Content Area (From Left Edge to Right Edge) */
         .brand-settings-form-card,
         .brand-settings-form {
-            grid-column: 2 !important;
+            grid-column: 1 / -1 !important;
             grid-row: 2 !important;
             width: 100% !important;
             max-width: 100% !important;
             min-width: 0 !important;
-            margin-top: 0 !important;
+            margin-top: 24px !important;
             padding: 28px !important;
             background: var(--surface) !important;
             border: 1px solid var(--border) !important;
