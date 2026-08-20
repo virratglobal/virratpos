@@ -1725,7 +1725,7 @@
             </p>
         </div>
 
-        <div class="settings-layout-grid mt-6">
+        <div class="settings-layout settings-layout-grid mt-6">
             <!-- Left Navigation Sidebar Card -->
             <div class="settings-sidebar settings-navigation-column">
                 <div class="setting-nav-wrp settings-navigation-card">
@@ -1808,7 +1808,7 @@
             </div>
 
             <!-- Settings Main Content -->
-            <div class="settings-content">
+            <div class="settings-content settings-main">
                 @if (Auth::user()->type == 'super admin')
                     <div class="tab-content" id="pills-tabContent">
                         <!-- Brand Settings Tab -->
