@@ -243,13 +243,18 @@
             font-weight: 400;
         }
 
-        /* 3-Column 2-Row Settings Layout Grid (240px Nav, minmax(520px, 1fr) Center, 300px Right Sidebar) */
+        /* Desktop 2-Column Settings Layout Grid (260px Navigation Sidebar, Flexible Right Main Content) */
         .settings-layout-grid {
             display: grid !important;
-            grid-template-columns: 240px minmax(520px, 1fr) 300px !important;
-            gap: 20px !important;
+            grid-template-columns: 260px minmax(0, 1fr) !important;
+            gap: 24px !important;
             align-items: start !important;
             width: 100% !important;
+        }
+
+        /* Hide 3rd column (System Info / Critical Actions) for Super Admin settings view */
+        .settings-right-sidebar {
+            display: none !important;
         }
 
         /* Allow active brand setting tab pane & form to participate directly in grid */
@@ -261,19 +266,20 @@
             display: contents !important;
         }
 
-        /* Row 1 Column 1: Sticky Navigation Sidebar */
+        /* Column 1: Sticky Navigation Sidebar */
         .settings-sidebar {
             grid-column: 1 !important;
             grid-row: 1 !important;
             position: sticky !important;
             top: 24px !important;
             align-self: start !important;
-            width: 240px !important;
+            width: 260px !important;
         }
 
-        /* Row 1 Column 2: Logo Upload Card (Natural Content Height, Strictly No Vertical Stretching) */
+        /* Column 2: Brand Settings Main Card (Occupies 100% of remaining right-side width) */
         .brand-settings-logos-card,
-        .brand-settings-card {
+        .brand-settings-card,
+        .brand-settings-main {
             grid-column: 2 !important;
             grid-row: 1 !important;
             width: 100% !important;
@@ -283,32 +289,27 @@
             max-height: none !important;
             align-self: start !important;
             flex: 0 0 auto !important;
-            margin-bottom: 0 !important;
-            padding: 24px !important;
+            margin-bottom: 24px !important;
+            padding: 28px !important;
             background: var(--surface) !important;
             border: 1px solid var(--border) !important;
-            border-radius: 16px !important;
+            border-radius: 12px !important;
             box-sizing: border-box !important;
         }
 
-        /* Row 1 Column 3: Settings Right Sidebar (System Info + Critical Actions stacked) */
-        .settings-right-sidebar {
-            grid-column: 3 !important;
-            grid-row: 1 !important;
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 20px !important;
-            width: 300px !important;
-            align-self: start !important;
-        }
-
-        /* Row 2 Full Width: Lower Brand Settings Form Card */
-        .brand-settings-form-card {
-            grid-column: 1 / -1 !important;
+        /* Lower Full-Width Form Card in Right Column */
+        .brand-settings-form-card,
+        .brand-settings-form {
+            grid-column: 2 !important;
             grid-row: 2 !important;
             width: 100% !important;
             min-width: 0 !important;
             margin-top: 0 !important;
+            padding: 28px !important;
+            background: var(--surface) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 12px !important;
+            box-sizing: border-box !important;
         }
 
         /* Handle non-brand tab panes (Payment, Email, Storage, etc.) */
@@ -319,25 +320,7 @@
             min-width: 0 !important;
         }
 
-        @media (max-width: 1199px) {
-            .settings-layout-grid {
-                grid-template-columns: 240px minmax(0, 1fr) !important;
-            }
-            .settings-right-sidebar {
-                grid-column: 1 / -1 !important;
-                grid-row: auto !important;
-                width: 100% !important;
-                display: grid !important;
-                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-                gap: 20px !important;
-                position: static !important;
-            }
-            .brand-settings-form-card {
-                grid-row: auto !important;
-            }
-        }
-
-        @media (max-width: 767px) {
+        @media (max-width: 991px) {
             .settings-layout-grid {
                 grid-template-columns: 1fr !important;
             }
@@ -346,16 +329,7 @@
                 grid-column: auto !important;
                 position: static !important;
             }
-            .brand-settings-logos-card {
-                grid-column: auto !important;
-                grid-row: auto !important;
-            }
-            .settings-right-sidebar {
-                grid-column: auto !important;
-                grid-row: auto !important;
-                grid-template-columns: 1fr !important;
-                width: 100% !important;
-            }
+            .brand-settings-logos-card,
             .brand-settings-form-card {
                 grid-column: auto !important;
                 grid-row: auto !important;
@@ -365,8 +339,8 @@
         .settings-sidebar .setting-nav-wrp {
             background: var(--surface) !important;
             border: 1px solid var(--border) !important;
-            border-radius: 16px !important;
-            padding: 12px !important;
+            border-radius: 10px !important;
+            padding: 8px !important;
             box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03) !important;
             gap: 4px !important;
             display: flex !important;
@@ -379,8 +353,8 @@
             gap: 12px !important;
             height: 44px !important;
             padding: 0 16px !important;
-            border-radius: 10px !important;
-            font-size: 13.5px !important;
+            border-radius: 8px !important;
+            font-size: 14px !important;
             font-weight: 500 !important;
             color: var(--text-secondary) !important;
             background: transparent !important;
@@ -398,10 +372,10 @@
             color: var(--primary) !important;
         }
         .settings-sidebar .nav-link.active {
-            background-color: #4F46E5 !important;
+            background-color: #5C59E8 !important;
             color: #FFFFFF !important;
             font-weight: 600 !important;
-            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3) !important;
+            box-shadow: 0 4px 14px rgba(92, 89, 232, 0.3) !important;
         }
         .settings-sidebar .nav-link.active::before {
             display: none !important;
@@ -426,39 +400,12 @@
         .settings-layout-wrapper .card,
         .settings-layout-wrapper .setting-card {
             background-color: var(--surface) !important;
-            border-radius: 16px !important;
+            border-radius: 12px !important;
             border: 1px solid var(--border) !important;
             box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03) !important;
-            padding: 24px !important;
+            padding: 28px !important;
             margin-bottom: 24px !important;
             width: 100% !important;
-        }
-
-        /* Sticky Right Sidebar */
-        .settings-right-sidebar {
-            position: sticky !important;
-            top: 24px !important;
-            align-self: start !important;
-            width: 300px !important;
-        }
-
-        .system-info-card {
-            background: var(--surface) !important;
-            border: 1px solid var(--border) !important;
-            border-radius: 14px !important;
-            padding: 24px !important;
-            margin-bottom: 24px !important;
-            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03) !important;
-            color: var(--text-primary) !important;
-        }
-        .critical-actions-card {
-            background: var(--surface) !important;
-            border: 1px solid var(--border) !important;
-            border-left: 4px solid #DC2626 !important;
-            border-radius: 14px !important;
-            padding: 24px !important;
-            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03) !important;
-            color: var(--text-primary) !important;
         }
 
         .settings-layout-wrapper .card-header {
@@ -493,7 +440,7 @@
         }
 
         .brand-settings-divider {
-            margin: 14px 0 20px 0 !important;
+            margin: 16px 0 24px 0 !important;
             border: 0 !important;
             border-top: 1px solid var(--border) !important;
             opacity: 0.6 !important;
@@ -507,12 +454,13 @@
             flex: 0 0 auto !important;
         }
 
-        /* Upload Grid Layout (3 Equal Columns, minmax(0, 1fr), gap 16px) */
+        /* Upload Grid Layout (3 Equal Columns in 1 Row, gap 24px) */
         .brand-upload-grid,
         .upload-grid-container {
             display: grid !important;
             grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-            gap: 16px !important;
+            gap: 24px !important;
+            margin-top: 24px !important;
             margin-bottom: 0 !important;
             width: 100% !important;
             box-sizing: border-box !important;
@@ -532,13 +480,13 @@
             }
         }
 
-        /* Brand Upload Asset Card (Natural Content Height) */
+        /* Brand Upload Asset Card */
         .brand-upload-card,
         .upload-asset-card {
             background: var(--surface) !important;
-            border: 1px solid var(--border) !important;
-            border-radius: 14px !important;
-            padding: 14px !important;
+            border: 1px solid #E5E7EB !important;
+            border-radius: 10px !important;
+            padding: 16px !important;
             display: flex !important;
             flex-direction: column !important;
             width: 100% !important;
@@ -552,22 +500,23 @@
         .upload-card-header {
             display: flex !important;
             align-items: center !important;
-            gap: 6px !important;
-            margin-bottom: 10px !important;
+            gap: 8px !important;
+            margin-bottom: 8px !important;
             min-width: 0 !important;
         }
 
         .upload-card-indicator {
             width: 4px !important;
             height: 18px !important;
-            background: #4F46E5 !important;
+            background: #5C59E8 !important;
             border-radius: 2px !important;
             flex-shrink: 0 !important;
         }
 
+        .brand-upload-title,
         .brand-upload-card-title,
         .upload-card-title {
-            font-size: 15px !important;
+            font-size: 16px !important;
             font-weight: 600 !important;
             color: var(--text-primary) !important;
             margin: 0 !important;
@@ -577,43 +526,47 @@
             text-overflow: clip !important;
         }
 
-        /* Preview Container (Height 135px, Margins 12px top, 12px bottom) */
+        /* Preview Container (Height 135px, Margins 14px top, 14px bottom) */
+        .brand-preview,
         .brand-upload-preview,
         .upload-preview-box {
             width: 100% !important;
             height: 135px !important;
-            margin-top: 12px !important;
-            margin-bottom: 12px !important;
-            background: var(--surface-2) !important;
-            border: 1px solid var(--border) !important;
-            border-radius: 12px !important;
+            margin-top: 14px !important;
+            margin-bottom: 14px !important;
+            background: #F8FAFC !important;
+            border: 1px solid #E2E8F0 !important;
+            border-radius: 10px !important;
             display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
             justify-content: center !important;
-            padding: 10px !important;
+            padding: 12px !important;
             box-sizing: border-box !important;
             overflow: hidden !important;
             position: relative !important;
         }
 
-        /* Image proportional containment (75% max width/height for natural whitespace) */
+        /* Image proportional containment (80% max width/height for natural presentation) */
+        .brand-preview img,
         .brand-upload-preview img,
         .upload-preview-box img,
         .upload-preview-box img.logo-preview-img {
-            max-height: 75% !important;
-            max-width: 75% !important;
+            max-height: 80% !important;
+            max-width: 80% !important;
             object-fit: contain !important;
         }
 
+        .brand-preview img.favicon-preview-img,
         .brand-upload-preview img.favicon-preview-img,
         .upload-preview-box img.favicon-preview-img {
-            width: 44px !important;
-            height: 44px !important;
+            width: 48px !important;
+            height: 48px !important;
             object-fit: contain !important;
         }
 
-        /* Full Width Upload Button (Fully Visible "Upload Image", No Truncation) */
+        /* Full Width Upload Button ("Choose file here", Fully Visible, No Truncation) */
+        .brand-upload-button,
         .btn-upload-blue,
         .brand-upload-card label,
         .brand-upload-card button,
@@ -625,8 +578,9 @@
             width: 100% !important;
             min-width: 0 !important;
             height: 40px !important;
-            padding: 0 10px !important;
-            background-color: #4F46E5 !important;
+            margin-top: 14px !important;
+            padding: 0 12px !important;
+            background-color: #5C59E8 !important;
             color: #FFFFFF !important;
             border-radius: 8px !important;
             font-size: 14px !important;
@@ -636,13 +590,68 @@
             text-decoration: none !important;
             box-sizing: border-box !important;
             white-space: nowrap !important;
-            overflow: visible !important;
-            text-overflow: clip !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
             transition: background-color 0.15s ease !important;
         }
+        .brand-upload-button:hover,
         .btn-upload-blue:hover {
-            background-color: #4338CA !important;
+            background-color: #4B48D6 !important;
             color: #FFFFFF !important;
+        }
+
+        /* Brand Settings Form Layout Grids */
+        .form-row-two,
+        .branding-inputs-grid-2 {
+            display: grid !important;
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            gap: 24px !important;
+            margin-bottom: 24px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .form-row-three,
+        .branding-inputs-grid-3 {
+            display: grid !important;
+            grid-template-columns: 1.2fr 1fr 1fr !important;
+            gap: 24px !important;
+            margin-bottom: 24px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        @media (max-width: 991px) {
+            .form-row-three,
+            .branding-inputs-grid-3 {
+                grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+            }
+        }
+
+        /* 4 Horizontal Toggle Cards Row */
+        .toggle-grid,
+        .toggle-cards-row {
+            display: grid !important;
+            grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+            gap: 20px !important;
+            margin-top: 24px !important;
+            margin-bottom: 24px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        @media (max-width: 1199px) {
+            .toggle-grid,
+            .toggle-cards-row {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .toggle-grid,
+            .toggle-cards-row {
+                grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+            }
         }
 
         /* Branding Form Inputs Grid */
@@ -1021,9 +1030,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="w-100">
-                                                    <label for="logo_dark" class="btn-upload-blue mb-0">
+                                                    <label for="logo_dark" class="btn-upload-blue brand-upload-button mb-0">
                                                         <span class="material-symbols-outlined text-[18px]">upload</span>
-                                                        <span>{{ __('Upload Image') }}</span>
+                                                        <span>{{ __('Choose file here') }}</span>
                                                         <input type="file" name="logo_dark" id="logo_dark" class="form-control file d-none" data-filename="logo_dark" onchange="var img = document.getElementById('logoDark'); img.src = window.URL.createObjectURL(this.files[0]); img.style.display='block'; if(img.nextElementSibling) img.nextElementSibling.style.display='none';">
                                                     </label>
                                                 </div>
@@ -1036,9 +1045,9 @@
                                             <div class="upload-asset-card brand-upload-card">
                                                 <div class="upload-card-header">
                                                     <div class="upload-card-indicator"></div>
-                                                    <h6 class="upload-card-title">{{ __('Logo Light') }}</h6>
+                                                    <h6 class="upload-card-title brand-upload-title">{{ __('Logo Light') }}</h6>
                                                 </div>
-                                                <div class="upload-preview-box brand-upload-preview">
+                                                <div class="upload-preview-box brand-upload-preview brand-preview">
                                                     @php
                                                         $lightPath = $logo . '/' . 'logo-light.png';
                                                         $defaultLight = asset('uploads/logo/logo-light.png');
@@ -1051,9 +1060,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="w-100">
-                                                    <label for="logo_light" class="btn-upload-blue mb-0">
+                                                    <label for="logo_light" class="btn-upload-blue brand-upload-button mb-0">
                                                         <span class="material-symbols-outlined text-[18px]">upload</span>
-                                                        <span>{{ __('Upload Image') }}</span>
+                                                        <span>{{ __('Choose file here') }}</span>
                                                         <input type="file" name="logo_light" id="logo_light" class="form-control file d-none" data-filename="logo_light" onchange="var img = document.getElementById('adminLogoLight'); img.src = window.URL.createObjectURL(this.files[0]); img.style.display='block'; if(img.nextElementSibling) img.nextElementSibling.style.display='none';">
                                                     </label>
                                                 </div>
@@ -1066,9 +1075,9 @@
                                             <div class="upload-asset-card brand-upload-card">
                                                 <div class="upload-card-header">
                                                     <div class="upload-card-indicator"></div>
-                                                    <h6 class="upload-card-title">{{ __('Favicon') }}</h6>
+                                                    <h6 class="upload-card-title brand-upload-title">{{ __('Favicon') }}</h6>
                                                 </div>
-                                                <div class="upload-preview-box brand-upload-preview">
+                                                <div class="upload-preview-box brand-upload-preview brand-preview">
                                                     @php
                                                         $favPath = $logo . '/' . 'favicon.png';
                                                         $defaultFav = asset('uploads/logo/favicon.png');
@@ -1081,9 +1090,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="w-100">
-                                                    <label for="favicon" class="btn-upload-blue mb-0">
+                                                    <label for="favicon" class="btn-upload-blue brand-upload-button mb-0">
                                                         <span class="material-symbols-outlined text-[18px]">upload</span>
-                                                        <span>{{ __('Upload Image') }}</span>
+                                                        <span>{{ __('Choose file here') }}</span>
                                                         <input type="file" name="favicon" id="favicon" class="form-control file d-none" data-filename="favicon_update" onchange="var img = document.getElementById('adminfavicon'); img.src = window.URL.createObjectURL(this.files[0]); img.style.display='block'; if(img.nextElementSibling) img.nextElementSibling.style.display='none';">
                                                     </label>
                                                 </div>
@@ -1096,14 +1105,14 @@
                                 </div>
 
                                 <!-- ROW 2 FULL WIDTH: Brand Settings Form Card -->
-                                <div class="card brand-settings-form-card">
+                                <div class="card brand-settings-form-card brand-settings-form">
                                     <div class="card-header">
                                         <h5>{{ __('Brand Settings Form') }}</h5>
                                         <p>{{ __('Configure application details, localization preferences, feature toggles, and theme customization.') }}</p>
                                     </div>
                                     <div class="card-body">
                                         <!-- Branding Form Inputs: Title Text & Footer Text (2 Equal Columns) -->
-                                        <div class="branding-inputs-grid-2">
+                                        <div class="branding-inputs-grid-2 form-row-two">
                                             <div>
                                                 {{ Form::label('title_text', __('Title Text'), ['class' => 'form-label']) }}
                                                 {{ Form::text('title_text', null, ['class' => 'form-control', 'placeholder' => __('Enter application title')]) }}
@@ -1121,8 +1130,8 @@
                                             </div>
                                         </div>
 
-                                        <!-- Currency & Language Section (3 Equal Columns) -->
-                                        <div class="branding-inputs-grid-3">
+                                        <!-- Currency & Language Section (3 Columns) -->
+                                        <div class="branding-inputs-grid-3 form-row-three">
                                             <div>
                                                 {{ Form::label('default_language', __('Default Language'), ['class' => 'form-label']) }}
                                                 <select name="default_language" id="default_language" class="form-control">
@@ -1153,52 +1162,52 @@
                                             </div>
                                         </div>
 
-                                        <!-- Feature Toggles Grid -->
-                                        <div class="row g-3 mb-4">
-                                            <div class="col-md-6">
-                                                <div class="toggle-setting-card">
-                                                    <div class="toggle-setting-info">
-                                                        <h6>{{ __('Enable Landing Page') }}</h6>
-                                                        <p>{{ __('Allow stores to use the landing page.') }}</p>
-                                                    </div>
-                                                    <label class="ios-toggle">
-                                                        <input type="checkbox" name="display_landing_page" id="display_landing_page" {{ $settings['display_landing_page'] == 'on' ? 'checked' : '' }}>
-                                                        <span class="ios-toggle-slider"></span>
-                                                    </label>
+                                        <!-- Feature Toggles Grid (4 Horizontal Cards Row) -->
+                                        <div class="toggle-grid toggle-cards-row mb-4">
+                                            <div class="toggle-setting-card">
+                                                <div class="toggle-setting-info">
+                                                    <h6>{{ __('Enable Landing Page') }}</h6>
+                                                    <p>{{ __('Allow stores to use the landing page.') }}</p>
                                                 </div>
+                                                <label class="ios-toggle">
+                                                    <input type="checkbox" name="display_landing_page" id="display_landing_page" {{ $settings['display_landing_page'] == 'on' ? 'checked' : '' }}>
+                                                    <span class="ios-toggle-slider"></span>
+                                                </label>
                                             </div>
 
-                                            <div class="col-md-6">
-                                                <div class="toggle-setting-card">
-                                                    <div class="toggle-setting-info">
-                                                        <h6>{{ __('Enable RTL') }}</h6>
-                                                        <p>{{ __('Enable right-to-left layout support.') }}</p>
-                                                    </div>
-                                                    <label class="ios-toggle">
-                                                        <input type="checkbox" name="SITE_RTL" id="SITE_RTL" {{ $settings['SITE_RTL'] == 'on' ? 'checked' : '' }}>
-                                                        <span class="ios-toggle-slider"></span>
-                                                    </label>
+                                            <div class="toggle-setting-card">
+                                                <div class="toggle-setting-info">
+                                                    <h6>{{ __('Enable RTL') }}</h6>
+                                                    <p>{{ __('Enable right-to-left layout support.') }}</p>
                                                 </div>
+                                                <label class="ios-toggle">
+                                                    <input type="checkbox" name="SITE_RTL" id="SITE_RTL" {{ $settings['SITE_RTL'] == 'on' ? 'checked' : '' }}>
+                                                    <span class="ios-toggle-slider"></span>
+                                                </label>
                                             </div>
 
-                                            <div class="col-md-6">
-                                                <div class="toggle-setting-card">
-                                                    <div class="toggle-setting-info">
-                                                        <h6>{{ __('Enable Sign-Up Page') }}</h6>
-                                                        <p>{{ __('Allow new users to create accounts.') }}</p>
-                                                    </div>
-                                                    <label class="ios-toggle">
-                                                        <input type="checkbox" name="signup_button" id="signup_button" {{ Utility::getValByName('signup_button') == 'on' ? 'checked' : '' }}>
-                                                        <span class="ios-toggle-slider"></span>
-                                                    </label>
+                                            <div class="toggle-setting-card">
+                                                <div class="toggle-setting-info">
+                                                    <h6>{{ __('Enable Sign-Up Page') }}</h6>
+                                                    <p>{{ __('Allow new users to create accounts.') }}</p>
                                                 </div>
+                                                <label class="ios-toggle">
+                                                    <input type="checkbox" name="signup_button" id="signup_button" {{ Utility::getValByName('signup_button') == 'on' ? 'checked' : '' }}>
+                                                    <span class="ios-toggle-slider"></span>
+                                                </label>
                                             </div>
 
-                                            <div class="col-md-6">
-                                                <div class="toggle-setting-card">
-                                                    <div class="toggle-setting-info">
-                                                        <h6>{{ __('Enable Email Verification') }}</h6>
-                                                        <p>{{ __('Require users to verify their email address.') }}</p>
+                                            <div class="toggle-setting-card">
+                                                <div class="toggle-setting-info">
+                                                    <h6>{{ __('Enable Email Verification') }}</h6>
+                                                    <p>{{ __('Require users to verify their email address.') }}</p>
+                                                </div>
+                                                <label class="ios-toggle">
+                                                    <input type="checkbox" name="email_verification" id="email_verification" {{ Utility::getValByName('email_verification') == 'on' ? 'checked' : '' }}>
+                                                    <span class="ios-toggle-slider"></span>
+                                                </label>
+                                            </div>
+                                        </div>
                                                     </div>
                                                     <label class="ios-toggle">
                                                         <input type="checkbox" name="email_verification" id="email_verification" {{ Utility::getValByName('email_verification') == 'on' ? 'checked' : '' }}>
