@@ -538,7 +538,7 @@
         .payment-setting-title-bar .accent-bar {
             width: 4px !important;
             height: 18px !important;
-            background: #5C59E8 !important;
+            background: #5146E5 !important;
             border-radius: 2px !important;
             display: inline-block !important;
             flex-shrink: 0 !important;
@@ -591,8 +591,8 @@
         }
 
         #pills-payment-setting input.form-control:focus {
-            border-color: #5C59E8 !important;
-            box-shadow: 0 0 0 3px rgba(92, 89, 232, 0.15) !important;
+            border-color: #5146E5 !important;
+            box-shadow: 0 0 0 3px rgba(81, 70, 229, 0.15) !important;
         }
 
         #pills-payment-setting small {
@@ -604,7 +604,7 @@
         }
 
         #pills-payment-setting small a {
-            color: #5C59E8 !important;
+            color: #5146E5 !important;
             text-decoration: underline !important;
         }
 
@@ -705,7 +705,7 @@
         }
 
         #pills-payment-setting .form-check-input:checked {
-            background-color: #5C59E8 !important;
+            background-color: #5146E5 !important;
         }
 
         /* Settings Card Tiles */
@@ -812,7 +812,7 @@
         .upload-card-indicator {
             width: 4px !important;
             height: 18px !important;
-            background: #5C59E8 !important;
+            background: #5146E5 !important;
             border-radius: 2px !important;
             flex-shrink: 0 !important;
         }
@@ -887,7 +887,7 @@
             height: 40px !important;
             margin-top: 14px !important;
             padding: 0 12px !important;
-            background-color: #5C59E8 !important;
+            background-color: #5146E5 !important;
             color: #FFFFFF !important;
             border-radius: 8px !important;
             font-size: 14px !important;
@@ -903,7 +903,7 @@
         }
         .brand-upload-button:hover,
         .btn-upload-blue:hover {
-            background-color: #4B48D6 !important;
+            background-color: #4338CA !important;
             color: #FFFFFF !important;
         }
 
@@ -1107,8 +1107,8 @@
         }
         .settings-layout-wrapper .form-control:focus,
         .settings-layout-wrapper select.form-control:focus {
-            border-color: #4F46E5 !important;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15) !important;
+            border-color: #5146E5 !important;
+            box-shadow: 0 0 0 3px rgba(81, 70, 229, 0.15) !important;
             outline: none !important;
         }
 
@@ -1170,7 +1170,7 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.15);
         }
         .ios-toggle input:checked + .ios-toggle-slider {
-            background-color: #4F46E5;
+            background-color: #5146E5;
         }
         .ios-toggle input:checked + .ios-toggle-slider:before {
             transform: translateX(20px);
@@ -1199,8 +1199,8 @@
             transform: translateY(-2px);
         }
         .theme-swatch-btn.active_color {
-            border-color: #4F46E5 !important;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3) !important;
+            border-color: #5146E5 !important;
+            box-shadow: 0 0 0 3px rgba(81, 70, 229, 0.3) !important;
         }
         .theme-swatch-btn.active_color::after {
             content: '✓';
@@ -1246,7 +1246,9 @@
             background: var(--surface-2) !important;
             color: var(--text-primary) !important;
         }
-        .btn-save-blue {
+        .btn-save-blue,
+        .settings-layout-wrapper .btn-primary,
+        .settings-layout-wrapper input[type="submit"] {
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
@@ -1254,16 +1256,18 @@
             height: 44px !important;
             padding: 0 24px !important;
             border-radius: 8px !important;
-            background: #4F46E5 !important;
+            background: #5146E5 !important;
             color: #FFFFFF !important;
             font-size: 13.5px !important;
             font-weight: 600 !important;
             border: none !important;
             cursor: pointer !important;
-            box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3) !important;
+            box-shadow: 0 2px 8px rgba(81, 70, 229, 0.3) !important;
             transition: background 0.15s !important;
         }
-        .btn-save-blue:hover {
+        .btn-save-blue:hover,
+        .settings-layout-wrapper .btn-primary:hover,
+        .settings-layout-wrapper input[type="submit"]:hover {
             background: #4338CA !important;
             color: #FFFFFF !important;
         }
