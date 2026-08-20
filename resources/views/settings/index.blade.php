@@ -1367,9 +1367,21 @@
         }
 
         /* Direct ID & Class Scoped Cookie Settings Box System */
+        .settings-layout-wrapper {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+            overflow-x: hidden !important;
+            padding: 8px 24px 40px 24px !important;
+        }
+
         #pills-cookie-settings,
         .cookie-settings-page,
         .cookie-settings-card {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
             box-sizing: border-box !important;
         }
 
@@ -1377,6 +1389,10 @@
         .cookie-settings-card {
             padding: 28px !important;
             box-sizing: border-box !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            overflow: hidden !important;
         }
 
         #pills-cookie-settings .cookie-header,
@@ -1384,11 +1400,14 @@
             display: flex !important;
             align-items: center !important;
             justify-content: space-between !important;
-            gap: 24px !important;
+            gap: 16px !important;
             min-height: 48px !important;
             padding-bottom: 16px !important;
             border-bottom: 1px solid #e5e7eb !important;
             margin-bottom: 20px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
         }
 
         #pills-cookie-settings .cookie-header h5,
@@ -1397,6 +1416,7 @@
             font-weight: 600 !important;
             color: #0F172A !important;
             margin: 0 !important;
+            min-width: 0 !important;
         }
 
         #pills-cookie-settings .cookie-toggle-row,
@@ -1408,6 +1428,8 @@
             column-gap: 24px !important;
             margin-bottom: 18px !important;
             width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
         }
 
         #pills-cookie-settings .cookie-toggle-item,
@@ -1417,6 +1439,7 @@
             align-items: center !important;
             gap: 8px !important;
             min-width: 0 !important;
+            max-width: 100% !important;
         }
 
         #pills-cookie-settings .cookie-toggle-item label,
@@ -1426,6 +1449,9 @@
             font-weight: 500 !important;
             color: #1f2937 !important;
             cursor: pointer !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            overflow-wrap: break-word !important;
         }
 
         #pills-cookie-settings .cookie-form-grid,
@@ -1438,6 +1464,8 @@
             column-gap: 24px !important;
             row-gap: 20px !important;
             width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
             margin-bottom: 20px !important;
         }
 
@@ -1447,6 +1475,8 @@
             grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
             column-gap: 24px !important;
             width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
             margin-bottom: 20px !important;
         }
 
@@ -1459,8 +1489,10 @@
             flex-direction: column !important;
             gap: 8px !important;
             width: 100% !important;
+            max-width: 100% !important;
             min-width: 0 !important;
             margin-bottom: 0 !important;
+            box-sizing: border-box !important;
         }
 
         #pills-cookie-settings label,
@@ -1473,6 +1505,9 @@
             line-height: 18px !important;
             font-weight: 500 !important;
             color: #1f2937 !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            overflow-wrap: break-word !important;
         }
 
         #pills-cookie-settings input[type="text"],
@@ -1492,7 +1527,10 @@
         .cookie-settings-card input[type="password"],
         .cookie-settings-card input[type="number"],
         .cookie-settings-card .form-control:not(textarea) {
+            display: block !important;
             width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
             height: 48px !important;
             min-height: 48px !important;
             max-height: 48px !important;
@@ -1510,7 +1548,10 @@
         #pills-cookie-settings textarea.form-control,
         .cookie-settings-page textarea,
         .cookie-settings-card textarea {
+            display: block !important;
             width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
             height: 90px !important;
             min-height: 90px !important;
             max-height: 90px !important;
@@ -1522,7 +1563,7 @@
             font-size: 14px !important;
             line-height: 1.5 !important;
             color: #1f2937 !important;
-            resize: none !important;
+            resize: vertical !important;
         }
 
         #pills-cookie-settings input:focus,
@@ -1542,6 +1583,9 @@
         .more-information-section {
             margin-top: 20px !important;
             margin-bottom: 16px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
         }
 
         #pills-cookie-settings .more-information-title h5,
@@ -1556,6 +1600,7 @@
             font-size: 16px !important;
             font-weight: 600 !important;
             color: #0F172A !important;
+            min-width: 0 !important;
         }
 
         #pills-cookie-settings .cookie-actions,
@@ -1566,7 +1611,10 @@
             display: flex !important;
             align-items: center !important;
             justify-content: space-between !important;
+            gap: 16px !important;
             width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
             background: transparent !important;
             box-sizing: border-box !important;
         }
@@ -1582,6 +1630,7 @@
             border-radius: 7px !important;
             background: #5146e5 !important;
             color: #ffffff !important;
+            flex-shrink: 0 !important;
         }
 
         #pills-cookie-settings .cookie-save-button,
@@ -1596,9 +1645,23 @@
             color: #ffffff !important;
             border: none !important;
             cursor: pointer !important;
+            flex-shrink: 0 !important;
         }
 
-        @media (max-width: 800px) {
+        @media (max-width: 1000px) {
+            .settings-layout,
+            .settings-layout-grid {
+                grid-template-columns: 220px minmax(0, 1fr) !important;
+                gap: 16px !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .settings-layout,
+            .settings-layout-grid {
+                grid-template-columns: 1fr !important;
+            }
+
             #pills-cookie-settings .cookie-toggle-grid,
             #pills-cookie-settings .cookie-form-grid,
             #pills-cookie-settings .contact-fields,
