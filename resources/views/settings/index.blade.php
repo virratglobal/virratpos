@@ -1269,7 +1269,7 @@
             color: var(--text-primary) !important;
         }
         .btn-save-blue,
-        .settings-layout-wrapper .btn-primary,
+        .settings-layout-wrapper .btn-primary:not(.btn-sm),
         .settings-layout-wrapper input[type="submit"] {
             display: inline-flex !important;
             align-items: center !important;
@@ -1286,12 +1286,34 @@
             cursor: pointer !important;
             box-shadow: 0 2px 8px rgba(81, 70, 229, 0.3) !important;
             transition: background 0.15s !important;
+            white-space: nowrap !important;
         }
         .btn-save-blue:hover,
-        .settings-layout-wrapper .btn-primary:hover,
+        .settings-layout-wrapper .btn-primary:not(.btn-sm):hover,
         .settings-layout-wrapper input[type="submit"]:hover {
             background: #4338CA !important;
             color: #FFFFFF !important;
+        }
+
+        .settings-layout-wrapper .btn-sm,
+        .settings-layout-wrapper .btn-sm.btn-primary {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            height: 36px !important;
+            padding: 0 12px !important;
+            border-radius: 6px !important;
+            background: #5146E5 !important;
+            color: #FFFFFF !important;
+            font-size: 13px !important;
+        }
+
+        .settings-layout-wrapper .card-footer {
+            background-color: transparent !important;
+            border-top: 1px solid var(--border) !important;
+            padding: 16px 24px !important;
+            box-sizing: border-box !important;
+            overflow: visible !important;
         }
 
         /* Enforce Full Width Layout Across Main Settings Column */
