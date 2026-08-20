@@ -276,8 +276,7 @@
             display: contents !important;
         }
 
-        /* Column 1: Sticky Settings Navigation Sidebar */
-        .settings-navigation-column,
+        /* Column 1: Sticky Navigation Sidebar */
         .settings-sidebar {
             grid-column: 1 !important;
             grid-row: 1 !important;
@@ -287,37 +286,87 @@
             width: 260px !important;
             max-width: 100% !important;
             min-width: 0 !important;
-            box-sizing: border-box !important;
-            margin-top: 0 !important;
         }
 
-        /* Settings Navigation Card Container */
-        .settings-navigation-card,
-        .settings-sidebar .setting-nav-wrp {
+        /* Column 2: Brand Settings Main Card (Occupies 100% of remaining right-side width) */
+        .brand-settings-logos-card,
+        .brand-settings-card,
+        .brand-settings-main {
+            grid-column: 2 !important;
+            grid-row: 1 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            height: auto !important;
+            min-height: 0 !important;
+            max-height: none !important;
+            align-self: start !important;
+            flex: 0 0 auto !important;
+            margin-bottom: 24px !important;
+            padding: 28px !important;
+            background: var(--surface) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 12px !important;
+            box-sizing: border-box !important;
+            overflow: hidden !important;
+        }
+
+        /* Lower Full-Width Form Card Spanning 100% of Entire Content Area (From Left Edge to Right Edge) */
+        .brand-settings-form-card,
+        .brand-settings-form {
+            grid-column: 1 / -1 !important;
+            grid-row: 2 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            margin-top: 24px !important;
+            padding: 28px !important;
+            background: var(--surface) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 12px !important;
+            box-sizing: border-box !important;
+            overflow: hidden !important;
+        }
+
+        /* Form Inputs & Select Containment */
+        .brand-settings-form-card input,
+        .brand-settings-form-card select,
+        .brand-settings-form input,
+        .brand-settings-form select,
+        .settings-layout-wrapper input,
+        .settings-layout-wrapper select {
             width: 100% !important;
             max-width: 100% !important;
             min-width: 0 !important;
             box-sizing: border-box !important;
-            padding: 8px !important;
+        }
+
+        /* Handle non-brand tab panes (Payment, Email, Storage, etc.) */
+        .tab-content > .tab-pane:not(#pills-brand-setting) {
+            grid-column: 2 !important;
+            grid-row: 1 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+        }
+
+        .settings-sidebar .setting-nav-wrp {
             background: var(--surface) !important;
             border: 1px solid var(--border) !important;
             border-radius: 10px !important;
+            padding: 8px !important;
             box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03) !important;
             gap: 4px !important;
             display: flex !important;
             flex-direction: column !important;
-            height: auto !important;
-            min-height: 0 !important;
         }
 
-        /* Settings Navigation Items */
-        .settings-navigation-item,
         .settings-sidebar .nav-link {
             display: flex !important;
             align-items: center !important;
-            gap: 14px !important;
-            height: auto !important;
-            padding: 12px 16px !important;
+            gap: 12px !important;
+            height: 44px !important;
+            padding: 0 16px !important;
             border-radius: 8px !important;
             font-size: 14px !important;
             font-weight: 500 !important;
@@ -327,54 +376,18 @@
             transition: all 0.15s ease-in-out !important;
             position: relative !important;
             width: 100% !important;
-            max-width: 100% !important;
-            min-width: 0 !important;
-            box-sizing: border-box !important;
             text-align: left !important;
             cursor: pointer !important;
             text-decoration: none !important;
             white-space: nowrap !important;
         }
-
-        .settings-navigation-item:hover,
         .settings-sidebar .nav-link:hover {
             background-color: var(--surface-2) !important;
             color: var(--primary) !important;
         }
-
-        /* Active Navigation Item Spanning 100% Card Width */
-        .settings-navigation-item.active,
         .settings-sidebar .nav-link.active {
-            width: 100% !important;
             background-color: #5C59E8 !important;
             color: #FFFFFF !important;
-            font-weight: 600 !important;
-            box-shadow: 0 4px 14px rgba(92, 89, 232, 0.3) !important;
-        }
-        .settings-navigation-item.active::before,
-        .settings-sidebar .nav-link.active::before {
-            display: none !important;
-        }
-
-        .settings-navigation-item .material-symbols-outlined,
-        .settings-sidebar .nav-link .material-symbols-outlined,
-        .settings-sidebar .nav-link svg {
-            font-size: 20px !important;
-            width: 20px !important;
-            height: 20px !important;
-            color: inherit !important;
-            transition: color 0.15s ease !important;
-            flex-shrink: 0 !important;
-        }
-
-        .settings-navigation-item span,
-        .settings-sidebar .nav-link span:not(.material-symbols-outlined) {
-            white-space: nowrap !important;
-            overflow: hidden !important;
-            text-overflow: ellipsis !important;
-            flex: 1 1 auto !important;
-            min-width: 0 !important;
-        }
             font-weight: 600 !important;
             box-shadow: 0 4px 14px rgba(92, 89, 232, 0.3) !important;
         }
