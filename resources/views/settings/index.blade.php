@@ -1366,16 +1366,20 @@
             overflow: visible !important;
         }
 
-        /* Scoped Cookie Settings Box/Field Uniform Design System */
+        /* Direct ID & Class Scoped Cookie Settings Box System */
+        #pills-cookie-settings,
         .cookie-settings-page,
         .cookie-settings-card {
             box-sizing: border-box !important;
         }
 
+        #pills-cookie-settings .cookie-settings-card,
         .cookie-settings-card {
             padding: 28px !important;
+            box-sizing: border-box !important;
         }
 
+        #pills-cookie-settings .cookie-header,
         .cookie-header {
             display: flex !important;
             align-items: center !important;
@@ -1387,6 +1391,7 @@
             margin-bottom: 20px !important;
         }
 
+        #pills-cookie-settings .cookie-header h5,
         .cookie-header h5 {
             font-size: 18px !important;
             font-weight: 600 !important;
@@ -1394,14 +1399,18 @@
             margin: 0 !important;
         }
 
+        #pills-cookie-settings .cookie-toggle-row,
+        #pills-cookie-settings .cookie-toggle-grid,
         .cookie-toggle-row,
         .cookie-toggle-grid {
             display: grid !important;
             grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
-            gap: 24px !important;
+            column-gap: 24px !important;
             margin-bottom: 18px !important;
+            width: 100% !important;
         }
 
+        #pills-cookie-settings .cookie-toggle-item,
         .cookie-toggle-item {
             height: 32px !important;
             display: flex !important;
@@ -1410,6 +1419,7 @@
             min-width: 0 !important;
         }
 
+        #pills-cookie-settings .cookie-toggle-item label,
         .cookie-toggle-item label {
             margin: 0 !important;
             font-size: 14px !important;
@@ -1418,6 +1428,8 @@
             cursor: pointer !important;
         }
 
+        #pills-cookie-settings .cookie-form-grid,
+        #pills-cookie-settings .contact-fields,
         .cookie-settings-page .form-row,
         .cookie-form-grid,
         .contact-fields {
@@ -1429,6 +1441,7 @@
             margin-bottom: 20px !important;
         }
 
+        #pills-cookie-settings .cookie-description-row,
         .cookie-description-row {
             display: grid !important;
             grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
@@ -1437,6 +1450,8 @@
             margin-bottom: 20px !important;
         }
 
+        #pills-cookie-settings .form-group,
+        #pills-cookie-settings .cookie-field,
         .cookie-settings-page .form-group,
         .cookie-settings-card .form-group,
         .cookie-field {
@@ -1448,6 +1463,8 @@
             margin-bottom: 0 !important;
         }
 
+        #pills-cookie-settings label,
+        #pills-cookie-settings .cookie-field label,
         .cookie-settings-page label,
         .cookie-settings-card label,
         .cookie-field label {
@@ -1458,6 +1475,12 @@
             color: #1f2937 !important;
         }
 
+        #pills-cookie-settings input[type="text"],
+        #pills-cookie-settings input[type="url"],
+        #pills-cookie-settings input[type="email"],
+        #pills-cookie-settings input[type="password"],
+        #pills-cookie-settings input[type="number"],
+        #pills-cookie-settings .form-control:not(textarea),
         .cookie-settings-page input[type="text"],
         .cookie-settings-page input[type="url"],
         .cookie-settings-page input[type="email"],
@@ -1483,6 +1506,8 @@
             color: #1f2937 !important;
         }
 
+        #pills-cookie-settings textarea,
+        #pills-cookie-settings textarea.form-control,
         .cookie-settings-page textarea,
         .cookie-settings-card textarea {
             width: 100% !important;
@@ -1500,6 +1525,8 @@
             resize: none !important;
         }
 
+        #pills-cookie-settings input:focus,
+        #pills-cookie-settings textarea:focus,
         .cookie-settings-page input:focus,
         .cookie-settings-page textarea:focus,
         .cookie-settings-card input:focus,
@@ -1509,12 +1536,18 @@
             box-shadow: 0 0 0 3px rgba(81, 70, 229, 0.12) !important;
         }
 
+        #pills-cookie-settings .more-information-title,
+        #pills-cookie-settings .more-information-section,
         .more-information-title,
         .more-information-section {
             margin-top: 20px !important;
             margin-bottom: 16px !important;
         }
 
+        #pills-cookie-settings .more-information-title h5,
+        #pills-cookie-settings .more-information-title h3,
+        #pills-cookie-settings .more-information-section h5,
+        #pills-cookie-settings .more-information-section h3,
         .more-information-title h5,
         .more-information-title h3,
         .more-information-section h5,
@@ -1525,6 +1558,7 @@
             color: #0F172A !important;
         }
 
+        #pills-cookie-settings .cookie-actions,
         .cookie-actions {
             border-top: 1px solid #e5e7eb !important;
             margin-top: 28px !important;
@@ -1537,6 +1571,7 @@
             box-sizing: border-box !important;
         }
 
+        #pills-cookie-settings .cookie-download-button,
         .cookie-download-button {
             width: 42px !important;
             height: 42px !important;
@@ -1549,6 +1584,7 @@
             color: #ffffff !important;
         }
 
+        #pills-cookie-settings .cookie-save-button,
         .cookie-save-button {
             height: 44px !important;
             min-width: 140px !important;
@@ -1563,6 +1599,9 @@
         }
 
         @media (max-width: 800px) {
+            #pills-cookie-settings .cookie-toggle-grid,
+            #pills-cookie-settings .cookie-form-grid,
+            #pills-cookie-settings .contact-fields,
             .cookie-toggle-row,
             .cookie-form-grid,
             .cookie-description-row,
@@ -4690,7 +4729,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="pills-cookie-settings" role="tabpanel" aria-labelledby="pills-cookie_settings-tab">
+                    <div class="tab-pane fade cookie-settings-page" id="pills-cookie-settings" role="tabpanel" aria-labelledby="pills-cookie_settings-tab">
                         <div class="col-xl-12 col-lg-12 col-md-12">
                             <div class="card cookie-settings-card">
 
