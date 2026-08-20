@@ -252,11 +252,12 @@
         }
 
         /* Desktop 2-Column Settings Layout Grid (260px Navigation Sidebar, minmax(0, 1fr) Main Content) */
+        .upper-settings-grid,
         .settings-layout-grid {
             display: grid !important;
             grid-template-columns: 260px minmax(0, 1fr) !important;
             gap: 24px !important;
-            align-items: start !important;
+            align-items: stretch !important;
             width: 100% !important;
             max-width: 100% !important;
             box-sizing: border-box !important;
@@ -276,19 +277,24 @@
             display: contents !important;
         }
 
-        /* Column 1: Sticky Navigation Sidebar */
+        /* Column 1: Equal-Height Settings Navigation Sidebar */
+        .settings-navigation-column,
         .settings-sidebar {
             grid-column: 1 !important;
             grid-row: 1 !important;
-            position: sticky !important;
-            top: 24px !important;
-            align-self: start !important;
+            align-self: stretch !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: stretch !important;
             width: 260px !important;
             max-width: 100% !important;
             min-width: 0 !important;
+            box-sizing: border-box !important;
+            margin-top: 0 !important;
+            margin-bottom: 24px !important;
         }
 
-        /* Column 2: Brand Settings Main Card (Occupies 100% of remaining right-side width) */
+        /* Column 2: Brand Settings Main Card */
         .brand-settings-logos-card,
         .brand-settings-card,
         .brand-settings-main {
@@ -300,7 +306,7 @@
             height: auto !important;
             min-height: 0 !important;
             max-height: none !important;
-            align-self: start !important;
+            align-self: stretch !important;
             flex: 0 0 auto !important;
             margin-bottom: 24px !important;
             padding: 28px !important;
@@ -319,7 +325,7 @@
             width: 100% !important;
             max-width: 100% !important;
             min-width: 0 !important;
-            margin-top: 24px !important;
+            margin-top: 0 !important;
             padding: 28px !important;
             background: var(--surface) !important;
             border: 1px solid var(--border) !important;
@@ -350,15 +356,26 @@
             min-width: 0 !important;
         }
 
+        /* Settings Navigation Card Container (Stretches to 100% Height of Row 1) */
+        .settings-navigation,
+        .settings-navigation-card,
         .settings-sidebar .setting-nav-wrp {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            height: 100% !important;
+            min-height: 100% !important;
+            box-sizing: border-box !important;
+            padding: 8px !important;
             background: var(--surface) !important;
             border: 1px solid var(--border) !important;
             border-radius: 10px !important;
-            padding: 8px !important;
             box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03) !important;
             gap: 4px !important;
             display: flex !important;
             flex-direction: column !important;
+            justify-content: flex-start !important;
+            align-items: stretch !important;
         }
 
         .settings-sidebar .nav-link {
