@@ -243,10 +243,10 @@
             font-weight: 400;
         }
 
-        /* 3-Column 2-Row Settings Layout Grid (240px Nav, minmax(500px, 1fr) Center, 300px Right Sidebar) */
+        /* 3-Column 2-Row Settings Layout Grid (240px Nav, minmax(520px, 1fr) Center, 300px Right Sidebar) */
         .settings-layout-grid {
             display: grid !important;
-            grid-template-columns: 240px minmax(500px, 1fr) 300px !important;
+            grid-template-columns: 240px minmax(520px, 1fr) 300px !important;
             gap: 20px !important;
             align-items: start !important;
             width: 100% !important;
@@ -271,15 +271,24 @@
             width: 240px !important;
         }
 
-        /* Row 1 Column 2: Logo Upload Card (Natural Content Height, No Vertical Stretching) */
-        .brand-settings-logos-card {
+        /* Row 1 Column 2: Logo Upload Card (Natural Content Height, Strictly No Vertical Stretching) */
+        .brand-settings-logos-card,
+        .brand-settings-card {
             grid-column: 2 !important;
             grid-row: 1 !important;
             width: 100% !important;
             min-width: 0 !important;
             height: auto !important;
+            min-height: 0 !important;
+            max-height: none !important;
             align-self: start !important;
+            flex: 0 0 auto !important;
             margin-bottom: 0 !important;
+            padding: 24px !important;
+            background: var(--surface) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 16px !important;
+            box-sizing: border-box !important;
         }
 
         /* Row 1 Column 3: Settings Right Sidebar (System Info + Critical Actions stacked) */
@@ -476,17 +485,6 @@
             display: block !important;
             font-weight: 400 !important;
         }
-        /* Brand Settings Card Container (Natural Height, No Blank Space Below) */
-        .brand-settings-card {
-            padding: 24px !important;
-            background: var(--surface) !important;
-            border: 1px solid var(--border) !important;
-            border-radius: 16px !important;
-            box-sizing: border-box !important;
-            height: auto !important;
-            min-height: 0 !important;
-            align-self: start !important;
-        }
 
         .brand-settings-header {
             margin-bottom: 0 !important;
@@ -499,6 +497,14 @@
             border: 0 !important;
             border-top: 1px solid var(--border) !important;
             opacity: 0.6 !important;
+        }
+
+        .brand-settings-logos-card .card-body,
+        .brand-settings-card .card-body {
+            height: auto !important;
+            min-height: 0 !important;
+            padding: 0 !important;
+            flex: 0 0 auto !important;
         }
 
         /* Upload Grid Layout (3 Equal Columns, minmax(0, 1fr), gap 16px) */
@@ -539,6 +545,8 @@
             min-width: 0 !important;
             box-sizing: border-box !important;
             height: auto !important;
+            min-height: 0 !important;
+            flex: 0 0 auto !important;
         }
 
         .upload-card-header {
