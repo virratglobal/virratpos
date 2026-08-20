@@ -1087,29 +1087,51 @@
             }
         }
 
-        /* Inputs & Form Controls */
-        .settings-layout-wrapper .form-label {
+        /* High-Clarity Typography, Labels & Form Input Styling */
+        .settings-layout-wrapper .form-label,
+        .settings-layout-wrapper label {
             font-size: 13.5px !important;
-            font-weight: 500 !important;
-            color: var(--text-primary) !important;
-            margin-bottom: 8px !important;
+            font-weight: 600 !important;
+            color: #1E293B !important;
+            margin-bottom: 6px !important;
+            display: block !important;
+            letter-spacing: -0.01em !important;
         }
+
         .settings-layout-wrapper .form-control,
-        .settings-layout-wrapper select.form-control {
+        .settings-layout-wrapper select.form-control,
+        .settings-layout-wrapper input[type="text"],
+        .settings-layout-wrapper input[type="password"],
+        .settings-layout-wrapper input[type="email"],
+        .settings-layout-wrapper input[type="number"] {
             height: 44px !important;
             padding: 0 14px !important;
             border-radius: 8px !important;
-            border: 1px solid var(--border) !important;
-            background-color: var(--input-bg) !important;
-            color: var(--text-primary) !important;
+            border: 1px solid #CBD5E1 !important;
+            background-color: #FFFFFF !important;
+            color: #0F172A !important;
             font-size: 14px !important;
-            transition: border-color 0.15s, box-shadow 0.15s !important;
+            font-weight: 400 !important;
+            line-height: 1.4 !important;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
         }
+
+        .settings-layout-wrapper .form-control::placeholder,
+        .settings-layout-wrapper input::placeholder {
+            color: #94A3B8 !important;
+            opacity: 1 !important;
+            font-size: 14px !important;
+            font-weight: 400 !important;
+        }
+
         .settings-layout-wrapper .form-control:focus,
-        .settings-layout-wrapper select.form-control:focus {
+        .settings-layout-wrapper select.form-control:focus,
+        .settings-layout-wrapper input:focus {
             border-color: #5146E5 !important;
             box-shadow: 0 0 0 3px rgba(81, 70, 229, 0.15) !important;
             outline: none !important;
+            background-color: #FFFFFF !important;
         }
 
         /* Setting Toggles Grid */
