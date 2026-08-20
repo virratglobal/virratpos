@@ -243,13 +243,68 @@
             font-weight: 400;
         }
 
-        /* 3-Column Settings Layout Grid */
+        /* 3-Column 2-Row Settings Layout Grid */
         .settings-layout-grid {
             display: grid !important;
             grid-template-columns: 260px minmax(0, 1fr) 320px !important;
-            gap: 24px !important;
+            gap: 20px !important;
             align-items: start !important;
             width: 100% !important;
+        }
+
+        /* Allow active brand setting tab pane & form to participate directly in grid */
+        .settings-content,
+        .tab-content,
+        .tab-pane#pills-brand-setting.active.show,
+        .tab-pane#pills-brand-setting.active,
+        .brand-settings-form-wrapper {
+            display: contents !important;
+        }
+
+        /* Row 1 Column 1: Sticky Navigation Sidebar */
+        .settings-sidebar {
+            grid-column: 1 !important;
+            grid-row: 1 !important;
+            position: sticky !important;
+            top: 24px !important;
+            align-self: start !important;
+            width: 260px !important;
+        }
+
+        /* Row 1 Column 2: Logo Upload Card */
+        .brand-settings-logos-card {
+            grid-column: 2 !important;
+            grid-row: 1 !important;
+            width: 100% !important;
+            min-width: 0 !important;
+            margin-bottom: 0 !important;
+        }
+
+        /* Row 1 Column 3: Settings Right Sidebar (System Info + Critical Actions stacked) */
+        .settings-right-sidebar {
+            grid-column: 3 !important;
+            grid-row: 1 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 20px !important;
+            width: 320px !important;
+        }
+
+        /* Row 2 Full Width: Lower Brand Settings Form Card */
+        .brand-settings-form-card {
+            grid-column: 1 / -1 !important;
+            grid-row: 2 !important;
+            width: 100% !important;
+            min-width: 0 !important;
+            margin-top: 0 !important;
+        }
+
+        /* Handle non-brand tab panes (Payment, Email, Storage, etc.) */
+        .tab-content > .tab-pane:not(#pills-brand-setting) {
+            grid-column: 2 !important;
+            grid-row: 1 !important;
+            width: 100% !important;
+            min-width: 0 !important;
         }
 
         @media (max-width: 1199px) {
@@ -258,10 +313,15 @@
             }
             .settings-right-sidebar {
                 grid-column: 1 / -1 !important;
+                grid-row: auto !important;
+                width: 100% !important;
                 display: grid !important;
                 grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
                 gap: 20px !important;
                 position: static !important;
+            }
+            .brand-settings-form-card {
+                grid-row: auto !important;
             }
         }
 
@@ -271,21 +331,23 @@
             }
             .settings-sidebar {
                 width: 100% !important;
+                grid-column: auto !important;
                 position: static !important;
+            }
+            .brand-settings-logos-card {
+                grid-column: auto !important;
+                grid-row: auto !important;
             }
             .settings-right-sidebar {
                 grid-column: auto !important;
+                grid-row: auto !important;
                 grid-template-columns: 1fr !important;
                 width: 100% !important;
             }
-        }
-
-        /* Sticky Left Sidebar Navigation */
-        .settings-sidebar {
-            position: sticky !important;
-            top: 24px !important;
-            align-self: start !important;
-            width: 260px !important;
+            .brand-settings-form-card {
+                grid-column: auto !important;
+                grid-row: auto !important;
+            }
         }
 
         .settings-sidebar .setting-nav-wrp {
@@ -876,11 +938,12 @@
                     <div class="tab-content" id="pills-tabContent">
                         <!-- Brand Settings Tab -->
                         <div class="tab-pane fade active show" id="pills-brand-setting" role="tabpanel" aria-labelledby="pills-brand_setting-tab">
-                            {{ Form::model($settings, ['route' => 'business.setting', 'method' => 'POST', 'enctype' => 'multipart/form-data']) }}
-                                <div class="card">
+                            {{ Form::model($settings, ['route' => 'business.setting', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'class' => 'brand-settings-form-wrapper']) }}
+                                <!-- ROW 1 COLUMN 2: Brand Settings Logo Uploads Card -->
+                                <div class="card brand-settings-logos-card">
                                     <div class="card-header">
                                         <h5>{{ __('Brand Settings') }}</h5>
-                                        <p>{{ __('Configure your platform identity, branding assets, and default application preferences.') }}</p>
+                                        <p>{{ __('Configure your platform identity and branding assets.') }}</p>
                                     </div>
                                     <div class="card-body">
                                         <!-- Three-Column Logo Upload Grid -->
@@ -975,7 +1038,16 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
 
+                                <!-- ROW 2 FULL WIDTH: Brand Settings Form Card -->
+                                <div class="card brand-settings-form-card">
+                                    <div class="card-header">
+                                        <h5>{{ __('Brand Settings Form') }}</h5>
+                                        <p>{{ __('Configure application details, localization preferences, feature toggles, and theme customization.') }}</p>
+                                    </div>
+                                    <div class="card-body">
                                         <!-- Branding Form Inputs: Title Text & Footer Text (2 Equal Columns) -->
                                         <div class="branding-inputs-grid-2">
                                             <div>
@@ -3974,95 +4046,100 @@
                 </div>
             @else
                 <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade" id="pills-brand-setting" role="tabpanel"
-                        aria-labelledby="pills-brand_setting-tab">
-                        {{ Form::model($settings, ['route' => 'business.setting', 'method' => 'POST', 'enctype' => 'multipart/form-data']) }}
-                            <div class="row">
-                                <div class="col-lg-12 col-sm-12 col-md-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5>{{ __('Brand Settings') }}</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <!-- Three-Column Logo Upload Grid -->
-                                            <div class="upload-grid-container">
-                                                <!-- Dark Logo Card -->
-                                                <div class="upload-asset-card">
-                                                    <div class="upload-card-header">
-                                                        <div class="upload-card-indicator"></div>
-                                                        <h6 class="upload-card-title">{{ __('Logo dark') }}</h6>
-                                                    </div>
-                                                    <div class="upload-preview-box">
-                                                        <a href="{{ route('dashboard') }}" class="b-brand">
-                                                            <img src="{{ $logo . '/' . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png') . '?timestamp='. time() }}"
-                                                                alt="{{ config('app.name', 'SaaS') }}"
-                                                                id="adminlogoDark"
-                                                                class="logo-preview-img">
-                                                        </a>
-                                                    </div>
-                                                    <div class="w-100">
-                                                        <label for="company_logo" class="btn-upload-blue mb-0">
-                                                            <span class="material-symbols-outlined text-[18px]">upload</span>
-                                                            <span>{{ __('Upload Image') }}</span>
-                                                            <input type="file" id="company_logo" data-filename="company_logo_update" name="logo_dark" class="form-control file d-none" onchange="document.getElementById('adminlogoDark').src = window.URL.createObjectURL(this.files[0])">
-                                                        </label>
-                                                    </div>
-                                                    @error('company_logo')
-                                                        <span class="invalid-logo text-danger text-xs mt-2 d-block text-center">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-
-                                                <!-- Light Logo Card -->
-                                                <div class="upload-asset-card">
-                                                    <div class="upload-card-header">
-                                                        <div class="upload-card-indicator"></div>
-                                                        <h6 class="upload-card-title">{{ __('Logo Light') }}</h6>
-                                                    </div>
-                                                    <div class="upload-preview-box">
-                                                        <a href="{{ $logo . '/' . (isset($logo_light) && !empty($logo_light) ? $logo_light : 'logo-light.png') }}" target="_blank">
-                                                            <img src="{{ $logo . '/' . (isset($logo_light) && !empty($logo_light) ? $logo_light : 'logo-light.png') . '?timestamp='. time() }}"
-                                                                class="logo-preview-img" id="logo-light">
-                                                        </a>
-                                                    </div>
-                                                    <div class="w-100">
-                                                        <label for="company_logo_light" class="btn-upload-blue mb-0">
-                                                            <span class="material-symbols-outlined text-[18px]">upload</span>
-                                                            <span>{{ __('Upload Image') }}</span>
-                                                            <input type="file" class="form-control file d-none" name="logo_light" id="company_logo_light" data-filename="dark_logo_update" onchange="document.getElementById('logo-light').src = window.URL.createObjectURL(this.files[0])">
-                                                        </label>
-                                                    </div>
-                                                    @error('company_logo_light')
-                                                        <span class="invalid-logo text-danger text-xs mt-2 d-block text-center">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-
-                                                <!-- Favicon Card -->
-                                                <div class="upload-asset-card">
-                                                    <div class="upload-card-header">
-                                                        <div class="upload-card-indicator"></div>
-                                                        <h6 class="upload-card-title">{{ __('Favicon') }}</h6>
-                                                    </div>
-                                                    <div class="upload-preview-box">
-                                                        <a href="{{ $logo . '/' . (isset($company_favicon) && !empty($company_favicon) ? $company_favicon : 'favicon.png') }}" target="_blank">
-                                                            <img src="{{ $logo . '/' . (isset($company_favicon) && !empty($company_favicon) ? $company_favicon : 'favicon.png') . '?timestamp='. time() }}"
-                                                                class="favicon-preview-img" id="faviCon">
-                                                        </a>
-                                                    </div>
-                                                    <div class="w-100">
-                                                        <label for="company_favicon" class="btn-upload-blue mb-0">
-                                                            <span class="material-symbols-outlined text-[18px]">upload</span>
-                                                            <span>{{ __('Upload Image') }}</span>
-                                                            <input type="file" class="form-control file d-none" id="company_favicon" name="favicon" data-filename="company_favicon_update" onchange="document.getElementById('faviCon').src = window.URL.createObjectURL(this.files[0])">
-                                                        </label>
-                                                    </div>
-                                                    @error('logo')
-                                                        <span class="invalid-logo text-danger text-xs mt-2 d-block text-center">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
+                    <div class="tab-pane fade" id="pills-brand-setting" role="tabpanel" aria-labelledby="pills-brand_setting-tab">
+                        {{ Form::model($settings, ['route' => 'business.setting', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'class' => 'brand-settings-form-wrapper']) }}
+                            <!-- ROW 1 COLUMN 2: Brand Settings Logo Uploads Card -->
+                            <div class="card brand-settings-logos-card">
+                                <div class="card-header">
+                                    <h5>{{ __('Brand Settings') }}</h5>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Three-Column Logo Upload Grid -->
+                                    <div class="upload-grid-container">
+                                        <!-- Dark Logo Card -->
+                                        <div class="upload-asset-card">
+                                            <div class="upload-card-header">
+                                                <div class="upload-card-indicator"></div>
+                                                <h6 class="upload-card-title">{{ __('Logo dark') }}</h6>
                                             </div>
+                                            <div class="upload-preview-box">
+                                                <a href="{{ route('dashboard') }}" class="b-brand">
+                                                    <img src="{{ $logo . '/' . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png') . '?timestamp='. time() }}"
+                                                        alt="{{ config('app.name', 'SaaS') }}"
+                                                        id="adminlogoDark"
+                                                        class="logo-preview-img">
+                                                </a>
+                                            </div>
+                                            <div class="w-100">
+                                                <label for="company_logo" class="btn-upload-blue mb-0">
+                                                    <span class="material-symbols-outlined text-[18px]">upload</span>
+                                                    <span>{{ __('Upload Image') }}</span>
+                                                    <input type="file" id="company_logo" data-filename="company_logo_update" name="logo_dark" class="form-control file d-none" onchange="document.getElementById('adminlogoDark').src = window.URL.createObjectURL(this.files[0])">
+                                                </label>
+                                            </div>
+                                            @error('company_logo')
+                                                <span class="invalid-logo text-danger text-xs mt-2 d-block text-center">{{ $message }}</span>
+                                            @enderror
+                                        </div>
 
-                                            <!-- Title Text & Footer Text Grid (2 Equal Columns) -->
-                                            <div class="branding-inputs-grid-2">
+                                        <!-- Light Logo Card -->
+                                        <div class="upload-asset-card">
+                                            <div class="upload-card-header">
+                                                <div class="upload-card-indicator"></div>
+                                                <h6 class="upload-card-title">{{ __('Logo Light') }}</h6>
+                                            </div>
+                                            <div class="upload-preview-box">
+                                                <a href="{{ $logo . '/' . (isset($logo_light) && !empty($logo_light) ? $logo_light : 'logo-light.png') }}" target="_blank">
+                                                    <img src="{{ $logo . '/' . (isset($logo_light) && !empty($logo_light) ? $logo_light : 'logo-light.png') . '?timestamp='. time() }}"
+                                                        class="logo-preview-img" id="logo-light">
+                                                </a>
+                                            </div>
+                                            <div class="w-100">
+                                                <label for="company_logo_light" class="btn-upload-blue mb-0">
+                                                    <span class="material-symbols-outlined text-[18px]">upload</span>
+                                                    <span>{{ __('Upload Image') }}</span>
+                                                    <input type="file" class="form-control file d-none" name="logo_light" id="company_logo_light" data-filename="dark_logo_update" onchange="document.getElementById('logo-light').src = window.URL.createObjectURL(this.files[0])">
+                                                </label>
+                                            </div>
+                                            @error('company_logo_light')
+                                                <span class="invalid-logo text-danger text-xs mt-2 d-block text-center">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <!-- Favicon Card -->
+                                        <div class="upload-asset-card">
+                                            <div class="upload-card-header">
+                                                <div class="upload-card-indicator"></div>
+                                                <h6 class="upload-card-title">{{ __('Favicon') }}</h6>
+                                            </div>
+                                            <div class="upload-preview-box">
+                                                <a href="{{ $logo . '/' . (isset($company_favicon) && !empty($company_favicon) ? $company_favicon : 'favicon.png') }}" target="_blank">
+                                                    <img src="{{ $logo . '/' . (isset($company_favicon) && !empty($company_favicon) ? $company_favicon : 'favicon.png') . '?timestamp='. time() }}"
+                                                        class="favicon-preview-img" id="faviCon">
+                                                </a>
+                                            </div>
+                                            <div class="w-100">
+                                                <label for="company_favicon" class="btn-upload-blue mb-0">
+                                                    <span class="material-symbols-outlined text-[18px]">upload</span>
+                                                    <span>{{ __('Upload Image') }}</span>
+                                                    <input type="file" class="form-control file d-none" id="company_favicon" name="favicon" data-filename="company_favicon_update" onchange="document.getElementById('faviCon').src = window.URL.createObjectURL(this.files[0])">
+                                                </label>
+                                            </div>
+                                            @error('logo')
+                                                <span class="invalid-logo text-danger text-xs mt-2 d-block text-center">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ROW 2 FULL WIDTH: Merchant Brand Form Card -->
+                                <div class="card brand-settings-form-card">
+                                    <div class="card-header">
+                                        <h5>{{ __('Store Settings & Preferences') }}</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <!-- Title Text & Footer Text Grid (2 Equal Columns) -->
+                                        <div class="branding-inputs-grid-2">
                                                 <div>
                                                     {{ Form::label('title_text', __('Title Text'), ['class' => 'form-label']) }}
                                                     {{ Form::text('title_text', null, ['class' => 'form-control', 'placeholder' => __('Title Text')]) }}
