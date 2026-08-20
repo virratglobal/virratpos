@@ -503,6 +503,211 @@
             min-width: 0 !important;
         }
 
+        /* Payment Setting Card Styling */
+        #pills-payment-setting .card,
+        .payment-setting-card {
+            background: var(--surface) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 12px !important;
+            padding: 28px !important;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03) !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            margin-bottom: 24px !important;
+        }
+
+        #pills-payment-setting .card-header,
+        .payment-setting-card-header {
+            border-bottom: 1px solid var(--border) !important;
+            padding-bottom: 16px !important;
+            margin-bottom: 24px !important;
+            background: transparent !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            padding-top: 0 !important;
+            border-top: none !important;
+        }
+
+        .payment-setting-title-bar {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            margin-bottom: 4px !important;
+        }
+        .payment-setting-title-bar .accent-bar {
+            width: 4px !important;
+            height: 18px !important;
+            background: #5C59E8 !important;
+            border-radius: 2px !important;
+            display: inline-block !important;
+            flex-shrink: 0 !important;
+        }
+        .payment-setting-title-bar h5 {
+            font-size: 18px !important;
+            font-weight: 700 !important;
+            color: var(--text-primary) !important;
+            margin: 0 !important;
+            letter-spacing: -0.01em !important;
+        }
+
+        .payment-setting-description {
+            font-size: 13.5px !important;
+            color: var(--text-secondary) !important;
+            margin-top: 6px !important;
+            margin-bottom: 0 !important;
+            line-height: 1.5 !important;
+            font-weight: 400 !important;
+        }
+
+        /* Payment Currency 2-Column Grid */
+        .payment-currency-row {
+            display: grid !important;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+            gap: 24px !important;
+            margin-bottom: 24px !important;
+            width: 100% !important;
+        }
+
+        #pills-payment-setting label.col-form-label,
+        #pills-payment-setting label.form-label {
+            font-size: 13.5px !important;
+            font-weight: 600 !important;
+            color: #475569 !important;
+            margin-bottom: 6px !important;
+            display: block !important;
+        }
+
+        #pills-payment-setting input.form-control {
+            height: 44px !important;
+            border: 1px solid #E2E8F0 !important;
+            border-radius: 8px !important;
+            padding: 0 14px !important;
+            font-size: 14px !important;
+            color: #0F172A !important;
+            background: #FFFFFF !important;
+            width: 100% !important;
+            box-shadow: none !important;
+        }
+
+        #pills-payment-setting input.form-control:focus {
+            border-color: #5C59E8 !important;
+            box-shadow: 0 0 0 3px rgba(92, 89, 232, 0.15) !important;
+        }
+
+        #pills-payment-setting small {
+            font-size: 12px !important;
+            color: #64748B !important;
+            margin-top: 6px !important;
+            display: block !important;
+            line-height: 1.4 !important;
+        }
+
+        #pills-payment-setting small a {
+            color: #5C59E8 !important;
+            text-decoration: underline !important;
+        }
+
+        /* Payment Gateways Accordion Card List */
+        #pills-payment-setting .setting-faq-wrp,
+        #pills-payment-setting .setting-accordion,
+        #pills-payment-setting .accordion {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 12px !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        #pills-payment-setting .accordion-item {
+            background: #F8FAFC !important;
+            border: 1px solid #E2E8F0 !important;
+            border-radius: 10px !important;
+            margin-bottom: 12px !important;
+            overflow: hidden !important;
+            box-shadow: none !important;
+        }
+
+        #pills-payment-setting .accordion-header {
+            margin: 0 !important;
+            background: transparent !important;
+            padding: 0 !important;
+        }
+
+        #pills-payment-setting .accordion-button {
+            background: #F8FAFC !important;
+            padding: 16px 24px !important;
+            border: none !important;
+            box-shadow: none !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            width: 100% !important;
+            color: #0F172A !important;
+            font-size: 15px !important;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            border-radius: 10px !important;
+        }
+
+        #pills-payment-setting .accordion-button:not(.collapsed) {
+            background: #F8FAFC !important;
+            color: #0F172A !important;
+            box-shadow: none !important;
+            border-bottom-left-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+        }
+
+        #pills-payment-setting .accordion-button::after {
+            content: '' !important;
+            width: 32px !important;
+            height: 32px !important;
+            border-radius: 50% !important;
+            background: #E2E8F0 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") center no-repeat !important;
+            margin-left: 12px !important;
+            flex-shrink: 0 !important;
+            transition: transform 0.2s ease, background-color 0.2s ease !important;
+        }
+
+        #pills-payment-setting .accordion-button:not(.collapsed)::after {
+            transform: rotate(180deg) !important;
+            background-color: #CBD5E1 !important;
+        }
+
+        #pills-payment-setting .accordion-body {
+            background: #FFFFFF !important;
+            border-top: 1px solid #E2E8F0 !important;
+            padding: 24px !important;
+            border-bottom-left-radius: 10px !important;
+            border-bottom-right-radius: 10px !important;
+        }
+
+        #pills-payment-setting .custom-switch-v1,
+        #pills-payment-setting .form-switch {
+            padding-left: 0 !important;
+            margin: 0 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+        }
+
+        #pills-payment-setting .form-check-input {
+            width: 44px !important;
+            height: 24px !important;
+            background-color: #CBD5E1 !important;
+            border: none !important;
+            border-radius: 12px !important;
+            cursor: pointer !important;
+            transition: background-color 0.2s ease !important;
+            margin: 0 !important;
+            float: none !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3E%3Ccircle r='3' fill='%23fff'/%3E%3C/svg%3E") !important;
+        }
+
+        #pills-payment-setting .form-check-input:checked {
+            background-color: #5C59E8 !important;
+        }
+
         /* Settings Card Tiles */
         .settings-layout-wrapper .card,
         .settings-layout-wrapper .setting-card {
@@ -1470,40 +1675,35 @@
                             {!! Form::close() !!}
                         </div>
                     <div class="tab-pane fade" id="pills-payment-setting" role="tabpanel" aria-labelledby="pills-brand_setting-tab">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>{{ 'Payment Setting' }}</h5>
-                                <small>{{__('These details will be used to collect subscription plan payments. Each subscription plan will have a payment button based on the below configuration.')}}</small>
+                        <div class="card payment-setting-card">
+                            <div class="card-header payment-setting-card-header">
+                                <div class="payment-setting-title-bar">
+                                    <span class="accent-bar"></span>
+                                    <h5>{{ __('Payment Setting') }}</h5>
+                                </div>
+                                <p class="payment-setting-description">{{ __('These details will be used to collect subscription plan payments. Each subscription plan will have a payment button based on the below configuration.') }}</p>
                             </div>
-                            <div class="card-body ">
+                            <div class="card-body p-0">
                                 <form id="setting-form" method="post" action="{{ route('payment.setting') }}">
                                     @csrf
-                                    <div class="row">
-                                        <div class="col-12">
-                                            {{-- <div class="card"> --}}
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6 form-group">
-                                                        <label class="col-form-label">{{ __('Currency') }}</label>
-                                                        <input type="text" name="currency" class="form-control"
-                                                            id="currency" value="{{ isset($admin_payment_setting['currency']) ? $admin_payment_setting['currency'] : '' }}" placeholder="{{ __('Enter Currency') }}" required>
-                                                        <small class="text-xs">
-                                                            {{ __('Note: Add currency code as per three-letter ISO code') }}.
-                                                            <a href="https://stripe.com/docs/currencies"
-                                                                target="_blank">{{ __('you can find out how to do that here..') }}</a>
-                                                                {{__('and This value will be automatically assigned whenever a new store is created.')}}
-                                                        </small>
-                                                    </div>
-                                                    <div class="col-lg-6 col-md-6 col-sm-6 form-group">
-                                                        <label for="currency_symbol"
-                                                            class="col-form-label">{{ __('Currency Symbol') }}</label>
-                                                        <input type="text" name="currency_symbol"
-                                                            class="form-control" id="currency_symbol"
-                                                            value="{{ isset($admin_payment_setting['currency_symbol']) ? $admin_payment_setting['currency_symbol'] : '' }}" placeholder="{{ __('Enter Currency Symbol') }}" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {{-- </div> --}}
+                                    <div class="payment-currency-row">
+                                        <div class="form-group">
+                                            <label class="col-form-label">{{ __('Currency') }}</label>
+                                            <input type="text" name="currency" class="form-control"
+                                                id="currency" value="{{ isset($admin_payment_setting['currency']) ? $admin_payment_setting['currency'] : '' }}" placeholder="{{ __('Enter Currency') }}" required>
+                                            <small class="text-xs">
+                                                {{ __('Note: Add currency code as per three-letter ISO code') }}.
+                                                <a href="https://stripe.com/docs/currencies"
+                                                    target="_blank">{{ __('you can find out how to do that here..') }}</a>
+                                                {{ __('and This value will be automatically assigned whenever a new store is created.') }}
+                                            </small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="currency_symbol"
+                                                class="col-form-label">{{ __('Currency Symbol') }}</label>
+                                            <input type="text" name="currency_symbol"
+                                                class="form-control" id="currency_symbol"
+                                                value="{{ isset($admin_payment_setting['currency_symbol']) ? $admin_payment_setting['currency_symbol'] : '' }}" placeholder="{{ __('Enter Currency Symbol') }}" required>
                                         </div>
                                     </div>
 
