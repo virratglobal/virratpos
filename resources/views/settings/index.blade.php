@@ -1366,10 +1366,14 @@
             overflow: visible !important;
         }
 
-        /* Scoped Cookie Settings Box/Field Refinements */
+        /* Scoped Cookie Settings Box/Field Uniform Design System */
+        .cookie-settings-page,
+        .cookie-settings-card {
+            box-sizing: border-box !important;
+        }
+
         .cookie-settings-card {
             padding: 28px !important;
-            box-sizing: border-box !important;
         }
 
         .cookie-header {
@@ -1377,9 +1381,10 @@
             align-items: center !important;
             justify-content: space-between !important;
             gap: 24px !important;
-            padding-bottom: 20px !important;
-            border-bottom: 1px solid #E2E8F0 !important;
-            margin-bottom: 22px !important;
+            min-height: 48px !important;
+            padding-bottom: 16px !important;
+            border-bottom: 1px solid #e5e7eb !important;
+            margin-bottom: 20px !important;
         }
 
         .cookie-header h5 {
@@ -1389,18 +1394,19 @@
             margin: 0 !important;
         }
 
+        .cookie-toggle-row,
         .cookie-toggle-grid {
             display: grid !important;
             grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
-            gap: 28px !important;
-            margin-top: 10px !important;
-            margin-bottom: 24px !important;
+            gap: 24px !important;
+            margin-bottom: 18px !important;
         }
 
         .cookie-toggle-item {
+            height: 32px !important;
             display: flex !important;
             align-items: center !important;
-            gap: 10px !important;
+            gap: 8px !important;
             min-width: 0 !important;
         }
 
@@ -1408,100 +1414,119 @@
             margin: 0 !important;
             font-size: 14px !important;
             font-weight: 500 !important;
-            color: #1E293B !important;
+            color: #1f2937 !important;
             cursor: pointer !important;
         }
 
-        .cookie-form-grid {
+        .cookie-settings-page .form-row,
+        .cookie-form-grid,
+        .contact-fields {
             display: grid !important;
             grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
             column-gap: 24px !important;
             row-gap: 20px !important;
             width: 100% !important;
-            margin-bottom: 24px !important;
+            margin-bottom: 20px !important;
         }
 
+        .cookie-description-row {
+            display: grid !important;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+            column-gap: 24px !important;
+            width: 100% !important;
+            margin-bottom: 20px !important;
+        }
+
+        .cookie-settings-page .form-group,
+        .cookie-settings-card .form-group,
         .cookie-field {
             display: flex !important;
             flex-direction: column !important;
             gap: 8px !important;
+            width: 100% !important;
             min-width: 0 !important;
+            margin-bottom: 0 !important;
         }
 
+        .cookie-settings-page label,
+        .cookie-settings-card label,
         .cookie-field label {
-            font-size: 13px !important;
-            font-weight: 500 !important;
-            line-height: 1.3 !important;
-            color: #1E293B !important;
             margin: 0 !important;
+            font-size: 13px !important;
+            line-height: 18px !important;
+            font-weight: 500 !important;
+            color: #1f2937 !important;
         }
 
+        .cookie-settings-page input[type="text"],
+        .cookie-settings-page input[type="url"],
+        .cookie-settings-page input[type="email"],
+        .cookie-settings-page input[type="password"],
+        .cookie-settings-page input[type="number"],
         .cookie-settings-card input[type="text"],
+        .cookie-settings-card input[type="url"],
+        .cookie-settings-card input[type="email"],
+        .cookie-settings-card input[type="password"],
         .cookie-settings-card input[type="number"],
         .cookie-settings-card .form-control:not(textarea) {
             width: 100% !important;
             height: 48px !important;
             min-height: 48px !important;
+            max-height: 48px !important;
             padding: 0 14px !important;
-            box-sizing: border-box !important;
+            border: 1px solid #d9deea !important;
             border-radius: 8px !important;
-            border: 1px solid #D9DEEA !important;
-            background-color: #FFFFFF !important;
-            color: #0F172A !important;
+            background: #ffffff !important;
+            box-sizing: border-box !important;
             font-size: 14px !important;
-            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03) !important;
-            transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+            line-height: 48px !important;
+            color: #1f2937 !important;
         }
 
-        .cookie-settings-card input:focus,
-        .cookie-settings-card textarea:focus {
-            border-color: #5146E5 !important;
-            box-shadow: 0 0 0 3px rgba(81, 70, 229, 0.15) !important;
-            outline: none !important;
-        }
-
+        .cookie-settings-page textarea,
         .cookie-settings-card textarea {
             width: 100% !important;
-            min-height: 90px !important;
             height: 90px !important;
+            min-height: 90px !important;
+            max-height: 90px !important;
             padding: 12px 14px !important;
-            box-sizing: border-box !important;
-            resize: vertical !important;
+            border: 1px solid #d9deea !important;
             border-radius: 8px !important;
-            border: 1px solid #D9DEEA !important;
-            background-color: #FFFFFF !important;
-            color: #0F172A !important;
+            background: #ffffff !important;
+            box-sizing: border-box !important;
             font-size: 14px !important;
             line-height: 1.5 !important;
-            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03) !important;
-            transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+            color: #1f2937 !important;
+            resize: none !important;
         }
 
+        .cookie-settings-page input:focus,
+        .cookie-settings-page textarea:focus,
+        .cookie-settings-card input:focus,
+        .cookie-settings-card textarea:focus {
+            outline: none !important;
+            border-color: #5146e5 !important;
+            box-shadow: 0 0 0 3px rgba(81, 70, 229, 0.12) !important;
+        }
+
+        .more-information-title,
         .more-information-section {
-            margin-top: 24px !important;
+            margin-top: 20px !important;
             margin-bottom: 16px !important;
-            border-top: 1px dashed #E2E8F0 !important;
-            padding-top: 20px !important;
         }
 
-        .more-information-section h3,
-        .more-information-section h5 {
+        .more-information-title h5,
+        .more-information-title h3,
+        .more-information-section h5,
+        .more-information-section h3 {
             margin: 0 !important;
             font-size: 16px !important;
             font-weight: 600 !important;
             color: #0F172A !important;
         }
 
-        .contact-fields {
-            display: grid !important;
-            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
-            gap: 24px !important;
-            width: 100% !important;
-            margin-bottom: 24px !important;
-        }
-
         .cookie-actions {
-            border-top: 1px solid #E5E7EB !important;
+            border-top: 1px solid #e5e7eb !important;
             margin-top: 28px !important;
             padding-top: 18px !important;
             display: flex !important;
@@ -1515,35 +1540,34 @@
         .cookie-download-button {
             width: 42px !important;
             height: 42px !important;
-            min-width: 42px !important;
-            display: inline-flex !important;
+            padding: 0 !important;
+            display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             border-radius: 7px !important;
-            background-color: #5146E5 !important;
-            color: #FFFFFF !important;
-            padding: 0 !important;
-            box-shadow: 0 2px 6px rgba(81, 70, 229, 0.2) !important;
+            background: #5146e5 !important;
+            color: #ffffff !important;
         }
 
         .cookie-save-button {
-            min-width: 140px !important;
             height: 44px !important;
+            min-width: 140px !important;
             padding: 0 20px !important;
             border-radius: 8px !important;
             font-size: 14px !important;
             font-weight: 500 !important;
-            background: #5146E5 !important;
-            color: #FFFFFF !important;
+            background: #5146e5 !important;
+            color: #ffffff !important;
             border: none !important;
             cursor: pointer !important;
-            box-shadow: 0 2px 8px rgba(81, 70, 229, 0.25) !important;
         }
 
         @media (max-width: 800px) {
+            .cookie-toggle-row,
             .cookie-form-grid,
-            .cookie-toggle-grid,
-            .contact-fields {
+            .cookie-description-row,
+            .contact-fields,
+            .cookie-settings-page .form-row {
                 grid-template-columns: 1fr !important;
             }
         }
