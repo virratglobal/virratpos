@@ -1674,7 +1674,7 @@
                                 </div>
                             {!! Form::close() !!}
                         </div>
-                    <div class="tab-pane fade" id="pills-payment-setting" role="tabpanel" aria-labelledby="pills-brand_setting-tab">
+                    <div class="tab-pane fade" id="pills-payment-setting" role="tabpanel" aria-labelledby="pills-payment-setting_tab">
                         <div class="card payment-setting-card">
                             <div class="card-header payment-setting-card-header">
                                 <div class="payment-setting-title-bar">
@@ -4008,7 +4008,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="pills-email-settings" role="tabpanel" aria-labelledby="pills-brand_setting-tab">
+                    <div class="tab-pane fade" id="pills-email-settings" role="tabpanel" aria-labelledby="pills-email-settings_tab">
                         <div class="col-md-12">
 
                             <div class="card">
@@ -4119,7 +4119,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="pills-recaptcha-settings" role="tabpanel" aria-labelledby="pills-brand_setting-tab">
+                    <div class="tab-pane fade" id="pills-recaptcha-settings" role="tabpanel" aria-labelledby="recaptcha-settings_tab">
                         <form method="POST" action="{{ route('recaptcha.settings.store') }}" accept-charset="UTF-8">
                             @csrf
                             <div class="col-md-12">
@@ -4191,7 +4191,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="tab-pane fade" id="storage_settings" role="tabpanel" aria-labelledby="pills-brand_setting-tab">
+                    <div class="tab-pane fade" id="storage_settings" role="tabpanel" aria-labelledby="storage_settings_tab">
                         {{ Form::open(array('route' => 'storage.setting.store', 'enctype' => "multipart/form-data")) }}
                             <div class="card">
                                 <div class="card-header">
@@ -4496,7 +4496,7 @@
                                         </div>
                                     </div>
                                     <div class="card-footer text-end">
-                                        <button class="btn btn-primary" type="submit">{{ __('Save Chnages') }}</button>
+                                        <button class="btn btn-primary" type="submit">{{ __('Save Changes') }}</button>
                                     </div>
                                 {{ Form::close() }}
                             </div>
@@ -8464,16 +8464,20 @@
     </script>
     <script type="text/javascript">
         function enablecookie() {
-            const element = $('#enable_cookie').is(':checked');
-            $('.cookieDiv').addClass('disabledCookie');
-            if (element==true) {
-                $('.cookieDiv').removeClass('disabledCookie');
-                $("#cookie_logging").attr('checked', true);
-            } else {
-                $('.cookieDiv').addClass('disabledCookie');
-                $("#cookie_logging").attr('checked', false);
-            }
+            setTimeout(function() {
+                const element = $('#enable_cookie').is(':checked');
+                if (element) {
+                    $('.cookieDiv').removeClass('disabledCookie');
+                    $("#cookie_logging").prop('checked', true);
+                } else {
+                    $('.cookieDiv').addClass('disabledCookie');
+                    $("#cookie_logging").prop('checked', false);
+                }
+            }, 50);
         }
+        $(document).on('change', '#enable_cookie', function() {
+            enablecookie();
+        });
     </script>
     <script>
         var themescolors = document.querySelectorAll(".themes-color > a");
@@ -8582,28 +8586,52 @@
                 });
             };
 
-            // Sync Horizontal Tabs with Sidebar Navigation
-            $('.settings-horizontal-tabs .nav-link').on('click', function(e) {
-                $('.settings-horizontal-tabs .nav-link').removeClass('active');
-                $(this).addClass('active');
-
-                var targetHash = $(this).attr('href');
-                if (targetHash) {
-                    var sidebarLink = $('.settings-sidebar a[href="' + targetHash + '"]');
-                    if (sidebarLink.length) {
+            // Tab & URL Hash Synchronization
+            function activateTabFromHash() {
+                var hash = window.location.hash;
+                if (hash) {
+                    var link = $('.settings-sidebar .nav-link[href="' + hash + '"]');
+                    if (link.length) {
                         $('.settings-sidebar .nav-link').removeClass('active');
-                        sidebarLink.addClass('active');
+                        link.addClass('active');
+                        $('.tab-content .tab-pane').removeClass('active show');
+                        $(hash).addClass('active show');
+
+                        var topTab = $('.settings-horizontal-tabs a[href="' + hash + '"]');
+                        $('.settings-horizontal-tabs .nav-link').removeClass('active');
+                        if (topTab.length) {
+                            topTab.addClass('active');
+                        }
                     }
                 }
+            }
+
+            $(document).ready(function() {
+                activateTabFromHash();
+            });
+
+            $(window).on('hashchange', function() {
+                activateTabFromHash();
             });
 
             $('.settings-sidebar .nav-link').on('click', function(e) {
                 var targetHash = $(this).attr('href');
-                if (targetHash) {
+                if (targetHash && targetHash.startsWith('#')) {
+                    $('.settings-sidebar .nav-link').removeClass('active');
+                    $(this).addClass('active');
+                    $('.tab-content .tab-pane').removeClass('active show');
+                    $(targetHash).addClass('active show');
+
                     var topTab = $('.settings-horizontal-tabs a[href="' + targetHash + '"]');
                     $('.settings-horizontal-tabs .nav-link').removeClass('active');
                     if (topTab.length) {
                         topTab.addClass('active');
+                    }
+
+                    if (history.pushState) {
+                        history.pushState(null, null, targetHash);
+                    } else {
+                        window.location.hash = targetHash;
                     }
                 }
             });
