@@ -1365,6 +1365,188 @@
             overflow: visible !important;
         }
 
+        /* Scoped Cookie Settings Box/Field Refinements */
+        .cookie-settings-card {
+            padding: 28px !important;
+            box-sizing: border-box !important;
+        }
+
+        .cookie-header {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 24px !important;
+            padding-bottom: 20px !important;
+            border-bottom: 1px solid #E2E8F0 !important;
+            margin-bottom: 22px !important;
+        }
+
+        .cookie-header h5 {
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            color: #0F172A !important;
+            margin: 0 !important;
+        }
+
+        .cookie-toggle-grid {
+            display: grid !important;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+            gap: 28px !important;
+            margin-top: 10px !important;
+            margin-bottom: 24px !important;
+        }
+
+        .cookie-toggle-item {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            min-width: 0 !important;
+        }
+
+        .cookie-toggle-item label {
+            margin: 0 !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            color: #1E293B !important;
+            cursor: pointer !important;
+        }
+
+        .cookie-form-grid {
+            display: grid !important;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+            column-gap: 24px !important;
+            row-gap: 20px !important;
+            width: 100% !important;
+            margin-bottom: 24px !important;
+        }
+
+        .cookie-field {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 8px !important;
+            min-width: 0 !important;
+        }
+
+        .cookie-field label {
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            line-height: 1.3 !important;
+            color: #1E293B !important;
+            margin: 0 !important;
+        }
+
+        .cookie-settings-card input[type="text"],
+        .cookie-settings-card input[type="number"],
+        .cookie-settings-card .form-control:not(textarea) {
+            width: 100% !important;
+            height: 48px !important;
+            min-height: 48px !important;
+            padding: 0 14px !important;
+            box-sizing: border-box !important;
+            border-radius: 8px !important;
+            border: 1px solid #D9DEEA !important;
+            background-color: #FFFFFF !important;
+            color: #0F172A !important;
+            font-size: 14px !important;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03) !important;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+        }
+
+        .cookie-settings-card input:focus,
+        .cookie-settings-card textarea:focus {
+            border-color: #5146E5 !important;
+            box-shadow: 0 0 0 3px rgba(81, 70, 229, 0.15) !important;
+            outline: none !important;
+        }
+
+        .cookie-settings-card textarea {
+            width: 100% !important;
+            min-height: 90px !important;
+            height: 90px !important;
+            padding: 12px 14px !important;
+            box-sizing: border-box !important;
+            resize: vertical !important;
+            border-radius: 8px !important;
+            border: 1px solid #D9DEEA !important;
+            background-color: #FFFFFF !important;
+            color: #0F172A !important;
+            font-size: 14px !important;
+            line-height: 1.5 !important;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03) !important;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+        }
+
+        .more-information-section {
+            margin-top: 24px !important;
+            margin-bottom: 16px !important;
+            border-top: 1px dashed #E2E8F0 !important;
+            padding-top: 20px !important;
+        }
+
+        .more-information-section h3,
+        .more-information-section h5 {
+            margin: 0 !important;
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            color: #0F172A !important;
+        }
+
+        .contact-fields {
+            display: grid !important;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+            gap: 24px !important;
+            width: 100% !important;
+            margin-bottom: 24px !important;
+        }
+
+        .cookie-actions {
+            border-top: 1px solid #E5E7EB !important;
+            margin-top: 28px !important;
+            padding-top: 18px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            width: 100% !important;
+            background: transparent !important;
+            box-sizing: border-box !important;
+        }
+
+        .cookie-download-button {
+            width: 42px !important;
+            height: 42px !important;
+            min-width: 42px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border-radius: 7px !important;
+            background-color: #5146E5 !important;
+            color: #FFFFFF !important;
+            padding: 0 !important;
+            box-shadow: 0 2px 6px rgba(81, 70, 229, 0.2) !important;
+        }
+
+        .cookie-save-button {
+            min-width: 140px !important;
+            height: 44px !important;
+            padding: 0 20px !important;
+            border-radius: 8px !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            background: #5146E5 !important;
+            color: #FFFFFF !important;
+            border: none !important;
+            cursor: pointer !important;
+            box-shadow: 0 2px 8px rgba(81, 70, 229, 0.25) !important;
+        }
+
+        @media (max-width: 800px) {
+            .cookie-form-grid,
+            .cookie-toggle-grid,
+            .contact-fields {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
         /* Enforce Full Width Layout Across Main Settings Column */
         .settings-content,
         .settings-content .tab-content,
@@ -4485,14 +4667,14 @@
                     </div>
                     <div class="tab-pane fade" id="pills-cookie-settings" role="tabpanel" aria-labelledby="pills-cookie_settings-tab">
                         <div class="col-xl-12 col-lg-12 col-md-12">
-                            <div class="card">
+                            <div class="card cookie-settings-card">
 
                                 {{Form::model($settings,array('route'=>'cookie.setting','method'=>'post'))}}
-                                    <div class="card-header flex-column flex-lg-row  d-flex align-items-lg-center gap-2 justify-content-between">
+                                    <div class="card-header cookie-header">
                                         <h5>{{ __('Cookie Settings') }}</h5>
                                         <div class="d-flex align-items-center">
                                             {{ Form::label('enable_cookie', __('Enable cookie'), ['class' => 'col-form-label p-0 fw-bold me-3']) }}
-                                            <div class="custom-control custom-switch"  onclick="enablecookie()">
+                                            <div class="custom-control custom-switch" onclick="enablecookie()">
                                                 <input type="checkbox" data-toggle="switchbutton" data-onstyle="primary" name="enable_cookie" class="form-check-input input-primary "
                                                     id="enable_cookie" {{ $settings['enable_cookie'] == 'on' ? ' checked ' : '' }} >
                                                 <label class="custom-control-label mb-1" for="enable_cookie"></label>
@@ -4501,72 +4683,72 @@
                                     </div>
                                     <div class="card-body cookieDiv {{ $settings['enable_cookie'] == 'off' ? 'disabledCookie ' : '' }}">
                                         @if(!empty($chatgpt['chatgpt_key']) && $settings['enable_cookie'] == 'on')
-                                            <div class="d-flex justify-content-end">
+                                            <div class="d-flex justify-content-end mb-3">
                                                 <a href="#" class="btn btn-primary btn-sm" data-size="xl" data-ajax-popup-over="true" data-url="{{ route('generate',['cookie']) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Generate') }}" data-title="{{ __('Generate Content With AI') }}">
                                                     <i class="fas fa-robot"></i> {{ __('Generate with AI') }}
                                                 </a>
                                             </div>
                                         @endif
-                                        <div class="row ">
-                                            <div class="col-md-6">
-                                                <div class="form-check form-switch custom-switch-v1" id="cookie_log">
-                                                    <input type="checkbox" name="cookie_logging" class="form-check-input input-primary cookie_setting"
-                                                        id="cookie_logging"{{ $settings['cookie_logging'] == 'on' ? ' checked ' : '' }}>
-                                                    <label class="form-check-label" for="cookie_logging">{{__('Enable logging')}}</label>
-                                                </div>
-                                                <div class="form-group" >
-                                                    {{ Form::label('cookie_title', __('Cookie Title'), ['class' => 'col-form-label' ]) }}
-                                                    {{ Form::text('cookie_title', null, ['class' => 'form-control cookie_setting', 'placeholder'=>__('Enter Cookie Title')] ) }}
-                                                </div>
-                                                <div class="form-group ">
-                                                    {{ Form::label('cookie_description', __('Cookie Description'), ['class' => ' form-label']) }}
-                                                    {!! Form::textarea('cookie_description', null, ['class' => 'form-control cookie_setting', 'rows' => '3', 'placeholder'=>__('Enter Cookie Description')]) !!}
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-check form-switch custom-switch-v1 ">
-                                                    <input type="checkbox" name="necessary_cookies" class="form-check-input input-primary"
-                                                        id="necessary_cookies" checked onclick="return false">
-                                                    <label class="form-check-label" for="necessary_cookies">{{__('Strictly necessary cookies')}}</label>
-                                                </div>
-                                                <div class="form-group ">
-                                                    {{ Form::label('strictly_cookie_title', __(' Strictly Cookie Title'), ['class' => 'col-form-label']) }}
-                                                    {{ Form::text('strictly_cookie_title', null, ['class' => 'form-control cookie_setting', 'placeholder'=>__('Enter Strictly Cookie Title')]) }}
-                                                </div>
-                                                <div class="form-group ">
-                                                    {{ Form::label('strictly_cookie_description', __('Strictly Cookie Description'), ['class' => ' form-label']) }}
-                                                    {!! Form::textarea('strictly_cookie_description', null, ['class' => 'form-control cookie_setting ', 'rows' => '3', 'placeholder'=>__('Enter Strictly Cookie Description')]) !!}
-                                                </div>
-                                            </div>
 
-                                            <div class="col-12">
-                                                <h5>{{__('More Information')}}</h5>
+                                        <!-- Toggles Grid -->
+                                        <div class="cookie-toggle-grid">
+                                            <div class="cookie-toggle-item form-check form-switch custom-switch-v1" id="cookie_log">
+                                                <input type="checkbox" name="cookie_logging" class="form-check-input input-primary cookie_setting"
+                                                    id="cookie_logging"{{ $settings['cookie_logging'] == 'on' ? ' checked ' : '' }}>
+                                                <label class="form-check-label" for="cookie_logging">{{__('Enable logging')}}</label>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group ">
-                                                    {{ Form::label('more_information_description', __('Contact Us Description'), ['class' => 'col-form-label']) }}
-                                                    {{ Form::text('more_information_description', null, ['class' => 'form-control cookie_setting', 'placeholder'=>__('Enter Contact Us Description')]) }}
-                                                </div>
+                                            <div class="cookie-toggle-item form-check form-switch custom-switch-v1">
+                                                <input type="checkbox" name="necessary_cookies" class="form-check-input input-primary"
+                                                    id="necessary_cookies" checked onclick="return false">
+                                                <label class="form-check-label" for="necessary_cookies">{{__('Strictly necessary cookies')}}</label>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group ">
-                                                    {{ Form::label('contactus_url', __('Contact Us URL'), ['class' => 'col-form-label']) }}
-                                                    {{ Form::text('contactus_url', null, ['class' => 'form-control cookie_setting', 'placeholder'=>__('Enter Contact Us URL')]) }}
-                                                </div>
-                                            </div>
+                                        </div>
 
+                                        <!-- Form Grid for Titles and Descriptions -->
+                                        <div class="cookie-form-grid">
+                                            <div class="cookie-field form-group">
+                                                {{ Form::label('cookie_title', __('Cookie Title'), ['class' => 'col-form-label' ]) }}
+                                                {{ Form::text('cookie_title', null, ['class' => 'form-control cookie_setting', 'placeholder'=>__('Enter Cookie Title')] ) }}
+                                            </div>
+                                            <div class="cookie-field form-group">
+                                                {{ Form::label('strictly_cookie_title', __('Strictly Cookie Title'), ['class' => 'col-form-label']) }}
+                                                {{ Form::text('strictly_cookie_title', null, ['class' => 'form-control cookie_setting', 'placeholder'=>__('Enter Strictly Cookie Title')]) }}
+                                            </div>
+                                            <div class="cookie-field form-group">
+                                                {{ Form::label('cookie_description', __('Cookie Description'), ['class' => 'form-label']) }}
+                                                {!! Form::textarea('cookie_description', null, ['class' => 'form-control cookie_setting', 'rows' => '3', 'placeholder'=>__('Enter Cookie Description')]) !!}
+                                            </div>
+                                            <div class="cookie-field form-group">
+                                                {{ Form::label('strictly_cookie_description', __('Strictly Cookie Description'), ['class' => 'form-label']) }}
+                                                {!! Form::textarea('strictly_cookie_description', null, ['class' => 'form-control cookie_setting', 'rows' => '3', 'placeholder'=>__('Enter Strictly Cookie Description')]) !!}
+                                            </div>
+                                        </div>
+
+                                        <!-- More Information Section -->
+                                        <div class="more-information-section">
+                                            <h5>{{__('More Information')}}</h5>
+                                        </div>
+                                        <div class="contact-fields">
+                                            <div class="cookie-field form-group">
+                                                {{ Form::label('more_information_description', __('Contact Us Description'), ['class' => 'col-form-label']) }}
+                                                {{ Form::text('more_information_description', null, ['class' => 'form-control cookie_setting', 'placeholder'=>__('Enter Contact Us Description')]) }}
+                                            </div>
+                                            <div class="cookie-field form-group">
+                                                {{ Form::label('contactus_url', __('Contact Us URL'), ['class' => 'col-form-label']) }}
+                                                {{ Form::text('contactus_url', null, ['class' => 'form-control cookie_setting', 'placeholder'=>__('Enter Contact Us URL')]) }}
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="card-footer d-flex align-items-center gap-2 flex-sm-column flex-lg-row justify-content-between" >
-                                        <div>
+                                    <div class="card-footer cookie-actions">
+                                        <div class="d-flex align-items-center gap-2">
                                             @if(isset($settings['cookie_logging']) && $settings['cookie_logging'] == 'on')
-                                            <label for="file" class="form-label action-btn-wrapper me-2">{{__('Download cookie accepted data')}}</label>
-                                                <a href="{{ asset(Storage::url('uploads/sample')) . '/data.csv' }}" class="btn btn-sm btn-primary" data-bs-placement="top"  data-bs-toggle="tooltip" title="{{ __('Download') }}">
-                                                    <i class="ti ti-download"></i>
+                                                <label for="file" class="form-label mb-0 me-2" style="font-size: 13.5px; font-weight: 500; color: #475569;">{{__('Download cookie accepted data')}}</label>
+                                                <a href="{{ asset(Storage::url('uploads/sample')) . '/data.csv' }}" class="btn btn-sm btn-primary cookie-download-button" data-bs-placement="top" data-bs-toggle="tooltip" title="{{ __('Download') }}">
+                                                    <i class="ti ti-download" style="font-size: 16px;"></i>
                                                 </a>
-                                                @endif
+                                            @endif
                                         </div>
-                                        <input type="submit" value="{{ __('Save Changes') }}" class="btn btn-primary">
+                                        <input type="submit" value="{{ __('Save Changes') }}" class="btn btn-primary cookie-save-button">
                                     </div>
                                 {{ Form::close() }}
                             </div>
