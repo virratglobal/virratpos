@@ -474,39 +474,59 @@
             display: block !important;
             font-weight: 400 !important;
         }
-        .settings-layout-wrapper .card-body {
-            padding: 0 !important;
-            background: transparent !important;
-            border: none !important;
+        /* Brand Settings Card Container */
+        .brand-settings-card {
+            padding: 28px !important;
+            background: var(--surface) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 16px !important;
         }
 
-        /* Upload Grid Layout (3 Equal Columns) */
+        .brand-settings-header {
+            margin-bottom: 0 !important;
+            padding-bottom: 0 !important;
+            border-bottom: none !important;
+        }
+
+        .brand-settings-divider {
+            margin: 16px 0 20px 0 !important;
+            border: 0 !important;
+            border-top: 1px solid var(--border) !important;
+            opacity: 0.6 !important;
+        }
+
+        /* Upload Grid Layout (3 Equal Columns, gap 18px) */
+        .brand-upload-grid,
         .upload-grid-container {
             display: grid !important;
-            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-            gap: 20px !important;
-            margin-bottom: 24px !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 18px !important;
+            margin-bottom: 0 !important;
             width: 100% !important;
             box-sizing: border-box !important;
         }
 
         @media (max-width: 991px) {
+            .brand-upload-grid,
             .upload-grid-container {
                 grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
             }
         }
 
         @media (max-width: 575px) {
+            .brand-upload-grid,
             .upload-grid-container {
                 grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
             }
         }
 
+        /* Brand Upload Asset Card */
+        .brand-upload-card,
         .upload-asset-card {
             background: var(--surface) !important;
             border: 1px solid var(--border) !important;
             border-radius: 14px !important;
-            padding: 18px !important;
+            padding: 16px !important;
             display: flex !important;
             flex-direction: column !important;
             justify-content: space-between !important;
@@ -520,7 +540,7 @@
             display: flex !important;
             align-items: center !important;
             gap: 8px !important;
-            margin-bottom: 14px !important;
+            margin-bottom: 12px !important;
         }
 
         .upload-card-indicator {
@@ -539,9 +559,13 @@
             line-height: 1.2 !important;
         }
 
+        /* Preview Container (Height 135px, Margins 12px top, 14px bottom) */
+        .brand-upload-preview,
         .upload-preview-box {
             width: 100% !important;
-            height: 140px !important;
+            height: 135px !important;
+            margin-top: 12px !important;
+            margin-bottom: 14px !important;
             background: var(--surface-2) !important;
             border: 1px solid var(--border) !important;
             border-radius: 12px !important;
@@ -550,25 +574,28 @@
             align-items: center !important;
             justify-content: center !important;
             padding: 12px !important;
-            margin-bottom: 16px !important;
             box-sizing: border-box !important;
             overflow: hidden !important;
             position: relative !important;
         }
 
+        /* Image proportional containment (75% max width/height for natural whitespace) */
+        .brand-upload-preview img,
         .upload-preview-box img,
         .upload-preview-box img.logo-preview-img {
-            max-height: 80% !important;
-            max-width: 80% !important;
+            max-height: 75% !important;
+            max-width: 75% !important;
             object-fit: contain !important;
         }
 
+        .brand-upload-preview img.favicon-preview-img,
         .upload-preview-box img.favicon-preview-img {
             width: 44px !important;
             height: 44px !important;
             object-fit: contain !important;
         }
 
+        /* Full Width Upload Button */
         .btn-upload-blue {
             display: inline-flex !important;
             align-items: center !important;
@@ -940,21 +967,24 @@
                         <div class="tab-pane fade active show" id="pills-brand-setting" role="tabpanel" aria-labelledby="pills-brand_setting-tab">
                             {{ Form::model($settings, ['route' => 'business.setting', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'class' => 'brand-settings-form-wrapper']) }}
                                 <!-- ROW 1 COLUMN 2: Brand Settings Logo Uploads Card -->
-                                <div class="card brand-settings-logos-card">
-                                    <div class="card-header">
-                                        <h5>{{ __('Brand Settings') }}</h5>
-                                        <p>{{ __('Configure your platform identity and branding assets.') }}</p>
+                                <div class="card brand-settings-logos-card brand-settings-card">
+                                    <div class="card-header brand-settings-header">
+                                        <h5 style="font-size: 18px; font-weight: 600; color: var(--text-primary); margin: 0;">{{ __('Brand Settings') }}</h5>
+                                        <p style="font-size: 13.5px; color: var(--text-secondary); margin-top: 4px; margin-bottom: 0;">{{ __('Configure your platform identity and branding assets.') }}</p>
                                     </div>
+                                    
+                                    <hr class="brand-settings-divider">
+
                                     <div class="card-body">
                                         <!-- Three-Column Logo Upload Grid -->
-                                        <div class="upload-grid-container">
+                                        <div class="upload-grid-container brand-upload-grid">
                                             <!-- Dark Logo Card -->
-                                            <div class="upload-asset-card">
+                                            <div class="upload-asset-card brand-upload-card">
                                                 <div class="upload-card-header">
                                                     <div class="upload-card-indicator"></div>
                                                     <h6 class="upload-card-title">{{ __('Logo dark') }}</h6>
                                                 </div>
-                                                <div class="upload-preview-box">
+                                                <div class="upload-preview-box brand-upload-preview">
                                                     @php
                                                         $darkPath = $logo . '/' . (isset($logo_img) && !empty($logo_img) ? $logo_img : 'logo-dark.png');
                                                         $defaultDark = asset('uploads/logo/logo-dark.png');
@@ -979,12 +1009,12 @@
                                             </div>
 
                                             <!-- Light Logo Card -->
-                                            <div class="upload-asset-card">
+                                            <div class="upload-asset-card brand-upload-card">
                                                 <div class="upload-card-header">
                                                     <div class="upload-card-indicator"></div>
                                                     <h6 class="upload-card-title">{{ __('Logo Light') }}</h6>
                                                 </div>
-                                                <div class="upload-preview-box">
+                                                <div class="upload-preview-box brand-upload-preview">
                                                     @php
                                                         $lightPath = $logo . '/' . 'logo-light.png';
                                                         $defaultLight = asset('uploads/logo/logo-light.png');
@@ -1009,12 +1039,12 @@
                                             </div>
 
                                             <!-- Favicon Card -->
-                                            <div class="upload-asset-card">
+                                            <div class="upload-asset-card brand-upload-card">
                                                 <div class="upload-card-header">
                                                     <div class="upload-card-indicator"></div>
                                                     <h6 class="upload-card-title">{{ __('Favicon') }}</h6>
                                                 </div>
-                                                <div class="upload-preview-box">
+                                                <div class="upload-preview-box brand-upload-preview">
                                                     @php
                                                         $favPath = $logo . '/' . 'favicon.png';
                                                         $defaultFav = asset('uploads/logo/favicon.png');
