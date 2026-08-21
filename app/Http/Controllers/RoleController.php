@@ -20,7 +20,15 @@ class RoleController extends Controller
         if(\Auth::user()->can('Manage Role'))
         {
             $roles = Role::where('store_id', '=', \Auth::user()->current_store)->where('created_by', '=', \Auth::user()->creatorId())->get();
-            return view('roles.index')->with('roles', $roles);
+
+            // Stats for the redesigned UI — computed from real data only
+            $totalRoles       = $roles->count();
+            $totalPermissions = Permission::count();
+            $staffCount       = \App\Models\User::where('created_by', '=', \Auth::user()->creatorId())
+                                    ->where('current_store', '=', \Auth::user()->current_store)
+                                    ->count();
+
+            return view('roles.index', compact('roles', 'totalRoles', 'totalPermissions', 'staffCount'));
         }
         else
         {

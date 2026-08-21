@@ -26,7 +26,6 @@
 <style>
     /* Prevent page-level scrollbar, constrain POS to viewport height */
     .pos-workspace-container {
-        height: calc(100vh - 160px) !important;
         display: flex !important;
         gap: 16px !important;
         width: 100% !important;
@@ -234,9 +233,17 @@
         height: 100% !important;
         overflow: hidden !important;
     }
+    .billing-totals-wrap {
+        flex: 1 1 auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+    }
     .carttable-scroll {
-        flex-grow: 1 !important;
+        flex: 0 1 auto !important;
         overflow-y: auto !important;
+        overflow-x: auto !important;
+        min-height: 80px !important;
     }
     
     /* Cart table custom styles */
@@ -372,72 +379,83 @@
 
 @section('content')
 <x-ui.page-container>
-    <x-ui.page-header title="{{ __('Pos') }}">
-        <x-slot name="breadcrumbs">
-            <a href="{{ route('dashboard') }}" class="hover:text-gray-900">{{ __('Home') }}</a>
-            <svg class="flex-shrink-0 mx-2 h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-            </svg>
-            <span class="text-gray-900 font-medium">{{ __('Pos') }}</span>
-        </x-slot>
-    </x-ui.page-header>
-
     <?php $lastsegment = request()->segment(count(request()->segments())) ?>
 
-    <!-- Two-Panel POS Workspace -->
-    <div class="pos-workspace-container">
-        
-        <!-- LEFT PANEL: PRODUCT CATALOGUE (w-[40%]) -->
-        <div class="w-full lg:w-[40%] flex flex-col gap-3 h-full overflow-hidden">
-            
-            <!-- 1. Search Bar Card -->
-            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-3 shrink-0">
-                <div class="search-main-form w-full">
-                    <form class="search-input-wrp m-0" onsubmit="return false;">
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="ti ti-search"></i></span>
-                            <input id="searchproduct" type="text" data-url="{{ route('search.products') }}" placeholder="{{ __('Search product by code or name') }}" class="form-control">
-                        </div>
-                    </form>
-                </div>
-                
-                <!-- Category Pills listing -->
-                <div class="category-tab-wrapper overflow-hidden">
-                    <div id="categories-listing" class="no-scrollbar">
-                        <!-- Dynamic categories loaded via AJAX -->
-                    </div>
-                </div>
+    <div class="flex flex-col h-auto lg:h-[calc(100vh-105px)] overflow-visible lg:overflow-hidden">
+        <!-- Dedicated POS Toolbar -->
+        <div class="pos-toolbar mb-3 bg-white border border-slate-200 rounded-xl px-4 py-3 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4 select-none shrink-0">
+            <!-- POS / Register Indicator -->
+            <div class="flex items-center gap-2">
+                <span class="flex h-3 w-3 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                </span>
+                <span class="font-bold text-slate-800 tracking-tight text-sm uppercase">{{ __('POS Terminal') }}</span>
+                <span class="text-slate-300 font-light">|</span>
+                <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider bg-slate-100 px-2 py-0.5 rounded">{{ __('Register Active') }}</span>
             </div>
 
-            <!-- 2. Scrollable Product Cards Grid -->
-            <div class="flex-grow overflow-y-auto custom-scrollbar pr-1">
-                <div id="product-listing">
-                    <!-- Dynamic products loaded via AJAX -->
-                </div>
+            <!-- Live Date & Time -->
+            <div class="flex items-center gap-2 font-medium text-slate-700 text-sm md:absolute md:left-1/2 md:-translate-x-1/2">
+                <span class="material-symbols-outlined text-indigo-600 text-lg leading-none">schedule</span>
+                <span id="pos-live-date" class="text-slate-500 font-semibold"></span>
+                <span class="text-slate-300">•</span>
+                <span id="pos-live-time" class="font-bold text-slate-800"></span>
             </div>
 
+            <!-- Redesigned Action Buttons -->
+            <div class="flex items-center gap-2 flex-wrap">
+                <a href="{{ route('product.index') }}" class="h-9 px-3.5 bg-white hover:bg-indigo-50 text-slate-700 hover:text-indigo-600 rounded-lg text-xs font-bold flex items-center gap-1.5 border border-slate-200 hover:border-indigo-200 shadow-sm transition-all text-decoration-none focus:outline-none focus:ring-2 focus:ring-indigo-500/25">
+                    <i class="ti ti-building-store text-base leading-none"></i> {{ __('Product List') }}
+                </a>
+                <a href="{{ route('orders.index') }}" class="h-9 px-3.5 bg-white hover:bg-purple-50 text-slate-700 hover:text-purple-600 rounded-lg text-xs font-bold flex items-center gap-1.5 border border-slate-200 hover:border-purple-200 shadow-sm transition-all text-decoration-none focus:outline-none focus:ring-2 focus:ring-purple-500/25">
+                    <i class="ti ti-chart-bar text-base leading-none"></i> {{ __('Today\'s Sales') }}
+                </a>
+                <button type="button" id="btn-calculator" class="h-9 px-3.5 bg-white hover:bg-blue-50 text-slate-700 hover:text-blue-600 rounded-lg text-xs font-bold flex items-center gap-1.5 border border-slate-200 hover:border-blue-200 shadow-sm transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/25" onclick="toggleCalculator()">
+                    <i class="ti ti-calculator text-base leading-none"></i> {{ __('Calculator') }}
+                </button>
+                <a href="{{ route('dashboard') }}" class="h-9 px-3.5 bg-white hover:bg-rose-50 text-slate-700 hover:text-rose-600 rounded-lg text-xs font-bold flex items-center gap-1.5 border border-slate-200 hover:border-rose-200 shadow-sm transition-all text-decoration-none focus:outline-none focus:ring-2 focus:ring-rose-500/25">
+                    <i class="ti ti-home text-base leading-none"></i> {{ __('Dashboard') }}
+                </a>
+            </div>
         </div>
 
-        <!-- RIGHT PANEL: CART & BILLING (w-[60%]) -->
-        <div class="w-full lg:w-[60%] flex flex-col gap-3 h-full overflow-hidden">
+        <!-- Two-Panel POS Workspace -->
+        <div class="pos-workspace-container flex-grow min-h-0">
             
-            <!-- 1. Quick Action Header Row -->
-            <div class="flex items-center justify-between pb-1 shrink-0">
-                <div class="flex gap-2 flex-wrap">
-                    <a href="{{ route('product.index') }}" class="px-3.5 py-2 bg-indigo-50 text-indigo-600 rounded-lg text-xs font-semibold flex items-center gap-1.5 border border-indigo-100 hover:bg-indigo-100 transition-colors text-decoration-none">
-                        <i class="ti ti-building-store text-sm"></i> {{ __('Product List') }}
-                    </a>
-                    <a href="{{ route('orders.index') }}" class="px-3.5 py-2 bg-purple-50 text-purple-600 rounded-lg text-xs font-semibold flex items-center gap-1.5 border border-purple-100 hover:bg-purple-100 transition-colors text-decoration-none">
-                        <i class="ti ti-chart-bar text-sm"></i> {{ __('Today Sales') }}
-                    </a>
-                    <button type="button" class="px-3.5 py-2 bg-blue-50 text-blue-600 rounded-lg text-xs font-semibold flex items-center gap-1.5 border border-blue-100 hover:bg-blue-100 transition-colors cursor-pointer" onclick="toggleCalculator()">
-                        <i class="ti ti-calculator text-sm"></i> {{ __('Calculator') }}
-                    </button>
-                    <a href="{{ route('dashboard') }}" class="px-3.5 py-2 bg-rose-50 text-rose-600 rounded-lg text-xs font-semibold flex items-center gap-1.5 border border-rose-100 hover:bg-rose-100 transition-colors text-decoration-none">
-                        <i class="ti ti-home text-sm"></i> {{ __('Dashboard') }}
-                    </a>
+            <!-- LEFT PANEL: PRODUCT CATALOGUE (w-[40%]) -->
+            <div class="w-full lg:w-[40%] flex flex-col gap-3 h-full overflow-hidden">
+                
+                <!-- 1. Search Bar Card -->
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-3 shrink-0">
+                    <div class="search-main-form w-full">
+                        <form class="search-input-wrp m-0" onsubmit="return false;">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="ti ti-search"></i></span>
+                                <input id="searchproduct" type="text" data-url="{{ route('search.products') }}" placeholder="{{ __('Search product by code or name') }}" class="form-control">
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Category Pills listing -->
+                    <div class="category-tab-wrapper overflow-hidden">
+                        <div id="categories-listing" class="no-scrollbar">
+                            <!-- Dynamic categories loaded via AJAX -->
+                        </div>
+                    </div>
                 </div>
+
+                <!-- 2. Scrollable Product Cards Grid -->
+                <div class="flex-grow overflow-y-auto custom-scrollbar pr-1">
+                    <div id="product-listing">
+                        <!-- Dynamic products loaded via AJAX -->
+                    </div>
+                </div>
+
             </div>
+
+            <!-- RIGHT PANEL: CART & BILLING (w-[60%]) -->
+            <div class="w-full lg:w-[60%] flex flex-col gap-3 h-full overflow-hidden">
 
             <!-- 2. Main Cart/Billing card container -->
             <div class="pos-billing-card">
@@ -484,7 +502,7 @@
 
                 <!-- Cart table body (scrollable) -->
                 @php $total = 0 @endphp
-                <div class="flex-grow overflow-y-auto custom-scrollbar carttable-scroll" id="carthtml">
+                <div class="overflow-y-auto custom-scrollbar carttable-scroll" id="carthtml">
                     <div class="carttable">
                         <table class="w-full text-sm text-left">
                             <thead class="sticky top-0 bg-slate-50 text-slate-700 font-semibold border-b border-slate-200 z-10">
@@ -575,7 +593,7 @@
                 </div>
 
                 <!-- Billing & Totals Section -->
-                <div class="border-t border-slate-100 bg-slate-50 shrink-0">
+                <div class="border-t border-slate-100 bg-slate-50 flex-grow billing-totals-wrap min-h-0">
                     <div class="p-4 grid grid-cols-12 gap-4">
                         <!-- Left Side Inputs (Payment Info) -->
                         <div class="col-span-7 space-y-2">
@@ -715,6 +733,7 @@
             </div>
         </div>
     </div>
+    </div> <!-- Close outer flex-col container -->
 </x-ui.page-container>
 @endsection
 
@@ -734,11 +753,20 @@
 
         window.toggleCalculator = function() {
             const modal = document.getElementById('calculatorModal');
+            const btn = document.getElementById('btn-calculator');
             if (modal.style.display === 'none') {
                 modal.style.display = 'flex';
+                if (btn) {
+                    btn.classList.add('bg-blue-50', 'text-blue-600', 'border-blue-300', 'ring-2', 'ring-blue-500/10');
+                    btn.classList.remove('bg-white', 'text-slate-700', 'border-slate-200');
+                }
                 resetCalculator();
             } else {
                 modal.style.display = 'none';
+                if (btn) {
+                    btn.classList.remove('bg-blue-50', 'text-blue-600', 'border-blue-300', 'ring-2', 'ring-blue-500/10');
+                    btn.classList.add('bg-white', 'text-slate-700', 'border-slate-200');
+                }
             }
         };
 
@@ -814,7 +842,39 @@
             }
         };
 
+        // Self-updating Live Clock
+        function startLiveClock() {
+            const dateEl = document.getElementById('pos-live-date');
+            const timeEl = document.getElementById('pos-live-time');
+            if (!dateEl || !timeEl) return;
+
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+            function updateTime() {
+                const now = new Date();
+                
+                const dayName = days[now.getDay()];
+                const dayNum = now.getDate();
+                const monthName = months[now.getMonth()];
+                const year = now.getFullYear();
+                
+                let hours = now.getHours();
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12; // 0 should be 12
+                
+                dateEl.textContent = `${dayName}, ${dayNum} ${monthName} ${year}`;
+                timeEl.textContent = `${String(hours).padStart(2, '0')}:${minutes} ${ampm}`;
+            }
+            
+            updateTime();
+            setInterval(updateTime, 1000);
+        }
+
         $( document ).ready(function() {
+            startLiveClock();
 
             $( "#vc_name_hidden" ).val($('.customer_select').val());
             $( "#discount_hidden").val($('.discount').val());
