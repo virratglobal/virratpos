@@ -799,6 +799,5 @@ $logo = \App\Models\Utility::get_file('uploads/logo');
         @include('layouts.cookie_consent')
     @endif
     @stack('scripts')
-    @stack('script-page')
 </body>
 </html>
