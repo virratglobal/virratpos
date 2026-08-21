@@ -53,7 +53,7 @@ class CustomerLoginController extends Controller
             return redirect()->route('customer.home',$slug);
         }
         else{
-            return view('storefront.' . $store->theme_dir . '.user.login', compact('blog','total_item', 'store', 'slug', 'page_slug_urls'));
+            return view('storefront.' . Utility::resolveTheme($store) . '.user.login', compact('blog','total_item', 'store', 'slug', 'page_slug_urls'));
 
         }
     }
@@ -208,7 +208,7 @@ class CustomerLoginController extends Controller
         }
         $userDetail = Customer::find(Crypt::decrypt($id));
 
-        return view('storefront.' . $store->theme_dir . '.customer.profile', compact('blog', 'slug', 'store', 'page_slug_urls', 'userDetail'));
+        return view('storefront.' . Utility::resolveTheme($store) . '.customer.profile', compact('blog', 'slug', 'store', 'page_slug_urls', 'userDetail'));
     }
 
     public function profileUpdate($slug, Request $request)

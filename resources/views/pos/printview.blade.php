@@ -27,6 +27,90 @@
         padding-bottom: 6px !important;
         margin-bottom: 6px !important;
     }
+
+    @media print {
+        /* Hide all non-printable layout wrappers and modal overlays */
+        .sg-sidebar,
+        .sg-main-content,
+        .modal-backdrop,
+        #commonModalOver,
+        .modal-header,
+        .modal-footer,
+        #print,
+        .toast,
+        .alert,
+        header,
+        footer,
+        nav,
+        aside {
+            display: none !important;
+            visibility: hidden !important;
+        }
+        
+        /* Reset HTML and body layouts, margins and backgrounds */
+        html, body {
+            background: #ffffff !important;
+            color: #000000 !important;
+            height: auto !important;
+            min-height: 0 !important;
+            overflow: visible !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        /* Remove fixed positions, overflows, transforms and shadows from parents of the print area */
+        #commonModal {
+            position: absolute !important;
+            left: 0 !important;
+            top: 0 !important;
+            width: 100% !important;
+            height: auto !important;
+            overflow: visible !important;
+            display: block !important;
+            opacity: 1 !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            transform: none !important;
+        }
+
+        #commonModal .modal-dialog {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            transform: none !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
+        }
+
+        #commonModal .modal-content {
+            border: none !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        /* Position and format the receipt box at the top left */
+        #printarea {
+            position: absolute !important;
+            left: 0 !important;
+            top: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+            background: #ffffff !important;
+            border: none !important;
+        }
+    }
 </style>
 <div class="modal-body pos-module" id="printarea" >
     <table class="table pos-module-tbl">
@@ -124,17 +208,6 @@
     </div>
 <script>
     $("#print").click(function () {
-        var print_div = document.getElementById("printarea");
-        $('.row').addClass('d-none');
-        $('.toast').addClass('d-none');
-        $('#print').addClass('d-none');
         window.print();
-        $('.row').removeClass('d-none');
-        $('#print').removeClass('d-none');
-        $('.toast').removeClass('d-none');
     });
 </script>
-
-
-
-
