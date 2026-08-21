@@ -523,153 +523,650 @@
 
 @else
 
+    {{-- ===================== PHP DATA CALCULATIONS ===================== --}}
+    @php
+        $store_id_data = $store_id;
+        
+        // Dynamic calculations for KPI comparison
+        $currentWeekSales = $orders->filter(function($o) {
+            return $o->created_at >= now()->subDays(7);
+        })->sum('price');
+        
+        $previousWeekSales = $orders->filter(function($o) {
+            return $o->created_at >= now()->subDays(14) && $o->created_at < now()->subDays(7);
+        })->sum('price');
+        
+        $salesGrowth = $previousWeekSales > 0 
+            ? (($currentWeekSales - $previousWeekSales) / $previousWeekSales) * 100 
+            : ($currentWeekSales > 0 ? 100 : 0);
 
-    <!-- Header Section -->
-    <div class="flex items-center justify-between mb-6">
-        <div>
-            <h1 class="text-[1.5rem] font-semibold text-gray-900" style="font-family: 'Geist', sans-serif; line-height: 40px; letter-spacing: -0.04em; margin: 0;">{{ __('Your overview') }}</h1>
-            <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #767586; margin-top: 2px;">{{ __('Real-time store performance & metrics') }}</p>
-        </div>
-        <div class="relative timeframe-select-wrap">
-            <select class="appearance-none bg-white border border-gray-200 rounded-md py-1.5 pl-3 pr-8 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-                <option>{{ __('Lifetime') }}</option>
-                <option>{{ __('Today') }}</option>
-                <option>{{ __('Yesterday') }}</option>
-                <option>{{ __('This Week') }}</option>
-            </select>
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
-                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        $currentWeekOrders = $orders->filter(function($o) {
+            return $o->created_at >= now()->subDays(7);
+        })->count();
+        
+        $previousWeekOrders = $orders->filter(function($o) {
+            return $o->created_at >= now()->subDays(14) && $o->created_at < now()->subDays(7);
+        })->count();
+        
+        $ordersGrowth = $previousWeekOrders > 0 
+            ? (($currentWeekOrders - $previousWeekOrders) / $previousWeekOrders) * 100 
+            : ($currentWeekOrders > 0 ? 100 : 0);
+
+        // AOV
+        $currentAOV = $totle_order > 0 ? $totle_sale / $totle_order : 0;
+        
+        $currentWeekAOV = $currentWeekOrders > 0 ? $currentWeekSales / $currentWeekOrders : 0;
+        $previousWeekAOV = $previousWeekOrders > 0 ? $previousWeekSales / $previousWeekOrders : 0;
+        
+        $aovGrowth = $previousWeekAOV > 0 
+            ? (($currentWeekAOV - $previousWeekAOV) / $previousWeekAOV) * 100 
+            : ($currentWeekAOV > 0 ? 100 : 0);
+
+        // Visitor Sessions & Conversion
+        $visitorCount = \DB::table('visitor')->where('slug', $store_id_data->slug)->count();
+        $conversionRate = $visitorCount > 0 ? ($totle_order / $visitorCount) * 100 : 0;
+
+        // Order status counts
+        $completedOrdersCount = $orders->filter(function($o) {
+            return in_array(strtolower($o->status), ['delivered', 'completed', 'approved']);
+        })->count();
+        
+        $pendingOrdersCount = $orders->filter(function($o) {
+            return strtolower($o->status) == 'pending';
+        })->count();
+        
+        $cancelledOrdersCount = $orders->filter(function($o) {
+            return in_array(strtolower($o->status), ['cancelled', 'canceled', 'rejected']);
+        })->count();
+
+        $completedOrdersPercent = $totle_order > 0 ? ($completedOrdersCount / $totle_order) * 100 : 0;
+        $pendingOrdersPercent = $totle_order > 0 ? ($pendingOrdersCount / $totle_order) * 100 : 0;
+        $cancelledOrdersPercent = $totle_order > 0 ? ($cancelledOrdersCount / $totle_order) * 100 : 0;
+
+        // Low stock count
+        $lowStockCount = \App\Models\Product::where('store_id', \Auth::user()->current_store)
+            ->where('quantity', '<=', 3)
+            ->count();
+    @endphp
+
+    {{-- ===================== DASHBOARD HEADER ===================== --}}
+    <div style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 28px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+            <div>
+                <h1 style="font-family: 'Geist', sans-serif; font-size: 1.75rem; font-weight: 600; color: #0b1c30; margin: 0; line-height: 1.2; letter-spacing: -0.04em;">
+                    <span id="greetings">{{ __('Good morning') }}</span>, {{ \Auth::user()->name }}
+                </h1>
+                <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #767586; margin: 4px 0 0;">
+                    {{ __("Here's what's happening with your store today.") }}
+                </p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                {{-- Date Selector placeholder --}}
+                <div style="position: relative;">
+                    <span class="material-symbols-outlined" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 16px; color: #a0a0b0; pointer-events: none;">calendar_today</span>
+                    <select disabled style="padding: 8px 32px 8px 34px; border: 1px solid rgba(199,196,215,0.4); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 13px; color: #464554; background: #fff; appearance: none; outline: none; cursor: not-allowed; width: 140px;">
+                        <option>{{ __('Lifetime') }}</option>
+                    </select>
+                    <span class="material-symbols-outlined" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 16px; color: #a0a0b0; pointer-events: none;">expand_more</span>
+                </div>
+                {{-- Refresh Button --}}
+                <button type="button" onclick="window.location.reload();"
+                        style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: #e5eeff; color: #4648d4; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s;"
+                        onmouseover="this.style.background='#dce9ff'; this.style.transform='rotate(45deg)';" onmouseout="this.style.background='#e5eeff'; this.style.transform='none';">
+                    <span class="material-symbols-outlined" style="font-size: 20px;">refresh</span>
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Main Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        
-        <!-- Total Sales Card -->
-        <div class="dashboard-card p-6 flex flex-col">
-            <div class="flex justify-between items-start mb-2">
-                <div class="flex items-center text-sm font-medium text-gray-500">
-                    {{ __('Total sales') }}
-                    <svg class="w-4 h-4 ml-1.5 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
-                </div>
-                <div class="status-icon-box" style="background: rgba(70, 72, 212, 0.08); color: #4648d4;">
-                    <span class="material-symbols-outlined" style="font-size: 18px;">payments</span>
+    {{-- ===================== KPI ROW ===================== --}}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" style="margin-bottom: 28px;">
+
+        {{-- Total Sales Card --}}
+        <div class="dashboard-card" style="border: 1px solid rgba(199,196,215,0.2); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,0.02);">
+            <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px;">
+                <span style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; color: #767586;">{{ __('Total Sales') }}</span>
+                <div style="width: 36px; height: 36px; border-radius: 8px; background: #eff0fe; display: flex; align-items: center; justify-content: center;">
+                    <span class="material-symbols-outlined" style="font-size: 18px; color: #4648d4;">payments</span>
                 </div>
             </div>
-            <div class="flex items-end justify-between mb-4">
-                <h3 class="text-3xl font-bold text-gray-900" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ \App\Models\Utility::priceFormat($totle_sale) }}</h3>
-                <span class="text-xs text-gray-500 font-semibold mb-1" style="background: #f1f5f9; padding: 2px 8px; border-radius: 12px;">{{ $totle_order }} {{ __('orders') }}</span>
-            </div>
-            
-            <div class="chart-container-wrap">
-                <div id="traffic-chart"></div>
-            </div>
-            
-            <div class="mt-4 pt-3 border-t border-gray-100 text-center">
-                <a href="{{ route('orders.index') }}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-800 flex items-center justify-center gap-1" style="color: #4648d4 !important;">
-                    {{ __('View order history') }} 
-                    <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
-                </a>
+            <h3 style="font-family: 'Geist', sans-serif; font-size: 1.75rem; font-weight: 700; color: #0b1c30; margin: 0 0 6px; line-height: 1.1;">
+                {{ \App\Models\Utility::priceFormat($totle_sale) }}
+            </h3>
+            <div style="display: flex; align-items: center; gap: 6px;">
+                @if($salesGrowth >= 0)
+                    <span style="color: #1a7431; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 2px;">
+                        <span class="material-symbols-outlined" style="font-size: 14px;">arrow_upward</span>
+                        +{{ number_format($salesGrowth, 1) }}%
+                    </span>
+                @else
+                    <span style="color: #ba1a1a; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 2px;">
+                        <span class="material-symbols-outlined" style="font-size: 14px;">arrow_downward</span>
+                        {{ number_format($salesGrowth, 1) }}%
+                    </span>
+                @endif
+                <span style="font-family: 'Inter', sans-serif; font-size: 12px; color: #767586;">{{ __('vs last week') }}</span>
             </div>
         </div>
 
-        <!-- Store Conversion Rate Card -->
-        <div class="dashboard-card p-6 flex flex-col">
-            <div class="flex justify-between items-start mb-2">
-                <div class="flex items-center text-sm font-medium text-gray-500">
-                    {{ __('Store conversion rate') }}
-                    <svg class="w-4 h-4 ml-1.5 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
-                </div>
-                <div class="status-icon-box" style="background: rgba(16, 185, 129, 0.08); color: #10b981;">
-                    <span class="material-symbols-outlined" style="font-size: 18px;">analytics</span>
+        {{-- Total Orders Card --}}
+        <div class="dashboard-card" style="border: 1px solid rgba(199,196,215,0.2); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,0.02);">
+            <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px;">
+                <span style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; color: #767586;">{{ __('Total Orders') }}</span>
+                <div style="width: 36px; height: 36px; border-radius: 8px; background: #e8f5e9; display: flex; align-items: center; justify-content: center;">
+                    <span class="material-symbols-outlined" style="font-size: 18px; color: #1a7431;">shopping_bag</span>
                 </div>
             </div>
-            <div class="flex items-end justify-between mb-4">
-                <h3 class="text-3xl font-bold text-gray-900" style="font-family: 'Plus Jakarta Sans', sans-serif;">0%</h3>
-                <span class="text-xs text-gray-500 font-semibold mb-1" style="background: #f1f5f9; padding: 2px 8px; border-radius: 12px;">0 {{ __('sessions') }}</span>
-            </div>
-            
-            <div class="chart-container-wrap">
-                <div id="conversion-chart"></div>
-            </div>
-            
-            <div class="mt-4 pt-3 border-t border-gray-100 text-center">
-                <a href="{{ route('storeanalytic') }}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-800 flex items-center justify-center gap-1" style="color: #4648d4 !important;">
-                    {{ __('View analytics') }} 
-                    <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
-                </a>
+            <h3 style="font-family: 'Geist', sans-serif; font-size: 1.75rem; font-weight: 700; color: #0b1c30; margin: 0 0 6px; line-height: 1.1;">
+                {{ $totle_order }}
+            </h3>
+            <div style="display: flex; align-items: center; gap: 6px;">
+                @if($ordersGrowth >= 0)
+                    <span style="color: #1a7431; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 2px;">
+                        <span class="material-symbols-outlined" style="font-size: 14px;">arrow_upward</span>
+                        +{{ number_format($ordersGrowth, 1) }}%
+                    </span>
+                @else
+                    <span style="color: #ba1a1a; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 2px;">
+                        <span class="material-symbols-outlined" style="font-size: 14px;">arrow_downward</span>
+                        {{ number_format($ordersGrowth, 1) }}%
+                    </span>
+                @endif
+                <span style="font-family: 'Inter', sans-serif; font-size: 12px; color: #767586;">{{ __('vs last week') }}</span>
             </div>
         </div>
 
-        <!-- Store Link & Quick Status -->
-        <div class="flex flex-col space-y-4">
-            <div class="dashboard-card p-6">
-                <div class="flex justify-between items-start mb-3">
-                    <div class="text-sm font-semibold text-gray-500">{{ __('Store link') }}</div>
-                    <a href="#" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800" style="color: #4648d4 !important;">{{ __('Link domain') }}</a>
+        {{-- AOV Card --}}
+        <div class="dashboard-card" style="border: 1px solid rgba(199,196,215,0.2); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,0.02);">
+            <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px;">
+                <span style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; color: #767586;">{{ __('Average Order Value') }}</span>
+                <div style="width: 36px; height: 36px; border-radius: 8px; background: #fff3e0; display: flex; align-items: center; justify-content: center;">
+                    <span class="material-symbols-outlined" style="font-size: 18px; color: #904900;">account_balance_wallet</span>
                 </div>
-                <div class="store-link-box">
-                    <a href="{{ $store_id['store_url'] ?? '' }}" target="_blank" class="store-link-url flex items-center gap-1">
-                        {{ $store_id['store_url'] ?? 'mydukaan.io/virrat' }}
-                        <span class="material-symbols-outlined" style="font-size: 14px;">open_in_new</span>
+            </div>
+            <h3 style="font-family: 'Geist', sans-serif; font-size: 1.75rem; font-weight: 700; color: #0b1c30; margin: 0 0 6px; line-height: 1.1;">
+                {{ \App\Models\Utility::priceFormat($currentAOV) }}
+            </h3>
+            <div style="display: flex; align-items: center; gap: 6px;">
+                @if($aovGrowth >= 0)
+                    <span style="color: #1a7431; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 2px;">
+                        <span class="material-symbols-outlined" style="font-size: 14px;">arrow_upward</span>
+                        +{{ number_format($aovGrowth, 1) }}%
+                    </span>
+                @else
+                    <span style="color: #ba1a1a; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 2px;">
+                        <span class="material-symbols-outlined" style="font-size: 14px;">arrow_downward</span>
+                        {{ number_format($aovGrowth, 1) }}%
+                    </span>
+                @endif
+                <span style="font-family: 'Inter', sans-serif; font-size: 12px; color: #767586;">{{ __('vs last week') }}</span>
+            </div>
+        </div>
+
+        {{-- Conversion Rate Card --}}
+        <div class="dashboard-card" style="border: 1px solid rgba(199,196,215,0.2); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,0.02);">
+            <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px;">
+                <span style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; color: #767586;">{{ __('Conversion Rate') }}</span>
+                <div style="width: 36px; height: 36px; border-radius: 8px; background: #e0f2f1; display: flex; align-items: center; justify-content: center;">
+                    <span class="material-symbols-outlined" style="font-size: 18px; color: #00796b;">query_stats</span>
+                </div>
+            </div>
+            <h3 style="font-family: 'Geist', sans-serif; font-size: 1.75rem; font-weight: 700; color: #0b1c30; margin: 0 0 6px; line-height: 1.1;">
+                {{ number_format($conversionRate, 2) }}%
+            </h3>
+            <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="font-family: 'Inter', sans-serif; font-size: 12px; color: #00796b; font-weight: 600;">
+                    {{ number_format($visitorCount) }} {{ __('sessions') }}
+                </span>
+            </div>
+        </div>
+
+    </div>
+
+    {{-- ===================== MAIN ANALYTICS ROWS ===================== --}}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6" style="margin-bottom: 28px;">
+
+        {{-- Left: Sales Overview Card --}}
+        <div class="lg:col-span-2" style="border: 1px solid rgba(199,196,215,0.2); border-radius: 16px; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column;">
+            
+            {{-- Header --}}
+            <div style="padding: 20px 24px; border-bottom: 1px solid rgba(199,196,215,0.15); display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                    <h2 style="font-family: 'Geist', sans-serif; font-size: 15px; font-weight: 600; color: #0b1c30; margin: 0; letter-spacing: -0.01em;">
+                        {{ __('Sales Overview') }}
+                    </h2>
+                </div>
+                <div style="background: #f1f5f9; border-radius: 6px; padding: 2px; display: inline-flex; gap: 2px;">
+                    <button type="button" style="border: none; padding: 4px 10px; background: #fff; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #4648d4; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">7 {{ __('Days') }}</button>
+                    <button type="button" disabled style="border: none; padding: 4px 10px; background: transparent; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; color: #767586; cursor: not-allowed;">30 {{ __('Days') }}</button>
+                </div>
+            </div>
+
+            {{-- Graph Area --}}
+            <div style="padding: 24px; flex-grow: 1;">
+                <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 16px;">
+                    <span style="font-family: 'Geist', sans-serif; font-size: 1.75rem; font-weight: 700; color: #0b1c30;">
+                        {{ \App\Models\Utility::priceFormat($currentWeekSales) }}
+                    </span>
+                    @if($salesGrowth >= 0)
+                        <span style="color: #1a7431; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 2px;">
+                            <span class="material-symbols-outlined" style="font-size: 14px;">arrow_upward</span>
+                            +{{ number_format($salesGrowth, 1) }}%
+                        </span>
+                    @else
+                        <span style="color: #ba1a1a; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 2px;">
+                            <span class="material-symbols-outlined" style="font-size: 14px;">arrow_downward</span>
+                            {{ number_format($salesGrowth, 1) }}%
+                        </span>
+                    @endif
+                </div>
+                
+                {{-- ApexCharts Mount --}}
+                <div id="sales-overview-chart" style="min-height: 240px; width: 100%;"></div>
+            </div>
+
+            {{-- Card Footer --}}
+            <div style="padding: 16px 24px; border-top: 1px solid rgba(199,196,215,0.15); text-align: center;">
+                <a href="{{ route('storeanalytic') }}" style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: #5146E5; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;"
+                   onmouseover="this.style.color='#3c34ba'" onmouseout="this.style.color='#5146E5'">
+                    {{ __('View detailed analytics') }}
+                    <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+                </a>
+            </div>
+
+        </div>
+
+        {{-- Right: Order Activity Card --}}
+        <div class="lg:col-span-1" style="border: 1px solid rgba(199,196,215,0.2); border-radius: 16px; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column;">
+            
+            {{-- Header --}}
+            <div style="padding: 20px 24px; border-bottom: 1px solid rgba(199,196,215,0.15); display: flex; align-items: center; justify-content: space-between;">
+                <h2 style="font-family: 'Geist', sans-serif; font-size: 15px; font-weight: 600; color: #0b1c30; margin: 0; letter-spacing: -0.01em;">
+                    {{ __('Order Activity') }}
+                </h2>
+                <span style="font-family: 'Inter', sans-serif; font-size: 12px; color: #767586; font-weight: 500;">
+                    {{ __('Distribution') }}
+                </span>
+            </div>
+
+            {{-- Content --}}
+            <div style="padding: 24px; flex-grow: 1; display: flex; flex-direction: column;">
+                
+                {{-- Dynamic Multi-Segmented Progress Bar --}}
+                <div style="display: flex; height: 10px; border-radius: 5px; overflow: hidden; background: #f1f5f9; margin-bottom: 24px; width: 100%;">
+                    @if($totle_order > 0)
+                        <div style="width: {{ $completedOrdersPercent }}%; background: #10b981;" title="Completed"></div>
+                        <div style="width: {{ $pendingOrdersPercent }}%; background: #f59e0b;" title="Pending"></div>
+                        <div style="width: {{ $cancelledOrdersPercent }}%; background: #ef4444;" title="Cancelled"></div>
+                    @else
+                        <div style="width: 100%; background: #e2e8f0;" title="No orders"></div>
+                    @endif
+                </div>
+
+                {{-- Status Legends --}}
+                <div style="display: flex; flex-direction: column; gap: 16px; flex-grow: 1; justify-content: center;">
+                    
+                    {{-- Total --}}
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 12px;">
+                        <span style="font-family: 'Inter', sans-serif; font-size: 13px; color: #464554; font-weight: 600;">{{ __('Total Orders') }}</span>
+                        <span style="font-family: 'Geist', sans-serif; font-size: 14px; font-weight: 700; color: #0b1c30;">{{ $totle_order }}</span>
+                    </div>
+
+                    {{-- Completed --}}
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
+                            <span style="font-family: 'Inter', sans-serif; font-size: 13px; color: #767586;">{{ __('Completed') }}</span>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30; display: block;">{{ $completedOrdersCount }}</span>
+                            <span style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; display: block;">{{ number_format($completedOrdersPercent, 1) }}%</span>
+                        </div>
+                    </div>
+
+                    {{-- Pending --}}
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; display: inline-block;"></span>
+                            <span style="font-family: 'Inter', sans-serif; font-size: 13px; color: #767586;">{{ __('Pending') }}</span>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30; display: block;">{{ $pendingOrdersCount }}</span>
+                            <span style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; display: block;">{{ number_format($pendingOrdersPercent, 1) }}%</span>
+                        </div>
+                    </div>
+
+                    {{-- Cancelled --}}
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444; display: inline-block;"></span>
+                            <span style="font-family: 'Inter', sans-serif; font-size: 13px; color: #767586;">{{ __('Cancelled') }}</span>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30; display: block;">{{ $cancelledOrdersCount }}</span>
+                            <span style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; display: block;">{{ number_format($cancelledOrdersPercent, 1) }}%</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {{-- ===================== STORE ACTIVITY & STORE LINK ROWS ===================== --}}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6" style="margin-bottom: 28px;">
+
+        {{-- Left: Store Activity Card --}}
+        <div class="lg:col-span-2" style="border: 1px solid rgba(199,196,215,0.2); border-radius: 16px; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column;">
+            
+            {{-- Header --}}
+            <div style="padding: 20px 24px; border-bottom: 1px solid rgba(199,196,215,0.15);">
+                <h2 style="font-family: 'Geist', sans-serif; font-size: 15px; font-weight: 600; color: #0b1c30; margin: 0; letter-spacing: -0.01em;">
+                    {{ __('Store Activity') }}
+                </h2>
+            </div>
+
+            {{-- Activity items list --}}
+            <div style="display: flex; flex-direction: column; width: 100%;">
+                
+                {{-- Pending Orders --}}
+                <a href="{{ route('orders.index') }}" class="status-row-item" style="display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; text-decoration: none; border-bottom: 1px solid rgba(199, 196, 215, 0.1);">
+                    <div style="display: flex; align-items: center;">
+                        <div class="status-icon-box" style="background: rgba(79, 70, 229, 0.08); color: #4f46e5; margin-right: 16px; width: 36px; height: 36px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center;">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">shopping_bag</span>
+                        </div>
+                        <div>
+                            <span style="font-family: 'Inter', sans-serif; font-size: 14px; text-decoration: none; color: #0b1c30; font-weight: 600; display: block;">{{ __('Pending Orders') }}</span>
+                            <span style="font-family: 'Inter', sans-serif; font-size: 12px; color: #767586; display: block; margin-top: 1px;">{{ $pendingOrdersCount }} {{ __('orders awaiting processing') }}</span>
+                        </div>
+                    </div>
+                    <span class="material-symbols-outlined" style="font-size: 18px; color: #a0a0b0;">chevron_right</span>
+                </a>
+
+                {{-- Shipped / Delivered Orders --}}
+                <a href="{{ route('orders.index') }}" class="status-row-item" style="display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; text-decoration: none; border-bottom: 1px solid rgba(199, 196, 215, 0.1);">
+                    <div style="display: flex; align-items: center;">
+                        <div class="status-icon-box" style="background: rgba(16, 185, 129, 0.08); color: #10b981; margin-right: 16px; width: 36px; height: 36px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center;">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">local_shipping</span>
+                        </div>
+                        <div>
+                            <span style="font-family: 'Inter', sans-serif; font-size: 14px; text-decoration: none; color: #0b1c30; font-weight: 600; display: block;">{{ __('Delivered Orders') }}</span>
+                            <span style="font-family: 'Inter', sans-serif; font-size: 12px; color: #767586; display: block; margin-top: 1px;">{{ $completedOrdersCount }} {{ __('orders completed/delivered') }}</span>
+                        </div>
+                    </div>
+                    <span class="material-symbols-outlined" style="font-size: 18px; color: #a0a0b0;">chevron_right</span>
+                </a>
+
+                {{-- Low Stock Products --}}
+                <a href="{{ route('product.index') }}" class="status-row-item" style="display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; text-decoration: none;">
+                    <div style="display: flex; align-items: center;">
+                        <div class="status-icon-box" style="background: rgba(245, 158, 11, 0.08); color: #f59e0b; margin-right: 16px; width: 36px; height: 36px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center;">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">warning</span>
+                        </div>
+                        <div>
+                            <span style="font-family: 'Inter', sans-serif; font-size: 14px; text-decoration: none; color: #0b1c30; font-weight: 600; display: block;">{{ __('Low Stock Products') }}</span>
+                            <span style="font-family: 'Inter', sans-serif; font-size: 12px; color: #767586; display: block; margin-top: 1px;">
+                                @if($lowStockCount > 0)
+                                    <span style="color: #f59e0b; font-weight: 600;">{{ $lowStockCount }} {{ __('products need attention') }}</span>
+                                @else
+                                    {{ __('All product stocks are healthy') }}
+                                @endif
+                            </span>
+                        </div>
+                    </div>
+                    <span class="material-symbols-outlined" style="font-size: 18px; color: #a0a0b0;">chevron_right</span>
+                </a>
+
+            </div>
+
+        </div>
+
+        {{-- Right: Store Link Card --}}
+        <div class="lg:col-span-1" style="border: 1px solid rgba(199,196,215,0.2); border-radius: 16px; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: space-between;">
+            
+            {{-- Content --}}
+            <div style="padding: 24px; flex-grow: 1;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                    <span style="font-family: 'Geist', sans-serif; font-size: 15px; font-weight: 600; color: #0b1c30;">{{ __('Your Store') }}</span>
+                    <span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 12px; background: #e8f5e9; color: #1a7431; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;">
+                        <span style="width: 5px; height: 5px; border-radius: 50%; background: #1a7431;"></span>
+                        {{ __('Live') }}
+                    </span>
+                </div>
+                <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #767586; margin: 0 0 16px;">
+                    {{ __('Your online storefront is ready.') }}
+                </p>
+                
+                {{-- Store Link Box --}}
+                <div style="background: #f8fafc; border: 1px solid rgba(199, 196, 215, 0.25); border-radius: 8px; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;">
+                    <a href="{{ $store_id['store_url'] ?? '' }}" target="_blank" style="color: #4648d4; font-weight: 600; font-size: 13px; font-family: 'Inter', sans-serif; text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 170px;">
+                        {{ str_replace(['http://', 'https://'], '', $store_id['store_url'] ?? 'mydukaan.io/virrat') }}
                     </a>
-                    <button class="btn-copy-link cp_link" data-link="{{ $store_id['store_url'] ?? '' }}">
+                    <button class="btn-copy-link cp_link" data-link="{{ $store_id['store_url'] ?? '' }}" style="background: #ffffff; border: 1px solid rgba(199,196,215,0.4); color: #464554; border-radius: 6px; padding: 4px 10px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#eff0fe'; this.style.color='#4648d4'; this.style.borderColor='#4648d4';" onmouseout="this.style.background='#ffffff'; this.style.color='#464554'; this.style.borderColor='rgba(199,196,215,0.4)';">
                         {{ __('Copy') }}
                     </button>
                 </div>
             </div>
-            
-            <!-- List items -->
-            <div class="dashboard-card py-2">
-                <div class="divide-y divide-gray-100">
-                    <a href="#" class="status-row-item flex items-center justify-between px-5 py-3.5 transition-colors text-decoration-none">
-                        <div class="flex items-center">
-                            <div class="status-icon-box mr-3" style="background: rgba(79, 70, 229, 0.08); color: #4f46e5;">
-                                <span class="material-symbols-outlined" style="font-size: 18px;">shopping_bag</span>
-                            </div>
-                            <span class="text-sm text-gray-700 font-semibold">{{ __('No new orders pending') }}</span>
-                        </div>
-                        <span class="material-symbols-outlined text-gray-400" style="font-size: 18px;">chevron_right</span>
-                    </a>
-                    <a href="#" class="status-row-item flex items-center justify-between px-5 py-3.5 transition-colors text-decoration-none">
-                        <div class="flex items-center">
-                            <div class="status-icon-box mr-3" style="background: rgba(217, 119, 6, 0.08); color: #d97706;">
-                                <span class="material-symbols-outlined" style="font-size: 18px;">local_shipping</span>
-                            </div>
-                            <span class="text-sm text-gray-700 font-semibold">{{ __('No order to ship today') }}</span>
-                        </div>
-                        <span class="material-symbols-outlined text-gray-400" style="font-size: 18px;">chevron_right</span>
-                    </a>
-                    <a href="#" class="status-row-item flex items-center justify-between px-5 py-3.5 transition-colors text-decoration-none">
-                        <div class="flex items-center">
-                            <div class="status-icon-box mr-3" style="background: rgba(220, 38, 38, 0.08); color: #dc2626;">
-                                <span class="material-symbols-outlined" style="font-size: 18px;">shopping_cart_off</span>
-                            </div>
-                            <span class="text-sm text-gray-700 font-semibold">{{ __('No abandoned order') }}</span>
-                        </div>
-                        <span class="material-symbols-outlined text-gray-400" style="font-size: 18px;">chevron_right</span>
-                    </a>
-                </div>
+
+            {{-- Footer link --}}
+            <div style="padding: 16px 24px; border-top: 1px solid rgba(199,196,215,0.15); background: #fafafa; text-align: center; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px;">
+                <a href="{{ $store_id['store_url'] ?? '' }}" target="_blank" style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: #5146E5; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;"
+                   onmouseover="this.style.color='#3c34ba'" onmouseout="this.style.color='#5146E5'">
+                    {{ __('Open store') }}
+                    <span class="material-symbols-outlined" style="font-size: 16px;">open_in_new</span>
+                </a>
             </div>
+
+        </div>
+
+    </div>
+
+    {{-- ===================== RECENT ORDERS TABLE ===================== --}}
+    <div style="border: 1px solid rgba(199,196,215,0.2); border-radius: 16px; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,0.02); overflow: hidden; margin-bottom: 28px;">
+        
+        {{-- Card Header --}}
+        <div style="padding: 18px 24px; border-bottom: 1px solid rgba(199,196,215,0.15); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+            <h2 style="font-family: 'Geist', sans-serif; font-size: 15px; font-weight: 600; color: #0b1c30; margin: 0; letter-spacing: -0.01em;">
+                {{ __('Recent Orders') }}
+            </h2>
+            <a href="{{ route('orders.index') }}" style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: #5146E5; text-decoration: none; display: inline-flex; align-items: center; gap: 2px;"
+               onmouseover="this.style.color='#3c34ba'" onmouseout="this.style.color='#5146E5'">
+                {{ __('View all') }}
+                <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+            </a>
+        </div>
+
+        {{-- Table Content --}}
+        @if($new_orders->isEmpty())
+            <div style="text-align: center; padding: 48px 24px;">
+                <span class="material-symbols-outlined" style="font-size: 40px; color: #c7c4d7; display: block; margin-bottom: 12px;">shopping_bag</span>
+                <p style="font-family: 'Inter', sans-serif; font-size: 14px; color: #767586; margin: 0;">{{ __('No orders placed yet.') }}</p>
+            </div>
+        @else
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; min-width: 640px;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid rgba(199,196,215,0.2);">
+                            <th style="padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #767586; text-transform: uppercase; letter-spacing: 0.07em; text-align: left; background: #fafafa;">{{ __('Order') }}</th>
+                            <th style="padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #767586; text-transform: uppercase; letter-spacing: 0.07em; text-align: left; background: #fafafa;">{{ __('Customer') }}</th>
+                            <th style="padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #767586; text-transform: uppercase; letter-spacing: 0.07em; text-align: center; background: #fafafa;">{{ __('Items') }}</th>
+                            <th style="padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #767586; text-transform: uppercase; letter-spacing: 0.07em; text-align: right; background: #fafafa;">{{ __('Amount') }}</th>
+                            <th style="padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #767586; text-transform: uppercase; letter-spacing: 0.07em; text-align: left; background: #fafafa;">{{ __('Status') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($new_orders as $order)
+                            @php
+                                $productsJson = json_decode($order->product, true);
+                                $itemsCount = is_array($productsJson) ? count($productsJson) : 0;
+                                
+                                // Initials for Avatar Fallback
+                                $custName = !empty($order->name) && $order->name !== 'walk-in-customer' ? $order->name : __('Walk-in Customer');
+                                $words = explode(' ', trim($custName));
+                                $initials = '';
+                                foreach ($words as $w) {
+                                    $initials .= strtoupper(substr($w, 0, 1));
+                                }
+                                $initials = substr($initials, 0, 2);
+                                if(empty($initials)) {
+                                    $initials = 'WC';
+                                }
+                                
+                                $bgColors = ['#eff0fe', '#e8f5e9', '#fff3e0', '#efebe9', '#f3e5f5'];
+                                $textColors = ['#4648d4', '#1a7431', '#904900', '#4e342e', '#6a1b9a'];
+                                $colorIndex = $order->id % count($bgColors);
+                                $bgColor = $bgColors[$colorIndex];
+                                $textColor = $textColors[$colorIndex];
+                            @endphp
+                            <tr style="border-bottom: 1px solid rgba(199,196,215,0.12); transition: background 0.15s;"
+                                onmouseover="this.style.background='#fafbff'" onmouseout="this.style.background='transparent'">
+                                
+                                {{-- Order ID --}}
+                                <td style="padding: 16px 24px; font-family: monospace; font-size: 13px; font-weight: 600; color: #4648d4; vertical-align: middle;">
+                                    #{{ $order->order_id }}
+                                </td>
+
+                                {{-- Customer details --}}
+                                <td style="padding: 16px 24px; vertical-align: middle;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <div style="width: 32px; height: 32px; border-radius: 50%; background: {{ $bgColor }}; color: {{ $textColor }}; display: flex; align-items: center; justify-content: center; font-family: 'Geist', sans-serif; font-size: 11px; font-weight: 600; flex-shrink: 0; border: 1px solid rgba(199,196,215,0.15);">
+                                            {{ $initials }}
+                                        </div>
+                                        <div>
+                                            <p style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30; margin: 0;">{{ $custName }}</p>
+                                            <p style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; margin: 1px 0 0;">{{ $order->email ?: __('No email') }}</p>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                {{-- Item count --}}
+                                <td style="padding: 16px 24px; text-align: center; vertical-align: middle; font-family: 'Inter', sans-serif; font-size: 13px; color: #464554;">
+                                    {{ $itemsCount }} {{ $itemsCount === 1 ? __('item') : __('items') }}
+                                </td>
+
+                                {{-- Amount --}}
+                                <td style="padding: 16px 24px; text-align: right; vertical-align: middle; font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30;">
+                                    {{ \App\Models\Utility::priceFormat($order->price) }}
+                                </td>
+
+                                {{-- Status --}}
+                                <td style="padding: 16px 24px; vertical-align: middle;">
+                                    @if(in_array(strtolower($order->status), ['delivered', 'completed', 'approved']))
+                                        <span style="display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; background: #e8f5e9; color: #1a7431; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;">
+                                            <span style="width: 5px; height: 5px; border-radius: 50%; background: #1a7431;"></span>
+                                            {{ __('Completed') }}
+                                        </span>
+                                    @elseif(strtolower($order->status) == 'pending')
+                                        <span style="display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; background: #fff3e0; color: #904900; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;">
+                                            <span style="width: 5px; height: 5px; border-radius: 50%; background: #904900;"></span>
+                                            {{ __('Pending') }}
+                                        </span>
+                                    @else
+                                        <span style="display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; background: #feeceb; color: #c01d14; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;">
+                                            <span style="width: 5px; height: 5px; border-radius: 50%; background: #c01d14;"></span>
+                                            {{ ucfirst($order->status) }}
+                                        </span>
+                                    @endif
+                                </td>
+
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
+
+    </div>
+
+    {{-- ===================== QUICK ACTIONS ===================== --}}
+    <div style="margin-bottom: 20px;">
+        <h2 style="font-family: 'Geist', sans-serif; font-size: 16px; font-weight: 600; color: #0b1c30; margin: 0 0 16px; letter-spacing: -0.02em;">
+            {{ __('Quick Actions') }}
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            
+            {{-- Create Order --}}
+            <a href="{{ route('pos.index') }}" class="group" style="text-decoration: none; border: 1px solid rgba(199,196,215,0.25); border-radius: 12px; background: #fff; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.01); transition: all 0.2s;"
+               onmouseover="this.style.borderColor='#4648d4'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='rgba(199,196,215,0.25)'; this.style.transform='none';">
+                <div style="width: 36px; height: 36px; border-radius: 8px; background: #eff0fe; color: #4648d4; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">point_of_sale</span>
+                </div>
+                <div>
+                    <h3 style="font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30; margin: 0 0 2px; display: flex; align-items: center; gap: 4px;">
+                        {{ __('Create Order') }}
+                        <span class="material-symbols-outlined" style="font-size: 14px; opacity: 0; transition: all 0.2s; transform: translateX(-4px);" class="group-hover:opacity-100 group-hover:transform-none">arrow_forward</span>
+                    </h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; margin: 0; line-height: 1.3;">{{ __('Start a new POS order') }}</p>
+                </div>
+            </a>
+
+            {{-- Add Product --}}
+            <a href="{{ route('product.create') }}" class="group" style="text-decoration: none; border: 1px solid rgba(199,196,215,0.25); border-radius: 12px; background: #fff; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.01); transition: all 0.2s;"
+               onmouseover="this.style.borderColor='#4648d4'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='rgba(199,196,215,0.25)'; this.style.transform='none';">
+                <div style="width: 36px; height: 36px; border-radius: 8px; background: #e8f5e9; color: #1a7431; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">add_box</span>
+                </div>
+                <div>
+                    <h3 style="font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30; margin: 0 0 2px; display: flex; align-items: center; gap: 4px;">
+                        {{ __('Add Product') }}
+                        <span class="material-symbols-outlined" style="font-size: 14px; opacity: 0; transition: all 0.2s; transform: translateX(-4px);" class="group-hover:opacity-100 group-hover:transform-none">arrow_forward</span>
+                    </h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; margin: 0; line-height: 1.3;">{{ __('Add a new product') }}</p>
+                </div>
+            </a>
+
+            {{-- Add Customer --}}
+            <a href="{{ route('customer.index') }}" class="group" style="text-decoration: none; border: 1px solid rgba(199,196,215,0.25); border-radius: 12px; background: #fff; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.01); transition: all 0.2s;"
+               onmouseover="this.style.borderColor='#4648d4'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='rgba(199,196,215,0.25)'; this.style.transform='none';">
+                <div style="width: 36px; height: 36px; border-radius: 8px; background: #fff3e0; color: #904900; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">person_add</span>
+                </div>
+                <div>
+                    <h3 style="font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30; margin: 0 0 2px; display: flex; align-items: center; gap: 4px;">
+                        {{ __('Add Customer') }}
+                        <span class="material-symbols-outlined" style="font-size: 14px; opacity: 0; transition: all 0.2s; transform: translateX(-4px);" class="group-hover:opacity-100 group-hover:transform-none">arrow_forward</span>
+                    </h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; margin: 0; line-height: 1.3;">{{ __('Create customer') }}</p>
+                </div>
+            </a>
+
+            {{-- View Orders --}}
+            <a href="{{ route('orders.index') }}" class="group" style="text-decoration: none; border: 1px solid rgba(199,196,215,0.25); border-radius: 12px; background: #fff; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.01); transition: all 0.2s;"
+               onmouseover="this.style.borderColor='#4648d4'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='rgba(199,196,215,0.25)'; this.style.transform='none';">
+                <div style="width: 36px; height: 36px; border-radius: 8px; background: #e0f2f1; color: #00796b; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">receipt_long</span>
+                </div>
+                <div>
+                    <h3 style="font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30; margin: 0 0 2px; display: flex; align-items: center; gap: 4px;">
+                        {{ __('View Orders') }}
+                        <span class="material-symbols-outlined" style="font-size: 14px; opacity: 0; transition: all 0.2s; transform: translateX(-4px);" class="group-hover:opacity-100 group-hover:transform-none">arrow_forward</span>
+                    </h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; margin: 0; line-height: 1.3;">{{ __('Manage recent orders') }}</p>
+                </div>
+            </a>
+
+            {{-- Manage Inventory --}}
+            <a href="{{ route('product.index') }}" class="group" style="text-decoration: none; border: 1px solid rgba(199,196,215,0.25); border-radius: 12px; background: #fff; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.01); transition: all 0.2s;"
+               onmouseover="this.style.borderColor='#4648d4'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='rgba(199,196,215,0.25)'; this.style.transform='none';">
+                <div style="width: 36px; height: 36px; border-radius: 8px; background: #efebe9; color: #4e342e; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">inventory_2</span>
+                </div>
+                <div>
+                    <h3 style="font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30; margin: 0 0 2px; display: flex; align-items: center; gap: 4px;">
+                        {{ __('Inventory') }}
+                        <span class="material-symbols-outlined" style="font-size: 14px; opacity: 0; transition: all 0.2s; transform: translateX(-4px);" class="group-hover:opacity-100 group-hover:transform-none">arrow_forward</span>
+                    </h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; margin: 0; line-height: 1.3;">{{ __('View products and stock') }}</p>
+                </div>
+            </a>
+
         </div>
     </div>
 
-    <!-- Shortcuts -->
-    <div class="mb-8">
-        <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg font-semibold text-gray-900" style="font-family: 'Geist', sans-serif; letter-spacing: -0.02em;">{{ __('Shortcuts') }}</h2>
-            <button class="text-gray-400 hover:text-gray-600">
-                <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
-            </button>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-            <a href="{{ route('product.create') }}" class="btn-add-shortcut flex items-center justify-center p-6 transition-colors">
-                <span class="material-symbols-outlined mr-2" style="font-size: 18px;">add</span>
-                <span class="font-semibold text-sm">{{ __('Add new shortcut') }}</span>
-            </a>
-        </div>
-    </div>
+@endif
 
 @endif
 @endsection
@@ -739,238 +1236,107 @@
 
 </script>
 @else
-<script>
-    $(document).ready(function() {
-        $('.cp_link').on('click', function() {
-            var value = $(this).attr('data-link');
-            var $temp = $("<input>");
-            $("body").append($temp);
-            $temp.val(value).select();
-            document.execCommand("copy");
-            $temp.remove();
-            show_toastr('Success', '{{ __('Link copied') }}', 'success')
+    <script>
+        $(document).ready(function() {
+            $('.cp_link').on('click', function() {
+                var value = $(this).attr('data-link');
+                var $temp = $("<input>");
+                $("body").append($temp);
+                $temp.val(value).select();
+                document.execCommand("copy");
+                $temp.remove();
+                show_toastr('Success', '{{ __('Link copied') }}', 'success')
+            });
         });
-    });
-    (function () {
-        var options = {
-            chart: {
-                height: 140,
-                type: 'area',
-                sparkline: {
+
+        // Sales Overview Chart
+        (function () {
+            var options = {
+                chart: {
+                    height: 240,
+                    type: 'area',
+                    toolbar: {
+                        show: false,
+                    },
+                    sparkline: {
+                        enabled: false
+                    }
+                },
+                dataLabels: {
                     enabled: false
                 },
-                toolbar: {
-                    show: false,
+                stroke: {
+                    width: 2,
+                    curve: 'smooth'
                 },
-            },
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-                width: 2,
-                curve: 'smooth'
-            },
-            series: [{
-                name: "{{ __('Order') }}",
-                data: {!! json_encode($chartData['data']) !!}
-            }],
-            xaxis: {
-                axisBorder: {
-                    show: false
-                },
-                axisTicks: {
-                    show: false
-                },
-                categories: {!! json_encode($chartData['label']) !!},
-                labels: {
-                    style: {
-                        colors: '#767586',
-                        fontSize: '10px'
-                    }
-                }
-            },
-            colors: ['#4648d4'],
-            fill: {
-                type: 'gradient',
-                gradient: {
-                    shadeIntensity: 1,
-                    opacityFrom: 0.3,
-                    opacityTo: 0.05,
-                    stops: [0, 90, 100]
-                }
-            },
-            grid: {
-                borderColor: 'rgba(199, 196, 215, 0.15)',
-                strokeDashArray: 4,
-            },
-            legend: {
-                show: false,
-            },
-            yaxis: {
-                tickAmount: 3,
-                labels: {
-                    style: {
-                        colors: '#767586',
-                        fontSize: '10px'
-                    }
-                }
-            }
-        };
-        var chart = new ApexCharts(document.querySelector("#traffic-chart"), options);
-        chart.render();
-    })();
-
-    (function () {
-        var options = {
-            chart: {
-                height: 140,
-                type: 'area',
-                toolbar: {
-                    show: false,
-                },
-            },
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-                width: 2,
-                curve: 'smooth'
-            },
-            series: [{
-                name: "{{ __('Sessions') }}",
-                data: [0, 0, 0, 0, 0, 0, 0]
-            }],
-            xaxis: {
-                axisBorder: {
-                    show: false
-                },
-                axisTicks: {
-                    show: false
-                },
-                categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                labels: {
-                    style: {
-                        colors: '#767586',
-                        fontSize: '10px'
-                    }
-                }
-            },
-            colors: ['#6063ee'],
-            fill: {
-                type: 'gradient',
-                gradient: {
-                    shadeIntensity: 1,
-                    opacityFrom: 0.3,
-                    opacityTo: 0.05,
-                    stops: [0, 90, 100]
-                }
-            },
-            grid: {
-                borderColor: 'rgba(199, 196, 215, 0.15)',
-                strokeDashArray: 4,
-            },
-            legend: {
-                show: false,
-            },
-            yaxis: {
-                tickAmount: 3,
-                labels: {
-                    style: {
-                        colors: '#767586',
-                        fontSize: '10px'
-                    }
-                }
-            }
-        };
-        var chart = new ApexCharts(document.querySelector("#conversion-chart"), options);
-        chart.render();
-    })();
-
-
-    (function () {
-        var options = {
-            series: [{{ round($storage_limit,2) }}],
-            chart: {
-                height: 600,
-                type: 'radialBar',
-                offsetY: -20,
-                sparkline: {
-                    enabled: true
-                }
-            },
-            plotOptions: {
-                radialBar: {
-                    startAngle: -90,
-                    endAngle: 90,
-                    track: {
-                        background: "#e7e7e7",
-                        strokeWidth: '97%',
-                        margin: 5, // margin is in pixels
+                series: [{
+                    name: "{{ __('Sales') }}",
+                    data: {!! json_encode($saleData['data']) !!}
+                }],
+                xaxis: {
+                    axisBorder: {
+                        show: false
                     },
-                    dataLabels: {
-                        name: {
-                            show: true
-                        },
-                        value: {
-                            offsetY: -50,
-                            fontSize: '20px'
+                    axisTicks: {
+                        show: false
+                    },
+                    categories: {!! json_encode($saleData['label']) !!},
+                    labels: {
+                        style: {
+                            colors: '#767586',
+                            fontSize: '11px',
+                            fontFamily: 'Inter, sans-serif'
+                        }
+                    }
+                },
+                colors: ['#5146e5'],
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        shadeIntensity: 1,
+                        opacityFrom: 0.3,
+                        opacityTo: 0.05,
+                        stops: [0, 90, 100]
+                    }
+                },
+                grid: {
+                    borderColor: 'rgba(199, 196, 215, 0.15)',
+                    strokeDashArray: 4,
+                },
+                legend: {
+                    show: false,
+                },
+                yaxis: {
+                    tickAmount: 4,
+                    labels: {
+                        style: {
+                            colors: '#767586',
+                            fontSize: '11px',
+                            fontFamily: 'Inter, sans-serif'
                         }
                     }
                 }
-            },
-            grid: {
-                padding: {
-                    top: -10
-                }
-            },
-            colors: ["#6FD943"],
-            labels: ['Used'],
-            responsive: [{
-                breakpoint: 1300, // Maximum screen width for this rule
-                options: {
-                    chart: {
-                        width: '100%',
-                        height:'400px'// Set width to 100% for responsiveness
-                    },
-                    legend: {
-                        position: 'bottom' // Position legend at the bottom
-                    }
-                },
-                // breakpoint: 380, // Maximum screen width for this rule
-                // options: {
-                //     chart: {
-                //         width: '100%',
-                //         height:'300px'// Set width to 100% for responsiveness
-                //     },
-                //     legend: {
-                //         position: 'bottom' // Position legend at the bottom
-                //     }
-                // },
+            };
+            var chart = new ApexCharts(document.querySelector("#sales-overview-chart"), options);
+            chart.render();
+        })();
 
-            }]
-        };
-        var chart = new ApexCharts(document.querySelector("#device-chart"), options);
-        chart.render();
-    })();
+        // social sharing
+        $(document).ready(function() {
+            var customURL = {!! json_encode(url('/store/' . $store_id->slug)) !!};
+            $('.Demo1').socialSharingPlugin({
+                url: customURL,
+                title: $('meta[property="og:title"]').attr('content'),
+                description: $('meta[property="og:description"]').attr('content'),
+                img: $('meta[property="og:image"]').attr('content'),
+                enable: ['whatsapp', 'facebook', 'twitter', 'pinterest', 'linkedin']
+            });
 
-
-    //social sharing
-    $(document).ready(function() {
-        var customURL = {!! json_encode(url('/store/' . $store_id->slug)) !!};
-        $('.Demo1').socialSharingPlugin({
-            url: customURL,
-            title: $('meta[property="og:title"]').attr('content'),
-            description: $('meta[property="og:description"]').attr('content'),
-            img: $('meta[property="og:image"]').attr('content'),
-            enable: ['whatsapp', 'facebook', 'twitter', 'pinterest', 'linkedin']
+            $('.socialShareButton').click(function(e) {
+                e.preventDefault();
+                $('.sharingButtonsContainer').toggle();
+            });
         });
-
-        $('.socialShareButton').click(function(e) {
-            e.preventDefault();
-            $('.sharingButtonsContainer').toggle();
-        });
-    });
-</script>
+    </script>
 @endif
 @endpush
-
