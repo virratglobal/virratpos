@@ -1167,8 +1167,6 @@
     </div>
 
 @endif
-
-@endif
 @endsection
 @push('script-page')
 @if (\Auth::user()->type == 'super admin')
