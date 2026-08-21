@@ -705,6 +705,10 @@ Route::middleware(['auth', 'XSS'])->group(function () {
     Route::post('empty-cart', [ProductController::class, 'emptyCart']);
     Route::get('printview/pos', [PosController::class, 'printView'])->name('pos.printview');
     Route::get('pos/data/store', [PosController::class, 'store'])->name('pos.data.store');
+    Route::post('pos/customer/store', [PosController::class, 'storeCustomer'])->name('pos.customer.store');
+    Route::get('pos/customer/show-ajax/{name}', [PosController::class, 'showCustomerAjax'])->name('pos.customer.show-ajax');
+    Route::get('pos/today-sales', [PosController::class, 'todaySales'])->name('pos.today-sales');
+    Route::get('pos/dashboard-ajax', [PosController::class, 'posDashboardAjax'])->name('pos.dashboard-ajax');
     //variant
     Route::get('pos-productVariant/{id}/{session}', [ProductController::class, 'productVariant']);
     Route::get('addToCartVariant/{id}/{session}/{variation_id?}', [ProductController::class, 'addToCartVariant'])->name('addToCartVariant');

@@ -25,8 +25,12 @@ class PosController extends Controller
     public function index()
     {
         if(\Auth::user()->can('Manage Pos')){
-            $customers      = Customer::where('store_id', \Auth::user()->current_store)->get()->pluck('name', 'name');
-            $customers->prepend('Walk-in-customer', '');
+            $customers_list = Customer::where('store_id', \Auth::user()->current_store)->get();
+            $customers = [];
+            $customers[''] = 'Walk-in-customer';
+            foreach ($customers_list as $c) {
+                $customers[$c->name] = $c->name . ($c->phone_number ? ' - ' . $c->phone_number : '');
+            }
             $user = \Auth::user();
             $store = Store::where('id','=',$user->current_store)->where('created_by',$user->creatorId())->first();
             return view('pos.index',compact('customers','store'));
@@ -244,7 +248,7 @@ class PosController extends Controller
                     $pos->product = json_encode($sales);
                     $pos->price_currency = $store->currency_code;
                     $pos->txn_id = '';
-                    $pos->payment_type = __('POS');
+                    $pos->payment_type = !empty($request->payment_type) ? $request->payment_type : __('POS');
                     $pos->payment_status = 'approved';
                     $pos->receipt = '';
                     $pos->user_id = $store['id'];
@@ -282,6 +286,7 @@ class PosController extends Controller
                             'code' => 200,
                             'success' => __('Payment completed successfully!'),
                             'order_id' => \Crypt::encrypt($pos->id),
+                            'id' => $pos->id,
                         ]
                     );
                     $order_email = $pos->email;
@@ -530,5 +535,173 @@ class PosController extends Controller
         }else{
             return redirect()->back()->with('error', 'Permission denied.');
         }
+    }
+
+    public function storeCustomer(Request $request)
+    {
+        if(\Auth::user()->can('Manage Pos')){
+            $validator = \Validator::make($request->all(), [
+                'name' => 'required|max:120',
+                'phone_number' => 'required|max:20',
+            ]);
+            
+            if ($validator->fails()) {
+                return response()->json(['status' => 'error', 'message' => $validator->errors()->first()], 422);
+            }
+            
+            $store_id = \Auth::user()->current_store;
+            $email = $request->email ?: $request->phone_number . '@pos-guest.com';
+            
+            $exist = Customer::where('store_id', $store_id)
+                ->where(function($q) use ($request, $email) {
+                    $q->where('name', $request->name)
+                      ->orWhere('phone_number', $request->phone_number)
+                      ->orWhere('email', $email);
+                })->first();
+                
+            if ($exist) {
+                return response()->json(['status' => 'error', 'message' => __('Customer already exists with this name, phone or email.')], 422);
+            }
+            
+            $customer = new Customer();
+            $customer->name = $request->name;
+            $customer->email = $email;
+            $customer->phone_number = $request->phone_number;
+            $customer->password = \Hash::make('customer123');
+            $customer->lang = 'en';
+            $customer->avatar = 'avatar.png';
+            $customer->store_id = $store_id;
+            $customer->save();
+            
+            $userdetail = new UserDetail();
+            $userdetail->customer_id = $customer->id;
+            $userdetail->store_id = $store_id;
+            $userdetail->name = $request->name;
+            $userdetail->last_name = '';
+            $userdetail->email = $customer->email;
+            $userdetail->phone = $request->phone_number;
+            $userdetail->billing_address = $request->address ?: '';
+            $userdetail->billing_city = $request->city ?: '';
+            $userdetail->billing_country = $request->state ?: '';
+            $userdetail->billing_postalcode = $request->zipcode ?: '';
+            $userdetail->shipping_address = $request->address ?: '';
+            $userdetail->shipping_city = $request->city ?: '';
+            $userdetail->shipping_country = $request->state ?: '';
+            $userdetail->shipping_postalcode = $request->zipcode ?: '';
+            $userdetail->save();
+            
+            return response()->json([
+                'status' => 'success',
+                'message' => __('Customer created successfully.'),
+                'name' => $customer->name,
+                'phone' => $customer->phone_number,
+                'display' => $customer->name . ' - ' . $customer->phone_number
+            ]);
+        }
+        return response()->json(['status' => 'error', 'message' => __('Permission Denied')], 403);
+    }
+
+    public function showCustomerAjax($name)
+    {
+        if(\Auth::user()->can('Manage Pos')){
+            $customer = Customer::where('name', $name)->where('store_id', \Auth::user()->current_store)->first();
+            if (!$customer) {
+                return response()->json(['status' => 'error', 'message' => __('Customer not found.')]);
+            }
+            $user_detail = UserDetail::where('customer_id', $customer->id)->where('store_id', \Auth::user()->current_store)->first();
+            $orders = Order::where('customer_id', $user_detail ? $user_detail->id : 0)->get();
+            return response()->json([
+                'status' => 'success',
+                'name' => $customer->name,
+                'phone' => $customer->phone_number,
+                'email' => $customer->email,
+                'address' => $user_detail ? $user_detail->billing_address : '',
+                'city' => $user_detail ? $user_detail->billing_city : '',
+                'state' => $user_detail ? $user_detail->billing_country : '',
+                'zip' => $user_detail ? $user_detail->billing_postalcode : '',
+                'order_count' => $orders->count(),
+                'total_purchase' => Utility::priceFormat($orders->sum('price')),
+            ]);
+        }
+        return response()->json(['status' => 'error', 'message' => __('Permission Denied')], 403);
+    }
+
+    public function todaySales()
+    {
+        if(\Auth::user()->can('Manage Pos')){
+            $today = date('Y-m-d');
+            $orders = Order::where('user_id', \Auth::user()->current_store)
+                ->whereDate('created_at', $today)
+                ->get();
+            
+            $total_sales = $orders->sum('price');
+            $order_count = $orders->count();
+            
+            $cash_sales = $orders->filter(function($o) {
+                return strtolower($o->payment_type) == 'cash' || strtolower($o->payment_type) == 'pos' || strtolower($o->payment_type) == 'cash payment';
+            })->sum('price');
+            $other_sales = $total_sales - $cash_sales;
+            
+            $transactions = [];
+            foreach ($orders as $o) {
+                $transactions[] = [
+                    'order_id' => $o->order_id,
+                    'name' => $o->name ?: __('Walk-in Customer'),
+                    'time' => $o->created_at->format('h:i A'),
+                    'amount' => Utility::priceFormat($o->price),
+                    'payment_type' => $o->payment_type,
+                    'id_encrypted' => \Crypt::encrypt($o->id)
+                ];
+            }
+            
+            return response()->json([
+                'status' => 'success',
+                'total_sales' => Utility::priceFormat($total_sales),
+                'order_count' => $order_count,
+                'cash_sales' => Utility::priceFormat($cash_sales),
+                'other_sales' => Utility::priceFormat($other_sales),
+                'transactions' => $transactions
+            ]);
+        }
+        return response()->json(['status' => 'error', 'message' => __('Permission Denied')], 403);
+    }
+
+    public function posDashboardAjax()
+    {
+        if(\Auth::user()->can('Manage Pos')){
+            $today = date('Y-m-d');
+            $orders = Order::where('user_id', \Auth::user()->current_store)
+                ->whereDate('created_at', $today)
+                ->get();
+            
+            $total_sales = $orders->sum('price');
+            $order_count = $orders->count();
+            
+            $items_sold = 0;
+            foreach ($orders as $o) {
+                $items = json_decode($o->product, true);
+                if (is_array($items)) {
+                    foreach ($items as $it) {
+                        $items_sold += isset($it['quantity']) ? intval($it['quantity']) : 0;
+                    }
+                }
+            }
+            
+            $aov = $order_count > 0 ? $total_sales / $order_count : 0;
+            $pending_payments = Order::where('user_id', \Auth::user()->current_store)
+                ->whereDate('created_at', $today)
+                ->where('status', 'pending')
+                ->count();
+            
+            return response()->json([
+                'status' => 'success',
+                'today_sales' => Utility::priceFormat($total_sales),
+                'today_orders' => $order_count,
+                'items_sold' => $items_sold,
+                'aov' => Utility::priceFormat($aov),
+                'pending_payments' => $pending_payments
+            ]);
+        }
+        return response()->json(['status' => 'error', 'message' => __('Permission Denied')], 403);
     }
 }
