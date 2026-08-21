@@ -185,11 +185,11 @@
         var target = document.getElementById("greetings");
 
         if (curHr < 12) {
-            target.innerHTML = "Good Morning,";
+            target.innerHTML = "Good Morning";
         } else if (curHr < 17) {
-            target.innerHTML = "Good Afternoon,";
+            target.innerHTML = "Good Afternoon";
         } else {
-            target.innerHTML = "Good Evening,";
+            target.innerHTML = "Good Evening";
         }
 
     </script>
