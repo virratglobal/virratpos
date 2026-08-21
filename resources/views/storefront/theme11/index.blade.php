@@ -10,7 +10,7 @@
 $imgpath=\App\Models\Utility::get_file('uploads/');
 $productImg = \App\Models\Utility::get_file('uploads/is_cover_image/');
 $catimg = \App\Models\Utility::get_file('uploads/product_image/');
-$default =\App\Models\Utility::get_file('uploads/theme11/header/logo4.png');
+$default =\App\Models\Utility::get_file('uploads/theme1/header/logo4.png');
 @endphp
 
 @section('content')
