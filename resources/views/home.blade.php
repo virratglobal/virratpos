@@ -140,6 +140,38 @@
         transform: translateY(-2px) !important;
         box-shadow: 0 4px 12px rgba(70, 72, 212, 0.05) !important;
     }
+
+    /* ===== Dashboard Customization System ===== */
+    .db-widget { position: relative; transition: transform 0.15s, box-shadow 0.15s; }
+    .widget-controls { position: absolute; top: 10px; right: 10px; display: flex; gap: 4px; z-index: 20; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+    .dash-customize-active .widget-controls { opacity: 1 !important; pointer-events: all !important; }
+    .widget-drag-handle { width: 28px; height: 28px; border-radius: 6px; background: rgba(255,255,255,0.96); border: 1px solid rgba(199,196,215,0.5); display: flex; align-items: center; justify-content: center; cursor: grab; box-shadow: 0 1px 4px rgba(0,0,0,0.1); color: #767586; transition: all 0.15s; }
+    .widget-drag-handle:hover { background: #5146e5 !important; color: #fff !important; border-color: #5146e5 !important; }
+    .widget-drag-handle:active { cursor: grabbing !important; }
+    .widget-actions-btn { width: 28px; height: 28px; border-radius: 6px; background: rgba(255,255,255,0.96); border: 1px solid rgba(199,196,215,0.5); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.1); color: #767586; transition: all 0.15s; padding: 0; }
+    .widget-actions-btn:hover { background: #f1f5f9; color: #0b1c30; }
+    .widget-actions-dropdown { position: absolute; top: 32px; right: 0; min-width: 155px; background: #fff; border: 1px solid rgba(199,196,215,0.3); border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); padding: 4px; display: none; z-index: 200; }
+    .widget-actions-dropdown.wad-open { display: block; }
+    .widget-actions-dropdown button { display: block; width: 100%; text-align: left; padding: 8px 12px; font-family: 'Inter', sans-serif; font-size: 13px; color: #464554; background: none; border: none; border-radius: 6px; cursor: pointer; transition: background 0.1s; }
+    .widget-actions-dropdown button:hover { background: #f1f5f9; }
+    .dash-customize-active .db-widget .db-card-inner { outline: 2px dashed rgba(81,70,229,0.18) !important; outline-offset: 2px !important; border-radius: 16px !important; }
+    .sortable-ghost { opacity: 0.5; }
+    .sortable-drag { box-shadow: 0 20px 60px rgba(0,0,0,0.16) !important; transform: scale(1.012) !important; z-index: 9999 !important; }
+    .db-widget.widget-hidden { display: none !important; }
+    #customize-hint-bar { background: linear-gradient(135deg,#eeeefd,#e6eeff); border: 1px solid rgba(81,70,229,0.22); border-radius: 12px; padding: 12px 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; animation: dbSlideDown 0.22s ease; }
+    @keyframes dbSlideDown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+    #manage-widgets-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.38); z-index: 1040; backdrop-filter: blur(2px); }
+    #manage-widgets-panel { position: fixed; top: 0; right: -360px; width: 340px; height: 100vh; background: #fff; z-index: 1050; box-shadow: -4px 0 32px rgba(0,0,0,0.14); transition: right 0.26s cubic-bezier(0.4,0,0.2,1); overflow-y: auto; }
+    #manage-widgets-panel.panel-open { right: 0; }
+    #reset-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.42); z-index: 1060; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
+    #reset-modal { background: #fff; border-radius: 16px; padding: 28px; max-width: 380px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+    .wg-toggle { position: relative; display: inline-block; width: 40px; height: 22px; flex-shrink: 0; }
+    .wg-toggle input { opacity: 0; width: 0; height: 0; }
+    .wg-toggle-track { position: absolute; inset: 0; background: #c7c4d7; border-radius: 11px; cursor: pointer; transition: background 0.2s; }
+    .wg-toggle input:checked + .wg-toggle-track { background: #5146e5; }
+    .wg-toggle-track::after { content: ''; position: absolute; left: 3px; top: 3px; width: 16px; height: 16px; background: #fff; border-radius: 50%; transition: transform 0.2s; }
+    .wg-toggle input:checked + .wg-toggle-track::after { transform: translateX(18px); }
+    #dashboard-widgets-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 28px; align-items: start; }
 </style>
 @endpush
 @push('script-page')
@@ -615,12 +647,123 @@
                         onmouseover="this.style.background='#dce9ff'; this.style.transform='rotate(45deg)';" onmouseout="this.style.background='#e5eeff'; this.style.transform='none';">
                     <span class="material-symbols-outlined" style="font-size: 20px;">refresh</span>
                 </button>
+
+                {{-- Customize Button --}}
+                <button id="btn-customize-dashboard" type="button" onclick="dbEnterCustomize()"
+                        style="display: inline-flex; align-items: center; gap: 6px; padding: 0 14px; height: 36px; background: #fff; color: #464554; border: 1px solid rgba(199,196,215,0.5); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;"
+                        onmouseover="this.style.borderColor='#5146e5'; this.style.color='#5146e5'; this.style.background='#f5f3ff';" onmouseout="this.style.borderColor='rgba(199,196,215,0.5)'; this.style.color='#464554'; this.style.background='#fff';">
+                    <span class="material-symbols-outlined" style="font-size: 16px;">tune</span>
+                    {{ __('Customize') }}
+                </button>
+
+                {{-- Done Button (hidden until customize mode) --}}
+                <button id="btn-done-customize" type="button" onclick="dbExitCustomize()"
+                        style="display: none; align-items: center; gap: 6px; padding: 0 14px; height: 36px; background: #5146e5; color: #fff; border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;"
+                        onmouseover="this.style.background='#3f36c8';" onmouseout="this.style.background='#5146e5';">
+                    <span class="material-symbols-outlined" style="font-size: 16px;">check</span>
+                    {{ __('Done') }}
+                </button>
             </div>
         </div>
     </div>
 
+    {{-- ===================== CUSTOMIZE HINT BAR ===================== --}}
+    <div id="customize-hint-bar" style="display:none;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="material-symbols-outlined" style="font-size: 18px; color: #5146e5;">drag_indicator</span>
+            <span style="font-family: 'Inter', sans-serif; font-size: 13px; color: #3a3060; font-weight: 500;">{{ __('Drag and drop widgets to arrange your dashboard.') }}</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <button type="button" onclick="dbOpenManagePanel()"
+                    style="display: inline-flex; align-items: center; gap: 5px; padding: 0 12px; height: 30px; background: rgba(81,70,229,0.1); color: #5146e5; border: 1px solid rgba(81,70,229,0.25); border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s;"
+                    onmouseover="this.style.background='rgba(81,70,229,0.18)';" onmouseout="this.style.background='rgba(81,70,229,0.1)';">
+                <span class="material-symbols-outlined" style="font-size: 14px;">widgets</span>
+                {{ __('Manage Widgets') }}
+            </button>
+            <button type="button" onclick="dbOpenResetModal()"
+                    style="display: inline-flex; align-items: center; gap: 5px; padding: 0 12px; height: 30px; background: transparent; color: #767586; border: 1px solid rgba(199,196,215,0.5); border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s;"
+                    onmouseover="this.style.background='#f1f5f9'; this.style.color='#464554';" onmouseout="this.style.background='transparent'; this.style.color='#767586';">
+                <span class="material-symbols-outlined" style="font-size: 14px;">restart_alt</span>
+                {{ __('Reset to Default') }}
+            </button>
+        </div>
+    </div>
+
+    {{-- ===================== MANAGE WIDGETS PANEL ===================== --}}
+    <div id="manage-widgets-overlay" style="display:none;" onclick="dbCloseManagePanel()"></div>
+    <div id="manage-widgets-panel">
+        <div style="padding: 20px 24px; border-bottom: 1px solid rgba(199,196,215,0.15); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: #fff; z-index: 1;">
+            <div>
+                <h3 style="font-family: 'Geist', sans-serif; font-size: 16px; font-weight: 600; color: #0b1c30; margin: 0;">{{ __('Dashboard Widgets') }}</h3>
+                <p style="font-family: 'Inter', sans-serif; font-size: 12px; color: #767586; margin: 3px 0 0;">{{ __('Show or hide widgets') }}</p>
+            </div>
+            <button onclick="dbCloseManagePanel()" style="width: 32px; height: 32px; border: 1px solid rgba(199,196,215,0.4); border-radius: 8px; background: #f8fafc; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #767586; font-size: 16px; transition: all 0.15s;" onmouseover="this.style.background='#f1f5f9';" onmouseout="this.style.background='#f8fafc';">&#x2715;</button>
+        </div>
+        <div style="padding: 16px 24px; display: flex; flex-direction: column; gap: 4px;" id="manage-widget-list">
+            @php
+            $dbWidgets = [
+                ['id'=>'kpi-row','label'=>__('KPI Cards'),'icon'=>'bar_chart'],
+                ['id'=>'sales-overview','label'=>__('Sales Overview'),'icon'=>'show_chart'],
+                ['id'=>'order-activity','label'=>__('Order Activity'),'icon'=>'donut_small'],
+                ['id'=>'store-activity','label'=>__('Store Activity'),'icon'=>'store'],
+                ['id'=>'store-link','label'=>__('Your Store'),'icon'=>'open_in_new'],
+                ['id'=>'recent-orders','label'=>__('Recent Orders'),'icon'=>'receipt_long'],
+                ['id'=>'quick-actions','label'=>__('Quick Actions'),'icon'=>'flash_on'],
+            ];
+            @endphp
+            @foreach($dbWidgets as $dbw)
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; border-radius: 10px; background: #fafafa; border: 1px solid rgba(199,196,215,0.15);">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 32px; height: 32px; border-radius: 8px; background: #eff0fe; color: #4648d4; display: flex; align-items: center; justify-content: center;">
+                        <span class="material-symbols-outlined" style="font-size: 16px;">{{ $dbw['icon'] }}</span>
+                    </div>
+                    <span style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; color: #0b1c30;">{{ $dbw['label'] }}</span>
+                </div>
+                <label class="wg-toggle">
+                    <input type="checkbox" id="wg-toggle-{{ $dbw['id'] }}" checked onchange="dbToggleWidget('{{ $dbw['id'] }}', this.checked)">
+                    <span class="wg-toggle-track"></span>
+                </label>
+            </div>
+            @endforeach
+        </div>
+    </div>
+
+    {{-- ===================== RESET CONFIRMATION MODAL ===================== --}}
+    <div id="reset-modal-overlay" style="display:none;">
+        <div id="reset-modal">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                <div style="width: 40px; height: 40px; border-radius: 10px; background: #fff3e0; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                    <span class="material-symbols-outlined" style="font-size: 22px; color: #904900;">restart_alt</span>
+                </div>
+                <div>
+                    <h3 style="font-family: 'Geist', sans-serif; font-size: 16px; font-weight: 600; color: #0b1c30; margin: 0;">{{ __('Reset dashboard layout?') }}</h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #767586; margin: 4px 0 0;">{{ __('This will restore the default widget arrangement.') }}</p>
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+                <button onclick="dbCloseResetModal()" style="padding: 0 20px; height: 38px; background: #f1f5f9; color: #464554; border: 1px solid rgba(199,196,215,0.4); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s;" onmouseover="this.style.background='#e2e8f0';" onmouseout="this.style.background='#f1f5f9';">{{ __('Cancel') }}</button>
+                <button onclick="dbResetDashboard()" style="padding: 0 20px; height: 38px; background: #ba1a1a; color: #fff; border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s;" onmouseover="this.style.background='#9b1212';" onmouseout="this.style.background='#ba1a1a';">{{ __('Reset') }}</button>
+            </div>
+        </div>
+    </div>
+
+    {{-- ===================== WIDGETS GRID ===================== --}}
+    <div id="dashboard-widgets-grid">
+
+    {{-- ======== WIDGET: KPI CARDS ======== --}}
+    <div class="db-widget" data-widget-id="kpi-row" style="grid-column: span 3;">
+        <div class="widget-controls">
+            <div class="widget-drag-handle" title="{{ __('Drag to reorder') }}"><span class="material-symbols-outlined" style="font-size: 16px;">drag_indicator</span></div>
+            <div style="position: relative;">
+                <button class="widget-actions-btn" onclick="dbWidgetMenu(this)" title="{{ __('Widget options') }}"><span class="material-symbols-outlined" style="font-size: 16px;">more_vert</span></button>
+                <div class="widget-actions-dropdown">
+                    <button onclick="dbHideWidget('kpi-row')"><span class="material-symbols-outlined" style="font-size: 14px; vertical-align: middle; margin-right: 6px;">visibility_off</span>{{ __('Hide widget') }}</button>
+                </div>
+            </div>
+        </div>
+        <div class="db-card-inner">
     {{-- ===================== KPI ROW ===================== --}}
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" style="margin-bottom: 28px;">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" style="margin-bottom: 0;">
 
         {{-- Total Sales Card --}}
         <div class="dashboard-card" style="border: 1px solid rgba(199,196,215,0.2); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,0.02);">
@@ -721,14 +864,22 @@
             </div>
         </div>
 
-    </div>
+    </div>{{-- /KPI grid --}}
+    </div>{{-- /db-card-inner kpi-row --}}
+    </div>{{-- /db-widget kpi-row --}}
 
-    {{-- ===================== MAIN ANALYTICS ROWS ===================== --}}
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6" style="margin-bottom: 28px;">
-
-        {{-- Left: Sales Overview Card --}}
-        <div class="lg:col-span-2" style="border: 1px solid rgba(199,196,215,0.2); border-radius: 16px; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column;">
-            
+    {{-- ======== WIDGET: SALES OVERVIEW ======== --}}
+    <div class="db-widget" data-widget-id="sales-overview" style="grid-column: span 2;">
+        <div class="widget-controls">
+            <div class="widget-drag-handle" title="{{ __('Drag to reorder') }}"><span class="material-symbols-outlined" style="font-size: 16px;">drag_indicator</span></div>
+            <div style="position: relative;">
+                <button class="widget-actions-btn" onclick="dbWidgetMenu(this)"><span class="material-symbols-outlined" style="font-size: 16px;">more_vert</span></button>
+                <div class="widget-actions-dropdown">
+                    <button onclick="dbHideWidget('sales-overview')"><span class="material-symbols-outlined" style="font-size: 14px; vertical-align: middle; margin-right: 6px;">visibility_off</span>{{ __('Hide widget') }}</button>
+                </div>
+            </div>
+        </div>
+        <div class="db-card-inner" style="border: 1px solid rgba(199,196,215,0.2); border-radius: 16px; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column;">
             {{-- Header --}}
             <div style="padding: 20px 24px; border-bottom: 1px solid rgba(199,196,215,0.15); display: flex; align-items: center; justify-content: space-between;">
                 <div>
@@ -741,7 +892,6 @@
                     <button type="button" disabled style="border: none; padding: 4px 10px; background: transparent; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; color: #767586; cursor: not-allowed;">30 {{ __('Days') }}</button>
                 </div>
             </div>
-
             {{-- Graph Area --}}
             <div style="padding: 24px; flex-grow: 1;">
                 <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 16px;">
@@ -760,11 +910,9 @@
                         </span>
                     @endif
                 </div>
-                
                 {{-- ApexCharts Mount --}}
                 <div id="sales-overview-chart" style="min-height: 240px; width: 100%;"></div>
             </div>
-
             {{-- Card Footer --}}
             <div style="padding: 16px 24px; border-top: 1px solid rgba(199,196,215,0.15); text-align: center;">
                 <a href="{{ route('storeanalytic') }}" style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: #5146E5; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;"
@@ -773,26 +921,28 @@
                     <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
                 </a>
             </div>
-
         </div>
+    </div>{{-- /db-widget sales-overview --}}
 
-        {{-- Right: Order Activity Card --}}
-        <div class="lg:col-span-1" style="border: 1px solid rgba(199,196,215,0.2); border-radius: 16px; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column;">
-            
+    {{-- ======== WIDGET: ORDER ACTIVITY ======== --}}
+    <div class="db-widget" data-widget-id="order-activity" style="grid-column: span 1;">
+        <div class="widget-controls">
+            <div class="widget-drag-handle" title="{{ __('Drag to reorder') }}"><span class="material-symbols-outlined" style="font-size: 16px;">drag_indicator</span></div>
+            <div style="position: relative;">
+                <button class="widget-actions-btn" onclick="dbWidgetMenu(this)"><span class="material-symbols-outlined" style="font-size: 16px;">more_vert</span></button>
+                <div class="widget-actions-dropdown">
+                    <button onclick="dbHideWidget('order-activity')"><span class="material-symbols-outlined" style="font-size: 14px; vertical-align: middle; margin-right: 6px;">visibility_off</span>{{ __('Hide widget') }}</button>
+                </div>
+            </div>
+        </div>
+        <div class="db-card-inner" style="border: 1px solid rgba(199,196,215,0.2); border-radius: 16px; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column;">
             {{-- Header --}}
             <div style="padding: 20px 24px; border-bottom: 1px solid rgba(199,196,215,0.15); display: flex; align-items: center; justify-content: space-between;">
-                <h2 style="font-family: 'Geist', sans-serif; font-size: 15px; font-weight: 600; color: #0b1c30; margin: 0; letter-spacing: -0.01em;">
-                    {{ __('Order Activity') }}
-                </h2>
-                <span style="font-family: 'Inter', sans-serif; font-size: 12px; color: #767586; font-weight: 500;">
-                    {{ __('Distribution') }}
-                </span>
+                <h2 style="font-family: 'Geist', sans-serif; font-size: 15px; font-weight: 600; color: #0b1c30; margin: 0; letter-spacing: -0.01em;">{{ __('Order Activity') }}</h2>
+                <span style="font-family: 'Inter', sans-serif; font-size: 12px; color: #767586; font-weight: 500;">{{ __('Distribution') }}</span>
             </div>
-
             {{-- Content --}}
             <div style="padding: 24px; flex-grow: 1; display: flex; flex-direction: column;">
-                
-                {{-- Dynamic Multi-Segmented Progress Bar --}}
                 <div style="display: flex; height: 10px; border-radius: 5px; overflow: hidden; background: #f1f5f9; margin-bottom: 24px; width: 100%;">
                     @if($totle_order > 0)
                         <div style="width: {{ $completedOrdersPercent }}%; background: #10b981;" title="Completed"></div>
@@ -802,17 +952,11 @@
                         <div style="width: 100%; background: #e2e8f0;" title="No orders"></div>
                     @endif
                 </div>
-
-                {{-- Status Legends --}}
                 <div style="display: flex; flex-direction: column; gap: 16px; flex-grow: 1; justify-content: center;">
-                    
-                    {{-- Total --}}
                     <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 12px;">
                         <span style="font-family: 'Inter', sans-serif; font-size: 13px; color: #464554; font-weight: 600;">{{ __('Total Orders') }}</span>
                         <span style="font-family: 'Geist', sans-serif; font-size: 14px; font-weight: 700; color: #0b1c30;">{{ $totle_order }}</span>
                     </div>
-
-                    {{-- Completed --}}
                     <div style="display: flex; align-items: center; justify-content: space-between;">
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
@@ -823,8 +967,6 @@
                             <span style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; display: block;">{{ number_format($completedOrdersPercent, 1) }}%</span>
                         </div>
                     </div>
-
-                    {{-- Pending --}}
                     <div style="display: flex; align-items: center; justify-content: space-between;">
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <span style="width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; display: inline-block;"></span>
@@ -835,8 +977,6 @@
                             <span style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; display: block;">{{ number_format($pendingOrdersPercent, 1) }}%</span>
                         </div>
                     </div>
-
-                    {{-- Cancelled --}}
                     <div style="display: flex; align-items: center; justify-content: space-between;">
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <span style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444; display: inline-block;"></span>
@@ -847,20 +987,24 @@
                             <span style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; display: block;">{{ number_format($cancelledOrdersPercent, 1) }}%</span>
                         </div>
                     </div>
-
                 </div>
-
             </div>
-
         </div>
+    </div>{{-- /db-widget order-activity --}}
 
-    </div>
 
-    {{-- ===================== STORE ACTIVITY & STORE LINK ROWS ===================== --}}
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6" style="margin-bottom: 28px;">
-
-        {{-- Left: Store Activity Card --}}
-        <div class="lg:col-span-2" style="border: 1px solid rgba(199,196,215,0.2); border-radius: 16px; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column;">
+    {{-- ======== WIDGET: STORE ACTIVITY ======== --}}
+    <div class="db-widget" data-widget-id="store-activity" style="grid-column: span 2;">
+        <div class="widget-controls">
+            <div class="widget-drag-handle" title="{{ __('Drag to reorder') }}"><span class="material-symbols-outlined" style="font-size: 16px;">drag_indicator</span></div>
+            <div style="position: relative;">
+                <button class="widget-actions-btn" onclick="dbWidgetMenu(this)"><span class="material-symbols-outlined" style="font-size: 16px;">more_vert</span></button>
+                <div class="widget-actions-dropdown">
+                    <button onclick="dbHideWidget('store-activity')"><span class="material-symbols-outlined" style="font-size: 14px; vertical-align: middle; margin-right: 6px;">visibility_off</span>{{ __('Hide widget') }}</button>
+                </div>
+            </div>
+        </div>
+        <div class="db-card-inner" style="border: 1px solid rgba(199,196,215,0.2); border-radius: 16px; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column;">
             
             {{-- Header --}}
             <div style="padding: 20px 24px; border-bottom: 1px solid rgba(199,196,215,0.15);">
@@ -923,9 +1067,20 @@
             </div>
 
         </div>
+    </div>{{-- /db-widget store-activity --}}
 
-        {{-- Right: Store Link Card --}}
-        <div class="lg:col-span-1" style="border: 1px solid rgba(199,196,215,0.2); border-radius: 16px; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: space-between;">
+    {{-- ======== WIDGET: STORE LINK ======== --}}
+    <div class="db-widget" data-widget-id="store-link" style="grid-column: span 1;">
+        <div class="widget-controls">
+            <div class="widget-drag-handle" title="{{ __('Drag to reorder') }}"><span class="material-symbols-outlined" style="font-size: 16px;">drag_indicator</span></div>
+            <div style="position: relative;">
+                <button class="widget-actions-btn" onclick="dbWidgetMenu(this)"><span class="material-symbols-outlined" style="font-size: 16px;">more_vert</span></button>
+                <div class="widget-actions-dropdown">
+                    <button onclick="dbHideWidget('store-link')"><span class="material-symbols-outlined" style="font-size: 14px; vertical-align: middle; margin-right: 6px;">visibility_off</span>{{ __('Hide widget') }}</button>
+                </div>
+            </div>
+        </div>
+        <div class="db-card-inner" style="border: 1px solid rgba(199,196,215,0.2); border-radius: 16px; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
             
             {{-- Content --}}
             <div style="padding: 24px; flex-grow: 1;">
@@ -961,210 +1116,234 @@
             </div>
 
         </div>
-
-    </div>
+    </div>{{-- /db-widget store-link --}}
 
     {{-- ===================== RECENT ORDERS TABLE ===================== --}}
-    <div style="border: 1px solid rgba(199,196,215,0.2); border-radius: 16px; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,0.02); overflow: hidden; margin-bottom: 28px;">
-        
-        {{-- Card Header --}}
-        <div style="padding: 18px 24px; border-bottom: 1px solid rgba(199,196,215,0.15); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-            <h2 style="font-family: 'Geist', sans-serif; font-size: 15px; font-weight: 600; color: #0b1c30; margin: 0; letter-spacing: -0.01em;">
-                {{ __('Recent Orders') }}
-            </h2>
-            <a href="{{ route('orders.index') }}" style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: #5146E5; text-decoration: none; display: inline-flex; align-items: center; gap: 2px;"
-               onmouseover="this.style.color='#3c34ba'" onmouseout="this.style.color='#5146E5'">
-                {{ __('View all') }}
-                <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
-            </a>
+    {{-- ======== WIDGET: RECENT ORDERS ======== --}}
+    <div class="db-widget" data-widget-id="recent-orders" style="grid-column: span 3;">
+        <div class="widget-controls">
+            <div class="widget-drag-handle" title="{{ __('Drag to reorder') }}"><span class="material-symbols-outlined" style="font-size: 16px;">drag_indicator</span></div>
+            <div style="position: relative;">
+                <button class="widget-actions-btn" onclick="dbWidgetMenu(this)"><span class="material-symbols-outlined" style="font-size: 16px;">more_vert</span></button>
+                <div class="widget-actions-dropdown">
+                    <button onclick="dbHideWidget('recent-orders')"><span class="material-symbols-outlined" style="font-size: 14px; vertical-align: middle; margin-right: 6px;">visibility_off</span>{{ __('Hide widget') }}</button>
+                </div>
+            </div>
         </div>
-
-        {{-- Table Content --}}
-        @if($new_orders->isEmpty())
-            <div style="text-align: center; padding: 48px 24px;">
-                <span class="material-symbols-outlined" style="font-size: 40px; color: #c7c4d7; display: block; margin-bottom: 12px;">shopping_bag</span>
-                <p style="font-family: 'Inter', sans-serif; font-size: 14px; color: #767586; margin: 0;">{{ __('No orders placed yet.') }}</p>
-            </div>
-        @else
-            <div style="overflow-x: auto;">
-                <table style="width: 100%; border-collapse: collapse; min-width: 640px;">
-                    <thead>
-                        <tr style="border-bottom: 1px solid rgba(199,196,215,0.2);">
-                            <th style="padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #767586; text-transform: uppercase; letter-spacing: 0.07em; text-align: left; background: #fafafa;">{{ __('Order') }}</th>
-                            <th style="padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #767586; text-transform: uppercase; letter-spacing: 0.07em; text-align: left; background: #fafafa;">{{ __('Customer') }}</th>
-                            <th style="padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #767586; text-transform: uppercase; letter-spacing: 0.07em; text-align: center; background: #fafafa;">{{ __('Items') }}</th>
-                            <th style="padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #767586; text-transform: uppercase; letter-spacing: 0.07em; text-align: right; background: #fafafa;">{{ __('Amount') }}</th>
-                            <th style="padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #767586; text-transform: uppercase; letter-spacing: 0.07em; text-align: left; background: #fafafa;">{{ __('Status') }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($new_orders as $order)
-                            @php
-                                $productsJson = json_decode($order->product, true);
-                                $itemsCount = is_array($productsJson) ? count($productsJson) : 0;
-                                
-                                // Initials for Avatar Fallback
-                                $custName = !empty($order->name) && $order->name !== 'walk-in-customer' ? $order->name : __('Walk-in Customer');
-                                $words = explode(' ', trim($custName));
-                                $initials = '';
-                                foreach ($words as $w) {
-                                    $initials .= strtoupper(substr($w, 0, 1));
-                                }
-                                $initials = substr($initials, 0, 2);
-                                if(empty($initials)) {
-                                    $initials = 'WC';
-                                }
-                                
-                                $bgColors = ['#eff0fe', '#e8f5e9', '#fff3e0', '#efebe9', '#f3e5f5'];
-                                $textColors = ['#4648d4', '#1a7431', '#904900', '#4e342e', '#6a1b9a'];
-                                $colorIndex = $order->id % count($bgColors);
-                                $bgColor = $bgColors[$colorIndex];
-                                $textColor = $textColors[$colorIndex];
-                            @endphp
-                            <tr style="border-bottom: 1px solid rgba(199,196,215,0.12); transition: background 0.15s;"
-                                onmouseover="this.style.background='#fafbff'" onmouseout="this.style.background='transparent'">
-                                
-                                {{-- Order ID --}}
-                                <td style="padding: 16px 24px; font-family: monospace; font-size: 13px; font-weight: 600; color: #4648d4; vertical-align: middle;">
-                                    #{{ $order->order_id }}
-                                </td>
-
-                                {{-- Customer details --}}
-                                <td style="padding: 16px 24px; vertical-align: middle;">
-                                    <div style="display: flex; align-items: center; gap: 10px;">
-                                        <div style="width: 32px; height: 32px; border-radius: 50%; background: {{ $bgColor }}; color: {{ $textColor }}; display: flex; align-items: center; justify-content: center; font-family: 'Geist', sans-serif; font-size: 11px; font-weight: 600; flex-shrink: 0; border: 1px solid rgba(199,196,215,0.15);">
-                                            {{ $initials }}
-                                        </div>
-                                        <div>
-                                            <p style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30; margin: 0;">{{ $custName }}</p>
-                                            <p style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; margin: 1px 0 0;">{{ $order->email ?: __('No email') }}</p>
-                                        </div>
-                                    </div>
-                                </td>
-
-                                {{-- Item count --}}
-                                <td style="padding: 16px 24px; text-align: center; vertical-align: middle; font-family: 'Inter', sans-serif; font-size: 13px; color: #464554;">
-                                    {{ $itemsCount }} {{ $itemsCount === 1 ? __('item') : __('items') }}
-                                </td>
-
-                                {{-- Amount --}}
-                                <td style="padding: 16px 24px; text-align: right; vertical-align: middle; font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30;">
-                                    {{ \App\Models\Utility::priceFormat($order->price) }}
-                                </td>
-
-                                {{-- Status --}}
-                                <td style="padding: 16px 24px; vertical-align: middle;">
-                                    @if(in_array(strtolower($order->status), ['delivered', 'completed', 'approved']))
-                                        <span style="display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; background: #e8f5e9; color: #1a7431; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;">
-                                            <span style="width: 5px; height: 5px; border-radius: 50%; background: #1a7431;"></span>
-                                            {{ __('Completed') }}
-                                        </span>
-                                    @elseif(strtolower($order->status) == 'pending')
-                                        <span style="display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; background: #fff3e0; color: #904900; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;">
-                                            <span style="width: 5px; height: 5px; border-radius: 50%; background: #904900;"></span>
-                                            {{ __('Pending') }}
-                                        </span>
-                                    @else
-                                        <span style="display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; background: #feeceb; color: #c01d14; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;">
-                                            <span style="width: 5px; height: 5px; border-radius: 50%; background: #c01d14;"></span>
-                                            {{ ucfirst($order->status) }}
-                                        </span>
-                                    @endif
-                                </td>
-
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        @endif
-
-    </div>
-
-    {{-- ===================== QUICK ACTIONS ===================== --}}
-    <div style="margin-bottom: 20px;">
-        <h2 style="font-family: 'Geist', sans-serif; font-size: 16px; font-weight: 600; color: #0b1c30; margin: 0 0 16px; letter-spacing: -0.02em;">
-            {{ __('Quick Actions') }}
-        </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div class="db-card-inner" style="border: 1px solid rgba(199,196,215,0.2); border-radius: 16px; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,0.02); overflow: hidden;">
             
-            {{-- Create Order --}}
-            <a href="{{ route('pos.index') }}" class="group" style="text-decoration: none; border: 1px solid rgba(199,196,215,0.25); border-radius: 12px; background: #fff; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.01); transition: all 0.2s;"
-               onmouseover="this.style.borderColor='#4648d4'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='rgba(199,196,215,0.25)'; this.style.transform='none';">
-                <div style="width: 36px; height: 36px; border-radius: 8px; background: #eff0fe; color: #4648d4; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
-                    <span class="material-symbols-outlined" style="font-size: 18px;">point_of_sale</span>
-                </div>
-                <div>
-                    <h3 style="font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30; margin: 0 0 2px; display: flex; align-items: center; gap: 4px;">
-                        {{ __('Create Order') }}
-                        <span class="material-symbols-outlined" style="font-size: 14px; opacity: 0; transition: all 0.2s; transform: translateX(-4px);" class="group-hover:opacity-100 group-hover:transform-none">arrow_forward</span>
-                    </h3>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; margin: 0; line-height: 1.3;">{{ __('Start a new POS order') }}</p>
-                </div>
-            </a>
+            {{-- Card Header --}}
+            <div style="padding: 18px 24px; border-bottom: 1px solid rgba(199,196,215,0.15); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+                <h2 style="font-family: 'Geist', sans-serif; font-size: 15px; font-weight: 600; color: #0b1c30; margin: 0; letter-spacing: -0.01em;">
+                    {{ __('Recent Orders') }}
+                </h2>
+                <a href="{{ route('orders.index') }}" style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: #5146E5; text-decoration: none; display: inline-flex; align-items: center; gap: 2px;"
+                   onmouseover="this.style.color='#3c34ba'" onmouseout="this.style.color='#5146E5'">
+                    {{ __('View all') }}
+                    <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+                </a>
+            </div>
 
-            {{-- Add Product --}}
-            <a href="{{ route('product.create') }}" class="group" style="text-decoration: none; border: 1px solid rgba(199,196,215,0.25); border-radius: 12px; background: #fff; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.01); transition: all 0.2s;"
-               onmouseover="this.style.borderColor='#4648d4'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='rgba(199,196,215,0.25)'; this.style.transform='none';">
-                <div style="width: 36px; height: 36px; border-radius: 8px; background: #e8f5e9; color: #1a7431; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
-                    <span class="material-symbols-outlined" style="font-size: 18px;">add_box</span>
+            {{-- Table Content --}}
+            @if($new_orders->isEmpty())
+                <div style="text-align: center; padding: 48px 24px;">
+                    <span class="material-symbols-outlined" style="font-size: 40px; color: #c7c4d7; display: block; margin-bottom: 12px;">shopping_bag</span>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 14px; color: #767586; margin: 0;">{{ __('No orders placed yet.') }}</p>
                 </div>
-                <div>
-                    <h3 style="font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30; margin: 0 0 2px; display: flex; align-items: center; gap: 4px;">
-                        {{ __('Add Product') }}
-                        <span class="material-symbols-outlined" style="font-size: 14px; opacity: 0; transition: all 0.2s; transform: translateX(-4px);" class="group-hover:opacity-100 group-hover:transform-none">arrow_forward</span>
-                    </h3>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; margin: 0; line-height: 1.3;">{{ __('Add a new product') }}</p>
-                </div>
-            </a>
+            @else
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; min-width: 640px;">
+                        <thead>
+                            <tr style="border-bottom: 1px solid rgba(199,196,215,0.2);">
+                                <th style="padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #767586; text-transform: uppercase; letter-spacing: 0.07em; text-align: left; background: #fafafa;">{{ __('Order') }}</th>
+                                <th style="padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #767586; text-transform: uppercase; letter-spacing: 0.07em; text-align: left; background: #fafafa;">{{ __('Customer') }}</th>
+                                <th style="padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #767586; text-transform: uppercase; letter-spacing: 0.07em; text-align: center; background: #fafafa;">{{ __('Items') }}</th>
+                                <th style="padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #767586; text-transform: uppercase; letter-spacing: 0.07em; text-align: right; background: #fafafa;">{{ __('Amount') }}</th>
+                                <th style="padding: 12px 24px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #767586; text-transform: uppercase; letter-spacing: 0.07em; text-align: left; background: #fafafa;">{{ __('Status') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($new_orders as $order)
+                                @php
+                                    $productsJson = json_decode($order->product, true);
+                                    $itemsCount = is_array($productsJson) ? count($productsJson) : 0;
+                                    
+                                    // Initials for Avatar Fallback
+                                    $custName = !empty($order->name) && $order->name !== 'walk-in-customer' ? $order->name : __('Walk-in Customer');
+                                    $words = explode(' ', trim($custName));
+                                    $initials = '';
+                                    foreach ($words as $w) {
+                                        $initials .= strtoupper(substr($w, 0, 1));
+                                    }
+                                    $initials = substr($initials, 0, 2);
+                                    if(empty($initials)) {
+                                        $initials = 'WC';
+                                    }
+                                    
+                                    $bgColors = ['#eff0fe', '#e8f5e9', '#fff3e0', '#efebe9', '#f3e5f5'];
+                                    $textColors = ['#4648d4', '#1a7431', '#904900', '#4e342e', '#6a1b9a'];
+                                    $colorIndex = $order->id % count($bgColors);
+                                    $bgColor = $bgColors[$colorIndex];
+                                    $textColor = $textColors[$colorIndex];
+                                @endphp
+                                <tr style="border-bottom: 1px solid rgba(199,196,215,0.12); transition: background 0.15s;"
+                                    onmouseover="this.style.background='#fafbff'" onmouseout="this.style.background='transparent'">
+                                    
+                                    {{-- Order ID --}}
+                                    <td style="padding: 16px 24px; font-family: monospace; font-size: 13px; font-weight: 600; color: #4648d4; vertical-align: middle;">
+                                        #{{ $order->order_id }}
+                                    </td>
 
-            {{-- Add Customer --}}
-            <a href="{{ route('customer.index') }}" class="group" style="text-decoration: none; border: 1px solid rgba(199,196,215,0.25); border-radius: 12px; background: #fff; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.01); transition: all 0.2s;"
-               onmouseover="this.style.borderColor='#4648d4'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='rgba(199,196,215,0.25)'; this.style.transform='none';">
-                <div style="width: 36px; height: 36px; border-radius: 8px; background: #fff3e0; color: #904900; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
-                    <span class="material-symbols-outlined" style="font-size: 18px;">person_add</span>
-                </div>
-                <div>
-                    <h3 style="font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30; margin: 0 0 2px; display: flex; align-items: center; gap: 4px;">
-                        {{ __('Add Customer') }}
-                        <span class="material-symbols-outlined" style="font-size: 14px; opacity: 0; transition: all 0.2s; transform: translateX(-4px);" class="group-hover:opacity-100 group-hover:transform-none">arrow_forward</span>
-                    </h3>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; margin: 0; line-height: 1.3;">{{ __('Create customer') }}</p>
-                </div>
-            </a>
+                                    {{-- Customer details --}}
+                                    <td style="padding: 16px 24px; vertical-align: middle;">
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <div style="width: 32px; height: 32px; border-radius: 50%; background: {{ $bgColor }}; color: {{ $textColor }}; display: flex; align-items: center; justify-content: center; font-family: 'Geist', sans-serif; font-size: 11px; font-weight: 600; flex-shrink: 0; border: 1px solid rgba(199,196,215,0.15);">
+                                                {{ $initials }}
+                                            </div>
+                                            <div>
+                                                <p style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30; margin: 0;">{{ $custName }}</p>
+                                                <p style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; margin: 1px 0 0;">{{ $order->email ?: __('No email') }}</p>
+                                            </div>
+                                        </div>
+                                    </td>
 
-            {{-- View Orders --}}
-            <a href="{{ route('orders.index') }}" class="group" style="text-decoration: none; border: 1px solid rgba(199,196,215,0.25); border-radius: 12px; background: #fff; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.01); transition: all 0.2s;"
-               onmouseover="this.style.borderColor='#4648d4'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='rgba(199,196,215,0.25)'; this.style.transform='none';">
-                <div style="width: 36px; height: 36px; border-radius: 8px; background: #e0f2f1; color: #00796b; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
-                    <span class="material-symbols-outlined" style="font-size: 18px;">receipt_long</span>
-                </div>
-                <div>
-                    <h3 style="font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30; margin: 0 0 2px; display: flex; align-items: center; gap: 4px;">
-                        {{ __('View Orders') }}
-                        <span class="material-symbols-outlined" style="font-size: 14px; opacity: 0; transition: all 0.2s; transform: translateX(-4px);" class="group-hover:opacity-100 group-hover:transform-none">arrow_forward</span>
-                    </h3>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; margin: 0; line-height: 1.3;">{{ __('Manage recent orders') }}</p>
-                </div>
-            </a>
+                                    {{-- Item count --}}
+                                    <td style="padding: 16px 24px; text-align: center; vertical-align: middle; font-family: 'Inter', sans-serif; font-size: 13px; color: #464554;">
+                                        {{ $itemsCount }} {{ $itemsCount === 1 ? __('item') : __('items') }}
+                                    </td>
 
-            {{-- Manage Inventory --}}
-            <a href="{{ route('product.index') }}" class="group" style="text-decoration: none; border: 1px solid rgba(199,196,215,0.25); border-radius: 12px; background: #fff; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.01); transition: all 0.2s;"
-               onmouseover="this.style.borderColor='#4648d4'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='rgba(199,196,215,0.25)'; this.style.transform='none';">
-                <div style="width: 36px; height: 36px; border-radius: 8px; background: #efebe9; color: #4e342e; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
-                    <span class="material-symbols-outlined" style="font-size: 18px;">inventory_2</span>
+                                    {{-- Amount --}}
+                                    <td style="padding: 16px 24px; text-align: right; vertical-align: middle; font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30;">
+                                        {{ \App\Models\Utility::priceFormat($order->price) }}
+                                    </td>
+
+                                    {{-- Status --}}
+                                    <td style="padding: 16px 24px; vertical-align: middle;">
+                                        @if(in_array(strtolower($order->status), ['delivered', 'completed', 'approved']))
+                                            <span style="display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; background: #e8f5e9; color: #1a7431; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;">
+                                                <span style="width: 5px; height: 5px; border-radius: 50%; background: #1a7431;"></span>
+                                                {{ __('Completed') }}
+                                            </span>
+                                        @elseif(strtolower($order->status) == 'pending')
+                                            <span style="display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; background: #fff3e0; color: #904900; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;">
+                                                <span style="width: 5px; height: 5px; border-radius: 50%; background: #904900;"></span>
+                                                {{ __('Pending') }}
+                                            </span>
+                                        @else
+                                            <span style="display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; background: #feeceb; color: #c01d14; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;">
+                                                <span style="width: 5px; height: 5px; border-radius: 50%; background: #c01d14;"></span>
+                                                {{ ucfirst($order->status) }}
+                                            </span>
+                                        @endif
+                                    </td>
+
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-                <div>
-                    <h3 style="font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30; margin: 0 0 2px; display: flex; align-items: center; gap: 4px;">
-                        {{ __('Inventory') }}
-                        <span class="material-symbols-outlined" style="font-size: 14px; opacity: 0; transition: all 0.2s; transform: translateX(-4px);" class="group-hover:opacity-100 group-hover:transform-none">arrow_forward</span>
-                    </h3>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; margin: 0; line-height: 1.3;">{{ __('View products and stock') }}</p>
-                </div>
-            </a>
+            @endif
 
         </div>
-    </div>
+    </div>{{-- /db-widget recent-orders --}}
+
+    {{-- ======== WIDGET: QUICK ACTIONS ======== --}}
+    <div class="db-widget" data-widget-id="quick-actions" style="grid-column: span 3;">
+        <div class="widget-controls">
+            <div class="widget-drag-handle" title="{{ __('Drag to reorder') }}"><span class="material-symbols-outlined" style="font-size: 16px;">drag_indicator</span></div>
+            <div style="position: relative;">
+                <button class="widget-actions-btn" onclick="dbWidgetMenu(this)"><span class="material-symbols-outlined" style="font-size: 16px;">more_vert</span></button>
+                <div class="widget-actions-dropdown">
+                    <button onclick="dbHideWidget('quick-actions')"><span class="material-symbols-outlined" style="font-size: 14px; vertical-align: middle; margin-right: 6px;">visibility_off</span>{{ __('Hide widget') }}</button>
+                </div>
+            </div>
+        </div>
+        <div class="db-card-inner">
+            <h2 style="font-family: 'Geist', sans-serif; font-size: 16px; font-weight: 600; color: #0b1c30; margin: 0 0 16px; letter-spacing: -0.02em;">
+                {{ __('Quick Actions') }}
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                
+                {{-- Create Order --}}
+                <a href="{{ route('pos.index') }}" class="group" style="text-decoration: none; border: 1px solid rgba(199,196,215,0.25); border-radius: 12px; background: #fff; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.01); transition: all 0.2s;"
+                   onmouseover="this.style.borderColor='#4648d4'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='rgba(199,196,215,0.25)'; this.style.transform='none';">
+                    <div style="width: 36px; height: 36px; border-radius: 8px; background: #eff0fe; color: #4648d4; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                        <span class="material-symbols-outlined" style="font-size: 18px;">point_of_sale</span>
+                    </div>
+                    <div>
+                        <h3 style="font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30; margin: 0 0 2px; display: flex; align-items: center; gap: 4px;">
+                            {{ __('Create Order') }}
+                            <span class="material-symbols-outlined" style="font-size: 14px; opacity: 0; transition: all 0.2s; transform: translateX(-4px);" class="group-hover:opacity-100 group-hover:transform-none">arrow_forward</span>
+                        </h3>
+                        <p style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; margin: 0; line-height: 1.3;">{{ __('Start a new POS order') }}</p>
+                    </div>
+                </a>
+
+                {{-- Add Product --}}
+                <a href="{{ route('product.create') }}" class="group" style="text-decoration: none; border: 1px solid rgba(199,196,215,0.25); border-radius: 12px; background: #fff; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.01); transition: all 0.2s;"
+                   onmouseover="this.style.borderColor='#4648d4'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='rgba(199,196,215,0.25)'; this.style.transform='none';">
+                    <div style="width: 36px; height: 36px; border-radius: 8px; background: #e8f5e9; color: #1a7431; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                        <span class="material-symbols-outlined" style="font-size: 18px;">add_box</span>
+                    </div>
+                    <div>
+                        <h3 style="font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30; margin: 0 0 2px; display: flex; align-items: center; gap: 4px;">
+                            {{ __('Add Product') }}
+                            <span class="material-symbols-outlined" style="font-size: 14px; opacity: 0; transition: all 0.2s; transform: translateX(-4px);" class="group-hover:opacity-100 group-hover:transform-none">arrow_forward</span>
+                        </h3>
+                        <p style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; margin: 0; line-height: 1.3;">{{ __('Add a new product') }}</p>
+                    </div>
+                </a>
+
+                {{-- Add Customer --}}
+                <a href="{{ route('customer.index') }}" class="group" style="text-decoration: none; border: 1px solid rgba(199,196,215,0.25); border-radius: 12px; background: #fff; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.01); transition: all 0.2s;"
+                   onmouseover="this.style.borderColor='#4648d4'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='rgba(199,196,215,0.25)'; this.style.transform='none';">
+                    <div style="width: 36px; height: 36px; border-radius: 8px; background: #fff3e0; color: #904900; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                        <span class="material-symbols-outlined" style="font-size: 18px;">person_add</span>
+                    </div>
+                    <div>
+                        <h3 style="font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30; margin: 0 0 2px; display: flex; align-items: center; gap: 4px;">
+                            {{ __('Add Customer') }}
+                            <span class="material-symbols-outlined" style="font-size: 14px; opacity: 0; transition: all 0.2s; transform: translateX(-4px);" class="group-hover:opacity-100 group-hover:transform-none">arrow_forward</span>
+                        </h3>
+                        <p style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; margin: 0; line-height: 1.3;">{{ __('Create customer') }}</p>
+                    </div>
+                </a>
+
+                {{-- View Orders --}}
+                <a href="{{ route('orders.index') }}" class="group" style="text-decoration: none; border: 1px solid rgba(199,196,215,0.25); border-radius: 12px; background: #fff; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.01); transition: all 0.2s;"
+                   onmouseover="this.style.borderColor='#4648d4'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='rgba(199,196,215,0.25)'; this.style.transform='none';">
+                    <div style="width: 36px; height: 36px; border-radius: 8px; background: #e0f2f1; color: #00796b; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                        <span class="material-symbols-outlined" style="font-size: 18px;">receipt_long</span>
+                    </div>
+                    <div>
+                        <h3 style="font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30; margin: 0 0 2px; display: flex; align-items: center; gap: 4px;">
+                            {{ __('View Orders') }}
+                            <span class="material-symbols-outlined" style="font-size: 14px; opacity: 0; transition: all 0.2s; transform: translateX(-4px);" class="group-hover:opacity-100 group-hover:transform-none">arrow_forward</span>
+                        </h3>
+                        <p style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; margin: 0; line-height: 1.3;">{{ __('Manage recent orders') }}</p>
+                    </div>
+                </a>
+
+                {{-- Manage Inventory --}}
+                <a href="{{ route('product.index') }}" class="group" style="text-decoration: none; border: 1px solid rgba(199,196,215,0.25); border-radius: 12px; background: #fff; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.01); transition: all 0.2s;"
+                   onmouseover="this.style.borderColor='#4648d4'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='rgba(199,196,215,0.25)'; this.style.transform='none';">
+                    <div style="width: 36px; height: 36px; border-radius: 8px; background: #efebe9; color: #4e342e; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                        <span class="material-symbols-outlined" style="font-size: 18px;">inventory_2</span>
+                    </div>
+                    <div>
+                        <h3 style="font-family: 'Geist', sans-serif; font-size: 13px; font-weight: 600; color: #0b1c30; margin: 0 0 2px; display: flex; align-items: center; gap: 4px;">
+                            {{ __('Inventory') }}
+                            <span class="material-symbols-outlined" style="font-size: 14px; opacity: 0; transition: all 0.2s; transform: translateX(-4px);" class="group-hover:opacity-100 group-hover:transform-none">arrow_forward</span>
+                        </h3>
+                        <p style="font-family: 'Inter', sans-serif; font-size: 11px; color: #767586; margin: 0; line-height: 1.3;">{{ __('View products and stock') }}</p>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </div>{{-- /db-widget quick-actions --}}
+
+    </div>{{-- /dashboard-widgets-grid --}}
 
 @endif
 @endsection
@@ -1234,7 +1413,55 @@
 
 </script>
 @else
+    {{-- Dynamically load SortableJS from CDN --}}
     <script>
+        if (typeof Sortable === 'undefined') {
+            let script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js';
+            document.head.appendChild(script);
+        }
+    </script>
+
+    <script>
+        // Apply persisted dashboard layout immediately on load
+        (function() {
+            let layoutStr = localStorage.getItem('virrat_dashboard_layout');
+            if (!layoutStr) return;
+            try {
+                let layout = JSON.parse(layoutStr);
+                let grid = document.getElementById('dashboard-widgets-grid');
+                if (grid) {
+                    // Reorder widgets
+                    if (layout.widgetOrder && layout.widgetOrder.length) {
+                        let widgetsMap = {};
+                        grid.querySelectorAll('.db-widget').forEach(w => {
+                            widgetsMap[w.getAttribute('data-widget-id')] = w;
+                        });
+                        layout.widgetOrder.forEach(id => {
+                            if (widgetsMap[id]) {
+                                grid.appendChild(widgetsMap[id]);
+                            }
+                        });
+                    }
+                    // Hide widgets
+                    if (layout.hiddenWidgets) {
+                        layout.hiddenWidgets.forEach(id => {
+                            let w = grid.querySelector(`[data-widget-id="${id}"]`);
+                            if (w) {
+                                w.classList.add('widget-hidden');
+                            }
+                            let cb = document.getElementById(`wg-toggle-${id}`);
+                            if (cb) {
+                                cb.checked = false;
+                            }
+                        });
+                    }
+                }
+            } catch (e) {
+                console.error('Error applying layout on load', e);
+            }
+        })();
+
         $(document).ready(function() {
             $('.cp_link').on('click', function() {
                 var value = $(this).attr('data-link');
@@ -1249,6 +1476,13 @@
 
         // Sales Overview Chart
         (function () {
+            // Safety: Destroy existing instance if present to avoid duplicate canvas renders
+            if (window.salesOverviewChart) {
+                try {
+                    window.salesOverviewChart.destroy();
+                } catch(e) {}
+            }
+
             var options = {
                 chart: {
                     height: 240,
@@ -1315,8 +1549,11 @@
                     }
                 }
             };
-            var chart = new ApexCharts(document.querySelector("#sales-overview-chart"), options);
-            chart.render();
+            var chartEl = document.querySelector("#sales-overview-chart");
+            if (chartEl) {
+                window.salesOverviewChart = new ApexCharts(chartEl, options);
+                window.salesOverviewChart.render();
+            }
         })();
 
         // social sharing
@@ -1335,6 +1572,129 @@
                 $('.sharingButtonsContainer').toggle();
             });
         });
+
+        // Dashboard customization functions
+        let sortableInstance = null;
+
+        function dbEnterCustomize() {
+            document.body.classList.add('dash-customize-active');
+            document.getElementById('customize-hint-bar').style.display = 'flex';
+            document.getElementById('btn-customize-dashboard').style.display = 'none';
+            document.getElementById('btn-done-customize').style.display = 'inline-flex';
+            
+            let el = document.getElementById('dashboard-widgets-grid');
+            if (el && typeof Sortable !== 'undefined') {
+                sortableInstance = new Sortable(el, {
+                    handle: '.widget-drag-handle',
+                    animation: 150,
+                    ghostClass: 'sortable-ghost',
+                    dragClass: 'sortable-drag'
+                });
+            }
+        }
+
+        function dbExitCustomize() {
+            document.body.classList.remove('dash-customize-active');
+            document.getElementById('customize-hint-bar').style.display = 'none';
+            document.getElementById('btn-customize-dashboard').style.display = 'inline-flex';
+            document.getElementById('btn-done-customize').style.display = 'none';
+            
+            if (sortableInstance) {
+                sortableInstance.destroy();
+                sortableInstance = null;
+            }
+            dbSaveLayout();
+        }
+
+        function dbSaveLayout() {
+            let grid = document.getElementById('dashboard-widgets-grid');
+            if (!grid) return;
+            let widgets = grid.querySelectorAll('.db-widget');
+            let order = [];
+            widgets.forEach(w => {
+                order.push(w.getAttribute('data-widget-id'));
+            });
+            let hidden = [];
+            widgets.forEach(w => {
+                if (w.classList.contains('widget-hidden')) {
+                    hidden.push(w.getAttribute('data-widget-id'));
+                }
+            });
+            let layout = {
+                widgetOrder: order,
+                hiddenWidgets: hidden,
+                version: 1
+            };
+            localStorage.setItem('virrat_dashboard_layout', JSON.stringify(layout));
+            show_toastr('Success', '{{ __("Dashboard layout saved successfully") }}', 'success');
+        }
+
+        function dbToggleWidget(id, show) {
+            let w = document.querySelector(`[data-widget-id="${id}"]`);
+            if (w) {
+                if (show) {
+                    w.classList.remove('widget-hidden');
+                } else {
+                    w.classList.add('widget-hidden');
+                }
+            }
+        }
+
+        function dbHideWidget(id) {
+            let w = document.querySelector(`[data-widget-id="${id}"]`);
+            if (w) {
+                w.classList.add('widget-hidden');
+                let cb = document.getElementById(`wg-toggle-${id}`);
+                if (cb) {
+                    cb.checked = false;
+                }
+            }
+            document.querySelectorAll('.widget-actions-dropdown').forEach(d => {
+                d.classList.remove('wad-open');
+            });
+        }
+
+        function dbWidgetMenu(btn) {
+            let dropdown = btn.nextElementSibling;
+            document.querySelectorAll('.widget-actions-dropdown').forEach(d => {
+                if (d !== dropdown) d.classList.remove('wad-open');
+            });
+            if (dropdown) {
+                dropdown.classList.toggle('wad-open');
+            }
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.widget-actions-btn')) {
+                document.querySelectorAll('.widget-actions-dropdown').forEach(d => {
+                    d.classList.remove('wad-open');
+                });
+            }
+        });
+
+        function dbOpenResetModal() {
+            document.getElementById('reset-modal-overlay').style.display = 'flex';
+        }
+
+        function dbCloseResetModal() {
+            document.getElementById('reset-modal-overlay').style.display = 'none';
+        }
+
+        function dbResetDashboard() {
+            localStorage.removeItem('virrat_dashboard_layout');
+            dbCloseResetModal();
+            window.location.reload();
+        }
+
+        function dbOpenManagePanel() {
+            document.getElementById('manage-widgets-overlay').style.display = 'block';
+            document.getElementById('manage-widgets-panel').classList.add('panel-open');
+        }
+
+        function dbCloseManagePanel() {
+            document.getElementById('manage-widgets-overlay').style.display = 'none';
+            document.getElementById('manage-widgets-panel').classList.remove('panel-open');
+        }
     </script>
 @endif
 @endpush
