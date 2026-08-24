@@ -7,17 +7,17 @@
     border-radius: 8px;
     text-decoration: none;
     transition: all 0.2s;
-    color: #464554 !important;
+    color: var(--text-secondary) !important;
     background: transparent !important;
     border: none;
     cursor: pointer;
 }
 .sg-nav-link:hover, .sg-nav-link.w-full:hover {
-    background-color: #dce9ff !important;
-    color: #0b1c30 !important;
+    background-color: var(--surface-2) !important;
+    color: var(--primary) !important;
 }
 .sg-nav-link.sg-active, .sg-nav-link.w-full.sg-active {
-    background-color: {{ $primaryColor }} !important;
+    background-color: var(--primary) !important;
     color: #ffffff !important;
     font-weight: 500 !important;
 }
@@ -30,17 +30,33 @@
     font-size: 13px;
     text-decoration: none;
     transition: all 0.2s;
-    color: #464554 !important;
+    color: var(--text-secondary) !important;
     background: transparent !important;
 }
 .sg-dropdown-link:hover {
-    background-color: #dce9ff !important;
-    color: #0b1c30 !important;
+    background-color: var(--surface-2) !important;
+    color: var(--primary) !important;
 }
 .sg-dropdown-link.sg-active {
-    background-color: {{ $primaryColor }} !important;
+    background-color: var(--primary) !important;
     color: #ffffff !important;
     font-weight: 500 !important;
+}
+
+.sg-nav-heading {
+    padding: 14px 12px 4px 12px !important;
+    font-family: 'Inter', -apple-system, sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    color: #94A3B8 !important;
+    text-transform: uppercase !important;
+    line-height: 1.2 !important;
+    margin-top: 6px !important;
+}
+.sg-nav-heading:first-of-type {
+    margin-top: 0 !important;
+    padding-top: 6px !important;
 }
 </style>
 {{-- Mobile sidebar backdrop --}}
@@ -49,17 +65,18 @@
 {{-- Sidebar --}}
 <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-[150%]'"
     class="fixed left-0 top-0 bottom-0 z-50 flex flex-col transition-transform duration-300 ease-in-out sg-sidebar"
-    style="background: #ffffff; border-radius: 12px; box-shadow: 0 1px 8px rgba(0,0,0,0.04); border: 1px solid rgba(199,196,215,0.1);">
+    style="background: var(--sidebar-bg); border-radius: 12px; box-shadow: 0 1px 8px rgba(0,0,0,0.04); border: 1px solid var(--border);">
 
     {{-- Logo Area --}}
-    <div style="padding: 24px; display: flex; align-items: center; justify-content: space-between;">
-        <a href="{{ route('dashboard') }}" style="display: block; max-width: 150px;">
+    <div style="padding: 22px 24px; display: flex; align-items: center; justify-content: space-between;">
+        <a href="{{ route('dashboard') }}" style="display: flex; align-items: center; width: 180px; height: 42px; text-decoration: none;">
             @php
                 $logo = \App\Models\Utility::get_file('uploads/logo/');
-                $company_logo = \App\Models\Utility::getValByName('company_logo');
-                $logo_img = isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png';
+                $company_logo = \App\Models\Utility::getValByName('company_logo_light');
+                $logo_img = (!empty($company_logo) && $company_logo != 'logo-dark.png') ? $company_logo : 'logo-light.png';
+                $lightFallback = asset('uploads/logo/logo-light.png');
             @endphp
-            <img src="{{ $logo . '/' . $logo_img . '?timestamp='. time() }}" alt="{{ config('app.name') }}" style="width: 100%; height: auto; object-fit: contain;">
+            <img src="{{ $logo . '/' . $logo_img . '?timestamp='. time() }}" alt="{{ config('app.name') }}" style="width: 180px; height: 42px; max-width: 180px; max-height: 42px; object-fit: contain; display: block; background: transparent !important; border: none !important; box-shadow: none !important; margin: 0; padding: 0;" onerror="this.src='{{ $lightFallback }}';">
         </a>
         <button @click="sidebarOpen = false" class="ml-auto lg:hidden" style="color: #767586;">
             <span class="material-symbols-outlined">close</span>
@@ -70,7 +87,7 @@
     <div style="flex: 1; overflow-y: auto; padding: 8px 12px; display: flex; flex-direction: column; gap: 4px;">
         
         {{-- Nav Section Label --}}
-        <div style="padding: 8px 12px 4px; font-family: Geist, sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; color: rgba(70,69,84,0.6); text-transform: uppercase;">
+        <div class="sg-nav-heading">
             {{ __('Main') }}
         </div>
 
@@ -83,7 +100,7 @@
 
         @if (Auth::user()->type == 'super admin')
             {{-- Super Admin Section --}}
-            <div style="padding: 16px 12px 4px; font-family: Geist, sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; color: rgba(70,69,84,0.6); text-transform: uppercase; margin-top: 8px;">
+            <div class="sg-nav-heading">
                 {{ __('Store Management') }}
             </div>
 
@@ -99,7 +116,7 @@
                 <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Coupons') }}</span>
             </a>
 
-            <div style="padding: 16px 12px 4px; font-family: Geist, sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; color: rgba(70,69,84,0.6); text-transform: uppercase; margin-top: 8px;">
+            <div class="sg-nav-heading">
                 {{ __('Subscriptions') }}
             </div>
 
@@ -122,7 +139,7 @@
                 <span style="font-family: Inter, sans-serif; font-size: 13px; line-height: 18px;">{{ __('Domain Requests') }}</span>
             </a>
 
-            <div style="padding: 16px 12px 4px; font-family: Geist, sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; color: rgba(70,69,84,0.6); text-transform: uppercase; margin-top: 8px;">
+            <div class="sg-nav-heading">
                 {{ __('System') }}
             </div>
 

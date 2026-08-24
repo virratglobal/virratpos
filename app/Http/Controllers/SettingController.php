@@ -2339,7 +2339,7 @@ class SettingController extends Controller
                     'cookie_description' => 'required',
                     'strictly_cookie_title' => 'required',
                     'strictly_cookie_description' => 'required',
-                    'more_information_title' => 'required',
+                    'more_information_description' => 'required',
                     'contactus_url' => 'required',
                 ]
             );
@@ -2367,7 +2367,7 @@ class SettingController extends Controller
             $post['cookie_description']            = $request->cookie_description;
             $post['strictly_cookie_title']            = $request->strictly_cookie_title;
             $post['strictly_cookie_description']            = $request->strictly_cookie_description;
-            $post['more_information_title']            = $request->more_information_title;
+            $post['more_information_description']            = $request->more_information_description;
             $post['contactus_url']            = $request->contactus_url;
 
             $settings = Utility::settings();

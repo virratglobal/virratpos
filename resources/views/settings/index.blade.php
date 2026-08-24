@@ -213,721 +213,2001 @@
 @endpush
 @section('content')
     <style>
-        /* Store Settings Design System Tokens - Stitch */
+        /* Global Box Sizing & Min-Width Containment */
+        .settings-layout-wrapper,
+        .settings-layout-wrapper *,
+        .settings-layout-wrapper *::before,
+        .settings-layout-wrapper *::after {
+            box-sizing: border-box !important;
+        }
+
+        /* Small, Compact Desktop Settings Page Container (max-width: 1140px) */
         .settings-layout-wrapper {
-            --color-text-primary: #0b1c30;
-            --color-text-secondary: #767586;
-            --color-text-tertiary: #ffffff;
-            --color-text-inverse: #dce9ff;
-            --color-surface-base: #f8f9ff;
-            --color-surface-raised: #4648d4;
-            --color-surface-strong: #f9fafb;
-
-            --font-family-primary: 'Inter', sans-serif;
-            --font-family-header: 'Geist', sans-serif;
-            --font-size-sm: 14px;
-            --font-size-md: 15px;
-            --font-size-lg: 16px;
-
-            --space-1: 4px;
-            --space-2: 8px;
-            --space-3: 12px;
-            --space-4: 16px;
-            --space-5: 20px;
-            --space-6: 24px;
-            
-            --radius-xs: 8px;
-            --shadow-1: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --motion-instant: 200ms;
-
-            font-family: var(--font-family-primary);
-        }
-
-        /* Settings Typography */
-        .settings-layout-wrapper {
-            color: var(--color-text-primary);
-            font-size: var(--font-size-sm);
-        }
-        
-        .settings-layout-wrapper h1, 
-        .settings-layout-wrapper h2, 
-        .settings-layout-wrapper h3, 
-        .settings-layout-wrapper h4, 
-        .settings-layout-wrapper h5 {
-            color: var(--color-text-primary);
-            font-family: var(--font-family-header);
-            font-weight: 600;
-        }
-
-        /* Component: Cards */
-        .settings-layout-wrapper .card, 
-        .settings-layout-wrapper .setting-card {
-            background-color: var(--color-text-tertiary) !important;
-            border-radius: var(--radius-xs) !important;
-            box-shadow: var(--shadow-1) !important;
-            padding: var(--space-6) !important;
-            border: 1px solid var(--color-text-inverse) !important;
-            margin-bottom: var(--space-6) !important;
-        }
-        .settings-layout-wrapper .card-header, 
-        .settings-layout-wrapper .card-body,
-        .settings-layout-wrapper .card-footer {
-            background-color: transparent !important;
-            padding: 0 !important;
-            border: none !important;
-            box-shadow: none !important;
-        }
-        .settings-layout-wrapper .card-header { margin-bottom: var(--space-6) !important; border-bottom: 1px solid var(--color-text-inverse) !important; padding-bottom: var(--space-4) !important;}
-        .settings-layout-wrapper .card-footer { margin-top: var(--space-6) !important; border-top: 1px solid var(--color-text-inverse) !important; padding-top: var(--space-4) !important;}
-
-        /* Component: Inputs (Forms) */
-        .settings-layout-wrapper .form-label {
-            color: var(--color-text-primary);
-            font-weight: 500;
-            margin-bottom: var(--space-2);
-            font-size: var(--font-size-sm);
-        }
-        .settings-layout-wrapper .form-control, .settings-layout-wrapper .custom-select {
-            padding: var(--space-3) !important;
-            border-radius: var(--radius-xs) !important;
-            border: 1px solid #d1d5db !important;
-            background-color: var(--color-text-tertiary) !important;
-            color: var(--color-text-primary) !important;
-            font-size: var(--font-size-sm) !important;
-            transition: all var(--motion-instant) ease;
-        }
-        .settings-layout-wrapper .form-control:hover, .settings-layout-wrapper .custom-select:hover {
-            border-color: #9ca3af !important;
-        }
-        .settings-layout-wrapper .form-control:focus, .settings-layout-wrapper .custom-select:focus {
-            outline: none !important;
-            border-color: var(--color-surface-raised) !important;
-            box-shadow: 0 0 0 1px var(--color-surface-raised) !important;
-        }
-        .settings-layout-wrapper .form-control:disabled {
-            background-color: var(--color-surface-strong) !important;
-            color: var(--color-text-secondary) !important;
-            cursor: not-allowed;
-        }
-
-        /* Component: Buttons */
-        .settings-layout-wrapper .btn-primary {
-            padding: 8px 16px !important;
-            border-radius: 6px !important;
-            background-color: var(--color-surface-raised) !important;
-            color: var(--color-text-tertiary) !important;
-            font-size: var(--font-size-sm) !important;
-            font-weight: 500;
-            border: none !important;
-            transition: all var(--motion-instant) ease;
-        }
-        .settings-layout-wrapper .btn-primary:hover {
-            opacity: 0.9;
-        }
-        .settings-layout-wrapper .btn-primary:focus-visible {
-            outline: 2px solid var(--color-surface-raised) !important;
-            outline-offset: 2px !important;
-        }
-        
-        .settings-layout-wrapper .btn-danger {
-            padding: 8px 16px !important;
-            border-radius: 6px !important;
-            font-size: var(--font-size-sm) !important;
-            font-weight: 500;
-        }
-
-        /* Component: Navigation (Sidebar) */
-        .settings-sidebar .nav-pills { 
-            display: flex !important; 
-            flex-direction: column !important; 
-            background: var(--color-text-tertiary) !important;
-            border: 1px solid var(--color-text-inverse) !important;
-            border-radius: var(--radius-xs) !important;
-            padding: 8px !important;
+            width: 100% !important;
+            max-width: 1140px !important;
             margin: 0 !important;
-            gap: 4px !important;
-            box-shadow: var(--shadow-1) !important;
+            padding: 8px 24px 40px 24px !important;
+            font-family: 'Inter', -apple-system, sans-serif !important;
+            color: var(--text-primary) !important;
+            box-sizing: border-box !important;
         }
-        .settings-sidebar .nav-pills .nav-item { margin: 0 !important; padding: 0 !important; width: 100%; }
-        .settings-sidebar .nav-pills .nav-link { 
-            color: var(--color-text-secondary) !important; 
-            padding: 12px 16px !important; 
-            margin-bottom: 0 !important; 
-            font-weight: 500 !important; 
-            font-size: var(--font-size-sm) !important;
-            border-radius: 6px !important;
-            background: transparent !important;
-            border: none !important;
+
+        /* Page Header */
+        .settings-header {
+            margin-bottom: 20px !important;
+        }
+        .settings-header h1 {
+            font-family: 'Inter', sans-serif !important;
+            font-size: 24px !important;
+            font-weight: 700 !important;
+            color: var(--text-primary) !important;
+            margin: 0 !important;
+            letter-spacing: -0.02em !important;
+        }
+        .settings-header p {
+            font-size: 13.5px !important;
+            color: var(--text-secondary) !important;
+            margin-top: 4px !important;
+            margin-bottom: 0 !important;
+            font-weight: 400 !important;
+        }
+
+        /* 1. OVERALL SETTINGS LAYOUT (Compact 2-Column Grid) */
+        .settings-layout,
+        .settings-layout-grid {
+            display: grid !important;
+            grid-template-columns: 240px minmax(0, 1fr) !important;
+            gap: 20px !important;
+            align-items: start !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .settings-right-sidebar {
+            display: none !important;
+        }
+
+        /* 2. LEFT SETTINGS NAVIGATION (240px Compact Width) */
+        .settings-navigation-column,
+        .settings-sidebar {
+            width: 240px !important;
+            max-width: 240px !important;
+            min-width: 240px !important;
+            box-sizing: border-box !important;
+            grid-column: 1 !important;
+        }
+
+        .settings-navigation-card,
+        .settings-sidebar .setting-nav-wrp {
+            width: 240px !important;
+            box-sizing: border-box !important;
+            padding: 6px !important;
+            background: #FFFFFF !important;
+            border: 1px solid #E2E8F0 !important;
+            border-radius: 12px !important;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03) !important;
+        }
+
+        .settings-navigation-menu,
+        .setting-nav-wrp .nav-pills {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 4px !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .settings-navigation-item,
+        .settings-sidebar .nav-link {
+            width: 100% !important;
+            height: 44px !important;
             display: flex !important;
             align-items: center !important;
-            box-shadow: none !important;
-            justify-content: flex-start !important;
+            gap: 14px !important;
+            padding: 0 16px !important;
+            border-radius: 8px !important;
+            box-sizing: border-box !important;
+            background: transparent !important;
+            color: #64748B !important;
+            border: none !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            text-decoration: none !important;
+            white-space: nowrap !important;
+            transition: background-color 0.15s ease, color 0.15s ease !important;
+        }
+
+        .settings-navigation-item:hover,
+        .settings-sidebar .nav-link:not(.active):hover {
+            background-color: #F1F5F9 !important;
+            color: #0F172A !important;
+        }
+
+        /* 3. ACTIVE SETTINGS ITEM */
+        .settings-navigation-item.active,
+        .settings-sidebar .nav-link.active {
+            background-color: #5146E5 !important;
+            color: #FFFFFF !important;
+            font-weight: 600 !important;
+            box-shadow: 0 4px 12px rgba(81, 70, 229, 0.25) !important;
+        }
+
+        .settings-navigation-item.active .label,
+        .settings-sidebar .nav-link.active .label,
+        .settings-sidebar .nav-link.active span {
+            color: #FFFFFF !important;
+        }
+
+        .settings-navigation-item .material-symbols-outlined,
+        .settings-sidebar .nav-link .material-symbols-outlined {
+            font-size: 20px !important;
+            width: 20px !important;
+            height: 20px !important;
+            color: inherit !important;
+            flex-shrink: 0 !important;
+        }
+
+        /* 4. RIGHT CONTENT CARD (Column 2) */
+        .settings-content {
+            grid-column: 2 !important;
             width: 100% !important;
-            transition: all var(--motion-instant) ease;
+            min-width: 0 !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
         }
-        .settings-sidebar .nav-pills .nav-link:hover { 
-            background-color: var(--color-surface-strong) !important; 
-            color: var(--color-text-primary) !important; 
+
+        .settings-content .tab-content {
+            width: 100% !important;
+            min-width: 0 !important;
         }
-        .settings-sidebar .nav-pills .nav-link.active { 
-            color: var(--color-surface-raised) !important; 
-            font-weight: 600 !important; 
-            background: #e5eeff !important; 
+
+        .settings-content .tab-pane {
+            width: 100% !important;
+            min-width: 0 !important;
         }
-        .settings-sidebar .nav-pills .nav-link svg { 
-            width: 18px !important; 
-            height: 18px !important; 
-            margin-right: 12px !important; 
-            stroke: currentColor; 
-            transition: stroke var(--motion-instant); 
-            flex-shrink: 0; 
+
+        .settings-content-card,
+        .settings-content .card {
+            width: 100% !important;
+            min-width: 0 !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            padding: 24px !important;
+            background: #FFFFFF !important;
+            border: 1px solid #E2E8F0 !important;
+            border-radius: 12px !important;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03) !important;
+            margin-bottom: 24px !important;
+        }
+
+        /* 5. CONTENT HEADER */
+        .settings-content-title {
+            display: flex !important;
+            align-items: center !important;
+            gap: 12px !important;
+            margin-bottom: 4px !important;
+        }
+
+        .settings-content-title .accent-bar {
+            width: 4px !important;
+            height: 18px !important;
+            background: #5146E5 !important;
+            border-radius: 2px !important;
+            display: inline-block !important;
+            flex-shrink: 0 !important;
+        }
+
+        .settings-content-title h5,
+        .settings-content-title h1,
+        .settings-content-title h2 {
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            color: #0F172A !important;
+            margin: 0 !important;
+            letter-spacing: -0.01em !important;
+        }
+
+        /* 15. RESPONSIVE BEHAVIOR */
+        @media (max-width: 900px) {
+            .settings-layout,
+            .settings-layout-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .settings-navigation-column,
+            .settings-sidebar,
+            .settings-navigation-card {
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+            }
+
+            .settings-content {
+                grid-column: 1 !important;
+            }
+        }
+        .setting-nav-wrp .nav-pills {
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: flex-start !important;
+            align-items: stretch !important;
+            gap: 4px !important;
+            width: 100% !important;
+            height: auto !important;
+            min-height: 0 !important;
+            flex: 0 0 auto !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        /* Menu Item (Fixed 44px Height, 14px Gap, 16px Padding) */
+        .settings-navigation-item,
+        .settings-sidebar .nav-link {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            height: 44px !important;
+            min-height: 44px !important;
+            max-height: 44px !important;
+            padding: 0 16px !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 14px !important;
+            border-radius: 8px !important;
+            box-sizing: border-box !important;
+            background: transparent !important;
+            color: #64748B !important;
+            border: none !important;
+            outline: none !important;
+            transition: background-color 0.15s ease, color 0.15s ease !important;
+            position: relative !important;
+            cursor: pointer !important;
+            text-decoration: none !important;
+            margin: 0 !important;
+            box-shadow: none !important;
+        }
+
+        /* Icon Container */
+        .settings-navigation-item .icon,
+        .settings-sidebar .nav-link .icon {
+            width: 20px !important;
+            min-width: 20px !important;
+            height: 20px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex-shrink: 0 !important;
+            color: inherit !important;
+        }
+
+        .settings-navigation-item .material-symbols-outlined,
+        .settings-sidebar .nav-link .material-symbols-outlined,
+        .settings-sidebar .nav-link svg {
+            font-size: 20px !important;
+            width: 20px !important;
+            height: 20px !important;
+            color: inherit !important;
+            flex-shrink: 0 !important;
+        }
+
+        /* Text Label */
+        .settings-navigation-item .label,
+        .settings-sidebar .nav-link .label,
+        .settings-sidebar .nav-link span:not(.material-symbols-outlined):not(.icon) {
+            flex: 1 1 auto !important;
+            min-width: 0 !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            line-height: 1.2 !important;
+            color: inherit !important;
+        }
+
+        /* Hover State for Non-Active Items */
+        .settings-navigation-item:not(.active):hover,
+        .settings-sidebar .nav-link:not(.active):hover {
+            background-color: #F6F7FB !important;
+            color: #0F172A !important;
+        }
+        .settings-navigation-item:not(.active):hover .label,
+        .settings-sidebar .nav-link:not(.active):hover .label {
+            color: #0F172A !important;
+        }
+
+        /* Active Item State (Purple #5146E5, Spans Full Card Width) */
+        .settings-navigation-item.active,
+        .settings-sidebar .nav-link.active {
+            width: 100% !important;
+            background-color: #5146E5 !important;
+            color: #FFFFFF !important;
+            font-weight: 600 !important;
+            box-shadow: 0 4px 14px rgba(81, 70, 229, 0.3) !important;
+        }
+        .settings-navigation-item.active .label,
+        .settings-sidebar .nav-link.active .label {
+            color: #FFFFFF !important;
+            font-weight: 600 !important;
+        }
+        .settings-navigation-item.active::before,
+        .settings-sidebar .nav-link.active::before {
+            display: none !important;
+        }
+        .settings-sidebar .nav-link .material-symbols-outlined,
+        .settings-sidebar .nav-link svg {
+            font-size: 20px !important;
+            width: 20px !important;
+            height: 20px !important;
+            color: inherit !important;
+            transition: color 0.15s ease !important;
+            flex-shrink: 0;
+        }
+
+        /* Flexible Middle Main Settings Content */
+        .settings-content {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+        }
+
+        /* Payment Setting Card & Viewport Width Styling */
+        #pills-payment-setting,
+        .payment-settings-page {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        #pills-payment-setting .card,
+        .payment-setting-card {
+            background: var(--surface) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 12px !important;
+            padding: 28px !important;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03) !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+            margin-bottom: 24px !important;
+        }
+
+        #pills-payment-setting .card-header,
+        .payment-setting-card-header {
+            border-bottom: 1px solid #e5e7eb !important;
+            padding-bottom: 16px !important;
+            margin-bottom: 20px !important;
+            background: transparent !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            padding-top: 0 !important;
+            border-top: none !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+        }
+
+        .payment-setting-title-bar {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            margin-bottom: 4px !important;
+        }
+
+        .payment-setting-title-bar .accent-bar {
+            width: 4px !important;
+            height: 18px !important;
+            background: #5146E5 !important;
+            border-radius: 2px !important;
+            display: inline-block !important;
+            flex-shrink: 0 !important;
+        }
+
+        .payment-setting-title-bar h5 {
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            color: var(--text-primary) !important;
+            margin: 0 !important;
+            letter-spacing: -0.01em !important;
+        }
+
+        .payment-setting-description {
+            font-size: 13px !important;
+            color: var(--text-secondary) !important;
+            margin-top: 4px !important;
+            margin-bottom: 0 !important;
+            line-height: 1.5 !important;
+            font-weight: 400 !important;
+        }
+
+        /* Payment Currency 2-Column Grid */
+        .payment-currency-row,
+        .payment-currency-grid {
+            display: grid !important;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+            column-gap: 24px !important;
+            margin-bottom: 32px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+        }
+
+        #pills-payment-setting label.col-form-label,
+        #pills-payment-setting label.form-label {
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            line-height: 18px !important;
+            color: #1f2937 !important;
+            margin-bottom: 8px !important;
+            display: block !important;
+        }
+
+        #pills-payment-setting input.form-control,
+        #pills-payment-setting input[type="text"] {
+            height: 48px !important;
+            min-height: 48px !important;
+            max-height: 48px !important;
+            border: 1px solid #d9deea !important;
+            border-radius: 8px !important;
+            padding: 0 14px !important;
+            font-size: 14px !important;
+            line-height: 48px !important;
+            color: #1f2937 !important;
+            background: #ffffff !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+            box-shadow: none !important;
+        }
+
+        #pills-payment-setting input.form-control:focus {
+            outline: none !important;
+            border-color: #5146E5 !important;
+            box-shadow: 0 0 0 3px rgba(81, 70, 229, 0.12) !important;
+        }
+
+        #pills-payment-setting small,
+        #pills-payment-setting small.text-xs {
+            font-size: 12px !important;
+            color: #64748B !important;
+            margin-top: 8px !important;
+            display: block !important;
+            line-height: 1.45 !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            overflow-wrap: break-word !important;
+        }
+
+        #pills-payment-setting small a {
+            color: #5146E5 !important;
+            text-decoration: underline !important;
+        }
+
+        /* Payment Gateways Accordion Card List */
+        #pills-payment-setting .payment-method-list,
+        #pills-payment-setting .setting-faq-wrp,
+        #pills-payment-setting .setting-accordion,
+        #pills-payment-setting .accordion {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 12px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        #pills-payment-setting .payment-method-row,
+        #pills-payment-setting .accordion-item {
+            background: transparent !important;
+            border: none !important;
+            border-radius: 8px !important;
+            margin-bottom: 0 !important;
+            margin-top: 0 !important;
+            overflow: hidden !important;
+            box-shadow: none !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        #pills-payment-setting .accordion-header {
+            margin: 0 !important;
+            background: transparent !important;
+            padding: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+        }
+
+        #pills-payment-setting .accordion-button,
+        .payment-method-row {
+            background: #f8fafc !important;
+            border: 1px solid #d9deea !important;
+            border-radius: 8px !important;
+            height: 52px !important;
+            min-height: 52px !important;
+            max-height: 52px !important;
+            padding: 0 20px !important;
+            box-shadow: none !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            color: #1f2937 !important;
+            font-size: 15px !important;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            box-sizing: border-box !important;
+        }
+
+        #pills-payment-setting .accordion-button:not(.collapsed) {
+            background: #f8fafc !important;
+            color: #1f2937 !important;
+            box-shadow: none !important;
+            border-bottom-left-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+        }
+
+        #pills-payment-setting .accordion-button span.d-flex,
+        #pills-payment-setting .accordion-button > span:first-child {
+            font-size: 15px !important;
+            font-weight: 600 !important;
+            color: #0f172a !important;
+            min-width: 0 !important;
+            overflow-wrap: break-word !important;
+        }
+
+        #pills-payment-setting .payment-method-actions,
+        #pills-payment-setting .accordion-button > div.d-flex {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: flex-end !important;
+            gap: 10px !important;
+            flex: 0 0 auto !important;
+        }
+
+        #pills-payment-setting .accordion-button::after {
+            content: '' !important;
+            width: 32px !important;
+            height: 32px !important;
+            min-width: 32px !important;
+            border-radius: 50% !important;
+            background: #ffffff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") center no-repeat !important;
+            border: 1px solid #e2e8f0 !important;
+            margin-left: 8px !important;
+            flex-shrink: 0 !important;
+            transition: transform 0.2s ease, background-color 0.2s ease !important;
+        }
+
+        #pills-payment-setting .accordion-button:not(.collapsed)::after {
+            transform: rotate(180deg) !important;
+            background-color: #f1f5f9 !important;
+        }
+
+        #pills-payment-setting .accordion-body {
+            background: #ffffff !important;
+            border: 1px solid #d9deea !important;
+            border-top: none !important;
+            padding: 20px 24px !important;
+            border-bottom-left-radius: 8px !important;
+            border-bottom-right-radius: 8px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        #pills-payment-setting .custom-switch-v1,
+        #pills-payment-setting .form-switch {
+            padding-left: 0 !important;
+            margin: 0 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+        }
+
+        #pills-payment-setting .form-check-input {
+            width: 44px !important;
+            height: 24px !important;
+            min-width: 44px !important;
+            background-color: #cbd5e1 !important;
+            border: none !important;
+            border-radius: 12px !important;
+            cursor: pointer !important;
+            transition: background-color 0.2s ease !important;
+            margin: 0 !important;
+            float: none !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3E%3Ccircle r='3' fill='%23fff'/%3E%3C/svg%3E") !important;
+        }
+
+        #pills-payment-setting .form-check-input:checked {
+            background-color: #5146e5 !important;
+        }
+
+        /* Settings Card Tiles */
+        .settings-layout-wrapper .card,
+        .settings-layout-wrapper .setting-card {
+            background-color: var(--surface) !important;
+            border-radius: 12px !important;
+            border: 1px solid var(--border) !important;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03) !important;
+            padding: 28px !important;
+            margin-bottom: 24px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        .settings-layout-wrapper .card-header {
+            background-color: transparent !important;
+            padding: 0 0 14px 0 !important;
+            border: none !important;
+            border-bottom: 1px solid var(--border) !important;
+            margin-bottom: 0 !important;
+            box-shadow: none !important;
+            position: relative !important;
+        }
+        .settings-layout-wrapper .card-header h5,
+        .settings-layout-wrapper .card-header h4 {
+            font-family: 'Inter', sans-serif !important;
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            color: var(--text-primary) !important;
+            margin: 0 !important;
+        }
+        .settings-layout-wrapper .card-header small {
+            font-size: 13.5px !important;
+            color: var(--text-secondary) !important;
+            margin-top: 4px !important;
+            display: block !important;
+            font-weight: 400 !important;
+        }
+
+        .brand-settings-header {
+            margin-bottom: 0 !important;
+            padding-bottom: 0 !important;
+            border-bottom: none !important;
+        }
+
+        .brand-settings-divider {
+            margin: 16px 0 24px 0 !important;
+            border: 0 !important;
+            border-top: 1px solid var(--border) !important;
+            opacity: 0.6 !important;
+        }
+
+        .brand-settings-logos-card .card-body,
+        .brand-settings-card .card-body {
+            height: auto !important;
+            min-height: 0 !important;
+            padding: 0 !important;
+            flex: 0 0 auto !important;
+        }
+
+        /* Upload Grid Layout (3 Equal Columns in 1 Row, gap 24px) */
+        .brand-upload-grid,
+        .upload-grid-container {
+            display: grid !important;
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            gap: 24px !important;
+            margin-top: 24px !important;
+            margin-bottom: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        /* Brand Upload Asset Card */
+        .brand-upload-card,
+        .upload-asset-card {
+            background: var(--surface) !important;
+            border: 1px solid #E5E7EB !important;
+            border-radius: 10px !important;
+            padding: 16px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+            height: auto !important;
+            min-height: 0 !important;
+            flex: 0 0 auto !important;
+        }
+
+        .upload-card-header {
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            margin-bottom: 8px !important;
+            min-width: 0 !important;
+        }
+
+        .upload-card-indicator {
+            width: 4px !important;
+            height: 18px !important;
+            background: #5146E5 !important;
+            border-radius: 2px !important;
+            flex-shrink: 0 !important;
+        }
+
+        .brand-upload-title,
+        .brand-upload-card-title,
+        .upload-card-title {
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            color: var(--text-primary) !important;
+            margin: 0 !important;
+            line-height: 1.3 !important;
+            white-space: nowrap !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
+        }
+
+        /* Preview Container (Height 135px, Margins 14px top, 14px bottom) */
+        .brand-preview,
+        .brand-upload-preview,
+        .upload-preview-box {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            height: 135px !important;
+            margin-top: 14px !important;
+            margin-bottom: 14px !important;
+            background: #F8FAFC !important;
+            border: 1px solid #E2E8F0 !important;
+            border-radius: 10px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 12px !important;
+            box-sizing: border-box !important;
+            overflow: hidden !important;
+            position: relative !important;
+        }
+
+        /* Image proportional containment (80% max width/height for natural presentation) */
+        .brand-preview img,
+        .brand-upload-preview img,
+        .upload-preview-box img,
+        .upload-preview-box img.logo-preview-img {
+            max-height: 80% !important;
+            max-width: 80% !important;
+            object-fit: contain !important;
+        }
+
+        .brand-preview img.favicon-preview-img,
+        .brand-upload-preview img.favicon-preview-img,
+        .upload-preview-box img.favicon-preview-img {
+            width: 48px !important;
+            height: 48px !important;
+            object-fit: contain !important;
+        }
+
+        /* Full Width Upload Button ("Choose file here", Fully Visible, No Truncation) */
+        .brand-upload-button,
+        .btn-upload-blue,
+        .brand-upload-card label,
+        .brand-upload-card button,
+        .brand-upload-card .upload-button {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 6px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            height: 40px !important;
+            margin-top: 14px !important;
+            padding: 0 12px !important;
+            background-color: #5146E5 !important;
+            color: #FFFFFF !important;
+            border-radius: 8px !important;
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            border: none !important;
+            text-decoration: none !important;
+            box-sizing: border-box !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            transition: background-color 0.15s ease !important;
+        }
+        .brand-upload-button:hover,
+        .btn-upload-blue:hover {
+            background-color: #4338CA !important;
+            color: #FFFFFF !important;
+        }
+
+        /* Brand Settings Form Layout Grids (minmax(0, 1fr)) */
+        .form-row-two,
+        .branding-inputs-grid-2,
+        .title-footer-row {
+            display: grid !important;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+            gap: 20px !important;
+            margin-bottom: 20px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        .form-row-three,
+        .branding-inputs-grid-3,
+        .currency-row {
+            display: grid !important;
+            grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr) !important;
+            gap: 20px !important;
+            margin-bottom: 20px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        /* 4 Horizontal Toggle Cards Row */
+        .toggle-grid,
+        .toggle-cards-row,
+        .settings-toggle-grid {
+            display: grid !important;
+            grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+            gap: 16px !important;
+            margin-top: 20px !important;
+            margin-bottom: 20px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        .toggle-setting-card,
+        .settings-toggle-card {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+            padding: 16px !important;
+            background: var(--surface) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 10px !important;
+            display: flex !important;
+            align-items: flex-start !important;
+            justify-content: space-between !important;
+            gap: 12px !important;
+        }
+
+        .toggle-setting-info,
+        .settings-toggle-info {
+            flex: 1 1 auto !important;
+            min-width: 0 !important;
+        }
+
+        .toggle-setting-info h6,
+        .settings-toggle-title {
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            line-height: 1.3 !important;
+            color: var(--text-primary) !important;
+            margin: 0 0 4px 0 !important;
+            word-break: break-word !important;
+        }
+
+        .ios-toggle,
+        .settings-toggle-switch {
+            flex: 0 0 auto !important;
+        }
+
+        /* Theme Customizer & Swatches */
+        .theme-customizer {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            overflow: hidden !important;
+            box-sizing: border-box !important;
+        }
+
+        .theme-customizer-content {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+        }
+
+        .theme-swatch-list,
+        .theme-color-options {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            gap: 10px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+        }
+
+        .theme-swatch-btn,
+        .theme-color-option {
+            flex: 0 0 36px !important;
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 50% !important;
+        }
+
+        /* Responsive Breakpoints (1100px & 640px) */
+        @media (max-width: 1100px) {
+            .settings-layout-grid {
+                grid-template-columns: 1fr !important;
+            }
+            .settings-sidebar {
+                width: 100% !important;
+                position: static !important;
+                grid-column: auto !important;
+            }
+            .brand-settings-logos-card,
+            .brand-settings-form-card {
+                grid-column: auto !important;
+                grid-row: auto !important;
+            }
+            .brand-upload-grid,
+            .upload-grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            }
+            .toggle-grid,
+            .toggle-cards-row,
+            .settings-toggle-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .brand-upload-grid,
+            .upload-grid-container,
+            .form-row-two,
+            .branding-inputs-grid-2,
+            .title-footer-row,
+            .form-row-three,
+            .branding-inputs-grid-3,
+            .currency-row,
+            .toggle-grid,
+            .toggle-cards-row,
+            .settings-toggle-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* Branding Form Inputs Grid */
+        .branding-inputs-grid-2 {
+            display: grid !important;
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            gap: 20px !important;
+            margin-bottom: 20px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .branding-inputs-grid-3 {
+            display: grid !important;
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            gap: 20px !important;
+            margin-bottom: 20px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        @media (max-width: 767px) {
+            .branding-inputs-grid-2,
+            .branding-inputs-grid-3 {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* High-Clarity Typography, Labels & Form Input Styling */
+        .settings-layout-wrapper .form-label,
+        .settings-layout-wrapper label {
+            font-size: 13.5px !important;
+            font-weight: 600 !important;
+            color: #1E293B !important;
+            margin-bottom: 6px !important;
+            display: block !important;
+            letter-spacing: -0.01em !important;
+        }
+
+        .settings-layout-wrapper .form-control,
+        .settings-layout-wrapper select.form-control,
+        .settings-layout-wrapper input[type="text"],
+        .settings-layout-wrapper input[type="password"],
+        .settings-layout-wrapper input[type="email"],
+        .settings-layout-wrapper input[type="number"] {
+            height: 44px !important;
+            padding: 0 14px !important;
+            border-radius: 8px !important;
+            border: 1px solid #CBD5E1 !important;
+            background-color: #FFFFFF !important;
+            color: #0F172A !important;
+            font-size: 14px !important;
+            font-weight: 400 !important;
+            line-height: 1.4 !important;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+        }
+
+        .settings-layout-wrapper .form-control::placeholder,
+        .settings-layout-wrapper input::placeholder {
+            color: #94A3B8 !important;
+            opacity: 1 !important;
+            font-size: 14px !important;
+            font-weight: 400 !important;
+        }
+
+        .settings-layout-wrapper .form-control:focus,
+        .settings-layout-wrapper select.form-control:focus,
+        .settings-layout-wrapper input:focus {
+            border-color: #5146E5 !important;
+            box-shadow: 0 0 0 3px rgba(81, 70, 229, 0.15) !important;
+            outline: none !important;
+            background-color: #FFFFFF !important;
+        }
+
+        /* Setting Toggles Grid */
+        .toggle-setting-card {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            padding: 16px !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 12px !important;
+            background: var(--surface) !important;
+            margin-bottom: 12px !important;
+            width: 100% !important;
+        }
+        .toggle-setting-info h6 {
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            color: var(--text-primary) !important;
+            margin: 0 !important;
+        }
+        .toggle-setting-info p {
+            font-size: 12.5px !important;
+            color: var(--text-secondary) !important;
+            margin: 2px 0 0 0 !important;
+        }
+
+        /* iOS Style Toggles */
+        .ios-toggle {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+        .ios-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .ios-toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #CBD5E1;
+            transition: .2s;
+            border-radius: 24px;
+        }
+        .ios-toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .2s;
+            border-radius: 50%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+        .ios-toggle input:checked + .ios-toggle-slider {
+            background-color: #5146E5;
+        }
+        .ios-toggle input:checked + .ios-toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Theme Color Swatches */
+        .theme-swatch-list {
+            display: grid !important;
+            grid-template-columns: repeat(5, 48px) !important;
+            gap: 8px !important;
+            margin-top: 10px !important;
+        }
+        .theme-swatch-btn {
+            width: 48px !important;
+            height: 48px !important;
+            border-radius: 10px !important;
+            cursor: pointer !important;
+            position: relative !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            transition: transform 0.15s, box-shadow 0.15s !important;
+            border: 2px solid transparent !important;
+        }
+        .theme-swatch-btn:hover {
+            transform: translateY(-2px);
+        }
+        .theme-swatch-btn.active_color {
+            border-color: #5146E5 !important;
+            box-shadow: 0 0 0 3px rgba(81, 70, 229, 0.3) !important;
+        }
+        .theme-swatch-btn.active_color::after {
+            content: '✓';
+            color: #FFFFFF;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        /* Sticky Save Action Bar */
+        .settings-sticky-actions {
+            position: sticky !important;
+            bottom: 16px !important;
+            background: var(--surface-elevated) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 12px !important;
+            padding: 14px 20px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: flex-end !important;
+            gap: 12px !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+            z-index: 30 !important;
+            margin-top: 24px !important;
+            width: 100% !important;
+        }
+        .btn-cancel-gray {
+            padding: 0 20px !important;
+            height: 44px !important;
+            border-radius: 8px !important;
+            background: var(--surface) !important;
+            border: 1px solid var(--border) !important;
+            color: var(--text-secondary) !important;
+            font-size: 13.5px !important;
+            font-weight: 500 !important;
+            transition: all 0.15s !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            cursor: pointer !important;
+        }
+        .btn-cancel-gray:hover {
+            background: var(--surface-2) !important;
+            color: var(--text-primary) !important;
+        }
+        .btn-save-blue,
+        .settings-layout-wrapper .btn-primary:not(.btn-sm),
+        .settings-layout-wrapper input[type="submit"] {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            height: 44px !important;
+            padding: 0 24px !important;
+            border-radius: 8px !important;
+            background: #5146E5 !important;
+            color: #FFFFFF !important;
+            font-size: 13.5px !important;
+            font-weight: 600 !important;
+            border: none !important;
+            cursor: pointer !important;
+            box-shadow: 0 2px 8px rgba(81, 70, 229, 0.3) !important;
+            transition: background 0.15s !important;
+            white-space: nowrap !important;
+        }
+        .btn-save-blue:hover,
+        .settings-layout-wrapper .btn-primary:not(.btn-sm):hover,
+        .settings-layout-wrapper input[type="submit"]:hover {
+            background: #4338CA !important;
+            color: #FFFFFF !important;
+        }
+
+        .settings-layout-wrapper .btn-sm,
+        .settings-layout-wrapper .btn-sm.btn-primary {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            height: 36px !important;
+            padding: 0 12px !important;
+            border-radius: 6px !important;
+            background: #5146E5 !important;
+            color: #FFFFFF !important;
+            font-size: 13px !important;
+        }
+
+        .settings-layout-wrapper .card-footer {
+            background-color: transparent !important;
+            border-top: 1px solid var(--border) !important;
+            padding: 16px 24px !important;
+            box-sizing: border-box !important;
+            overflow: visible !important;
+        }
+
+        /* Direct ID & Class Scoped Cookie Settings Box System */
+        .settings-layout-wrapper {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+            overflow-x: hidden !important;
+            padding: 8px 24px 40px 24px !important;
+        }
+
+        #pills-cookie-settings,
+        .cookie-settings-page,
+        .cookie-settings-card {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        #pills-cookie-settings .cookie-settings-card,
+        .cookie-settings-card {
+            padding: 28px !important;
+            box-sizing: border-box !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            overflow: hidden !important;
+        }
+
+        #pills-cookie-settings .cookie-header,
+        .cookie-header {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 16px !important;
+            min-height: 48px !important;
+            padding-bottom: 16px !important;
+            border-bottom: 1px solid #e5e7eb !important;
+            margin-bottom: 20px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+        }
+
+        #pills-cookie-settings .cookie-header h5,
+        .cookie-header h5 {
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            color: #0F172A !important;
+            margin: 0 !important;
+            min-width: 0 !important;
+        }
+
+        #pills-cookie-settings .cookie-toggle-row,
+        #pills-cookie-settings .cookie-toggle-grid,
+        .cookie-toggle-row,
+        .cookie-toggle-grid {
+            display: grid !important;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+            column-gap: 24px !important;
+            margin-bottom: 18px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+        }
+
+        #pills-cookie-settings .cookie-toggle-item,
+        .cookie-toggle-item {
+            height: 32px !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            min-width: 0 !important;
+            max-width: 100% !important;
+        }
+
+        #pills-cookie-settings .cookie-toggle-item label,
+        .cookie-toggle-item label {
+            margin: 0 !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            color: #1f2937 !important;
+            cursor: pointer !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            overflow-wrap: break-word !important;
+        }
+
+        #pills-cookie-settings .cookie-form-grid,
+        #pills-cookie-settings .contact-fields,
+        .cookie-settings-page .form-row,
+        .cookie-form-grid,
+        .contact-fields {
+            display: grid !important;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+            column-gap: 24px !important;
+            row-gap: 20px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            margin-bottom: 20px !important;
+        }
+
+        #pills-cookie-settings .cookie-description-row,
+        .cookie-description-row {
+            display: grid !important;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+            column-gap: 24px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            margin-bottom: 20px !important;
+        }
+
+        #pills-cookie-settings .form-group,
+        #pills-cookie-settings .cookie-field,
+        .cookie-settings-page .form-group,
+        .cookie-settings-card .form-group,
+        .cookie-field {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 8px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            margin-bottom: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        #pills-cookie-settings label,
+        #pills-cookie-settings .cookie-field label,
+        .cookie-settings-page label,
+        .cookie-settings-card label,
+        .cookie-field label {
+            margin: 0 !important;
+            font-size: 13px !important;
+            line-height: 18px !important;
+            font-weight: 500 !important;
+            color: #1f2937 !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            overflow-wrap: break-word !important;
+        }
+
+        #pills-cookie-settings input[type="text"],
+        #pills-cookie-settings input[type="url"],
+        #pills-cookie-settings input[type="email"],
+        #pills-cookie-settings input[type="password"],
+        #pills-cookie-settings input[type="number"],
+        #pills-cookie-settings .form-control:not(textarea),
+        .cookie-settings-page input[type="text"],
+        .cookie-settings-page input[type="url"],
+        .cookie-settings-page input[type="email"],
+        .cookie-settings-page input[type="password"],
+        .cookie-settings-page input[type="number"],
+        .cookie-settings-card input[type="text"],
+        .cookie-settings-card input[type="url"],
+        .cookie-settings-card input[type="email"],
+        .cookie-settings-card input[type="password"],
+        .cookie-settings-card input[type="number"],
+        .cookie-settings-card .form-control:not(textarea) {
+            display: block !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            height: 48px !important;
+            min-height: 48px !important;
+            max-height: 48px !important;
+            padding: 0 14px !important;
+            border: 1px solid #d9deea !important;
+            border-radius: 8px !important;
+            background: #ffffff !important;
+            box-sizing: border-box !important;
+            font-size: 14px !important;
+            line-height: 48px !important;
+            color: #1f2937 !important;
+        }
+
+        #pills-cookie-settings textarea,
+        #pills-cookie-settings textarea.form-control,
+        .cookie-settings-page textarea,
+        .cookie-settings-card textarea {
+            display: block !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            height: 90px !important;
+            min-height: 90px !important;
+            max-height: 90px !important;
+            padding: 12px 14px !important;
+            border: 1px solid #d9deea !important;
+            border-radius: 8px !important;
+            background: #ffffff !important;
+            box-sizing: border-box !important;
+            font-size: 14px !important;
+            line-height: 1.5 !important;
+            color: #1f2937 !important;
+            resize: vertical !important;
+        }
+
+        #pills-cookie-settings input:focus,
+        #pills-cookie-settings textarea:focus,
+        .cookie-settings-page input:focus,
+        .cookie-settings-page textarea:focus,
+        .cookie-settings-card input:focus,
+        .cookie-settings-card textarea:focus {
+            outline: none !important;
+            border-color: #5146e5 !important;
+            box-shadow: 0 0 0 3px rgba(81, 70, 229, 0.12) !important;
+        }
+
+        #pills-cookie-settings .more-information-title,
+        #pills-cookie-settings .more-information-section,
+        .more-information-title,
+        .more-information-section {
+            margin-top: 20px !important;
+            margin-bottom: 16px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+        }
+
+        #pills-cookie-settings .more-information-title h5,
+        #pills-cookie-settings .more-information-title h3,
+        #pills-cookie-settings .more-information-section h5,
+        #pills-cookie-settings .more-information-section h3,
+        .more-information-title h5,
+        .more-information-title h3,
+        .more-information-section h5,
+        .more-information-section h3 {
+            margin: 0 !important;
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            color: #0F172A !important;
+            min-width: 0 !important;
+        }
+
+        #pills-cookie-settings .cookie-actions,
+        .cookie-actions {
+            border-top: 1px solid #e5e7eb !important;
+            margin-top: 28px !important;
+            padding-top: 18px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 16px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            background: transparent !important;
+            box-sizing: border-box !important;
+        }
+
+        #pills-cookie-settings .cookie-download-button,
+        .cookie-download-button {
+            width: 42px !important;
+            height: 42px !important;
+            padding: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border-radius: 7px !important;
+            background: #5146e5 !important;
+            color: #ffffff !important;
+            flex-shrink: 0 !important;
+        }
+
+        #pills-cookie-settings .cookie-save-button,
+        .cookie-save-button {
+            height: 44px !important;
+            min-width: 140px !important;
+            padding: 0 20px !important;
+            border-radius: 8px !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            background: #5146e5 !important;
+            color: #ffffff !important;
+            border: none !important;
+            cursor: pointer !important;
+            flex-shrink: 0 !important;
+        }
+
+        @media (max-width: 1000px) {
+            .settings-layout,
+            .settings-layout-grid {
+                grid-template-columns: 220px minmax(0, 1fr) !important;
+                gap: 16px !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .settings-layout,
+            .settings-layout-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            #pills-cookie-settings .cookie-toggle-grid,
+            #pills-cookie-settings .cookie-form-grid,
+            #pills-cookie-settings .contact-fields,
+            .cookie-toggle-row,
+            .cookie-form-grid,
+            .cookie-description-row,
+            .contact-fields,
+            .cookie-settings-page .form-row {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* Enforce Full Width Layout Across Main Settings Column */
+        .settings-content,
+        .settings-content .tab-content,
+        .settings-content .tab-pane,
+        .settings-content form,
+        .settings-content .card,
+        .settings-content .card-body,
+        .settings-content .setting-card {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .settings-content .row {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            width: 100% !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .settings-content .col-12,
+        .settings-content .col-lg-12,
+        .settings-content .col-md-12,
+        .settings-content .col-sm-12 {
+            width: 100% !important;
+            flex: 0 0 100% !important;
+            max-width: 100% !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
         }
     </style>
-    <x-ui.page-container class="pt-6">
-        <!-- Page Header -->
-        <div class="flex items-center justify-between mb-8">
-            <div>
-                <h1 style="font-family: 'Geist', sans-serif; font-size: 1.5rem; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30 !important; margin: 0;">
-                    @if (Auth::user()->type == 'super admin')
-                        {{ __('Super Admin Settings') }}
-                    @else
-                        {{ __('Store Settings') }}
-                    @endif
-                </h1>
-                <p style="font-family: 'Inter', sans-serif; font-size: 14px; color: #767586 !important; margin-top: 4px;">
-                    @if (Auth::user()->type == 'super admin')
-                        {{ __('Overview and control of platform-wide configurations and brand settings.') }}
-                    @else
-                        {{ __('Manage and configure your storefront preferences and integrations.') }}
-                    @endif
-                </p>
-            </div>
+    <x-ui.page-container class="settings-layout-wrapper pt-4">
+        <!-- Settings Top Header -->
+        <div class="settings-header" style="margin-bottom: 24px;">
+            <h1 style="font-size: 24px; font-weight: 700; color: var(--text-primary); margin: 0;">
+                @if (Auth::user()->type == 'super admin')
+                    {{ __('Super Admin Settings') }}
+                @else
+                    {{ __('Store Settings') }}
+                @endif
+            </h1>
+            <p style="font-size: 13.5px; color: var(--text-secondary); margin-top: 4px; margin-bottom: 0;">
+                @if (Auth::user()->type == 'super admin')
+                    {{ __('Overview and control of platform-wide configurations and brand settings.') }}
+                @else
+                    {{ __('Overview and control of store configurations and brand settings.') }}
+                @endif
+            </p>
         </div>
 
-        <div class="settings-layout-wrapper flex flex-col lg:flex-row gap-6">
-            <div class="w-full lg:w-64 shrink-0 settings-sidebar">
-            <div class="sticky top-6">
-                <ul class="nav setting-nav-wrp nav-pills" id="pills-tab" role="tablist">
-                    @if (Auth::user()->type == 'super admin')
-            <!-- Brand Settings -->
-            <li class="nav-item col-12">
-                <a class="nav-link active" id="site_setting_tab" data-bs-toggle="pill" href="#pills-brand-setting"
-                    role="tab" aria-controls="pills-brand-setting" aria-selected="true">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
-                    <span>{{ __('Brand Settings') }}</span>
-                </a>
-            </li>
-            <!-- Payment Settings -->
-            <li class="nav-item col-12">
-                <a class="nav-link" id="pills-payment-setting_tab" data-bs-toggle="pill" href="#pills-payment-setting"
-                    role="tab" aria-controls="pills-payment-setting" aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
-                    <span>{{ __('Payment Settings') }}</span>
-                </a>
-            </li>
-            <!-- Email Settings -->
-            <li class="nav-item col-12">
-                <a class="nav-link" id="pills-email-settings_tab" data-bs-toggle="pill" href="#pills-email-settings"
-                    role="tab" aria-controls="pills-email-settings" aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                    <span>{{ __('Email Settings') }}</span>
-                </a>
-            </li>
-            <!-- ReCaptcha Settings -->
-            <li class="nav-item col-12">
-                <a class="nav-link" id="recaptcha-settings_tab" data-bs-toggle="pill" href="#pills-recaptcha-settings"
-                    role="tab" aria-controls="pills-recaptcha-settings-tab" aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                    <span>{{ __('ReCaptcha Settings') }}</span>
-                </a>
-            </li>
-            <!-- Storage Settings -->
-            <li class="nav-item col-12">
-                <a class="nav-link" id="storage_settings_tab" data-bs-toggle="pill" href="#storage_settings"
-                    role="tab" aria-controls="pills-storage_settings-tab" aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
-                    <span>{{ __('Storage Settings') }}</span>
-                </a>
-            </li>
-            <!-- Cache Settings -->
-            <li class="nav-item col-12">
-                <a class="nav-link" id="pills-cache_settings-tab" data-bs-toggle="pill" href="#pills-cache-settings"
-                    role="tab" aria-controls="pills-cache_settings-tab" aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    <span>{{ __('Cache Settings') }}</span>
-                </a>
-            </li>
-            <!-- Cookie Settings -->
-            <li class="nav-item col-12">
-                <a class="nav-link" id="pills-cookie_settings-tab" data-bs-toggle="pill" href="#pills-cookie-settings"
-                    role="tab" aria-controls="pills-cookie_settings-tab" aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                    <span>{{ __('Cookie Settings') }}</span>
-                </a>
-            </li>
-            <!-- Chat GPT Settings -->
-            <li class="nav-item col-12">
-                <a class="nav-link" id="pills-chatgpt-tab" data-bs-toggle="pill" href="#pills-chatgpt-settings"
-                    role="tab" aria-controls="pills-chatgpt-tab" aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                    <span>{{ __('Chat GPT Settings') }}</span>
-                </a>
-            </li>
-        @else
-            <!-- Store Details -->
-            <li class="nav-item w-100">
-                <a class="nav-link active" id="pills-store_setting-tab" data-bs-toggle="pill" href="#pills-store_setting"
-                    role="tab" aria-controls="pills-store_setting" aria-selected="true">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                    <span>{{ __('Store Details') }}</span>
-                </a>
-            </li>
-            <!-- Brand Details -->
-            <li class="nav-item w-100">
-                <a class="nav-link" id="pills-brand_details-tab" data-bs-toggle="pill" href="#pills-brand_details"
-                    role="tab" aria-controls="pills-brand_details" aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
-                    <span>{{ __('Brand Details') }}</span>
-                </a>
-            </li>
-            <!-- SEO Settings -->
-            <li class="nav-item w-100">
-                <a class="nav-link" id="pills-seo_setting-tab" data-bs-toggle="pill" href="#pills-seo_setting"
-                    role="tab" aria-controls="pills-seo_setting" aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    <span>{{ __('SEO Settings') }}</span>
-                </a>
-            </li>
-            <!-- Domain Settings -->
-            <li class="nav-item w-100">
-                <a class="nav-link" id="pills-domain_setting-tab" data-bs-toggle="pill" href="#pills-domain_setting"
-                    role="tab" aria-controls="pills-domain_setting" aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
-                    <span>{{ __('Domain Settings') }}</span>
-                </a>
-            </li>
-            <!-- Payment Settings -->
-            <li class="nav-item w-100">
-                <a class="nav-link" id="pills-store_payment-setting-tab" data-bs-toggle="pill"
-                    href="#pills-store_payment-setting" role="tab" aria-controls="pills-store_payment-setting"
-                    aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
-                    <span>{{ __('Payment Settings') }}</span>
-                </a>
-            </li>
-            <!-- Email Settings -->
-            <li class="nav-item w-100">
-                <a class="nav-link" id="pills-store_email_setting-tab" data-bs-toggle="pill"
-                    href="#pills-store_email_setting" role="tab" aria-controls="pills-store_email_setting"
-                    aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                    <span>{{ __('Email Settings') }}</span>
-                </a>
-            </li>
-            <!-- Whatsapp Settings -->
-            <li class="nav-item w-100">
-                <a class="nav-link" id="pills-whatsapp_custom_massage-tab" data-bs-toggle="pill"
-                    href="#pills-whatsapp_custom_massage" role="tab" aria-controls="pills-whatsapp_custom_massage"
-                    aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-                    <span>{{ __('Whatsapp Settings') }}</span>
-                </a>
-            </li>
-            <!-- Twilio Settings -->
-            <li class="nav-item w-100">
-                <a class="nav-link" id="pills-twilio_setting-tab" data-bs-toggle="pill" href="#pills-twilio_setting"
-                    role="tab" aria-controls="pills-twilio_setting"
-                    aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
-                    <span>{{ __('Twilio Settings') }}</span>
-                </a>
-            </li>
-            <!-- Pixel Settings -->
-            <li class="nav-item w-100">
-                <a class="nav-link" id="pills-pixel_setting-tab" data-bs-toggle="pill" href="#pixel_settings"
-                    role="tab" aria-controls="pixel_settings"
-                    aria-selected="false">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                    <span>{{ __('Pixel Settings') }}</span>
-                </a>
-            </li>
-            <!-- App Settings -->
-            @if ($plan->pwa_store == 'on')
-                <li class="nav-item w-100">
-                    <a class="nav-link" id="pills-pwa_setting-tab" data-bs-toggle="pill" href="#pwa_settings"
-                        role="tab" aria-controls="pwa_settings"
-                        aria-selected="false">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                        <span>{{ __('App Settings') }}</span>
-                    </a>
-                </li>
-            @endif
-            <!-- Webhook Settings -->
-            <li class="nav-item w-100">
-                <a class="nav-link" id="pills-webhook_setting-tab" data-bs-toggle="pill" href="#webhook_settings"
-                        role="tab" aria-controls="webhook_settings"
-                        aria-selected="false">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                        <span>{{ __('Webhook Settings') }}</span>
-                </a>
-            </li>
-        @endif
-        </ul>
+        <div class="settings-layout settings-layout-grid mt-6">
+            <!-- Left Navigation Sidebar Card -->
+            <div class="settings-sidebar settings-navigation-column">
+                <div class="setting-nav-wrp settings-navigation-card">
+                    <div class="settings-navigation-menu">
+                        @if (Auth::user()->type == 'super admin')
+                            <a class="nav-link settings-navigation-item active" id="pills-brand_setting-tab" data-bs-toggle="pill" href="#pills-brand-setting" role="tab" aria-controls="pills-brand-setting" aria-selected="true">
+                                <span class="icon"><span class="material-symbols-outlined">palette</span></span>
+                                <span class="label">{{ __('Brand Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="pills-payment-setting_tab" data-bs-toggle="pill" href="#pills-payment-setting" role="tab" aria-controls="pills-payment-setting" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">credit_card</span></span>
+                                <span class="label">{{ __('Payment Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="pills-email-settings_tab" data-bs-toggle="pill" href="#pills-email-settings" role="tab" aria-controls="pills-email-settings" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">mail</span></span>
+                                <span class="label">{{ __('Email Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="recaptcha-settings_tab" data-bs-toggle="pill" href="#pills-recaptcha-settings" role="tab" aria-controls="pills-recaptcha-settings-tab" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">verified_user</span></span>
+                                <span class="label">{{ __('ReCaptcha Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="storage_settings_tab" data-bs-toggle="pill" href="#storage_settings" role="tab" aria-controls="pills-storage_settings-tab" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">database</span></span>
+                                <span class="label">{{ __('Storage Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="pills-cache_settings-tab" data-bs-toggle="pill" href="#pills-cache-settings" role="tab" aria-controls="pills-cache_settings-tab" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">bolt</span></span>
+                                <span class="label">{{ __('Cache Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="pills-cookie_settings-tab" data-bs-toggle="pill" href="#pills-cookie-settings" role="tab" aria-controls="pills-cookie_settings-tab" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">cookie</span></span>
+                                <span class="label">{{ __('Cookie Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="pills-chatgpt-tab" data-bs-toggle="pill" href="#pills-chatgpt-settings" role="tab" aria-controls="pills-chatgpt-tab" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">smart_toy</span></span>
+                                <span class="label">{{ __('Chat GPT Settings') }}</span>
+                            </a>
+                        @else
+                            <a class="nav-link settings-navigation-item active" id="pills-brand_setting-tab" data-bs-toggle="pill" href="#pills-brand-setting" role="tab" aria-controls="pills-brandsetting" aria-selected="true">
+                                <span class="icon"><span class="material-symbols-outlined">palette</span></span>
+                                <span class="label">{{ __('Brand Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="pills-store_setting-tab" data-bs-toggle="pill" href="#pills-store_setting" role="tab" aria-controls="pills-store_setting" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">storefront</span></span>
+                                <span class="label">{{ __('Store Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="pills-store_payment-setting-tab" data-bs-toggle="pill" href="#pills-store_payment-setting" role="tab" aria-controls="pills-store_payment-setting" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">credit_card</span></span>
+                                <span class="label">{{ __('Payment Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="pills-store_email_setting-tab" data-bs-toggle="pill" href="#pills-store_email_setting" role="tab" aria-controls="pills-store_email_setting" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">mail</span></span>
+                                <span class="label">{{ __('Email Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="pills-whatsapp_custom_massage-tab" data-bs-toggle="pill" href="#pills-whatsapp_custom_massage" role="tab" aria-controls="pills-whatsapp_custom_massage" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">chat</span></span>
+                                <span class="label">{{ __('Whatsapp Message Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="pills-twilio_setting-tab" data-bs-toggle="pill" href="#pills-twilio_setting" role="tab" aria-controls="pills-twilio_setting" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">sms</span></span>
+                                <span class="label">{{ __('Twilio Settings') }}</span>
+                            </a>
+                            <a class="nav-link settings-navigation-item" id="pills-pixel_setting-tab" data-bs-toggle="pill" href="#pixel_settings" role="tab" aria-controls="pixel_settings" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">analytics</span></span>
+                                <span class="label">{{ __('Pixel Settings') }}</span>
+                            </a>
+                            @if ($plan->pwa_store == 'on')
+                                <a class="nav-link settings-navigation-item" id="pills-pwa_setting-tab" data-bs-toggle="pill" href="#pwa_settings" role="tab" aria-controls="pwa_settings" aria-selected="false">
+                                    <span class="icon"><span class="material-symbols-outlined">install_mobile</span></span>
+                                    <span class="label">{{ __('PWA Settings') }}</span>
+                                </a>
+                            @endif
+                            <a class="nav-link settings-navigation-item" id="pills-webhook_setting-tab" data-bs-toggle="pill" href="#webhook_settings" role="tab" aria-controls="webhook_settings" aria-selected="false">
+                                <span class="icon"><span class="material-symbols-outlined">webhook</span></span>
+                                <span class="label">{{ __('Webhook Settings') }}</span>
+                            </a>
+                        @endif
+                    </div>
+                </div>
             </div>
-        </div>
-        <!-- [ sample-page ] start -->
-        <div class="flex-1 min-w-0 settings-content">
-            @if (Auth::user()->type == 'super admin')
-                <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade active show" id="pills-brand-setting" role="tabpanel" aria-labelledby="pills-brand_setting-tab">
-                        {{ Form::model($settings, ['route' => 'business.setting', 'method' => 'POST', 'enctype' => 'multipart/form-data']) }}
-                            <div class="row">
-                                <div class="col-lg-12 col-sm-12 col-md-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5>{{ __('Brand Settings') }}</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-lg-4 col-sm-6 col-md-6">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h5>{{ __('Logo dark') }}</h5>
-                                                        </div>
-                                                        <div class="card-body pt-0">
-                                                            <div class=" setting-card">
-                                                                <div class="mt-4">  {{-- logo-content --}}
-                                                                    {{-- <a href="{{ asset(Storage::url('uploads/logo/logo-dark.png')) }}"
-                                                                        target="_blank">
-                                                                        <img src="{{ asset(Storage::url('uploads/logo/logo-dark.png')) }}"
-                                                                            width="170px" class="img_setting"
-                                                                            id="logoDark">
-                                                                    </a> --}}
-                                                                    <a href="{{$logo. '/' . (isset($logo_img) && !empty($logo_img)? $logo_img:'logo-dark.png')}}" target="_blank">
-                                                                        <img id="logoDark" alt="your image" src="{{$logo. '/' . (isset($logo_img) && !empty($logo_img)? $logo_img:'logo-dark.png') . '?timestamp='. time()}}  " width="150px" class="img_setting fix-logo">
-                                                                    </a>
-                                                                </div>
-                                                                <div class="choose-files mt-5">
-                                                                    <label for="logo_dark">
-                                                                        <div class=" bg-primary full_logo"> <i
-                                                                                class="ti ti-upload px-1"></i>{{ __('Choose file here') }}
-                                                                        </div>
-                                                                        <input type="file" name="logo_dark"
-                                                                            id="logo_dark" class="form-control file"
-                                                                            data-filename="logo_dark"
-                                                                            onchange="document.getElementById('logoDark').src = window.URL.createObjectURL(this.files[0])">
-                                                                    </label>
-                                                                </div>
-                                                                @error('logo_dark')
-                                                                    <div class="row">
-                                                                        <span class="invalid-logo" role="alert">
-                                                                            <strong
-                                                                                class="text-danger">{{ $message }}</strong>
-                                                                        </span>
-                                                                    </div>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-sm-6 col-md-6">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h5>{{ __('Logo Light') }}</h5>
-                                                        </div>
-                                                        <div class="card-body pt-0">
-                                                            <div class=" setting-card">
-                                                                <div class="mt-4">  {{-- logo-content --}}
-                                                                    {{-- <a href="{{ asset(Storage::url('uploads/logo/logo-light.png')) }}"
-                                                                        target="_blank">
-                                                                        <img src="{{ asset(Storage::url('uploads/logo/logo-light.png')) }}"
-                                                                            width="170px" class=" img_setting"
-                                                                            id="logoLight">
-                                                                    </a> --}}
 
-                                                                    <a href="{{$logo. '/' . 'logo-light.png'}}" target="_blank">
-                                                                        <img id="adminLogoLight" alt="your image" src="{{$logo. '/' . 'logo-light.png' . '?timestamp='. time()}}" width="170px" class="img_setting fix-logo">
-                                                                    </a>
-                                                                </div>
-                                                                <div class="choose-files mt-5">
-                                                                    <label for="logo_light">
-                                                                        <div class=" bg-primary"> <i
-                                                                                class="ti ti-upload px-1"></i>{{ __('Choose file here') }}
-                                                                        </div>
-                                                                        <input type="file" class="form-control file"
-                                                                            name="logo_light" id="logo_light"
-                                                                            data-filename="logo_light"
-                                                                            onchange="document.getElementById('adminLogoLight').src = window.URL.createObjectURL(this.files[0])">
-                                                                    </label>
-                                                                </div>
-                                                                @error('logo_light')
-                                                                    <div class="row">
-                                                                        <span class="invalid-logo" role="alert">
-                                                                            <strong
-                                                                                class="text-danger">{{ $message }}</strong>
-                                                                        </span>
-                                                                    </div>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-sm-6 col-md-6">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h5>{{ __('Favicon') }}</h5>
-                                                        </div>
-                                                        <div class="card-body pt-0">
-                                                            <div class=" setting-card">
-                                                                <div class="logo-content mt-3">
-                                                                    <a href="{{ $logo . '/' . 'favicon.png' }}"
-                                                                        target="_blank">
-                                                                        <img src="{{ $logo . '/' . 'favicon.png' . '?timestamp='. time() }}"
-                                                                        {{-- <img src="{{ $logo . 'favicon.png' . '?timestamp='. time() }}" --}}
-                                                                            width="50px" height="50px"
-                                                                            class="img_setting favicon" id="adminfavicon">
-                                                                    </a>
-                                                                </div>
-                                                                {{-- <div class="logo-content logo-set-bg  text-center py-2">
-                                                                    <img src="{{ $logo . '/' . (isset($company_favicon) && !empty($company_favicon) ? $company_favicon : 'favicon.png') }}"  width="50px" class="img_setting">
-                                                                </div> --}}
-                                                                <div class="choose-files mt-5">
-                                                                    <label for="favicon">
-                                                                        <div class=" bg-primary favicon_update"> <i
-                                                                                class="ti ti-upload px-1"></i>{{ __('Choose file here') }}
-                                                                        </div>
-                                                                        <input type="file" class="form-control file"
-                                                                            id="favicon" name="favicon"
-                                                                            data-filename="favicon_update"
-                                                                            onchange="document.getElementById('adminfavicon').src = window.URL.createObjectURL(this.files[0])">
-                                                                    </label>
-                                                                </div>
-                                                                @error('favicon')
-                                                                    <div class="row">
-                                                                        <span class="invalid-logo" role="alert">
-                                                                            <strong
-                                                                                class="text-danger">{{ $message }}</strong>
-                                                                        </span>
-                                                                    </div>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+            <!-- Settings Main Content -->
+            <div class="settings-content settings-main">
+                @if (Auth::user()->type == 'super admin')
+                    <div class="tab-content" id="pills-tabContent">
+                        <!-- Brand Settings Tab -->
+                        <div class="tab-pane fade active show" id="pills-brand-setting" role="tabpanel" aria-labelledby="pills-brand_setting-tab">
+                            {{ Form::model($settings, ['route' => 'business.setting', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'class' => 'brand-settings-form-wrapper']) }}
+                                <!-- ROW 1 COLUMN 2: Brand Settings Logo Uploads Card -->
+                                <div class="card brand-settings-logos-card brand-settings-card">
+                                    <div class="card-header brand-settings-header">
+                                        <h5 style="font-size: 18px; font-weight: 600; color: var(--text-primary); margin: 0;">{{ __('Brand Settings') }}</h5>
+                                        <p style="font-size: 13.5px; color: var(--text-secondary); margin-top: 4px; margin-bottom: 0;">{{ __('Configure your platform identity and branding assets.') }}</p>
+                                    </div>
+                                    
+                                    <hr class="brand-settings-divider">
 
-                                                <div class="form-group col-md-6">
-                                                    {{ Form::label('title_text', __('Title Text'), ['class' => 'form-label']) }}
-                                                    {{ Form::text('title_text', null, ['class' => 'form-control', 'placeholder' => __('Title Text')]) }}
-                                                    @error('title_text')
-                                                        <span class="invalid-title_text" role="alert">
-                                                            <strong class="text-danger">{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
+                                    <div class="card-body">
+                                        <!-- Three-Column Logo Upload Grid -->
+                                        <div class="upload-grid-container brand-upload-grid">
+                                            <!-- Dark Logo Card -->
+                                            <div class="upload-asset-card brand-upload-card">
+                                                <div class="upload-card-header">
+                                                    <div class="upload-card-indicator"></div>
+                                                    <h6 class="upload-card-title">{{ __('Logo dark') }}</h6>
                                                 </div>
-                                                <div class="form-group col-md-6">
-                                                    {{ Form::label('footer_text', __('Footer Text'), ['class' => 'form-label']) }}
-                                                    {{ Form::text('footer_text', null, ['class' => 'form-control', 'placeholder' => __('Footer Text')]) }}
-                                                    @error('footer_text')
-                                                        <span class="invalid-footer_text" role="alert">
-                                                            <strong class="text-danger">{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group col-md-4">
-                                                    {{ Form::label('default_language', __('Default Language'), ['class' => 'form-label']) }}
-                                                    <div class="changeLanguage">
-                                                        <select name="default_language" id="default_language"
-                                                            class="form-control" data-toggle="select">
-                                                            @foreach ($languages as $code => $language)
-                                                                <option @if ($lang == $code) selected @endif
-                                                                    value="{{ $code }}">
-                                                                    {{ ucFirst($language) }}</option>
-                                                            @endforeach
-                                                        </select>
+                                                <div class="upload-preview-box brand-upload-preview">
+                                                    @php
+                                                        $darkPath = $logo . '/' . (isset($logo_img) && !empty($logo_img) ? $logo_img : 'logo-dark.png');
+                                                        $defaultDark = asset('uploads/logo/logo-dark.png');
+                                                    @endphp
+                                                    <img id="logoDark" alt="Dark Logo" class="logo-preview-img" src="{{ $darkPath . '?timestamp=' . time() }}"
+                                                        onerror="if(!this.dataset.tried){ this.dataset.tried='1'; this.src='{{ $defaultDark }}'; } else { this.style.display='none'; this.nextElementSibling.style.display='flex'; }">
+                                                    <div class="upload-empty-state" style="display: none; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+                                                        <span class="material-symbols-outlined" style="font-size: 28px; color: #94A3B8;">image</span>
+                                                        <span style="font-size: 13px; font-weight: 500; color: var(--text-secondary);">{{ __('No image uploaded') }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-md-4">
-                                                    <div class="form-group">
-                                                        {{ Form::label('currency_symbol', __('Currency Symbol*'), ['class' => 'form-label']) }}
-                                                        {{ Form::text('currency_symbol', $settings['currency_symbol'], ['class' => 'form-control', 'placeholder' => __('Enter Currency Symbol')]) }}
-                                                        <small>{{ __('Note: This value will be automatically assigned whenever a new store is created.') }}</small>
-                                                        @error('currency_symbol')
-                                                            <span class="invalid-currency_symbol" role="alert">
-                                                                <strong class="text-danger">{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
+                                                <div class="w-100">
+                                                    <label for="logo_dark" class="btn-upload-blue brand-upload-button mb-0">
+                                                        <span class="material-symbols-outlined text-[18px]">upload</span>
+                                                        <span>{{ __('Choose file here') }}</span>
+                                                        <input type="file" name="logo_dark" id="logo_dark" class="form-control file d-none" data-filename="logo_dark" onchange="var img = document.getElementById('logoDark'); img.src = window.URL.createObjectURL(this.files[0]); img.style.display='block'; if(img.nextElementSibling) img.nextElementSibling.style.display='none';">
+                                                    </label>
                                                 </div>
-                                                <div class="form-group col-md-4 mb-0">
-                                                    <div class="form-group">
-                                                        {{ Form::label('currency', __('Currency *'), ['class' => 'form-label']) }}
-                                                        {{ Form::text('currency', $settings['currency'], ['class' => 'form-control font-style', 'placeholder' => __('Enter Currency')]) }}
-                                                        <small>{{ __('Note: This value will be automatically assigned whenever a new store is created.') }}</small>
-                                                        <small>
-                                                            <a href="https://stripe.com/docs/currencies"
-                                                                target="_blank">{{ __('you can find out how to do that here..') }}</a>
-                                                        </small>
-                                                        <br>
+                                                @error('logo_dark')
+                                                    <span class="invalid-logo text-danger text-xs mt-2 d-block text-center">{{ $message }}</span>
+                                                @enderror
+                                            </div>
 
+                                            <!-- Light Logo Card -->
+                                            <div class="upload-asset-card brand-upload-card">
+                                                <div class="upload-card-header">
+                                                    <div class="upload-card-indicator"></div>
+                                                    <h6 class="upload-card-title brand-upload-title">{{ __('Logo Light') }}</h6>
+                                                </div>
+                                                <div class="upload-preview-box brand-upload-preview brand-preview">
+                                                    @php
+                                                        $lightPath = $logo . '/' . 'logo-light.png';
+                                                        $defaultLight = asset('uploads/logo/logo-light.png');
+                                                    @endphp
+                                                    <img id="adminLogoLight" alt="Light Logo" class="logo-preview-img" src="{{ $lightPath . '?timestamp=' . time() }}"
+                                                        onerror="if(!this.dataset.tried){ this.dataset.tried='1'; this.src='{{ $defaultLight }}'; } else { this.style.display='none'; this.nextElementSibling.style.display='flex'; }">
+                                                    <div class="upload-empty-state" style="display: none; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+                                                        <span class="material-symbols-outlined" style="font-size: 28px; color: #94A3B8;">image</span>
+                                                        <span style="font-size: 13px; font-weight: 500; color: var(--text-secondary);">{{ __('No image uploaded') }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="w-100">
+                                                    <label for="logo_light" class="btn-upload-blue brand-upload-button mb-0">
+                                                        <span class="material-symbols-outlined text-[18px]">upload</span>
+                                                        <span>{{ __('Choose file here') }}</span>
+                                                        <input type="file" name="logo_light" id="logo_light" class="form-control file d-none" data-filename="logo_light" onchange="var img = document.getElementById('adminLogoLight'); img.src = window.URL.createObjectURL(this.files[0]); img.style.display='block'; if(img.nextElementSibling) img.nextElementSibling.style.display='none';">
+                                                    </label>
+                                                </div>
+                                                @error('logo_light')
+                                                    <span class="invalid-logo text-danger text-xs mt-2 d-block text-center">{{ $message }}</span>
+                                                @enderror
+                                            </div>
 
-                                                        @error('currency')
-                                                            <span class="invalid-currency" role="alert">
-                                                                <strong class="text-danger">{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-
+                                            <!-- Favicon Card -->
+                                            <div class="upload-asset-card brand-upload-card">
+                                                <div class="upload-card-header">
+                                                    <div class="upload-card-indicator"></div>
+                                                    <h6 class="upload-card-title brand-upload-title">{{ __('Favicon') }}</h6>
+                                                </div>
+                                                <div class="upload-preview-box brand-upload-preview brand-preview">
+                                                    @php
+                                                        $favPath = $logo . '/' . 'favicon.png';
+                                                        $defaultFav = asset('uploads/logo/favicon.png');
+                                                    @endphp
+                                                    <img id="adminfavicon" alt="Favicon" class="favicon-preview-img" src="{{ $favPath . '?timestamp=' . time() }}"
+                                                        onerror="if(!this.dataset.tried){ this.dataset.tried='1'; this.src='{{ $defaultFav }}'; } else { this.style.display='none'; this.nextElementSibling.style.display='flex'; }">
+                                                    <div class="upload-empty-state" style="display: none; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+                                                        <span class="material-symbols-outlined" style="font-size: 28px; color: #94A3B8;">image</span>
+                                                        <span style="font-size: 13px; font-weight: 500; color: var(--text-secondary);">{{ __('No image uploaded') }}</span>
                                                     </div>
                                                 </div>
-
-                                                <div class="form-group col-6 col-md-3">
-                                                    <div class="custom-control form-switch p-0">
-                                                        <label class="form-check-label"
-                                                            for="display_landing_page">{{ __('Enable Landing Page') }}</label><br>
-                                                        <input type="checkbox" name="display_landing_page"
-                                                            class="form-check-input" id="display_landing_page"
-                                                            data-toggle="switchbutton"
-                                                            {{ $settings['display_landing_page'] == 'on' ? 'checked="checked"' : '' }}
-                                                            data-onstyle="primary">
-                                                    </div>
+                                                <div class="w-100">
+                                                    <label for="favicon" class="btn-upload-blue brand-upload-button mb-0">
+                                                        <span class="material-symbols-outlined text-[18px]">upload</span>
+                                                        <span>{{ __('Choose file here') }}</span>
+                                                        <input type="file" name="favicon" id="favicon" class="form-control file d-none" data-filename="favicon_update" onchange="var img = document.getElementById('adminfavicon'); img.src = window.URL.createObjectURL(this.files[0]); img.style.display='block'; if(img.nextElementSibling) img.nextElementSibling.style.display='none';">
+                                                    </label>
                                                 </div>
-
-                                                <div class="form-group col-6 col-md-3">
-                                                    <div class="custom-control form-switch p-0">
-                                                        <label class="form-check-label"
-                                                            for="SITE_RTL">{{ __('Enable RTL') }}</label><br>
-                                                        <input type="checkbox" class="form-check-input"
-                                                            data-toggle="switchbutton" data-onstyle="primary"
-                                                            name="SITE_RTL" id="SITE_RTL"
-                                                            {{ $settings['SITE_RTL'] == 'on' ? 'checked="checked"' : '' }}>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group col-6 col-md-3">
-                                                    <div class="custom-control form-switch p-0">
-                                                        <label class="form-check-label"
-                                                            for="signup_button">{{ __('Enable Sign-Up Page') }}</label><br>
-                                                        <input type="checkbox" name="signup_button"
-                                                            class="form-check-input" id="signup_button"
-                                                            data-toggle="switchbutton"
-                                                            {{ Utility::getValByName('signup_button') == 'on' ? 'checked="checked"' : '' }}
-                                                            data-onstyle="primary">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group col-6 col-md-3">
-                                                    <div class="custom-control form-switch p-0">
-                                                        <label class="form-check-label"
-                                                            for="email_verification">{{ __('Enable Email Verification') }}</label><br>
-                                                        <input type="checkbox" name="email_verification"
-                                                            class="form-check-input" id="email_verification"
-                                                            data-toggle="switchbutton"
-                                                            {{ Utility::getValByName('email_verification') == 'on' ? 'checked="checked"' : '' }}
-                                                            data-onstyle="primary">
-                                                    </div>
-                                                </div>
-                                                <div class="setting-card setting-logo-box p-3">
-                                                    <div class="row">
-                                                        <h5>{{ __('Theme Customizer') }}</h5>
-                                                        <div class="col-md-4 my-auto">
-                                                            <h6 class="mt-2">
-                                                                <i data-feather="credit-card"
-                                                                    class="me-2"></i>{{ __('Primary Color Settings') }}
-                                                            </h6>
-                                                            <hr class="my-2" />
-                                                            <div class="color-wrp">
-                                                                <div class="theme-color themes-color">
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-1' ? 'active_color' : '' }}" data-value="theme-1"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-1"{{ $color == 'theme-1' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-2' ? 'active_color' : '' }}" data-value="theme-2"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-2"{{ $color == 'theme-2' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-3' ? 'active_color' : '' }}" data-value="theme-3"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-3"{{ $color == 'theme-3' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-4' ? 'active_color' : '' }}" data-value="theme-4"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-4"{{ $color == 'theme-4' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-5' ? 'active_color' : '' }}" data-value="theme-5"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-5"{{ $color == 'theme-5' ? 'checked' : '' }}>
-                                                                    <br>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-6' ? 'active_color' : '' }}" data-value="theme-6"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-6"{{ $color == 'theme-6' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-7' ? 'active_color' : '' }}" data-value="theme-7"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-7"{{ $color == 'theme-7' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-8' ? 'active_color' : '' }}" data-value="theme-8"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-8"{{ $color == 'theme-8' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-9' ? 'active_color' : '' }}" data-value="theme-9"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-9"{{ $color == 'theme-9' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-10' ? 'active_color' : '' }}" data-value="theme-10"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-10"{{ $color == 'theme-10' ? 'checked' : '' }}>
-                                                                </div>
-                                                                <div class="color-picker-wrp ">
-                                                                        <input type="color" value="{{ $color ? $color : '' }}" class="colorPicker {{ isset($flag) && $flag == 'true' ? 'active_color' : '' }}" name="custom_color" id="color-picker">
-                                                                        <input type='hidden' name="color_flag" value = {{  isset($flag) && $flag == 'true' ? 'true' : 'false' }}>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4 my-auto mt-2">
-                                                            <h6 class="">
-                                                                <i data-feather="layout"
-                                                                    class="me-2"></i>{{ __('Sidebar Settings') }}
-                                                            </h6>
-                                                            <hr class="my-2" />
-                                                            <div class="form-check form-switch">
-                                                                <input type="checkbox" class="form-check-input"
-                                                                    id="cust-theme-bg" name="cust_theme_bg"
-                                                                    {{ Utility::getValByName('cust_theme_bg') == 'on' ? 'checked' : '' }} />
-                                                                <label class="form-check-label f-w-600 pl-1"
-                                                                    for="cust-theme-bg">{{ __('Transparent layout') }}</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="card-footer p-0">
-                                                    <div class="col-sm-12 mt-3 px-2">
-                                                        <div class="text-end">
-                                                            {{ Form::submit(__('Save Changes'), ['class' => 'btn btn-xs btn-primary']) }}
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                @error('favicon')
+                                                    <span class="invalid-logo text-danger text-xs mt-2 d-block text-center">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            {!! Form::close() !!}
-                    </div>
-                    <div class="tab-pane fade" id="pills-payment-setting" role="tabpanel" aria-labelledby="pills-brand_setting-tab">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>{{ 'Payment Setting' }}</h5>
-                                <small>{{__('These details will be used to collect subscription plan payments. Each subscription plan will have a payment button based on the below configuration.')}}</small>
-                            </div>
-                            <div class="card-body ">
-                                <form id="setting-form" method="post" action="{{ route('payment.setting') }}">
-                                    @csrf
-                                    <div class="row">
-                                        <div class="col-12">
-                                            {{-- <div class="card"> --}}
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6 form-group">
-                                                        <label class="col-form-label">{{ __('Currency') }}</label>
-                                                        <input type="text" name="currency" class="form-control"
-                                                            id="currency" value="{{ isset($admin_payment_setting['currency']) ? $admin_payment_setting['currency'] : '' }}" placeholder="{{ __('Enter Currency') }}" required>
-                                                        <small class="text-xs">
-                                                            {{ __('Note: Add currency code as per three-letter ISO code') }}.
-                                                            <a href="https://stripe.com/docs/currencies"
-                                                                target="_blank">{{ __('you can find out how to do that here..') }}</a>
-                                                                {{__('and This value will be automatically assigned whenever a new store is created.')}}
-                                                        </small>
+
+                                <!-- ROW 2 FULL WIDTH: Brand Settings Form Card -->
+                                <div class="card brand-settings-form-card brand-settings-form">
+                                    <div class="card-header">
+                                        <h5>{{ __('Brand Settings Form') }}</h5>
+                                        <p>{{ __('Configure application details, localization preferences, feature toggles, and theme customization.') }}</p>
+                                    </div>
+                                    <div class="card-body">
+                                        <!-- Branding Form Inputs: Title Text & Footer Text (2 Equal Columns) -->
+                                        <div class="branding-inputs-grid-2 form-row-two">
+                                            <div>
+                                                {{ Form::label('title_text', __('Title Text'), ['class' => 'form-label']) }}
+                                                {{ Form::text('title_text', null, ['class' => 'form-control', 'placeholder' => __('Enter application title')]) }}
+                                                @error('title_text')
+                                                    <span class="invalid-title_text text-danger text-xs mt-1 d-block">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div>
+                                                {{ Form::label('footer_text', __('Footer Text'), ['class' => 'form-label']) }}
+                                                {{ Form::text('footer_text', null, ['class' => 'form-control', 'placeholder' => __('Enter footer text')]) }}
+                                                @error('footer_text')
+                                                    <span class="invalid-footer_text text-danger text-xs mt-1 d-block">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <!-- Currency & Language Section (3 Columns) -->
+                                        <div class="branding-inputs-grid-3 form-row-three">
+                                            <div>
+                                                {{ Form::label('default_language', __('Default Language'), ['class' => 'form-label']) }}
+                                                <select name="default_language" id="default_language" class="form-control">
+                                                    @foreach ($languages as $code => $language)
+                                                        <option @if ($lang == $code) selected @endif value="{{ $code }}">
+                                                            {{ ucFirst($language) }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                            <div>
+                                                {{ Form::label('currency_symbol', __('Currency Symbol*'), ['class' => 'form-label']) }}
+                                                {{ Form::text('currency_symbol', $settings['currency_symbol'], ['class' => 'form-control', 'placeholder' => __('Enter currency symbol')]) }}
+                                                <small class="text-xs text-muted d-block mt-1">{{ __('Note: Assigned when creating new stores.') }}</small>
+                                                @error('currency_symbol')
+                                                    <span class="invalid-currency_symbol text-danger text-xs mt-1 d-block">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div>
+                                                {{ Form::label('currency', __('Currency*'), ['class' => 'form-label']) }}
+                                                {{ Form::text('currency', $settings['currency'], ['class' => 'form-control', 'placeholder' => __('Enter currency')]) }}
+                                                <small class="text-xs text-muted d-block mt-1">{{ __('Note: Assigned when creating new stores.') }}</small>
+                                                @error('currency')
+                                                    <span class="invalid-currency text-danger text-xs mt-1 d-block">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <!-- Feature Toggles Grid (4 Horizontal Cards Row) -->
+                                        <div class="toggle-grid toggle-cards-row settings-toggle-grid mb-4">
+                                            <div class="toggle-setting-card settings-toggle-card">
+                                                <div class="toggle-setting-info settings-toggle-info">
+                                                    <h6 class="settings-toggle-title">{{ __('Enable Landing Page') }}</h6>
+                                                    <p>{{ __('Allow stores to use the landing page.') }}</p>
+                                                </div>
+                                                <label class="ios-toggle settings-toggle-switch">
+                                                    <input type="checkbox" name="display_landing_page" id="display_landing_page" {{ $settings['display_landing_page'] == 'on' ? 'checked' : '' }}>
+                                                    <span class="ios-toggle-slider"></span>
+                                                </label>
+                                            </div>
+
+                                            <div class="toggle-setting-card settings-toggle-card">
+                                                <div class="toggle-setting-info settings-toggle-info">
+                                                    <h6 class="settings-toggle-title">{{ __('Enable RTL') }}</h6>
+                                                    <p>{{ __('Enable right-to-left layout support.') }}</p>
+                                                </div>
+                                                <label class="ios-toggle settings-toggle-switch">
+                                                    <input type="checkbox" name="SITE_RTL" id="SITE_RTL" {{ $settings['SITE_RTL'] == 'on' ? 'checked' : '' }}>
+                                                    <span class="ios-toggle-slider"></span>
+                                                </label>
+                                            </div>
+
+                                            <div class="toggle-setting-card settings-toggle-card">
+                                                <div class="toggle-setting-info settings-toggle-info">
+                                                    <h6 class="settings-toggle-title">{{ __('Enable Sign-Up Page') }}</h6>
+                                                    <p>{{ __('Allow new users to create accounts.') }}</p>
+                                                </div>
+                                                <label class="ios-toggle settings-toggle-switch">
+                                                    <input type="checkbox" name="signup_button" id="signup_button" {{ Utility::getValByName('signup_button') == 'on' ? 'checked' : '' }}>
+                                                    <span class="ios-toggle-slider"></span>
+                                                </label>
+                                            </div>
+
+                                            <div class="toggle-setting-card settings-toggle-card">
+                                                <div class="toggle-setting-info settings-toggle-info">
+                                                    <h6 class="settings-toggle-title">{{ __('Enable Email Verification') }}</h6>
+                                                    <p>{{ __('Require users to verify their email address.') }}</p>
+                                                </div>
+                                                <label class="ios-toggle settings-toggle-switch">
+                                                    <input type="checkbox" name="email_verification" id="email_verification" {{ Utility::getValByName('email_verification') == 'on' ? 'checked' : '' }}>
+                                                    <span class="ios-toggle-slider"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <!-- Theme Customizer Section -->
+                                        <div class="card p-4 border mt-4 theme-customizer" style="background: #F8FAFC; border-color: #E2E8F0 !important;">
+                                            <div class="mb-3">
+                                                <h5 class="m-0" style="font-size: 16px; font-weight: 600; color: #0F172A;">{{ __('Theme Customizer') }}</h5>
+                                                <p style="font-size: 13px; color: #64748B; margin-top: 2px;">{{ __('Customize the appearance of your VirratPOS dashboard.') }}</p>
+                                            </div>
+
+                                            <div class="row g-4 theme-customizer-content">
+                                                <div class="col-md-6">
+                                                    <h6 style="font-size: 13.5px; font-weight: 600; color: #0F172A; margin-bottom: 8px;">{{ __('Primary Color') }}</h6>
+                                                    <div class="theme-swatch-list theme-color-options">
+                                                        <a href="#!" class="theme-swatch-btn theme-color-option {{ $color == 'theme-1' ? 'active_color' : '' }}" data-value="theme-1" style="background: #2563EB;" title="Virrat Blue"></a>
+                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-1" {{ $color == 'theme-1' ? 'checked' : '' }}>
+
+                                                        <a href="#!" class="theme-swatch-btn theme-color-option {{ $color == 'theme-2' ? 'active_color' : '' }}" data-value="theme-2" style="background: #0F172A;" title="Navy"></a>
+                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-2" {{ $color == 'theme-2' ? 'checked' : '' }}>
+
+                                                        <a href="#!" class="theme-swatch-btn theme-color-option {{ $color == 'theme-3' ? 'active_color' : '' }}" data-value="theme-3" style="background: #0EA5E9;" title="Sky Blue"></a>
+                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-3" {{ $color == 'theme-3' ? 'checked' : '' }}>
+
+                                                        <a href="#!" class="theme-swatch-btn theme-color-option {{ $color == 'theme-4' ? 'active_color' : '' }}" data-value="theme-4" style="background: #6366F1;" title="Indigo Blue"></a>
+                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-4" {{ $color == 'theme-4' ? 'checked' : '' }}>
+
+                                                        <a href="#!" class="theme-swatch-btn theme-color-option {{ $color == 'theme-5' ? 'active_color' : '' }}" data-value="theme-5" style="background: #64748B;" title="Slate Blue"></a>
+                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-5" {{ $color == 'theme-5' ? 'checked' : '' }}>
                                                     </div>
-                                                    <div class="col-lg-6 col-md-6 col-sm-6 form-group">
-                                                        <label for="currency_symbol"
-                                                            class="col-form-label">{{ __('Currency Symbol') }}</label>
-                                                        <input type="text" name="currency_symbol"
-                                                            class="form-control" id="currency_symbol"
-                                                            value="{{ isset($admin_payment_setting['currency_symbol']) ? $admin_payment_setting['currency_symbol'] : '' }}" placeholder="{{ __('Enter Currency Symbol') }}" required>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <h6 style="font-size: 13.5px; font-weight: 600; color: #0F172A; margin-bottom: 8px;">{{ __('Sidebar Settings') }}</h6>
+                                                    <div class="toggle-setting-card settings-toggle-card mt-2 mb-0">
+                                                        <div class="toggle-setting-info settings-toggle-info">
+                                                            <h6 class="settings-toggle-title">{{ __('Transparent Sidebar') }}</h6>
+                                                            <p>{{ __('Use a transparent sidebar style across the dashboard.') }}</p>
+                                                        </div>
+                                                        <label class="ios-toggle settings-toggle-switch">
+                                                            <input type="checkbox" id="cust-theme-bg" name="cust_theme_bg" {{ Utility::getValByName('cust_theme_bg') == 'on' ? 'checked' : '' }}>
+                                                            <span class="ios-toggle-slider"></span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
-                                            {{-- </div> --}}
+                                        </div>
+
+                                        <!-- Sticky / Prominent Save Action Bar -->
+                                        <div class="settings-sticky-actions">
+                                            <button type="button" class="btn-cancel-gray" onclick="window.location.reload();">{{ __('Cancel') }}</button>
+                                            <button type="submit" class="btn-save-blue">
+                                                <span class="material-symbols-outlined text-[18px]">save</span>
+                                                <span>{{ __('Save Changes') }}</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            {!! Form::close() !!}
+                        </div>
+                    <div class="tab-pane fade payment-settings-page" id="pills-payment-setting" role="tabpanel" aria-labelledby="pills-payment-setting_tab">
+                        <div class="card payment-setting-card">
+                            <div class="card-header payment-setting-card-header">
+                                <div class="payment-setting-title-bar">
+                                    <span class="accent-bar"></span>
+                                    <h5>{{ __('Payment Setting') }}</h5>
+                                </div>
+                                <p class="payment-setting-description">{{ __('These details will be used to collect subscription plan payments. Each subscription plan will have a payment button based on the below configuration.') }}</p>
+                            </div>
+                            <div class="card-body p-0">
+                                <form id="setting-form" method="post" action="{{ route('payment.setting') }}">
+                                    @csrf
+                                    <div class="payment-currency-row">
+                                        <div class="form-group">
+                                            <label class="col-form-label">{{ __('Currency') }}</label>
+                                            <input type="text" name="currency" class="form-control"
+                                                id="currency" value="{{ isset($admin_payment_setting['currency']) ? $admin_payment_setting['currency'] : '' }}" placeholder="{{ __('Enter Currency') }}" required>
+                                            <small class="text-xs">
+                                                {{ __('Note: Add currency code as per three-letter ISO code') }}.
+                                                <a href="https://stripe.com/docs/currencies"
+                                                    target="_blank">{{ __('you can find out how to do that here..') }}</a>
+                                                {{ __('and This value will be automatically assigned whenever a new store is created.') }}
+                                            </small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="currency_symbol"
+                                                class="col-form-label">{{ __('Currency Symbol') }}</label>
+                                            <input type="text" name="currency_symbol"
+                                                class="form-control" id="currency_symbol"
+                                                value="{{ isset($admin_payment_setting['currency_symbol']) ? $admin_payment_setting['currency_symbol'] : '' }}" placeholder="{{ __('Enter Currency Symbol') }}" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="payment-services-section-header d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4 mt-3 pb-3 border-bottom" style="width: 100%; max-width: 100%; box-sizing: border-box;">
+                                        <div>
+                                            <div class="d-flex align-items-center gap-2 flex-wrap">
+                                                <h5 class="m-0 font-weight-bold" style="font-size: 16px; color: #0f172a;">{{ __('Payment Services') }}</h5>
+                                                <span class="badge" id="payment-services-count" style="font-size: 12px; font-weight: 600; padding: 5px 10px; border-radius: 6px; background: #EEF2FF; color: #4338CA;">0 services available</span>
+                                                <span class="badge" id="payment-enabled-count" style="font-size: 12px; font-weight: 600; padding: 5px 10px; border-radius: 6px; background: #DCFCE7; color: #15803D;">0 enabled</span>
+                                            </div>
+                                            <p class="text-muted text-xs m-0 mt-1" style="font-size: 13px; color: #64748b;">
+                                                {{ __('Enable and configure the payment gateways available for your platform.') }}
+                                            </p>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                                            <div class="position-relative" style="min-width: 220px;">
+                                                <input type="text" id="payment-service-search" class="form-control" placeholder="{{ __('Search payment service...') }}" style="height: 38px !important; min-height: 38px !important; max-height: 38px !important; padding-left: 14px !important; border-radius: 8px !important; font-size: 13px !important;">
+                                            </div>
+                                            <select id="payment-service-filter" class="form-select" style="height: 38px !important; min-height: 38px !important; max-height: 38px !important; width: 140px; border-radius: 8px !important; font-size: 13px !important; border: 1px solid #d9deea;">
+                                                <option value="all">{{ __('All Services') }}</option>
+                                                <option value="enabled">{{ __('Enabled') }}</option>
+                                                <option value="disabled">{{ __('Disabled') }}</option>
+                                            </select>
                                         </div>
                                     </div>
 
@@ -935,6 +2215,9 @@
                                         <div class="setting-faq-wrp faq col-12">
                                             <div class="accordion accordion-flush setting-accordion"
                                                 id="accordionExample">
+                                                <div id="payment-services-empty-state" class="text-center py-4 d-none" style="background: #f8fafc; border: 1px solid #d9deea; border-radius: 8px; margin-bottom: 12px;">
+                                                    <p class="text-muted m-0" style="font-size: 14px; font-weight: 500;">{{ __('No payment services found.') }}</p>
+                                                </div>
                                                 <div class="accordion-item">
                                                     <h2 class="accordion-header" id="headingOne">
                                                         <button class="accordion-button collapsed"
@@ -3232,7 +4515,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="pills-email-settings" role="tabpanel" aria-labelledby="pills-brand_setting-tab">
+                    <div class="tab-pane fade" id="pills-email-settings" role="tabpanel" aria-labelledby="pills-email-settings_tab">
                         <div class="col-md-12">
 
                             <div class="card">
@@ -3343,7 +4626,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="pills-recaptcha-settings" role="tabpanel" aria-labelledby="pills-brand_setting-tab">
+                    <div class="tab-pane fade" id="pills-recaptcha-settings" role="tabpanel" aria-labelledby="recaptcha-settings_tab">
                         <form method="POST" action="{{ route('recaptcha.settings.store') }}" accept-charset="UTF-8">
                             @csrf
                             <div class="col-md-12">
@@ -3415,7 +4698,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="tab-pane fade" id="storage_settings" role="tabpanel" aria-labelledby="pills-brand_setting-tab">
+                    <div class="tab-pane fade" id="storage_settings" role="tabpanel" aria-labelledby="storage_settings_tab">
                         {{ Form::open(array('route' => 'storage.setting.store', 'enctype' => "multipart/form-data")) }}
                             <div class="card">
                                 <div class="card-header">
@@ -3610,16 +4893,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="pills-cookie-settings" role="tabpanel" aria-labelledby="pills-cookie_settings-tab">
+                    <div class="tab-pane fade cookie-settings-page" id="pills-cookie-settings" role="tabpanel" aria-labelledby="pills-cookie_settings-tab">
                         <div class="col-xl-12 col-lg-12 col-md-12">
-                            <div class="card">
+                            <div class="card cookie-settings-card">
 
                                 {{Form::model($settings,array('route'=>'cookie.setting','method'=>'post'))}}
-                                    <div class="card-header flex-column flex-lg-row  d-flex align-items-lg-center gap-2 justify-content-between">
+                                    <div class="card-header cookie-header">
                                         <h5>{{ __('Cookie Settings') }}</h5>
                                         <div class="d-flex align-items-center">
                                             {{ Form::label('enable_cookie', __('Enable cookie'), ['class' => 'col-form-label p-0 fw-bold me-3']) }}
-                                            <div class="custom-control custom-switch"  onclick="enablecookie()">
+                                            <div class="custom-control custom-switch" onclick="enablecookie()">
                                                 <input type="checkbox" data-toggle="switchbutton" data-onstyle="primary" name="enable_cookie" class="form-check-input input-primary "
                                                     id="enable_cookie" {{ $settings['enable_cookie'] == 'on' ? ' checked ' : '' }} >
                                                 <label class="custom-control-label mb-1" for="enable_cookie"></label>
@@ -3628,72 +4911,72 @@
                                     </div>
                                     <div class="card-body cookieDiv {{ $settings['enable_cookie'] == 'off' ? 'disabledCookie ' : '' }}">
                                         @if(!empty($chatgpt['chatgpt_key']) && $settings['enable_cookie'] == 'on')
-                                            <div class="d-flex justify-content-end">
+                                            <div class="d-flex justify-content-end mb-3">
                                                 <a href="#" class="btn btn-primary btn-sm" data-size="xl" data-ajax-popup-over="true" data-url="{{ route('generate',['cookie']) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Generate') }}" data-title="{{ __('Generate Content With AI') }}">
                                                     <i class="fas fa-robot"></i> {{ __('Generate with AI') }}
                                                 </a>
                                             </div>
                                         @endif
-                                        <div class="row ">
-                                            <div class="col-md-6">
-                                                <div class="form-check form-switch custom-switch-v1" id="cookie_log">
-                                                    <input type="checkbox" name="cookie_logging" class="form-check-input input-primary cookie_setting"
-                                                        id="cookie_logging"{{ $settings['cookie_logging'] == 'on' ? ' checked ' : '' }}>
-                                                    <label class="form-check-label" for="cookie_logging">{{__('Enable logging')}}</label>
-                                                </div>
-                                                <div class="form-group" >
-                                                    {{ Form::label('cookie_title', __('Cookie Title'), ['class' => 'col-form-label' ]) }}
-                                                    {{ Form::text('cookie_title', null, ['class' => 'form-control cookie_setting', 'placeholder'=>__('Enter Cookie Title')] ) }}
-                                                </div>
-                                                <div class="form-group ">
-                                                    {{ Form::label('cookie_description', __('Cookie Description'), ['class' => ' form-label']) }}
-                                                    {!! Form::textarea('cookie_description', null, ['class' => 'form-control cookie_setting', 'rows' => '3', 'placeholder'=>__('Enter Cookie Description')]) !!}
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-check form-switch custom-switch-v1 ">
-                                                    <input type="checkbox" name="necessary_cookies" class="form-check-input input-primary"
-                                                        id="necessary_cookies" checked onclick="return false">
-                                                    <label class="form-check-label" for="necessary_cookies">{{__('Strictly necessary cookies')}}</label>
-                                                </div>
-                                                <div class="form-group ">
-                                                    {{ Form::label('strictly_cookie_title', __(' Strictly Cookie Title'), ['class' => 'col-form-label']) }}
-                                                    {{ Form::text('strictly_cookie_title', null, ['class' => 'form-control cookie_setting', 'placeholder'=>__('Enter Strictly Cookie Title')]) }}
-                                                </div>
-                                                <div class="form-group ">
-                                                    {{ Form::label('strictly_cookie_description', __('Strictly Cookie Description'), ['class' => ' form-label']) }}
-                                                    {!! Form::textarea('strictly_cookie_description', null, ['class' => 'form-control cookie_setting ', 'rows' => '3', 'placeholder'=>__('Enter Strictly Cookie Description')]) !!}
-                                                </div>
-                                            </div>
 
-                                            <div class="col-12">
-                                                <h5>{{__('More Information')}}</h5>
+                                        <!-- Toggles Grid -->
+                                        <div class="cookie-toggle-grid">
+                                            <div class="cookie-toggle-item form-check form-switch custom-switch-v1" id="cookie_log">
+                                                <input type="checkbox" name="cookie_logging" class="form-check-input input-primary cookie_setting"
+                                                    id="cookie_logging"{{ $settings['cookie_logging'] == 'on' ? ' checked ' : '' }}>
+                                                <label class="form-check-label" for="cookie_logging">{{__('Enable logging')}}</label>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group ">
-                                                    {{ Form::label('more_information_description', __('Contact Us Description'), ['class' => 'col-form-label']) }}
-                                                    {{ Form::text('more_information_description', null, ['class' => 'form-control cookie_setting', 'placeholder'=>__('Enter Contact Us Description')]) }}
-                                                </div>
+                                            <div class="cookie-toggle-item form-check form-switch custom-switch-v1">
+                                                <input type="checkbox" name="necessary_cookies" class="form-check-input input-primary"
+                                                    id="necessary_cookies" checked onclick="return false">
+                                                <label class="form-check-label" for="necessary_cookies">{{__('Strictly necessary cookies')}}</label>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group ">
-                                                    {{ Form::label('contactus_url', __('Contact Us URL'), ['class' => 'col-form-label']) }}
-                                                    {{ Form::text('contactus_url', null, ['class' => 'form-control cookie_setting', 'placeholder'=>__('Enter Contact Us URL')]) }}
-                                                </div>
-                                            </div>
+                                        </div>
 
+                                        <!-- Form Grid for Titles and Descriptions -->
+                                        <div class="cookie-form-grid">
+                                            <div class="cookie-field form-group">
+                                                {{ Form::label('cookie_title', __('Cookie Title'), ['class' => 'col-form-label' ]) }}
+                                                {{ Form::text('cookie_title', null, ['class' => 'form-control cookie_setting', 'placeholder'=>__('Enter Cookie Title')] ) }}
+                                            </div>
+                                            <div class="cookie-field form-group">
+                                                {{ Form::label('strictly_cookie_title', __('Strictly Cookie Title'), ['class' => 'col-form-label']) }}
+                                                {{ Form::text('strictly_cookie_title', null, ['class' => 'form-control cookie_setting', 'placeholder'=>__('Enter Strictly Cookie Title')]) }}
+                                            </div>
+                                            <div class="cookie-field form-group">
+                                                {{ Form::label('cookie_description', __('Cookie Description'), ['class' => 'form-label']) }}
+                                                {!! Form::textarea('cookie_description', null, ['class' => 'form-control cookie_setting', 'rows' => '3', 'placeholder'=>__('Enter Cookie Description')]) !!}
+                                            </div>
+                                            <div class="cookie-field form-group">
+                                                {{ Form::label('strictly_cookie_description', __('Strictly Cookie Description'), ['class' => 'form-label']) }}
+                                                {!! Form::textarea('strictly_cookie_description', null, ['class' => 'form-control cookie_setting', 'rows' => '3', 'placeholder'=>__('Enter Strictly Cookie Description')]) !!}
+                                            </div>
+                                        </div>
+
+                                        <!-- More Information Section -->
+                                        <div class="more-information-section">
+                                            <h5>{{__('More Information')}}</h5>
+                                        </div>
+                                        <div class="contact-fields">
+                                            <div class="cookie-field form-group">
+                                                {{ Form::label('more_information_description', __('Contact Us Description'), ['class' => 'col-form-label']) }}
+                                                {{ Form::text('more_information_description', null, ['class' => 'form-control cookie_setting', 'placeholder'=>__('Enter Contact Us Description')]) }}
+                                            </div>
+                                            <div class="cookie-field form-group">
+                                                {{ Form::label('contactus_url', __('Contact Us URL'), ['class' => 'col-form-label']) }}
+                                                {{ Form::text('contactus_url', null, ['class' => 'form-control cookie_setting', 'placeholder'=>__('Enter Contact Us URL')]) }}
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="card-footer d-flex align-items-center gap-2 flex-sm-column flex-lg-row justify-content-between" >
-                                        <div>
+                                    <div class="card-footer cookie-actions">
+                                        <div class="d-flex align-items-center gap-2">
                                             @if(isset($settings['cookie_logging']) && $settings['cookie_logging'] == 'on')
-                                            <label for="file" class="form-label action-btn-wrapper me-2">{{__('Download cookie accepted data')}}</label>
-                                                <a href="{{ asset(Storage::url('uploads/sample')) . '/data.csv' }}" class="btn btn-sm btn-primary" data-bs-placement="top"  data-bs-toggle="tooltip" title="{{ __('Download') }}">
-                                                    <i class="ti ti-download"></i>
+                                                <label for="file" class="form-label mb-0 me-2" style="font-size: 13.5px; font-weight: 500; color: #475569;">{{__('Download cookie accepted data')}}</label>
+                                                <a href="{{ asset(Storage::url('uploads/sample')) . '/data.csv' }}" class="btn btn-sm btn-primary cookie-download-button" data-bs-placement="top" data-bs-toggle="tooltip" title="{{ __('Download') }}">
+                                                    <i class="ti ti-download" style="font-size: 16px;"></i>
                                                 </a>
-                                                @endif
+                                            @endif
                                         </div>
-                                        <input type="submit" value="{{ __('Save Changes') }}" class="btn btn-primary">
+                                        <input type="submit" value="{{ __('Save Changes') }}" class="btn btn-primary cookie-save-button">
                                     </div>
                                 {{ Form::close() }}
                             </div>
@@ -3720,7 +5003,7 @@
                                         </div>
                                     </div>
                                     <div class="card-footer text-end">
-                                        <button class="btn btn-primary" type="submit">{{ __('Save Chnages') }}</button>
+                                        <button class="btn btn-primary" type="submit">{{ __('Save Changes') }}</button>
                                     </div>
                                 {{ Form::close() }}
                             </div>
@@ -3729,168 +5012,115 @@
                 </div>
             @else
                 <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade" id="pills-brand-setting" role="tabpanel"
-                        aria-labelledby="pills-brand_setting-tab">
-                        {{ Form::model($settings, ['route' => 'business.setting', 'method' => 'POST', 'enctype' => 'multipart/form-data']) }}
-                            <div class="row">
-                                <div class="col-lg-12 col-sm-12 col-md-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5>{{ __('Brand Settings') }}</h5>
+                    <div class="tab-pane fade" id="pills-brand-setting" role="tabpanel" aria-labelledby="pills-brand_setting-tab">
+                        {{ Form::model($settings, ['route' => 'business.setting', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'class' => 'brand-settings-form-wrapper']) }}
+                            <!-- ROW 1 COLUMN 2: Brand Settings Logo Uploads Card -->
+                            <div class="card brand-settings-logos-card">
+                                <div class="card-header">
+                                    <h5>{{ __('Brand Settings') }}</h5>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Three-Column Logo Upload Grid -->
+                                    <div class="upload-grid-container">
+                                        <!-- Dark Logo Card -->
+                                        <div class="upload-asset-card">
+                                            <div class="upload-card-header">
+                                                <div class="upload-card-indicator"></div>
+                                                <h6 class="upload-card-title">{{ __('Logo dark') }}</h6>
+                                            </div>
+                                            <div class="upload-preview-box">
+                                                <a href="{{ route('dashboard') }}" class="b-brand">
+                                                    <img src="{{ $logo . '/' . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png') . '?timestamp='. time() }}"
+                                                        alt="{{ config('app.name', 'SaaS') }}"
+                                                        id="adminlogoDark"
+                                                        class="logo-preview-img">
+                                                </a>
+                                            </div>
+                                            <div class="w-100">
+                                                <label for="company_logo" class="btn-upload-blue mb-0">
+                                                    <span class="material-symbols-outlined text-[18px]">upload</span>
+                                                    <span>{{ __('Upload Image') }}</span>
+                                                    <input type="file" id="company_logo" data-filename="company_logo_update" name="logo_dark" class="form-control file d-none" onchange="document.getElementById('adminlogoDark').src = window.URL.createObjectURL(this.files[0])">
+                                                </label>
+                                            </div>
+                                            @error('company_logo')
+                                                <span class="invalid-logo text-danger text-xs mt-2 d-block text-center">{{ $message }}</span>
+                                            @enderror
                                         </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-lg-4 col-sm-6 col-md-6">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h5>{{ __('Logo dark') }}</h5>
-                                                        </div>
 
-                                                        <div class="card-body pt-0">
-                                                            <div class="setting-card">
-                                                                <div class="mt-4">  {{-- logo-content --}}
-                                                                    {{-- <img src="{{ $logo . '/' . (isset($logo_dark) && !empty($logo_dark) ? $logo_dark : ' logo-dark.png') }}"
-                                                                        class="img-setting" width="170px"> --}}
+                                        <!-- Light Logo Card -->
+                                        <div class="upload-asset-card">
+                                            <div class="upload-card-header">
+                                                <div class="upload-card-indicator"></div>
+                                                <h6 class="upload-card-title">{{ __('Logo Light') }}</h6>
+                                            </div>
+                                            <div class="upload-preview-box">
+                                                <a href="{{ $logo . '/' . (isset($logo_light) && !empty($logo_light) ? $logo_light : 'logo-light.png') }}" target="_blank">
+                                                    <img src="{{ $logo . '/' . (isset($logo_light) && !empty($logo_light) ? $logo_light : 'logo-light.png') . '?timestamp='. time() }}"
+                                                        class="logo-preview-img" id="logo-light">
+                                                </a>
+                                            </div>
+                                            <div class="w-100">
+                                                <label for="company_logo_light" class="btn-upload-blue mb-0">
+                                                    <span class="material-symbols-outlined text-[18px]">upload</span>
+                                                    <span>{{ __('Upload Image') }}</span>
+                                                    <input type="file" class="form-control file d-none" name="logo_light" id="company_logo_light" data-filename="dark_logo_update" onchange="document.getElementById('logo-light').src = window.URL.createObjectURL(this.files[0])">
+                                                </label>
+                                            </div>
+                                            @error('company_logo_light')
+                                                <span class="invalid-logo text-danger text-xs mt-2 d-block text-center">{{ $message }}</span>
+                                            @enderror
+                                        </div>
 
-                                                                    <a href="{{ route('dashboard') }}" class="b-brand">
-                                                                        <img src="{{ $logo . '/' . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png') . '?timestamp='. time() }}"
-                                                                            alt="{{ config('app.name', 'SaaS') }}"
-                                                                            id="adminlogoDark"
-                                                                            class="logo logo-lg nav-sidebar-logo fix-logo">
-                                                                    </a>
-                                                                </div>
-                                                                <div class="choose-files mt-5">
-                                                                    <label for="company_logo">
-                                                                        <div class=" bg-primary company_logo_update">
-                                                                            <i
-                                                                                class="ti ti-upload "></i>{{ __('Choose file here') }}
-                                                                            <input type="file" id="company_logo"
-                                                                                data-filename="company_logo_update"
-                                                                                name="logo_dark" class="form-control file"
-                                                                                onchange=" document.getElementById('adminlogoDark').src = window.URL.createObjectURL(this.files[0])">
-                                                                        </div>
-                                                                        {{-- <input type="file" name="logo_dark"
-                                                                        id="company_logo" class="form-control file "
-                                                                        data-filename="company_logo_update"> --}}
-                                                                    </label>
+                                        <!-- Favicon Card -->
+                                        <div class="upload-asset-card">
+                                            <div class="upload-card-header">
+                                                <div class="upload-card-indicator"></div>
+                                                <h6 class="upload-card-title">{{ __('Favicon') }}</h6>
+                                            </div>
+                                            <div class="upload-preview-box">
+                                                <a href="{{ $logo . '/' . (isset($company_favicon) && !empty($company_favicon) ? $company_favicon : 'favicon.png') }}" target="_blank">
+                                                    <img src="{{ $logo . '/' . (isset($company_favicon) && !empty($company_favicon) ? $company_favicon : 'favicon.png') . '?timestamp='. time() }}"
+                                                        class="favicon-preview-img" id="faviCon">
+                                                </a>
+                                            </div>
+                                            <div class="w-100">
+                                                <label for="company_favicon" class="btn-upload-blue mb-0">
+                                                    <span class="material-symbols-outlined text-[18px]">upload</span>
+                                                    <span>{{ __('Upload Image') }}</span>
+                                                    <input type="file" class="form-control file d-none" id="company_favicon" name="favicon" data-filename="company_favicon_update" onchange="document.getElementById('faviCon').src = window.URL.createObjectURL(this.files[0])">
+                                                </label>
+                                            </div>
+                                            @error('logo')
+                                                <span class="invalid-logo text-danger text-xs mt-2 d-block text-center">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
 
-                                                                </div>
-                                                                @error('company_logo')
-                                                                    <div class="row">
-                                                                        <span class="invalid-logo" role="alert">
-                                                                            <strong
-                                                                                class="text-danger">{{ $message }}</strong>
-                                                                        </span>
-                                                                    </div>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-sm-6 col-md-6">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h5>{{ __('Logo Light') }}</h5>
-                                                        </div>
-                                                        <div class="card-body pt-0">
-                                                            <div class=" setting-card">
-                                                                <div class="mt-4">  {{-- logo-content --}}
-                                                                    <a href="{{ $logo . '/' . (isset($logo_light) && !empty($logo_light) ? $logo_light : 'logo-light.png') }}"
-                                                                        target="_blank">
-                                                                        <img src="{{ $logo . '/' . (isset($logo_light) && !empty($logo_light) ? $logo_light : 'logo-light.png') . '?timestamp='. time() }}"
-                                                                            class=" img_setting fix-logo" width="170px"
-                                                                            id="logo-light">
-                                                                    </a>
-
-                                                                    {{--  <a href="{{ $logo . 'logo-light.png' }}" target="_blank">
-                                                                        <img id="logo-light" alt="your image"
-                                                                            src="{{ $logo . 'logo-light.png' }}" width="170px"
-                                                                            class="img_setting">
-                                                                    </a>  --}}
-                                                                </div>
-                                                                <div class="choose-files mt-5">
-                                                                    <label for="company_logo_light">
-                                                                        <div class=" bg-primary dark_logo_update"> <i
-                                                                                class="ti ti-upload px-1"></i>{{ __('Choose file here') }}
-                                                                        </div>
-                                                                        <input type="file" class="form-control file"
-                                                                            name="logo_light" id="company_logo_light"
-                                                                            data-filename="dark_logo_update"
-                                                                            onchange=" document.getElementById('logo-light').src = window.URL.createObjectURL(this.files[0])">
-                                                                    </label>
-                                                                </div>
-                                                                @error('company_logo_light')
-                                                                    <div class="row">
-                                                                        <span class="invalid-logo" role="alert">
-                                                                            <strong
-                                                                                class="text-danger">{{ $message }}</strong>
-                                                                        </span>
-                                                                    </div>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-sm-6 col-md-6">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h5>{{ __('Favicon') }}</h5>
-                                                        </div>
-                                                        <div class="card-body pt-0">
-                                                            <div class=" setting-card">
-                                                                <div class="logo-content mt-3">
-                                                                    <a href="{{ $logo . '/' . (isset($company_favicon) && !empty($company_favicon) ? $company_favicon : 'favicon.png') }}"
-                                                                        target="_blank">
-                                                                        <img src="{{ $logo . '/' . (isset($company_favicon) && !empty($company_favicon) ? $company_favicon : 'favicon.png') . '?timestamp='. time() }}"
-                                                                            width="50px" height="50px"
-                                                                            class=" img_setting favicon" id="faviCon">
-                                                                    </a>
-                                                                    {{--  <a href="{{$logo.(isset($logo) && !empty($logo)? $logo :'favicon.png')}}" target="_blank">
-                                                                        <img alt="your image" src="{{$logo.'favicon.png'}}"   width="50px" height="50px" class=" img_setting favicon" id="faviCon">
-                                                                    </a>  --}}
-                                                                </div>
-                                                                <div class="choose-files mt-5">
-                                                                    <label for="company_favicon">
-                                                                        <div class=" bg-primary company_favicon_update"> <i
-                                                                                class="ti ti-upload px-1"></i>{{ __('Choose file here') }}
-                                                                        </div>
-                                                                        <input type="file" class="form-control file"
-                                                                            id="company_favicon" name="favicon"
-                                                                            data-filename="company_favicon_update"
-                                                                            onchange=" document.getElementById('faviCon').src = window.URL.createObjectURL(this.files[0])">
-                                                                    </label>
-                                                                </div>
-                                                                @error('logo')
-                                                                    <div class="row">
-                                                                        <span class="invalid-logo" role="alert">
-                                                                            <strong
-                                                                                class="text-danger">{{ $message }}</strong>
-                                                                        </span>
-                                                                    </div>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group col-md-6">
+                                <!-- ROW 2 FULL WIDTH: Merchant Brand Form Card -->
+                                <div class="card brand-settings-form-card">
+                                    <div class="card-header">
+                                        <h5>{{ __('Store Settings & Preferences') }}</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <!-- Title Text & Footer Text Grid (2 Equal Columns) -->
+                                        <div class="branding-inputs-grid-2">
+                                                <div>
                                                     {{ Form::label('title_text', __('Title Text'), ['class' => 'form-label']) }}
                                                     {{ Form::text('title_text', null, ['class' => 'form-control', 'placeholder' => __('Title Text')]) }}
                                                     @error('title_text')
-                                                        <span class="invalid-title_text" role="alert">
-                                                            <strong class="text-danger">{{ $message }}</strong>
-                                                        </span>
+                                                        <span class="invalid-title_text text-danger text-xs mt-1 d-block">{{ $message }}</span>
                                                     @enderror
                                                 </div>
-                                                <div class="form-group col-md-6">
+                                                <div>
                                                     {{ Form::label('footer_text', __('Footer Text'), ['class' => 'form-label']) }}
                                                     {{ Form::text('footer_text', null, ['class' => 'form-control', 'placeholder' => __('Footer Text')]) }}
                                                     @error('footer_text')
-                                                        <span class="invalid-footer_text" role="alert">
-                                                            <strong class="text-danger">{{ $message }}</strong>
-                                                        </span>
+                                                        <span class="invalid-footer_text text-danger text-xs mt-1 d-block">{{ $message }}</span>
                                                     @enderror
                                                 </div>
+                                            </div>
                                                 <div class="form-group col-md-6">
                                                     <label for="site_date_format"
                                                         class="form-label">{{ __('Date Format') }}</label>
@@ -3945,58 +5175,59 @@
                                                             id="SITE_RTL"
                                                             {{ $settings['SITE_RTL'] == 'on' ? 'checked="checked"' : '' }}>
                                                     </div>
-                                                </div>
-                                                <div class="setting-card setting-logo-box p-3">
-                                                    <div class="row">
-                                                        <h5>{{ __('Theme Customizer') }}</h5>
-                                                        <div class="col-md-4 my-auto">
-                                                            <h6 class="mt-2">
-                                                                <i data-feather="credit-card"
-                                                                    class="me-2"></i>{{ __('Primary Color Settings') }}
-                                                            </h6>
-                                                            <hr class="my-2" />
+                                                <div class="col-12">
+                                                    <div class="setting-card setting-logo-box p-3">
+                                                        <div class="row">
+                                                            <h5>{{ __('Theme Customizer') }}</h5>
+                                                            <div class="col-md-4 my-auto">
+                                                                <h6 class="mt-2">
+                                                                    <i data-feather="credit-card"
+                                                                        class="me-2"></i>{{ __('Primary Color Settings') }}
+                                                                </h6>
+                                                                <hr class="my-2" />
 
-                                                            <div class="color-wrp">
-                                                                <div class="theme-color color-setting-wrp themes-color">
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-1' ? 'active_color' : '' }}" data-value="theme-1"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-1"{{ $color == 'theme-1' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-2' ? 'active_color' : '' }}" data-value="theme-2"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-2"{{ $color == 'theme-2' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-3' ? 'active_color' : '' }}" data-value="theme-3"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-3"{{ $color == 'theme-3' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-4' ? 'active_color' : '' }}" data-value="theme-4"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-4"{{ $color == 'theme-4' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-5' ? 'active_color' : '' }}" data-value="theme-5"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-5"{{ $color == 'theme-5' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-6' ? 'active_color' : '' }}" data-value="theme-6"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-6"{{ $color == 'theme-6' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-7' ? 'active_color' : '' }}" data-value="theme-7"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-7"{{ $color == 'theme-7' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-8' ? 'active_color' : '' }}" data-value="theme-8"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-8"{{ $color == 'theme-8' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-9' ? 'active_color' : '' }}" data-value="theme-9"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-9"{{ $color == 'theme-9' ? 'checked' : '' }}>
-                                                                    <a href="#!" class="themes-color-change {{ $color == 'theme-10' ? 'active_color' : '' }}" data-value="theme-10"></a>
-                                                                    <input type="radio" class="theme_color d-none" name="color" value="theme-10"{{ $color == 'theme-10' ? 'checked' : '' }}>
-                                                                </div>
-                                                                <div class="color-picker-wrp ">
-                                                                        <input type="color" value="{{ $color ? $color : '' }}" class="colorPicker {{ isset($flag) && $flag == 'true' ? 'active_color' : '' }}" name="custom_color" id="color-picker">
-                                                                        <input type='hidden' name="color_flag" value = {{  isset($flag) && $flag == 'true' ? 'true' : 'false' }}>
+                                                                <div class="color-wrp">
+                                                                    <div class="theme-color color-setting-wrp themes-color">
+                                                                        <a href="#!" class="themes-color-change {{ $color == 'theme-1' ? 'active_color' : '' }}" data-value="theme-1"></a>
+                                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-1"{{ $color == 'theme-1' ? 'checked' : '' }}>
+                                                                        <a href="#!" class="themes-color-change {{ $color == 'theme-2' ? 'active_color' : '' }}" data-value="theme-2"></a>
+                                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-2"{{ $color == 'theme-2' ? 'checked' : '' }}>
+                                                                        <a href="#!" class="themes-color-change {{ $color == 'theme-3' ? 'active_color' : '' }}" data-value="theme-3"></a>
+                                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-3"{{ $color == 'theme-3' ? 'checked' : '' }}>
+                                                                        <a href="#!" class="themes-color-change {{ $color == 'theme-4' ? 'active_color' : '' }}" data-value="theme-4"></a>
+                                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-4"{{ $color == 'theme-4' ? 'checked' : '' }}>
+                                                                        <a href="#!" class="themes-color-change {{ $color == 'theme-5' ? 'active_color' : '' }}" data-value="theme-5"></a>
+                                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-5"{{ $color == 'theme-5' ? 'checked' : '' }}>
+                                                                        <a href="#!" class="themes-color-change {{ $color == 'theme-6' ? 'active_color' : '' }}" data-value="theme-6"></a>
+                                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-6"{{ $color == 'theme-6' ? 'checked' : '' }}>
+                                                                        <a href="#!" class="themes-color-change {{ $color == 'theme-7' ? 'active_color' : '' }}" data-value="theme-7"></a>
+                                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-7"{{ $color == 'theme-7' ? 'checked' : '' }}>
+                                                                        <a href="#!" class="themes-color-change {{ $color == 'theme-8' ? 'active_color' : '' }}" data-value="theme-8"></a>
+                                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-8"{{ $color == 'theme-8' ? 'checked' : '' }}>
+                                                                        <a href="#!" class="themes-color-change {{ $color == 'theme-9' ? 'active_color' : '' }}" data-value="theme-9"></a>
+                                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-9"{{ $color == 'theme-9' ? 'checked' : '' }}>
+                                                                        <a href="#!" class="themes-color-change {{ $color == 'theme-10' ? 'active_color' : '' }}" data-value="theme-10"></a>
+                                                                        <input type="radio" class="theme_color d-none" name="color" value="theme-10"{{ $color == 'theme-10' ? 'checked' : '' }}>
+                                                                    </div>
+                                                                    <div class="color-picker-wrp ">
+                                                                            <input type="color" value="{{ $color ? $color : '' }}" class="colorPicker {{ isset($flag) && $flag == 'true' ? 'active_color' : '' }}" name="custom_color" id="color-picker">
+                                                                            <input type='hidden' name="color_flag" value = {{  isset($flag) && $flag == 'true' ? 'true' : 'false' }}>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-4 my-auto mt-2">
-                                                            <h6 class="">
-                                                                <i data-feather="layout"
-                                                                    class="me-2"></i>{{ __('Sidebar Settings') }}
-                                                            </h6>
-                                                            <hr class="my-2" />
-                                                            <div class="form-check form-switch">
-                                                                <input type="checkbox" class="form-check-input"
-                                                                    id="cust-theme-bg" name="cust_theme_bg"
-                                                                    {{ Utility::getValByName('cust_theme_bg') == 'on' ? 'checked' : '' }} />
-                                                                <label class="form-check-label f-w-600 pl-1"
-                                                                    for="cust-theme-bg">{{ __('Transparent layout') }}</label>
+                                                            <div class="col-md-4 my-auto mt-2">
+                                                                <h6 class="">
+                                                                    <i data-feather="layout"
+                                                                        class="me-2"></i>{{ __('Sidebar Settings') }}
+                                                                </h6>
+                                                                <hr class="my-2" />
+                                                                <div class="form-check form-switch">
+                                                                    <input type="checkbox" class="form-check-input"
+                                                                        id="cust-theme-bg" name="cust_theme_bg"
+                                                                        {{ Utility::getValByName('cust_theme_bg') == 'on' ? 'checked' : '' }} />
+                                                                    <label class="form-check-label f-w-600 pl-1"
+                                                                        for="cust-theme-bg">{{ __('Transparent layout') }}</label>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -7594,6 +8825,45 @@
                     </div>
                 </div>
             @endif
+            </div>
+
+            <!-- Settings Right Sidebar Column -->
+            <div class="settings-right-sidebar">
+                <!-- System Information Card -->
+                <div class="system-info-card">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="material-symbols-outlined text-[#2563EB]">info</span>
+                        <h4 style="font-size: 16px; font-weight: 700; color: #0F172A; margin: 0;">{{ __('System Information') }}</h4>
+                    </div>
+
+                    <div class="flex flex-col gap-2.5 text-xs">
+                        <div class="flex justify-between py-2 border-b border-gray-100">
+                            <span style="color: #64748B; font-weight: 500;">{{ __('Version') }}</span>
+                            <span style="font-weight: 600; color: #0F172A;">v2.4.1-stable</span>
+                        </div>
+                        <div class="flex justify-between py-2 border-b border-gray-100">
+                            <span style="color: #64748B; font-weight: 500;">{{ __('Environment') }}</span>
+                            <span style="font-weight: 600; color: #0F172A;">Production</span>
+                        </div>
+                        <div class="flex justify-between py-2">
+                            <span style="color: #64748B; font-weight: 500;">{{ __('Last Update') }}</span>
+                            <span style="font-weight: 600; color: #0F172A;">2 hours ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Critical Actions Card (Clean Warning/Danger Card) -->
+                <div class="critical-actions-card">
+                    <h4 style="font-size: 16px; font-weight: 700; color: #0F172A; margin: 0 0 6px 0;">{{ __('Critical Actions') }}</h4>
+                    <p style="font-size: 12.5px; color: #64748B; margin-bottom: 18px; line-height: 1.5;">
+                        {{ __('These actions can have permanent effects on the platform infrastructure.') }}
+                    </p>
+
+                    <a href="{{ url('/config-cache') }}" class="btn w-full text-center py-2.5 px-4 font-semibold text-xs uppercase tracking-wider rounded-lg transition-colors" style="background: #DC2626; color: #FFFFFF; text-decoration: none; display: block;">
+                        {{ __('Clear Cache') }}
+                    </a>
+                </div>
+            </div>
         </div>
         <!-- [ sample-page ] end -->
     </x-ui.page-container>
@@ -7610,6 +8880,65 @@
         }
 
         $(document).ready(function() {
+            function updatePaymentServicesCountAndFilter() {
+                var $items = $('#accordionExample .accordion-item');
+                var totalCount = $items.length;
+                var enabledCount = 0;
+                var visibleCount = 0;
+
+                var searchText = ($('#payment-service-search').val() || '').toLowerCase().trim();
+                var filterValue = $('#payment-service-filter').val() || 'all';
+
+                $items.each(function() {
+                    var $item = $(this);
+                    var providerName = $item.find('.accordion-button > span').text().toLowerCase().trim();
+                    var $checkbox = $item.find('input[type="checkbox"]');
+                    var isEnabled = $checkbox.length && $checkbox.is(':checked');
+
+                    if (isEnabled) {
+                        enabledCount++;
+                    }
+
+                    var matchesSearch = !searchText || providerName.indexOf(searchText) !== -1;
+                    var matchesFilter = true;
+                    if (filterValue === 'enabled') {
+                        matchesFilter = isEnabled;
+                    } else if (filterValue === 'disabled') {
+                        matchesFilter = !isEnabled;
+                    }
+
+                    if (matchesSearch && matchesFilter) {
+                        $item.removeClass('d-none');
+                        visibleCount++;
+                    } else {
+                        $item.addClass('d-none');
+                    }
+                });
+
+                $('#payment-services-count').text(totalCount + ' services available');
+                $('#payment-enabled-count').text(enabledCount + ' enabled');
+
+                if (visibleCount === 0 && totalCount > 0) {
+                    $('#payment-services-empty-state').removeClass('d-none');
+                } else {
+                    $('#payment-services-empty-state').addClass('d-none');
+                }
+            }
+
+            updatePaymentServicesCountAndFilter();
+
+            $(document).on('keyup input', '#payment-service-search', function() {
+                updatePaymentServicesCountAndFilter();
+            });
+
+            $(document).on('change', '#payment-service-filter', function() {
+                updatePaymentServicesCountAndFilter();
+            });
+
+            $(document).on('change', '#accordionExample input[type="checkbox"]', function() {
+                updatePaymentServicesCountAndFilter();
+            });
+
             setTimeout(function(e) {
                 var checked = $("input[type=radio][name='theme_color']:checked");
                 $('#themefile').val(checked.attr('data-theme'));
@@ -7701,16 +9030,20 @@
     </script>
     <script type="text/javascript">
         function enablecookie() {
-            const element = $('#enable_cookie').is(':checked');
-            $('.cookieDiv').addClass('disabledCookie');
-            if (element==true) {
-                $('.cookieDiv').removeClass('disabledCookie');
-                $("#cookie_logging").attr('checked', true);
-            } else {
-                $('.cookieDiv').addClass('disabledCookie');
-                $("#cookie_logging").attr('checked', false);
-            }
+            setTimeout(function() {
+                const element = $('#enable_cookie').is(':checked');
+                if (element) {
+                    $('.cookieDiv').removeClass('disabledCookie');
+                    $("#cookie_logging").prop('checked', true);
+                } else {
+                    $('.cookieDiv').addClass('disabledCookie');
+                    $("#cookie_logging").prop('checked', false);
+                }
+            }, 50);
         }
+        $(document).on('change', '#enable_cookie', function() {
+            enablecookie();
+        });
     </script>
     <script>
         var themescolors = document.querySelectorAll(".themes-color > a");
@@ -7811,12 +9144,62 @@
                $(`input[value=${color_val}]`).prop('checked', true);
            });
 
-           $.fn.removeClassRegex = function(regex) {
-       return $(this).removeClass(function(index, classes) {
-           return classes.split(/\s+/).filter(function(c) {
-               return regex.test(c);
-           }).join(' ');
-       });
-   };
-   </script>
+            $.fn.removeClassRegex = function(regex) {
+                return $(this).removeClass(function(index, classes) {
+                    return classes.split(/\s+/).filter(function(c) {
+                        return regex.test(c);
+                    }).join(' ');
+                });
+            };
+
+            // Tab & URL Hash Synchronization
+            function activateTabFromHash() {
+                var hash = window.location.hash;
+                if (hash) {
+                    var link = $('.settings-sidebar .nav-link[href="' + hash + '"]');
+                    if (link.length) {
+                        $('.settings-sidebar .nav-link').removeClass('active');
+                        link.addClass('active');
+                        $('.tab-content .tab-pane').removeClass('active show');
+                        $(hash).addClass('active show');
+
+                        var topTab = $('.settings-horizontal-tabs a[href="' + hash + '"]');
+                        $('.settings-horizontal-tabs .nav-link').removeClass('active');
+                        if (topTab.length) {
+                            topTab.addClass('active');
+                        }
+                    }
+                }
+            }
+
+            $(document).ready(function() {
+                activateTabFromHash();
+            });
+
+            $(window).on('hashchange', function() {
+                activateTabFromHash();
+            });
+
+            $('.settings-sidebar .nav-link').on('click', function(e) {
+                var targetHash = $(this).attr('href');
+                if (targetHash && targetHash.startsWith('#')) {
+                    $('.settings-sidebar .nav-link').removeClass('active');
+                    $(this).addClass('active');
+                    $('.tab-content .tab-pane').removeClass('active show');
+                    $(targetHash).addClass('active show');
+
+                    var topTab = $('.settings-horizontal-tabs a[href="' + targetHash + '"]');
+                    $('.settings-horizontal-tabs .nav-link').removeClass('active');
+                    if (topTab.length) {
+                        topTab.addClass('active');
+                    }
+
+                    if (history.pushState) {
+                        history.pushState(null, null, targetHash);
+                    } else {
+                        window.location.hash = targetHash;
+                    }
+                }
+            });
+    </script>
 @endpush

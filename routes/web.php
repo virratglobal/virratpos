@@ -689,7 +689,7 @@ Route::get('/config-cache', function() {
     Artisan::call('view:clear');
     Artisan::call('optimize:clear');
     return redirect()->back()->with('success', 'Clear Cache successfully.');
-});
+})->name('config.cache');
 
 
 

@@ -172,6 +172,67 @@
     .wg-toggle-track::after { content: ''; position: absolute; left: 3px; top: 3px; width: 16px; height: 16px; background: #fff; border-radius: 50%; transition: transform 0.2s; }
     .wg-toggle input:checked + .wg-toggle-track::after { transform: translateX(18px); }
     #dashboard-widgets-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 28px; align-items: start; }
+
+    /* Dark Mode Dashboard Overrides */
+    html.dark .dashboard-card,
+    html.dark .dashboard-custom-card {
+        background-color: #111827 !important;
+        border-color: #263449 !important;
+        color: #F8FAFC !important;
+    }
+    html.dark .dashboard-custom-title,
+    html.dark .timeline-text-main,
+    html.dark .plan-name {
+        color: #F8FAFC !important;
+    }
+    html.dark .timeline-text-sub,
+    html.dark .plan-users,
+    html.dark .plan-revenue,
+    html.dark .status-row-item span {
+        color: #CBD5E1 !important;
+    }
+    html.dark .timeline-dot-wrapper {
+        background-color: #1E293B !important;
+        border-color: #111827 !important;
+    }
+    html.dark .timeline-line {
+        background-color: #263449 !important;
+    }
+    html.dark .plan-progress-track {
+        background-color: #1E293B !important;
+    }
+    html.dark .timeframe-select-wrap select {
+        background-color: #0F172A !important;
+        border-color: #334155 !important;
+        color: #F8FAFC !important;
+    }
+    html.dark .status-row-item:hover {
+        background-color: #172033 !important;
+    }
+    html.dark .store-link-box {
+        background-color: #0F172A !important;
+        border-color: #263449 !important;
+    }
+    html.dark .btn-copy-link {
+        background-color: #1E293B !important;
+        border-color: #334155 !important;
+        color: #CBD5E1 !important;
+    }
+    html.dark .btn-copy-link:hover {
+        background-color: #2563EB !important;
+        color: #FFFFFF !important;
+        border-color: #2563EB !important;
+    }
+    html.dark .btn-add-shortcut {
+        background-color: #0F172A !important;
+        border-color: #334155 !important;
+        color: #CBD5E1 !important;
+    }
+    html.dark .btn-add-shortcut:hover {
+        background-color: #172033 !important;
+        border-color: #3B82F6 !important;
+        color: #60A5FA !important;
+    }
 </style>
 @endpush
 @push('script-page')
@@ -213,10 +274,10 @@
         <!-- Header -->
         <div class="flex items-center justify-between mb-8">
             <div>
-                <h1 style="font-family: 'Geist', sans-serif; font-size: 1.5rem; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30; margin: 0;">
+                <h1 style="font-family: 'Geist', sans-serif; font-size: 1.5rem; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: var(--text-primary); margin: 0;">
                     {{ __('Overview') }}
                 </h1>
-                <p style="font-family: 'Inter', sans-serif; font-size: 14px; color: #767586; margin-top: 4px;">
+                <p style="font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text-secondary); margin-top: 4px;">
                     {{ __('Super Admin Dashboard') }}
                 </p>
             </div>
@@ -229,83 +290,83 @@
         <!-- 5 Cards Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
             <!-- Active Plans -->
-            <div style="background: #e5eeff; border-radius: 12px; padding: 24px; position: relative; overflow: hidden;" class="group">
-                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(70,72,212,0.05);"></div>
+            <div style="background: var(--metric-bg); border-radius: 12px; padding: 24px; position: relative; overflow: hidden; border: 1px solid var(--border);" class="group">
+                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(59,130,246,0.08);"></div>
                 <div class="flex justify-between items-start mb-6">
-                    <div style="width: 48px; height: 48px; border-radius: 12px; background: #6063ee; color: #fffbff; display: flex; align-items: center; justify-content: center;">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: #2563EB; color: #fffbff; display: flex; align-items: center; justify-content: center;">
                         <span class="material-symbols-outlined">workspace_premium</span>
                     </div>
                 </div>
                 <div>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #464554; margin-bottom: 4px;">{{ __('Active Plans') }}</p>
-                    <p style="font-family: 'Geist', sans-serif; font-size: 24px; font-weight: 600; color: #0b1c30; margin: 0;">{{ $user['active_plans'] }}</p>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-secondary); margin-bottom: 4px;">{{ __('Active Plans') }}</p>
+                    <p style="font-family: 'Geist', sans-serif; font-size: 24px; font-weight: 600; color: var(--text-primary); margin: 0;">{{ $user['active_plans'] }}</p>
                 </div>
             </div>
 
             <!-- Pending Requests -->
-            <div style="background: #e5eeff; border-radius: 12px; padding: 24px; position: relative; overflow: hidden;" class="group">
-                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(70,72,212,0.05);"></div>
+            <div style="background: var(--metric-bg); border-radius: 12px; padding: 24px; position: relative; overflow: hidden; border: 1px solid var(--border);" class="group">
+                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(59,130,246,0.08);"></div>
                 <div class="flex justify-between items-start mb-6">
                     <div style="width: 48px; height: 48px; border-radius: 12px; background: #f59e0b; color: #fffbff; display: flex; align-items: center; justify-content: center;">
                         <span class="material-symbols-outlined">pending_actions</span>
                     </div>
                 </div>
                 <div>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #464554; margin-bottom: 4px;">{{ __('Pending Requests') }}</p>
-                    <p style="font-family: 'Geist', sans-serif; font-size: 24px; font-weight: 600; color: #0b1c30; margin: 0;">{{ $user['pending_requests'] }}</p>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-secondary); margin-bottom: 4px;">{{ __('Pending Requests') }}</p>
+                    <p style="font-family: 'Geist', sans-serif; font-size: 24px; font-weight: 600; color: var(--text-primary); margin: 0;">{{ $user['pending_requests'] }}</p>
                 </div>
             </div>
 
             <!-- Monthly Growth -->
-            <div style="background: #e5eeff; border-radius: 12px; padding: 24px; position: relative; overflow: hidden;" class="group">
-                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(70,72,212,0.05);"></div>
+            <div style="background: var(--metric-bg); border-radius: 12px; padding: 24px; position: relative; overflow: hidden; border: 1px solid var(--border);" class="group">
+                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(59,130,246,0.08);"></div>
                 <div class="flex justify-between items-start mb-6">
-                    <div style="width: 48px; height: 48px; border-radius: 12px; background: #6063ee; color: #fffbff; display: flex; align-items: center; justify-content: center;">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: #2563EB; color: #fffbff; display: flex; align-items: center; justify-content: center;">
                         <span class="material-symbols-outlined">trending_up</span>
                     </div>
                     @if($user['monthly_growth'] >= 0)
-                        <span style="background: #e6f6ec; color: #0f7636; padding: 4px 8px; border-radius: 16px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 4px;">
+                        <span style="background: rgba(34,197,94,0.12); color: #4ADE80; padding: 4px 8px; border-radius: 16px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 4px;">
                             <span class="material-symbols-outlined" style="font-size: 14px;">arrow_upward</span>
                             {{ $user['monthly_growth'] }}%
                         </span>
                     @else
-                        <span style="background: #feeceb; color: #c01d14; padding: 4px 8px; border-radius: 16px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 4px;">
+                        <span style="background: rgba(239,68,68,0.12); color: #F87171; padding: 4px 8px; border-radius: 16px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 4px;">
                             <span class="material-symbols-outlined" style="font-size: 14px;">arrow_downward</span>
                             {{ abs($user['monthly_growth']) }}%
                         </span>
                     @endif
                 </div>
                 <div>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #464554; margin-bottom: 4px;">{{ __('Monthly Growth') }}</p>
-                    <p style="font-family: 'Geist', sans-serif; font-size: 24px; font-weight: 600; color: #0b1c30; margin: 0;">{{ $user['monthly_growth'] }}%</p>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-secondary); margin-bottom: 4px;">{{ __('Monthly Growth') }}</p>
+                    <p style="font-family: 'Geist', sans-serif; font-size: 24px; font-weight: 600; color: var(--text-primary); margin: 0;">{{ $user['monthly_growth'] }}%</p>
                 </div>
             </div>
 
             <!-- Total Stores -->
-            <div style="background: #e5eeff; border-radius: 12px; padding: 24px; position: relative; overflow: hidden;" class="group">
-                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(70,72,212,0.05);"></div>
+            <div style="background: var(--metric-bg); border-radius: 12px; padding: 24px; position: relative; overflow: hidden; border: 1px solid var(--border);" class="group">
+                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(59,130,246,0.08);"></div>
                 <div class="flex justify-between items-start mb-6">
                     <div style="width: 48px; height: 48px; border-radius: 12px; background: #10b981; color: #fffbff; display: flex; align-items: center; justify-content: center;">
                         <span class="material-symbols-outlined">storefront</span>
                     </div>
                 </div>
                 <div>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #464554; margin-bottom: 4px;">{{ __('Total Stores') }}</p>
-                    <p style="font-family: 'Geist', sans-serif; font-size: 24px; font-weight: 600; color: #0b1c30; margin: 0;">{{ $user->total_user }}</p>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-secondary); margin-bottom: 4px;">{{ __('Total Stores') }}</p>
+                    <p style="font-family: 'Geist', sans-serif; font-size: 24px; font-weight: 600; color: var(--text-primary); margin: 0;">{{ $user->total_user }}</p>
                 </div>
             </div>
 
             <!-- Total Revenue -->
-            <div style="background: #e5eeff; border-radius: 12px; padding: 24px; position: relative; overflow: hidden;" class="group">
-                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(70,72,212,0.05);"></div>
+            <div style="background: var(--metric-bg); border-radius: 12px; padding: 24px; position: relative; overflow: hidden; border: 1px solid var(--border);" class="group">
+                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150" style="background: rgba(59,130,246,0.08);"></div>
                 <div class="flex justify-between items-start mb-6">
-                    <div style="width: 48px; height: 48px; border-radius: 12px; background: #6063ee; color: #fffbff; display: flex; align-items: center; justify-content: center;">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: #2563EB; color: #fffbff; display: flex; align-items: center; justify-content: center;">
                         <span class="material-symbols-outlined">payments</span>
                     </div>
                 </div>
                 <div>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #464554; margin-bottom: 4px;">{{ __('Total Revenue') }}</p>
-                    <p style="font-family: 'Geist', sans-serif; font-size: 24px; font-weight: 600; color: #0b1c30; margin: 0;">{{ \App\Models\Utility::priceFormat($user['total_plan_price']) }}</p>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-secondary); margin-bottom: 4px;">{{ __('Total Revenue') }}</p>
+                    <p style="font-family: 'Geist', sans-serif; font-size: 24px; font-weight: 600; color: var(--text-primary); margin: 0;">{{ \App\Models\Utility::priceFormat($user['total_plan_price']) }}</p>
                 </div>
             </div>
         </div>
@@ -316,24 +377,25 @@
         @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap');
         
         .dashboard-custom-card {
-            background-color: #fff;
+            background-color: var(--surface);
             border-radius: 12px;
             padding: 24px;
             box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
             height: 100%;
         }
         .dashboard-custom-title {
             font-family: 'Geist', sans-serif;
             font-size: 20px;
             font-weight: 600;
-            color: #0b1c30;
+            color: var(--text-primary);
             margin: 0;
         }
         .dashboard-custom-link {
             font-family: 'Geist', sans-serif;
             font-size: 13px;
             font-weight: 500;
-            color: #4648d4;
+            color: var(--primary);
             text-decoration: none;
         }
         .dashboard-custom-link:hover { text-decoration: underline; }
@@ -345,7 +407,7 @@
             top: 8px;
             bottom: 8px;
             width: 1px;
-            background-color: rgba(199, 196, 215, 0.4);
+            background-color: var(--border);
         }
         .timeline-item {
             display: flex;
@@ -358,19 +420,19 @@
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background-color: #dce9ff;
+            background-color: var(--surface-2);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 10;
-            border: 4px solid #fff;
+            border: 4px solid var(--surface);
             flex-shrink: 0;
         }
         .timeline-dot { width: 8px; height: 8px; border-radius: 50%; }
         
-        .text-primary-dot { background-color: #4648d4; }
-        .text-error-dot { background-color: #ba1a1a; }
-        .text-tertiary-dot { background-color: #904900; }
+        .text-primary-dot { background-color: #3B82F6; }
+        .text-error-dot { background-color: #EF4444; }
+        .text-tertiary-dot { background-color: #F59E0B; }
         
         .timeline-content {
             flex: 1;
@@ -382,13 +444,13 @@
         .timeline-text-main {
             font-family: 'Inter', sans-serif;
             font-size: 14px;
-            color: #0b1c30;
+            color: var(--text-primary);
             margin: 0;
         }
         .timeline-text-sub {
             font-family: 'Inter', sans-serif;
             font-size: 13px;
-            color: #464554;
+            color: var(--text-secondary);
             margin: 4px 0 0 0;
         }
         
@@ -399,9 +461,9 @@
             font-size: 12px;
             font-weight: 500;
         }
-        .status-success { background-color: rgba(70, 72, 212, 0.1); color: #4648d4; }
-        .status-pending { background-color: rgba(144, 73, 0, 0.1); color: #904900; }
-        .status-error { background-color: rgba(186, 26, 26, 0.1); color: #ba1a1a; }
+        .status-success { background-color: rgba(59, 130, 246, 0.12); color: #60A5FA; }
+        .status-pending { background-color: rgba(245, 158, 11, 0.12); color: #FBBF24; }
+        .status-error { background-color: rgba(239, 68, 68, 0.12); color: #F87171; }
         
         .plan-item { margin-bottom: 28px; }
         .plan-item:last-child { margin-bottom: 0; }
@@ -413,12 +475,12 @@
             font-size: 13px;
             font-weight: 500;
         }
-        .plan-name { color: #0b1c30; }
-        .plan-users { color: #464554; }
+        .plan-name { color: var(--text-primary); }
+        .plan-users { color: var(--text-secondary); }
         .plan-progress-track {
             width: 100%;
             height: 8px;
-            background-color: #d3e4fe;
+            background-color: var(--border);
             border-radius: 4px;
             margin-bottom: 8px;
         }
@@ -523,31 +585,31 @@
 
         <!-- Quick Links -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <a class="card mb-0 hover:bg-surface-container-high transition-colors group flex-row items-center gap-4 p-6" href="{{ route('store-resource.index') }}" style="border-radius: 12px; cursor: pointer; text-decoration: none;">
-                <div style="width: 48px; height: 48px; border-radius: 8px; background: #6063ee; color: #fffbff; display: flex; align-items: center; justify-content: center;" class="group-hover:scale-110 transition-transform flex-shrink-0">
+            <a class="card mb-0 transition-colors group flex-row items-center gap-4 p-6" href="{{ route('store-resource.index') }}" style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; text-decoration: none;">
+                <div style="width: 48px; height: 48px; border-radius: 8px; background: rgba(59, 130, 246, 0.12); color: #60A5FA; display: flex; align-items: center; justify-content: center;" class="group-hover:scale-110 transition-transform flex-shrink-0">
                     <span class="material-symbols-outlined text-[24px]">business</span>
                 </div>
                 <div>
-                    <h3 style="font-family: 'Geist', sans-serif; font-size: 16px; font-weight: 600; color: #0b1c30; margin: 0 0 4px;">{{ __('Store Management') }}</h3>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #767586; margin: 0;">{{ __('View and edit registered stores') }}</p>
+                    <h3 style="font-family: 'Geist', sans-serif; font-size: 16px; font-weight: 600; color: var(--text-primary); margin: 0 0 4px;">{{ __('Store Management') }}</h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-secondary); margin: 0;">{{ __('View and edit registered stores') }}</p>
                 </div>
             </a>
-            <a class="card mb-0 hover:bg-surface-container-high transition-colors group flex-row items-center gap-4 p-6" href="{{ route('plans.index') }}" style="border-radius: 12px; cursor: pointer; text-decoration: none;">
-                <div style="width: 48px; height: 48px; border-radius: 8px; background: #dae2fd; color: #131b2e; display: flex; align-items: center; justify-content: center;" class="group-hover:scale-110 transition-transform flex-shrink-0">
+            <a class="card mb-0 transition-colors group flex-row items-center gap-4 p-6" href="{{ route('plans.index') }}" style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; text-decoration: none;">
+                <div style="width: 48px; height: 48px; border-radius: 8px; background: rgba(59, 130, 246, 0.12); color: #60A5FA; display: flex; align-items: center; justify-content: center;" class="group-hover:scale-110 transition-transform flex-shrink-0">
                     <span class="material-symbols-outlined text-[24px]">subscriptions</span>
                 </div>
                 <div>
-                    <h3 style="font-family: 'Geist', sans-serif; font-size: 16px; font-weight: 600; color: #0b1c30; margin: 0 0 4px;">{{ __('Plan Management') }}</h3>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #767586; margin: 0;">{{ __('Configure subscription tiers and pricing') }}</p>
+                    <h3 style="font-family: 'Geist', sans-serif; font-size: 16px; font-weight: 600; color: var(--text-primary); margin: 0 0 4px;">{{ __('Plan Management') }}</h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-secondary); margin: 0;">{{ __('Configure subscription tiers and pricing') }}</p>
                 </div>
             </a>
-            <a class="card mb-0 hover:bg-surface-container-high transition-colors group flex-row items-center gap-4 p-6" href="{{ route('coupons.index') }}" style="border-radius: 12px; cursor: pointer; text-decoration: none;">
-                <div style="width: 48px; height: 48px; border-radius: 8px; background: #ffdcc5; color: #301400; display: flex; align-items: center; justify-content: center;" class="group-hover:scale-110 transition-transform flex-shrink-0">
+            <a class="card mb-0 transition-colors group flex-row items-center gap-4 p-6" href="{{ route('coupons.index') }}" style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; text-decoration: none;">
+                <div style="width: 48px; height: 48px; border-radius: 8px; background: rgba(59, 130, 246, 0.12); color: #60A5FA; display: flex; align-items: center; justify-content: center;" class="group-hover:scale-110 transition-transform flex-shrink-0">
                     <span class="material-symbols-outlined text-[24px]">local_activity</span>
                 </div>
                 <div>
-                    <h3 style="font-family: 'Geist', sans-serif; font-size: 16px; font-weight: 600; color: #0b1c30; margin: 0 0 4px;">{{ __('Coupon Management') }}</h3>
-                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #767586; margin: 0;">{{ __('Create and track promotional codes') }}</p>
+                    <h3 style="font-family: 'Geist', sans-serif; font-size: 16px; font-weight: 600; color: var(--text-primary); margin: 0 0 4px;">{{ __('Coupon Management') }}</h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-secondary); margin: 0;">{{ __('Create and track promotional codes') }}</p>
                 </div>
             </a>
         </div>

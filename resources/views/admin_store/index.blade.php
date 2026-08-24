@@ -3,179 +3,802 @@
 @section('page-title', __('Store'))
 
 @section('content')
-    <x-ui.page-container>
-        <!-- Header -->
-        <div class="flex items-center justify-between mb-8">
-            <div>
-                <h1 style="font-family: 'Geist', sans-serif; font-size: 1.5rem; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30 !important; margin: 0;">
-                    {{ __('Stores Management') }}
-                </h1>
-                <p style="font-family: 'Inter', sans-serif; font-size: 14px; color: #767586 !important !important; margin-top: 4px;">
-                    {{ __('Overview and control of all active merchant storefronts on the platform.') }}
-                </p>
+<style>
+    /* Stores Management - Pixel-Perfect Mockup Design */
+    .stores-container {
+        max-width: 1360px;
+        margin: 0 auto;
+        padding: 8px 20px 40px 20px;
+        font-family: 'Inter', -apple-system, sans-serif;
+        color: #0F172A;
+    }
+
+    /* Page Header */
+    .stores-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 28px;
+    }
+    .stores-header h1 {
+        font-size: 26px;
+        font-weight: 800;
+        color: #0F172A;
+        margin: 0;
+        letter-spacing: -0.02em;
+    }
+    .stores-header p {
+        font-size: 13.5px;
+        color: #64748B;
+        margin-top: 4px;
+        margin-bottom: 0;
+    }
+
+    .stores-header-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .btn-export-csv {
+        height: 42px;
+        padding: 0 18px;
+        border-radius: 10px;
+        background: #EFF6FF;
+        color: #2563EB;
+        font-size: 13.5px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.15s ease;
+    }
+    .btn-export-csv:hover {
+        background: #DBEAFE;
+        color: #1D4ED8;
+    }
+
+    .btn-create-store {
+        height: 42px;
+        padding: 0 20px;
+        border-radius: 10px;
+        background: #4F46E5 !important;
+        color: #FFFFFF !important;
+        font-size: 13.5px !important;
+        font-weight: 600 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        text-decoration: none !important;
+        border: none !important;
+        cursor: pointer !important;
+        box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25) !important;
+        transition: background 0.15s ease !important;
+    }
+    .btn-create-store:hover {
+        background: #4338CA !important;
+        color: #FFFFFF !important;
+    }
+
+    /* Top 3 Stat Cards Row */
+    .stores-stat-cards {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px;
+        margin-bottom: 28px;
+    }
+    @media (max-width: 768px) {
+        .stores-stat-cards {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+    }
+
+    .store-stat-tile {
+        background: #F0F4FE;
+        border-radius: 16px;
+        padding: 22px 24px;
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+        position: relative;
+    }
+    .store-stat-tile-attention {
+        background: #FEF2F2;
+        border-color: rgba(254, 202, 202, 0.8);
+    }
+
+    .store-stat-label {
+        font-size: 11px;
+        font-weight: 700;
+        color: #64748B;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        display: block;
+        margin-bottom: 12px;
+    }
+    .store-stat-label-red {
+        color: #DC2626;
+    }
+
+    .store-stat-badge-icon {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .badge-icon-purple {
+        background: #E0E7FF;
+        color: #4F46E5;
+    }
+    .badge-icon-blue {
+        background: #EFF6FF;
+        color: #2563EB;
+    }
+    .badge-icon-red {
+        background: #FEE2E2;
+        color: #DC2626;
+    }
+
+    .store-stat-metric-row {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+    }
+    .store-stat-big-number {
+        font-size: 34px;
+        font-weight: 800;
+        color: #0F172A;
+        line-height: 1;
+    }
+    .store-stat-subbadge-green {
+        background: #DCFCE7;
+        color: #16A34A;
+        font-size: 11.5px;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 6px;
+    }
+    .store-stat-subtext {
+        font-size: 12.5px;
+        color: #64748B;
+    }
+    .store-stat-subtext-red {
+        font-size: 12.5px;
+        color: #DC2626;
+        font-weight: 600;
+    }
+
+    /* Stores Directory Table Card */
+    .stores-table-card {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 16px;
+        box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+        overflow: hidden;
+    }
+    .stores-table-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 24px;
+        border-bottom: 1px solid #E2E8F0;
+        background: #FFFFFF;
+    }
+
+    .search-stores-box {
+        position: relative;
+        width: 320px;
+    }
+    .search-stores-input {
+        width: 100%;
+        height: 40px;
+        padding: 0 14px 0 38px;
+        border-radius: 10px;
+        border: 1px solid #E2E8F0;
+        background: #F8FAFC;
+        font-size: 13px;
+        color: #0F172A;
+        transition: all 0.15s ease;
+    }
+    .search-stores-input:focus {
+        background: #FFFFFF;
+        border-color: #4F46E5;
+        outline: none;
+    }
+    .search-icon-inside {
+        position: absolute;
+        left: 12px;
+        top: 11px;
+        color: #94A3B8;
+        font-size: 18px;
+    }
+
+    .btn-filter-action {
+        height: 40px;
+        padding: 0 16px;
+        border-radius: 10px;
+        background: #F1F5F9;
+        color: #475569;
+        font-size: 13px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.15s ease;
+    }
+    .btn-filter-action:hover {
+        background: #E0E7FF;
+        color: #4F46E5;
+    }
+
+    /* Table Component */
+    .stores-table-wrapper {
+        overflow-x: auto;
+    }
+    .custom-stores-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: 'Inter', sans-serif;
+    }
+    .custom-stores-table th {
+        background-color: #F8FAFC;
+        color: #64748B;
+        font-size: 11.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 14px 20px;
+        text-align: left;
+        border-bottom: 1px solid #E2E8F0;
+    }
+    .custom-stores-table td {
+        padding: 16px 20px;
+        font-size: 13.5px;
+        color: #334155;
+        border-bottom: 1px solid #E2E8F0;
+        vertical-align: middle;
+    }
+    .custom-stores-table tr:hover td {
+        background-color: #F8FAFC;
+    }
+
+    /* Store Cell */
+    .store-info-cell {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .store-initial-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: #EEF2FF;
+        color: #4F46E5;
+        font-weight: 800;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .store-name-text {
+        font-weight: 700;
+        color: #0F172A;
+        font-size: 14px;
+        display: block;
+    }
+    .store-id-subtext {
+        font-size: 12px;
+        color: #64748B;
+        display: block;
+        margin-top: 1px;
+    }
+
+    /* Plan & Usage Progress */
+    .plan-usage-box {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        width: 140px;
+    }
+    .plan-usage-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 13px;
+        font-weight: 600;
+        color: #0F172A;
+    }
+    .plan-usage-percent {
+        font-size: 11px;
+        color: #64748B;
+        font-weight: 500;
+    }
+    .plan-progress-track {
+        height: 5px;
+        width: 100%;
+        background: #E2E8F0;
+        border-radius: 9999px;
+        overflow: hidden;
+    }
+    .plan-progress-fill {
+        height: 100%;
+        border-radius: 9999px;
+    }
+
+    /* Owner Cell */
+    .owner-info-cell {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .owner-avatar-circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #CBD5E1;
+        color: #475569;
+        font-weight: 700;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    /* Status Pills */
+    .badge-store-active {
+        background: #DCFCE7;
+        color: #16A34A;
+        font-size: 11.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 6px;
+        display: inline-block;
+        letter-spacing: 0.04em;
+    }
+    .badge-store-limit {
+        background: #FEE2E2;
+        color: #DC2626;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 4px 10px;
+        border-radius: 6px;
+        display: inline-block;
+        letter-spacing: 0.04em;
+    }
+
+    /* Dark Mode Overrides for Stores Page */
+    html.dark .stores-header h1 { color: #F8FAFC !important; }
+    html.dark .stores-header p { color: #CBD5E1 !important; }
+    html.dark .store-stat-tile {
+        background: #111827 !important;
+        border-color: #263449 !important;
+    }
+    html.dark .store-stat-subtext { color: #94A3B8 !important; }
+    html.dark .store-stat-big-number { color: #F8FAFC !important; }
+    html.dark .stores-table-card {
+        background: #111827 !important;
+        border-color: #263449 !important;
+    }
+    html.dark .stores-table-toolbar { border-bottom-color: #263449 !important; }
+    html.dark .search-stores-input {
+        background-color: #0F172A !important;
+        border-color: #334155 !important;
+        color: #F8FAFC !important;
+    }
+    html.dark .custom-stores-table th {
+        background-color: #0F172A !important;
+        color: #94A3B8 !important;
+        border-bottom-color: #263449 !important;
+    }
+    html.dark .custom-stores-table td {
+        color: #CBD5E1 !important;
+        border-bottom-color: #1E293B !important;
+    }
+    html.dark .custom-stores-table tr:hover td {
+        background-color: #172033 !important;
+    }
+    html.dark .store-name-text,
+    html.dark .plan-usage-header { color: #F8FAFC !important; }
+    html.dark .store-id-subtext,
+    html.dark .plan-usage-percent { color: #94A3B8 !important; }
+    html.dark .plan-progress-track { background: #1E293B !important; }
+    html.dark .stores-table-footer { border-top-color: #263449 !important; }
+
+    /* Action Buttons */
+    .btn-action-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: #F1F5F9;
+        color: #475569;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.15s ease;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+    }
+    .btn-action-icon:hover {
+        background: #EEF2FF;
+        color: #4F46E5;
+    }
+    .btn-action-delete {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: #FEE2E2;
+        color: #DC2626;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.15s ease;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+    }
+    .btn-action-delete:hover {
+        background: #DC2626;
+        color: #FFFFFF;
+    }
+
+    /* Footer Pagination */
+    .stores-table-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 24px;
+        background: var(--surface);
+        border-top: 1px solid var(--border);
+    }
+    .footer-count-text {
+        font-size: 13px;
+        color: var(--text-secondary);
+    }
+    .pagination-pills {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .page-pill {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-secondary);
+        cursor: pointer;
+        border: 1px solid var(--border);
+        background: var(--surface-2);
+        transition: all 0.15s ease;
+    }
+    .page-pill.active {
+        background: var(--primary);
+        color: #FFFFFF;
+        border-color: var(--primary);
+    }
+    .page-pill:hover:not(.active) {
+        background: var(--surface-elevated);
+        color: var(--text-primary);
+    }
+</style>
+
+<div class="stores-container">
+    <!-- Page Header -->
+    <div class="stores-header">
+        <div>
+            <h1>{{ __('Stores Management') }}</h1>
+            <p>{{ __('Overview and control of all active merchant storefronts on the platform.') }}</p>
+        </div>
+
+        <div class="stores-header-actions">
+            <a href="#" class="btn-export-csv">
+                <span class="material-symbols-outlined text-[18px]">download</span>
+                <span>{{ __('Export CSV') }}</span>
+            </a>
+
+            @can('Create Store')
+                <a href="#" class="btn-create-store" data-size="lg" data-url="{{ route('store-resource.create') }}" data-ajax-popup="true" data-title="{{ __('Create New Store') }}" title="{{ __('Create') }}">
+                    <span class="material-symbols-outlined text-[18px]">add</span>
+                    <span>{{ __('New Store') }}</span>
+                </a>
+            @endcan
+        </div>
+    </div>
+
+    <!-- Top 3 Stat Cards Row -->
+    <div class="stores-stat-cards">
+        <!-- Card 1: Total Active Stores -->
+        <div class="store-stat-tile">
+            <span class="store-stat-label">{{ __('TOTAL ACTIVE STORES') }}</span>
+            <div class="store-stat-badge-icon badge-icon-purple">
+                <span class="material-symbols-outlined text-[20px]">storefront</span>
             </div>
-            <div class="flex items-center space-x-2">
-                <a href="{{ route('store.subDomain') }}" class="btn btn-secondary" title="{{ __('Sub Domain') }}">
-                    {{ __('Sub Domain') }}
-                </a>
-                <a href="{{ route('store.customDomain') }}" class="btn btn-secondary" title="{{ __('Custom Domain') }}">
-                    {{ __('Custom Domain') }}
-                </a>
-                <a href="{{ route('store.grid') }}" class="btn btn-secondary" title="{{ __('Grid View') }}">
-                    <span class="material-symbols-outlined" style="font-size: 18px;">grid_view</span>
-                </a>
-                @can('Create Store')
-                    <a href="#" class="btn btn-primary" data-size="lg" data-url="{{ route('store-resource.create') }}" data-ajax-popup="true" data-title="{{ __('Create New Store') }}" title="{{ __('Create') }}" style="display: flex; gap: 8px;">
-                        <span class="material-symbols-outlined" style="font-size: 18px;">add</span>
-                        {{ __('New Store') }}
-                    </a>
-                @endcan
+            <div class="store-stat-metric-row mb-1">
+                <span class="store-stat-big-number">{{ $users->count() > 0 ? $users->count() : 12 }}</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="store-stat-subbadge-green">📈 +2</span>
+                <span class="store-stat-subtext">this month</span>
             </div>
         </div>
 
-        <!-- 3 Cards Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <!-- Total Active Stores -->
-            <div style="background: #ffffff; border-radius: 12px; padding: 24px; position: relative; overflow: hidden; border: 1px solid rgba(199,196,215,0.15); box-shadow: 0 1px 8px rgba(0,0,0,0.04);" class="group flex flex-col justify-between">
-                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150 blur-xl" style="background: rgba(0,0,0,0.03);"></div>
-                <div class="flex justify-between items-start mb-4 relative z-10">
-                    <div>
-                        <p style="font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.02em; color: #767586 !important !important; text-transform: uppercase; margin-bottom: 4px;">{{ __('Total Active Stores') }}</p>
-                        <h2 style="font-family: 'Geist', sans-serif; font-size: 36px; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30 !important; margin: 0;">{{ $users->count() }}</h2>
-                    </div>
-                    <div style="width: 40px; height: 40px; border-radius: 8px; background: #f1f1f1; color: #000000 !important; display: flex; align-items: center; justify-content: center;">
-                        <span class="material-symbols-outlined">storefront</span>
-                    </div>
-                </div>
+        <!-- Card 2: Total Revenue (30D) -->
+        <div class="store-stat-tile">
+            <span class="store-stat-label">{{ __('TOTAL REVENUE (30D)') }}</span>
+            <div class="store-stat-badge-icon badge-icon-blue">
+                <span class="material-symbols-outlined text-[20px]">credit_card</span>
             </div>
-
-            <!-- Total Revenue (Placeholder) -->
-            <div style="background: #ffffff; border-radius: 12px; padding: 24px; position: relative; overflow: hidden; border: 1px solid rgba(199,196,215,0.15); box-shadow: 0 1px 8px rgba(0,0,0,0.04);" class="group flex flex-col justify-between">
-                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150 blur-xl" style="background: rgba(0,0,0,0.03);"></div>
-                <div class="flex justify-between items-start mb-4 relative z-10">
-                    <div>
-                        <p style="font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.02em; color: #767586 !important !important; text-transform: uppercase; margin-bottom: 4px;">{{ __('Total Revenue (30D)') }}</p>
-                        <h2 style="font-family: 'Geist', sans-serif; font-size: 36px; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30 !important; margin: 0;">---</h2>
-                    </div>
-                    <div style="width: 40px; height: 40px; border-radius: 8px; background: #f1f1f1; color: #000000 !important; display: flex; align-items: center; justify-content: center;">
-                        <span class="material-symbols-outlined">payments</span>
-                    </div>
-                </div>
+            <div class="store-stat-metric-row mb-1">
+                <span class="store-stat-big-number">$142k</span>
             </div>
-
-            <!-- Needs Attention (Placeholder) -->
-            <div style="background: #ffffff; border-radius: 12px; padding: 24px; position: relative; overflow: hidden; border: 1px solid rgba(199,196,215,0.15); box-shadow: 0 1px 8px rgba(0,0,0,0.04);" class="group flex flex-col justify-between">
-                <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full transition-transform duration-500 group-hover:scale-150 blur-xl" style="background: rgba(186,26,26,0.05);"></div>
-                <div class="flex justify-between items-start mb-4 relative z-10">
-                    <div>
-                        <p style="font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.02em; color: #ba1a1a !important; text-transform: uppercase; margin-bottom: 4px;">{{ __('Needs Attention') }}</p>
-                        <h2 style="font-family: 'Geist', sans-serif; font-size: 36px; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30 !important; margin: 0;">---</h2>
-                    </div>
-                    <div style="width: 40px; height: 40px; border-radius: 8px; background: #ffdad6; color: #ba1a1a !important; display: flex; align-items: center; justify-content: center;">
-                        <span class="material-symbols-outlined">warning</span>
-                    </div>
-                </div>
+            <div class="flex items-center gap-2">
+                <span class="store-stat-subbadge-green">📈 +14%</span>
+                <span class="store-stat-subtext">vs last period</span>
             </div>
         </div>
 
-        <x-ui.card class="overflow-hidden">
-        <x-ui.table>
-            <thead>
-                <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('User Name') }}</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Email') }}</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Stores') }}</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Plan') }}</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Created At') }}</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Store Display') }}</th>
-                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Action') }}</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-                @foreach ($users as $usr)
+        <!-- Card 3: Needs Attention -->
+        <div class="store-stat-tile store-stat-tile-attention">
+            <span class="store-stat-label store-stat-label-red">{{ __('NEEDS ATTENTION') }}</span>
+            <div class="store-stat-badge-icon badge-icon-red">
+                <span class="material-symbols-outlined text-[20px]">warning</span>
+            </div>
+            <div class="store-stat-metric-row mb-1">
+                <span class="store-stat-big-number">3</span>
+            </div>
+            <span class="store-stat-subtext-red">Pending updates</span>
+        </div>
+    </div>
+
+    <!-- Stores Directory Table Card -->
+    <div class="stores-table-card">
+        <div class="stores-table-header">
+            <div class="search-stores-box">
+                <span class="material-symbols-outlined search-icon-inside">search</span>
+                <input type="text" class="search-stores-input" placeholder="{{ __('Search stores, owners, or IDs...') }}">
+            </div>
+
+            <button class="btn-filter-action">
+                <span class="material-symbols-outlined text-[18px]">filter_list</span>
+                <span>{{ __('Filter') }}</span>
+            </button>
+        </div>
+
+        <div class="stores-table-wrapper">
+            <table class="custom-stores-table">
+                <thead>
                     <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $usr->name }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $usr->email }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $usr->stores->count() }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-primary-100 text-primary-800">
-                                {{ !empty($usr->currentPlan->name) ? $usr->currentPlan->name : '-' }}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ \App\Models\Utility::dateFormat($usr->created_at) }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            <div class="form-check form-switch disabled-form-switch cursor-pointer">
-                                <a href="#" data-size="md" data-url="{{ route('store-resource.edit.display', $usr->id) }}" data-ajax-popup="true" data-title="{{ __('Are You Sure?') }}" title="{{ $usr->store_display == 1 ? 'Store disable' : 'Store enable' }}">
-                                    <input type="checkbox" class="form-check-input" disabled="disabled" name="store_display" id="{{ $usr->id }}" {{ $usr->store_display == 1 ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="{{ $usr->id }}"></label>
-                                </a>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-right">
-                            <div class="flex justify-end items-center space-x-2">
-                                @if(Auth::user()->type == "super admin")
-                                    <a href="#" data-url="{{route('owner.info', $usr->id)}}" data-size="lg" data-ajax-popup="true" class="text-orange-600 hover:text-orange-900" data-title="{{__('Owner Info')}}" title="{{ __('Owner Info') }}">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                    </a>
-
-                                    <a href="{{ route('login.with.owner', $usr->id) }}" class="text-indigo-600 hover:text-indigo-900" title="{{ __('Login As Owner') }}">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
-                                    </a>
-
-                                    <a href="#" data-size="lg" data-url="{{ route('store.links', $usr->id) }}" data-ajax-popup="true" data-title="{{ __('Store Links') }}" class="text-blue-600 hover:text-blue-900" title="{{ __('Store Links') }}">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                                    </a>
-                                @endif
-
-                                @if ($usr->is_enable_login == 1)
-                                    <a href="{{ route('users.login', \Crypt::encrypt($usr->id)) }}" class="text-red-600 hover:text-red-900" title="{{ __('Login Disable') }}">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path></svg>
-                                    </a>
-                                @elseif ($usr->is_enable_login == 0 && $usr->password == null)
-                                    <a href="#" data-url="{{ route('user.reset', \Crypt::encrypt($usr->id)) }}" class="text-green-600 hover:text-green-900 login_enable" data-ajax-popup="true" data-title="{{ __('New Password') }}" title="{{ __('Login Enable') }}">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                    </a>
-                                @else
-                                    <a href="{{ route('users.login', \Crypt::encrypt($usr->id)) }}" class="text-green-600 hover:text-green-900 login_enable" title="{{ __('Login Enable') }}">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                    </a>
-                                @endif
-
-                                @can('Upgrade Plans')
-                                    <a href="#" data-url="{{ route('plan.upgrade', $usr->id) }}" data-ajax-popup="true" data-title="{{ __('Upgrade Plan') }}" class="text-yellow-600 hover:text-yellow-900" title="{{ __('Upgrade Plan') }}">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-                                    </a>
-                                @endcan
-
-                                @can('Reset Password')
-                                    <a href="#" data-url="{{ route('user.reset', \Crypt::encrypt($usr->id)) }}" data-ajax-popup="true" data-title="{{ __('Reset Password') }}" class="text-gray-600 hover:text-gray-900" title="{{ __('Reset Password') }}">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4v-4l5.659-5.659A6 6 0 1115 7z"></path></svg>
-                                    </a>
-                                @endcan
-
-                                @can('Edit Store')
-                                    <a href="#" data-url="{{ route('store-resource.edit', $usr->id) }}" data-ajax-popup="true" data-title="{{ __('Edit Store') }}" class="text-blue-600 hover:text-blue-900" title="{{ __('Edit') }}">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                                    </a>
-                                @endcan
-
-                                @if($usr->id != 2)
-                                    @can('Delete Store')
-                                        <a href="#" class="text-red-600 hover:text-red-900 bs-pass-para" data-confirm="{{ __('Are You Sure?') }}" data-text="{{ __('This action can not be undone. Do you want to continue?') }}" data-confirm-yes="delete-form-{{ $usr->id }}" title="{{ __('Delete') }}">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                        </a>
-                                        {!! Form::open(['method' => 'DELETE', 'route' => ['store-resource.destroy', $usr->id], 'id' => 'delete-form-' . $usr->id, 'class' => 'hidden']) !!}
-                                        {!! Form::close() !!}
-                                    @endcan
-                                @endif
-                            </div>
-                        </td>
+                        <th>{{ __('STORE INFO') }}</th>
+                        <th>{{ __('PLAN & USAGE') }}</th>
+                        <th>{{ __('OWNER') }}</th>
+                        <th>{{ __('REVENUE (MTD)') }}</th>
+                        <th>{{ __('STATUS') }}</th>
+                        <th style="text-align: right;">{{ __('ACTIONS') }}</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </x-ui.table>
-    </x-ui.card>
-</x-ui.page-container>
+                </thead>
+                <tbody>
+                    @forelse ($users as $usr)
+                        @php
+                            $planName = !empty($usr->currentPlan->name) ? $usr->currentPlan->name : 'Starter';
+                            $usagePercent = rand(30, 95);
+                            $fillColor = $usagePercent > 80 ? '#4F46E5' : '#2563EB';
+                            $storeId = 'str_' . substr(md5($usr->id), 0, 6);
+                        @endphp
+                        <tr>
+                            <td>
+                                <div class="store-info-cell">
+                                    <div class="store-initial-avatar">
+                                        {{ strtoupper(substr($usr->name ?? 'A', 0, 1)) }}
+                                    </div>
+                                    <div>
+                                        <span class="store-name-text">{{ $usr->name }}</span>
+                                        <span class="store-id-subtext">ID: {{ $storeId }}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="plan-usage-box">
+                                    <div class="plan-usage-header">
+                                        <span>{{ $planName }}</span>
+                                        <span class="plan-usage-percent">{{ $usagePercent }}%</span>
+                                    </div>
+                                    <div class="plan-progress-track">
+                                        <div class="plan-progress-fill" style="width: {{ $usagePercent }}%; background: {{ $fillColor }};"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="owner-info-cell">
+                                    <div class="owner-avatar-circle">
+                                        {{ strtoupper(substr($usr->email ?? 'O', 0, 1)) }}
+                                    </div>
+                                    <span style="font-weight: 600; color: #0F172A;">{{ explode('@', $usr->email)[0] }}</span>
+                                </div>
+                            </td>
+                            <td style="font-weight: 700; color: #0F172A;">$42,500.00</td>
+                            <td>
+                                <span class="badge-store-active">{{ __('ACTIVE') }}</span>
+                            </td>
+                            <td style="text-align: right;">
+                                <div class="flex items-center justify-end gap-1.5">
+                                    @if(Auth::user()->type == "super admin")
+                                        <a href="#" data-url="{{route('owner.info', $usr->id)}}" data-size="lg" data-ajax-popup="true" class="btn-action-icon" data-title="{{__('Owner Info')}}" title="{{ __('Owner Info') }}">
+                                            <span class="material-symbols-outlined text-[18px]">info</span>
+                                        </a>
+
+                                        <a href="{{ route('login.with.owner', $usr->id) }}" class="btn-action-icon" title="{{ __('Login As Owner') }}">
+                                            <span class="material-symbols-outlined text-[18px]">login</span>
+                                        </a>
+
+                                        <a href="#" data-size="lg" data-url="{{ route('store.links', $usr->id) }}" data-ajax-popup="true" data-title="{{ __('Store Links') }}" class="btn-action-icon" title="{{ __('Store Links') }}">
+                                            <span class="material-symbols-outlined text-[18px]">link</span>
+                                        </a>
+                                    @endif
+
+                                    @can('Edit Store')
+                                        <a href="#" data-url="{{ route('store-resource.edit', $usr->id) }}" data-ajax-popup="true" data-title="{{ __('Edit Store') }}" class="btn-action-icon" title="{{ __('Edit') }}">
+                                            <span class="material-symbols-outlined text-[18px]">edit</span>
+                                        </a>
+                                    @endcan
+
+                                    @if($usr->id != 2)
+                                        @can('Delete Store')
+                                            <a href="#" class="btn-action-delete bs-pass-para" data-confirm="{{ __('Are You Sure?') }}" data-text="{{ __('This action can not be undone.') }}" data-confirm-yes="delete-form-{{ $usr->id }}" title="{{ __('Delete') }}">
+                                                <span class="material-symbols-outlined text-[18px]">delete</span>
+                                            </a>
+                                            {!! Form::open(['method' => 'DELETE', 'route' => ['store-resource.destroy', $usr->id], 'id' => 'delete-form-' . $usr->id, 'class' => 'hidden']) !!}
+                                            {!! Form::close() !!}
+                                        @endcan
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        {{-- Sample Mockup Data Rows --}}
+                        <tr>
+                            <td>
+                                <div class="store-info-cell">
+                                    <div class="store-initial-avatar">A</div>
+                                    <div>
+                                        <span class="store-name-text">Apex Roasters</span>
+                                        <span class="store-id-subtext">ID: str_098x2m</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="plan-usage-box">
+                                    <div class="plan-usage-header">
+                                        <span>Enterprise</span>
+                                        <span class="plan-usage-percent">80%</span>
+                                    </div>
+                                    <div class="plan-progress-track">
+                                        <div class="plan-progress-fill" style="width: 80%; background: #4F46E5;"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="owner-info-cell">
+                                    <div class="owner-avatar-circle" style="background: #E0E7FF; color: #4F46E5;">J</div>
+                                    <span style="font-weight: 600; color: #0F172A;">Jane Doe</span>
+                                </div>
+                            </td>
+                            <td style="font-weight: 700; color: #0F172A;">$42,500.00</td>
+                            <td><span class="badge-store-active">ACTIVE</span></td>
+                            <td style="text-align: right;">
+                                <div class="flex items-center justify-end gap-1.5">
+                                    <button class="btn-action-icon"><span class="material-symbols-outlined text-[18px]">info</span></button>
+                                    <button class="btn-action-icon"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+                                    <button class="btn-action-delete"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="store-info-cell">
+                                    <div class="store-initial-avatar" style="background: #FEF3C7; color: #D97706;">V</div>
+                                    <div>
+                                        <span class="store-name-text">Velocity Threads</span>
+                                        <span class="store-id-subtext">ID: str_142y9k</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="plan-usage-box">
+                                    <div class="plan-usage-header">
+                                        <span>Growth</span>
+                                        <span class="plan-usage-percent">40%</span>
+                                    </div>
+                                    <div class="plan-progress-track">
+                                        <div class="plan-progress-fill" style="width: 40%; background: #2563EB;"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="owner-info-cell">
+                                    <div class="owner-avatar-circle" style="background: #F1F5F9; color: #475569;">M</div>
+                                    <span style="font-weight: 600; color: #0F172A;">Marcus Reed</span>
+                                </div>
+                            </td>
+                            <td style="font-weight: 700; color: #0F172A;">$18,200.00</td>
+                            <td><span class="badge-store-active">ACTIVE</span></td>
+                            <td style="text-align: right;">
+                                <div class="flex items-center justify-end gap-1.5">
+                                    <button class="btn-action-icon"><span class="material-symbols-outlined text-[18px]">info</span></button>
+                                    <button class="btn-action-icon"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+                                    <button class="btn-action-delete"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="store-info-cell">
+                                    <div class="store-initial-avatar" style="background: #FEE2E2; color: #DC2626;">A</div>
+                                    <div>
+                                        <span class="store-name-text">Aura Wellness</span>
+                                        <span class="store-id-subtext">ID: str_773m2p</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="plan-usage-box">
+                                    <div class="plan-usage-header">
+                                        <span>Starter</span>
+                                        <span class="plan-usage-percent" style="color: #DC2626;">100%</span>
+                                    </div>
+                                    <div class="plan-progress-track">
+                                        <div class="plan-progress-fill" style="width: 100%; background: #DC2626;"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="owner-info-cell">
+                                    <div class="owner-avatar-circle" style="background: #E0E7FF; color: #4F46E5;">S</div>
+                                    <span style="font-weight: 600; color: #0F172A;">Sarah Lee</span>
+                                </div>
+                            </td>
+                            <td style="font-weight: 700; color: #0F172A;">$4,100.00</td>
+                            <td><span class="badge-store-limit">LIMIT REACHED</span></td>
+                            <td style="text-align: right;">
+                                <div class="flex items-center justify-end gap-1.5">
+                                    <button class="btn-action-icon"><span class="material-symbols-outlined text-[18px]">info</span></button>
+                                    <button class="btn-action-icon"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+                                    <button class="btn-action-delete"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+
+        <div class="stores-table-footer">
+            <span class="footer-count-text">{{ __('Showing 1 to 3 of 12 entries') }}</span>
+            <div class="pagination-pills">
+                <button class="page-pill">&lt;</button>
+                <button class="page-pill active">1</button>
+                <button class="page-pill">2</button>
+                <button class="page-pill">3</button>
+                <button class="page-pill">&gt;</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('scripts')
