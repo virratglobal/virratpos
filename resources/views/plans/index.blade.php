@@ -25,209 +25,127 @@
     </div>
 
     <!-- Plans Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8 relative">
+    <div class="flex flex-wrap justify-center gap-6 mb-8 relative">
         <div class="absolute -inset-10 blur-3xl -z-10 rounded-full opacity-50 pointer-events-none" style="background: linear-gradient(to bottom right, rgba(211,228,254,0.3), transparent, rgba(225,224,255,0.2));"></div>
         @foreach ($plans as $plan)
-            @if($loop->iteration == 2)
-                <!-- Featured / Most Popular Plan -->
-                <div style="background: #4648d4; border-radius: 16px; padding: 24px; position: relative; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(70,72,212,0.2), 0 10px 10px -5px rgba(70,72,212,0.1);" class="group flex flex-col gap-6 transition-all duration-300 hover:-translate-y-1 scale-[1.02]">
-                    <div class="absolute -top-12 -right-12 w-48 h-48 rounded-full blur-2xl" style="background: rgba(255,255,255,0.1);"></div>
-                    <div class="absolute top-0 right-10 w-8 h-8 rounded-full blur-xl animate-pulse" style="background: #494bd6;"></div>
-                    <div class="absolute top-0 left-0 w-full flex justify-center -translate-y-1/2">
-                        <span style="background: #494bd6; color: #ffffff; padding: 4px 16px; border-radius: 9999px; font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.02em; text-transform: uppercase; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);">{{ __('Most Popular') }}</span>
+            @php
+                $isActive = (\Auth::user()->type !== 'super admin' && \Auth::user()->plan == $plan->id);
+            @endphp
+            <div class="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] xl:w-[calc(25%-18px)] max-w-sm bg-white rounded-2xl p-6 relative flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 {{ $isActive ? 'border-2 border-[#4648d4] shadow-md' : 'border border-gray-200' }}">
+                
+                @if ($isActive)
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                        <span class="bg-[#4648d4] text-white px-4 py-1 rounded-full text-xs font-semibold uppercase tracking-wider shadow-sm">
+                            {{ __('Current Plan') }}
+                        </span>
                     </div>
+                @endif
 
-                    <div class="flex items-start justify-between mt-2">
-                        <div>
-                            <h3 style="font-family: 'Geist', sans-serif; font-size: 24px; line-height: 32px; letter-spacing: -0.02em; font-weight: 600; color: #ffffff; margin: 0;">{{ $plan->name }}</h3>
-                            @if ($plan->description)
-                                <p style="font-family: 'Inter', sans-serif; font-size: 14px; color: rgba(255,255,255,0.8); margin-top: 4px;">{{ Str::limit($plan->description, 50) }}</p>
-                            @endif
-                        </div>
-                        @if (\Auth::user()->type !== 'super admin' && \Auth::user()->plan == $plan->id)
-                            <span style="background: #494bd6; color: #ffffff; padding: 4px 10px; border-radius: 6px; font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.02em; text-transform: uppercase; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);">{{ __('Active') }}</span>
+                <div class="flex items-start justify-between mt-2">
+                    <div>
+                        <h3 style="font-family: 'Geist', sans-serif; font-size: 24px; line-height: 32px; letter-spacing: -0.02em; font-weight: 600; color: #0b1c30; margin: 0;">{{ $plan->name }}</h3>
+                        @if ($plan->description)
+                            <p style="font-family: 'Inter', sans-serif; font-size: 14px; color: #767586; margin-top: 4px;">{{ Str::limit($plan->description, 50) }}</p>
                         @endif
-                    </div>
-
-                    <div class="flex items-end gap-1">
-                        <span style="font-family: 'Geist', sans-serif; font-size: 36px; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #ffffff;">{{ isset($admin_payments_setting['currency_symbol']) ? $admin_payments_setting['currency_symbol'] : '$' }}{{ $plan->price }}</span>
-                        <span style="font-family: 'Inter', sans-serif; font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 8px;">/ {{ __(\App\Models\Plan::$arrDuration[$plan->duration]) }}</span>
-                    </div>
-
-                    <div class="flex flex-col gap-3 flex-1 mt-4">
-                        <div class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-[20px]" style="color: #ffffff;">check_circle</span>
-                            <span style="font-family: 'Inter', sans-serif; font-size: 14px; color: #ffffff;">{{ $plan->max_stores == '-1' ? __('Unlimited') : $plan->max_stores }} {{ __('Stores') }}</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-[20px]" style="color: #ffffff;">check_circle</span>
-                            <span style="font-family: 'Inter', sans-serif; font-size: 14px; color: #ffffff;">{{ $plan->max_products == '-1' ? __('Unlimited') : $plan->max_products }} {{ __('Products') }}</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-[20px]" style="color: #ffffff;">check_circle</span>
-                            <span style="font-family: 'Inter', sans-serif; font-size: 14px; color: #ffffff;">{{ $plan->max_users == '-1' ? __('Unlimited') : $plan->max_users }} {{ __('Users') }}</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-[20px]" style="color: #ffffff;">check_circle</span>
-                            <span style="font-family: 'Inter', sans-serif; font-size: 14px; color: #ffffff;">{{ $plan->storage_limit == '-1' ? __('Unlimited') : $plan->storage_limit }} {{ __('MB Storage') }}</span>
-                        </div>
-                        @if($plan->enable_custdomain == 'on')
-                        <div class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-[20px]" style="color: #ffffff;">check_circle</span>
-                            <span style="font-family: 'Inter', sans-serif; font-size: 14px; color: #ffffff;">{{ __('Custom Domain') }}</span>
-                        </div>
-                        @endif
-                    </div>
-
-                    <div style="background: rgba(0,0,0,0.1); backdrop-filter: blur(4px); border-radius: 12px; padding: 16px; margin-top: 24px; display: flex; justify-content: space-between; items-center;">
-                        <div class="flex flex-col gap-2 w-full">
-                            @if (\Auth::user()->type == 'super admin')
-                                <div class="flex justify-between w-full">
-                                    @can('Edit Plans')
-                                        <a href="#" class="btn btn-secondary w-full justify-center" data-url="{{ route('plans.edit',$plan->id) }}" data-title="{{__('Edit Plan')}}" data-ajax-popup="true" data-size="lg">
-                                            {{ __('Edit') }}
-                                        </a>
-                                    @endcan
-                                </div>
-                            @else
-                                @if($plan->price <= 0)
-                                    <div class="w-full text-center text-sm font-semibold" style="color: rgba(255,255,255,0.8); padding: 8px;">{{ __('Lifetime / Free') }}</div>
-                                @elseif(\Auth::user()->trial_plan == $plan->id && \Auth::user()->trial_expire_date && date('Y-m-d') < \Auth::user()->trial_expire_date)
-                                    <div class="w-full text-center text-sm font-semibold py-2 rounded" style="color: #ffffff;">{{ __('Trial Expires: ') }} {{ \Auth::user()->dateFormat(\Auth::user()->trial_expire_date) }}</div>
-                                @elseif (\Auth::user()->plan == $plan->id && date('Y-m-d') < \Auth::user()->plan_expire_date && \Auth::user()->is_trial_done != 1)
-                                    <div class="w-full text-center text-sm font-semibold py-2 rounded" style="color: #ffffff;">{{ __('Renews: ') }} {{ \App\Models\Utility::dateFormat(\Auth::user()->plan_expire_date) }}</div>
-                                @elseif(\Auth::user()->plan == $plan->id && !empty(\Auth::user()->plan_expire_date) && \Auth::user()->plan_expire_date < date('Y-m-d'))
-                                    <div class="w-full text-center text-sm font-semibold py-2 rounded" style="color: #ffffff;">{{ __('Expired') }}</div>
-                                @elseif(\Auth::user()->plan == $plan->id && $plan->duration == 'Lifetime')
-                                    <div class="w-full text-center text-sm font-semibold py-2 rounded" style="color: #ffffff;">{{ __('Lifetime') }}</div>
-                                @else
-                                    <div class="flex space-x-2">
-                                        @if ($plan->price > 0 && \Auth::user()->trial_plan == 0 && \Auth::user()->plan != $plan->id && $plan->trial != 'off' && $plan->trial_days != 0)
-                                            <a href="{{ route('plan.trial', \Illuminate\Support\Facades\Crypt::encrypt($plan->id)) }}" class="flex-1">
-                                                <button class="btn btn-secondary w-full" style="background: rgba(255,255,255,0.2); color: #fff;">{{ __('Free Trial') }}</button>
-                                            </a>
-                                        @endif
-                                        <a href="{{ route('stripe', \Illuminate\Support\Facades\Crypt::encrypt($plan->id)) }}" class="flex-1">
-                                            <button class="btn btn-primary w-full" style="background: #ffffff; color: #4648d4;">{{ __('Subscribe') }}</button>
-                                        </a>
-                                    </div>
-                                @endif
-                                @if (\Auth::user()->plan != $plan->id && $plan->id != 1)
-                                    <div class="mt-2">
-                                        @if (\Auth::user()->requested_plan != $plan->id)
-                                            <a href="{{ route('send.request',[\Illuminate\Support\Facades\Crypt::encrypt($plan->id)]) }}" data-title="{{ __('Send Request') }}">
-                                                <button class="btn btn-secondary w-full" style="background: rgba(255,255,255,0.1); color: #fff;">{{ __('Request Plan') }}</button>
-                                            </a>
-                                        @else
-                                            <a href="{{ route('request.cancel',\Auth::user()->id) }}" data-title="{{ __('Cancel Request') }}">
-                                                <button class="btn btn-danger w-full">{{ __('Cancel Request') }}</button>
-                                            </a>
-                                        @endif
-                                    </div>
-                                @endif
-                            @endif
-                        </div>
                     </div>
                 </div>
-            @else
-                <!-- Standard Plan -->
-                <div style="background: #e5eeff; border-radius: 16px; padding: 24px; position: relative; overflow: hidden;" class="group flex flex-col gap-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                    <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" style="background: linear-gradient(to bottom right, rgba(255,255,255,0.1), transparent);"></div>
 
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <h3 style="font-family: 'Geist', sans-serif; font-size: 24px; line-height: 32px; letter-spacing: -0.02em; font-weight: 600; color: #0b1c30; margin: 0;">{{ $plan->name }}</h3>
-                            @if ($plan->description)
-                                <p style="font-family: 'Inter', sans-serif; font-size: 14px; color: #767586; margin-top: 4px;">{{ Str::limit($plan->description, 50) }}</p>
-                            @endif
-                        </div>
-                        @if (\Auth::user()->type !== 'super admin' && \Auth::user()->plan == $plan->id)
-                            <span style="background: #dce9ff; color: #464554; padding: 4px 10px; border-radius: 6px; font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.02em; text-transform: uppercase;">{{ __('Active') }}</span>
-                        @endif
-                    </div>
-
-                    <div class="flex items-end gap-1">
-                        <span style="font-family: 'Geist', sans-serif; font-size: 36px; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30;">{{ isset($admin_payments_setting['currency_symbol']) ? $admin_payments_setting['currency_symbol'] : '$' }}{{ $plan->price }}</span>
-                        <span style="font-family: 'Inter', sans-serif; font-size: 14px; color: #767586; margin-bottom: 8px;">/ {{ __(\App\Models\Plan::$arrDuration[$plan->duration]) }}</span>
-                    </div>
-
-                    <div class="flex flex-col gap-3 flex-1 mt-4">
-                        <div class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-[20px]" style="color: #4648d4;">check_circle</span>
-                            <span style="font-family: 'Inter', sans-serif; font-size: 14px; color: #0b1c30;">{{ $plan->max_stores == '-1' ? __('Unlimited') : $plan->max_stores }} {{ __('Stores') }}</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-[20px]" style="color: #4648d4;">check_circle</span>
-                            <span style="font-family: 'Inter', sans-serif; font-size: 14px; color: #0b1c30;">{{ $plan->max_products == '-1' ? __('Unlimited') : $plan->max_products }} {{ __('Products') }}</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-[20px]" style="color: #4648d4;">check_circle</span>
-                            <span style="font-family: 'Inter', sans-serif; font-size: 14px; color: #0b1c30;">{{ $plan->max_users == '-1' ? __('Unlimited') : $plan->max_users }} {{ __('Users') }}</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-[20px]" style="color: #4648d4;">check_circle</span>
-                            <span style="font-family: 'Inter', sans-serif; font-size: 14px; color: #0b1c30;">{{ $plan->storage_limit == '-1' ? __('Unlimited') : $plan->storage_limit }} {{ __('MB Storage') }}</span>
-                        </div>
-                        @if($plan->enable_custdomain == 'on')
-                        <div class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-[20px]" style="color: #4648d4;">check_circle</span>
-                            <span style="font-family: 'Inter', sans-serif; font-size: 14px; color: #0b1c30;">{{ __('Custom Domain') }}</span>
-                        </div>
-                        @endif
-                    </div>
-
-                    <div style="background: #eff4ff; border-radius: 12px; padding: 16px; margin-top: 24px; display: flex; justify-content: space-between; items-center;">
-                        <div class="flex flex-col gap-2 w-full">
-                            @if (\Auth::user()->type == 'super admin')
-                                <div class="flex justify-between w-full">
-                                    @can('Edit Plans')
-                                        <a href="#" class="btn btn-secondary w-full justify-center" data-url="{{ route('plans.edit',$plan->id) }}" data-title="{{__('Edit Plan')}}" data-ajax-popup="true" data-size="lg">
-                                            {{ __('Edit') }}
-                                        </a>
-                                    @endcan
-                                </div>
-                            @else
-                                @if($plan->price <= 0)
-                                    <div class="w-full text-center text-sm font-semibold" style="color: #767586; padding: 8px;">{{ __('Lifetime / Free') }}</div>
-                                @elseif(\Auth::user()->trial_plan == $plan->id && \Auth::user()->trial_expire_date && date('Y-m-d') < \Auth::user()->trial_expire_date)
-                                    <div class="w-full text-center text-sm font-semibold py-2 rounded" style="color: #904900; background: #fff5eb;">{{ __('Trial Expires: ') }} {{ \Auth::user()->dateFormat(\Auth::user()->trial_expire_date) }}</div>
-                                @elseif (\Auth::user()->plan == $plan->id && date('Y-m-d') < \Auth::user()->plan_expire_date && \Auth::user()->is_trial_done != 1)
-                                    <div class="w-full text-center text-sm font-semibold py-2 rounded" style="color: #4648d4; background: #e5eeff;">{{ __('Renews: ') }} {{ \App\Models\Utility::dateFormat(\Auth::user()->plan_expire_date) }}</div>
-                                @elseif(\Auth::user()->plan == $plan->id && !empty(\Auth::user()->plan_expire_date) && \Auth::user()->plan_expire_date < date('Y-m-d'))
-                                    <div class="w-full text-center text-sm font-semibold py-2 rounded" style="color: #ba1a1a; background: #ffdad6;">{{ __('Expired') }}</div>
-                                @elseif(\Auth::user()->plan == $plan->id && $plan->duration == 'Lifetime')
-                                    <div class="w-full text-center text-sm font-semibold py-2 rounded" style="color: #4648d4; background: #e5eeff;">{{ __('Lifetime') }}</div>
-                                @else
-                                    <div class="flex space-x-2">
-                                        @if ($plan->price > 0 && \Auth::user()->trial_plan == 0 && \Auth::user()->plan != $plan->id && $plan->trial != 'off' && $plan->trial_days != 0)
-                                            <a href="{{ route('plan.trial', \Illuminate\Support\Facades\Crypt::encrypt($plan->id)) }}" class="flex-1">
-                                                <button class="btn btn-secondary w-full">{{ __('Free Trial') }}</button>
-                                            </a>
-                                        @endif
-                                        <a href="{{ route('stripe', \Illuminate\Support\Facades\Crypt::encrypt($plan->id)) }}" class="flex-1">
-                                            <button class="btn btn-primary w-full">{{ __('Subscribe') }}</button>
-                                        </a>
-                                    </div>
-                                @endif
-                                @if (\Auth::user()->plan != $plan->id && $plan->id != 1)
-                                    <div class="mt-2">
-                                        @if (\Auth::user()->requested_plan != $plan->id)
-                                            <a href="{{ route('send.request',[\Illuminate\Support\Facades\Crypt::encrypt($plan->id)]) }}" data-title="{{ __('Send Request') }}">
-                                                <button class="btn btn-secondary w-full">{{ __('Request Plan') }}</button>
-                                            </a>
-                                        @else
-                                            <a href="{{ route('request.cancel',\Auth::user()->id) }}" data-title="{{ __('Cancel Request') }}">
-                                                <button class="btn btn-danger w-full">{{ __('Cancel Request') }}</button>
-                                            </a>
-                                        @endif
-                                    </div>
-                                @endif
-                            @endif
-                        </div>
-                    </div>
+                <div class="flex items-end gap-1 mt-4">
+                    <span style="font-family: 'Geist', sans-serif; font-size: 36px; line-height: 40px; letter-spacing: -0.04em; font-weight: 600; color: #0b1c30;">{{ isset($admin_payments_setting['currency_symbol']) ? $admin_payments_setting['currency_symbol'] : '$' }}{{ $plan->price }}</span>
+                    <span style="font-family: 'Inter', sans-serif; font-size: 14px; color: #767586; margin-bottom: 8px;">/ {{ __(\App\Models\Plan::$arrDuration[$plan->duration]) }}</span>
                 </div>
-            @endif
+
+                <div class="flex flex-col gap-3 flex-1 mt-6 pt-6 border-t border-gray-100">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-[20px]" style="color: #4648d4;">check_circle</span>
+                        <span style="font-family: 'Inter', sans-serif; font-size: 14px; color: #0b1c30;">{{ $plan->max_stores == '-1' ? __('Unlimited') : $plan->max_stores }} {{ __('Stores') }}</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-[20px]" style="color: #4648d4;">check_circle</span>
+                        <span style="font-family: 'Inter', sans-serif; font-size: 14px; color: #0b1c30;">{{ $plan->max_products == '-1' ? __('Unlimited') : $plan->max_products }} {{ __('Products') }}</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-[20px]" style="color: #4648d4;">check_circle</span>
+                        <span style="font-family: 'Inter', sans-serif; font-size: 14px; color: #0b1c30;">{{ $plan->max_users == '-1' ? __('Unlimited') : $plan->max_users }} {{ __('Users') }}</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-[20px]" style="color: #4648d4;">check_circle</span>
+                        <span style="font-family: 'Inter', sans-serif; font-size: 14px; color: #0b1c30;">{{ $plan->storage_limit == '-1' ? __('Unlimited') : $plan->storage_limit }} {{ __('MB Storage') }}</span>
+                    </div>
+                    @if($plan->enable_custdomain == 'on')
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-[20px]" style="color: #4648d4;">check_circle</span>
+                        <span style="font-family: 'Inter', sans-serif; font-size: 14px; color: #0b1c30;">{{ __('Custom Domain') }}</span>
+                    </div>
+                    @endif
+                </div>
+
+                <div class="mt-8 flex flex-col gap-2 w-full">
+                    @if (\Auth::user()->type == 'super admin')
+                        @can('Edit Plans')
+                            <a href="#" class="btn w-full justify-center" style="background: #e5eeff; color: #4648d4; border: none; font-weight: 500;" data-url="{{ route('plans.edit',$plan->id) }}" data-title="{{__('Edit Plan')}}" data-ajax-popup="true" data-size="lg">
+                                {{ __('Edit Plan') }}
+                            </a>
+                        @endcan
+                    @else
+                        @if($isActive)
+                            <button class="btn w-full" disabled style="background: #f3f4f6; color: #9ca3af; border: 1px solid #e5e7eb; font-weight: 500;">
+                                {{ __('Current Plan') }}
+                            </button>
+                            @if(\Auth::user()->trial_plan == $plan->id && \Auth::user()->trial_expire_date && date('Y-m-d') < \Auth::user()->trial_expire_date)
+                                <div class="text-center text-xs font-medium mt-1" style="color: #904900;">{{ __('Trial Expires: ') }} {{ \Auth::user()->dateFormat(\Auth::user()->trial_expire_date) }}</div>
+                            @elseif (date('Y-m-d') < \Auth::user()->plan_expire_date && \Auth::user()->is_trial_done != 1)
+                                <div class="text-center text-xs font-medium mt-1" style="color: #767586;">{{ __('Renews: ') }} {{ \App\Models\Utility::dateFormat(\Auth::user()->plan_expire_date) }}</div>
+                            @elseif(!empty(\Auth::user()->plan_expire_date) && \Auth::user()->plan_expire_date < date('Y-m-d'))
+                                <div class="text-center text-xs font-medium mt-1" style="color: #ba1a1a;">{{ __('Expired') }}</div>
+                            @endif
+                        @else
+                            @if($plan->price <= 0)
+                                <a href="{{ route('stripe', \Illuminate\Support\Facades\Crypt::encrypt($plan->id)) }}" class="w-full">
+                                    <button class="btn btn-primary w-full" style="background: #4648d4; border: none;">{{ __('Select Plan') }}</button>
+                                </a>
+                            @else
+                                <div class="flex space-x-2">
+                                    @if (\Auth::user()->trial_plan == 0 && $plan->trial != 'off' && $plan->trial_days != 0)
+                                        <a href="{{ route('plan.trial', \Illuminate\Support\Facades\Crypt::encrypt($plan->id)) }}" class="flex-1">
+                                            <button class="btn w-full" style="background: #e5eeff; color: #4648d4; border: none;">{{ __('Free Trial') }}</button>
+                                        </a>
+                                    @endif
+                                    <a href="{{ route('stripe', \Illuminate\Support\Facades\Crypt::encrypt($plan->id)) }}" class="flex-1">
+                                        <button class="btn btn-primary w-full" style="background: #4648d4; border: none;">{{ __('Subscribe') }}</button>
+                                    </a>
+                                </div>
+                            @endif
+                            @if ($plan->id != 1)
+                                <div class="mt-2">
+                                    @if (\Auth::user()->requested_plan != $plan->id)
+                                        <a href="{{ route('send.request',[\Illuminate\Support\Facades\Crypt::encrypt($plan->id)]) }}" data-title="{{ __('Send Request') }}">
+                                            <button class="btn w-full" style="background: white; border: 1px solid #dce9ff; color: #4648d4;">{{ __('Request Plan') }}</button>
+                                        </a>
+                                    @else
+                                        <a href="{{ route('request.cancel',\Auth::user()->id) }}" data-title="{{ __('Cancel Request') }}">
+                                            <button class="btn btn-danger w-full">{{ __('Cancel Request') }}</button>
+                                        </a>
+                                    @endif
+                                </div>
+                            @endif
+                        @endif
+                    @endif
+                </div>
+            </div>
         @endforeach
+    </div>
+
+    <!-- Contact Sales Section -->
+    <div class="flex flex-col items-center justify-center text-center p-8 bg-white border border-gray-200 rounded-2xl mb-8 mt-2 shadow-sm relative overflow-hidden">
+        <div class="absolute -inset-10 blur-3xl -z-10 rounded-full opacity-20 pointer-events-none" style="background: linear-gradient(to right, #4648d4, transparent);"></div>
+        <h3 style="font-family: 'Geist', sans-serif; font-size: 20px; font-weight: 600; color: #0b1c30; margin: 0;">{{ __('Need more flexibility?') }}</h3>
+        <p style="font-family: 'Inter', sans-serif; font-size: 15px; color: #767586; margin-top: 8px; max-width: 500px;">
+            {{ __('Contact us for custom limits, enterprise features, and tailored plans to perfectly fit your business needs.') }}
+        </p>
+        <a href="#" class="mt-6 btn btn-primary" style="background: #4648d4; border: none; padding: 10px 24px; font-weight: 500; font-family: 'Inter', sans-serif;">
+            {{ __('Contact Sales') }}
+        </a>
     </div>
 
     <!-- Orders Table -->
