@@ -695,7 +695,7 @@
         #pills-payment-setting .accordion {
             display: flex !important;
             flex-direction: column !important;
-            gap: 16px !important;
+            gap: 12px !important;
             width: 100% !important;
             max-width: 100% !important;
             min-width: 0 !important;
@@ -727,14 +727,15 @@
             min-width: 0 !important;
         }
 
-        #pills-payment-setting .accordion-button {
+        #pills-payment-setting .accordion-button,
+        .payment-method-row {
             background: #f8fafc !important;
             border: 1px solid #d9deea !important;
             border-radius: 8px !important;
-            height: 64px !important;
-            min-height: 64px !important;
-            max-height: 64px !important;
-            padding: 0 24px !important;
+            height: 52px !important;
+            min-height: 52px !important;
+            max-height: 52px !important;
+            padding: 0 20px !important;
             box-shadow: none !important;
             display: flex !important;
             align-items: center !important;
@@ -777,9 +778,9 @@
 
         #pills-payment-setting .accordion-button::after {
             content: '' !important;
-            width: 36px !important;
-            height: 36px !important;
-            min-width: 36px !important;
+            width: 32px !important;
+            height: 32px !important;
+            min-width: 32px !important;
             border-radius: 50% !important;
             background: #ffffff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") center no-repeat !important;
             border: 1px solid #e2e8f0 !important;
@@ -2187,10 +2188,36 @@
                                         </div>
                                     </div>
 
+                                    <div class="payment-services-section-header d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4 mt-3 pb-3 border-bottom" style="width: 100%; max-width: 100%; box-sizing: border-box;">
+                                        <div>
+                                            <div class="d-flex align-items-center gap-2 flex-wrap">
+                                                <h5 class="m-0 font-weight-bold" style="font-size: 16px; color: #0f172a;">{{ __('Payment Services') }}</h5>
+                                                <span class="badge" id="payment-services-count" style="font-size: 12px; font-weight: 600; padding: 5px 10px; border-radius: 6px; background: #EEF2FF; color: #4338CA;">0 services available</span>
+                                                <span class="badge" id="payment-enabled-count" style="font-size: 12px; font-weight: 600; padding: 5px 10px; border-radius: 6px; background: #DCFCE7; color: #15803D;">0 enabled</span>
+                                            </div>
+                                            <p class="text-muted text-xs m-0 mt-1" style="font-size: 13px; color: #64748b;">
+                                                {{ __('Enable and configure the payment gateways available for your platform.') }}
+                                            </p>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                                            <div class="position-relative" style="min-width: 220px;">
+                                                <input type="text" id="payment-service-search" class="form-control" placeholder="{{ __('Search payment service...') }}" style="height: 38px !important; min-height: 38px !important; max-height: 38px !important; padding-left: 14px !important; border-radius: 8px !important; font-size: 13px !important;">
+                                            </div>
+                                            <select id="payment-service-filter" class="form-select" style="height: 38px !important; min-height: 38px !important; max-height: 38px !important; width: 140px; border-radius: 8px !important; font-size: 13px !important; border: 1px solid #d9deea;">
+                                                <option value="all">{{ __('All Services') }}</option>
+                                                <option value="enabled">{{ __('Enabled') }}</option>
+                                                <option value="disabled">{{ __('Disabled') }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                     <div class="row">
                                         <div class="setting-faq-wrp faq col-12">
                                             <div class="accordion accordion-flush setting-accordion"
                                                 id="accordionExample">
+                                                <div id="payment-services-empty-state" class="text-center py-4 d-none" style="background: #f8fafc; border: 1px solid #d9deea; border-radius: 8px; margin-bottom: 12px;">
+                                                    <p class="text-muted m-0" style="font-size: 14px; font-weight: 500;">{{ __('No payment services found.') }}</p>
+                                                </div>
                                                 <div class="accordion-item">
                                                     <h2 class="accordion-header" id="headingOne">
                                                         <button class="accordion-button collapsed"
@@ -8853,6 +8880,65 @@
         }
 
         $(document).ready(function() {
+            function updatePaymentServicesCountAndFilter() {
+                var $items = $('#accordionExample .accordion-item');
+                var totalCount = $items.length;
+                var enabledCount = 0;
+                var visibleCount = 0;
+
+                var searchText = ($('#payment-service-search').val() || '').toLowerCase().trim();
+                var filterValue = $('#payment-service-filter').val() || 'all';
+
+                $items.each(function() {
+                    var $item = $(this);
+                    var providerName = $item.find('.accordion-button > span').text().toLowerCase().trim();
+                    var $checkbox = $item.find('input[type="checkbox"]');
+                    var isEnabled = $checkbox.length && $checkbox.is(':checked');
+
+                    if (isEnabled) {
+                        enabledCount++;
+                    }
+
+                    var matchesSearch = !searchText || providerName.indexOf(searchText) !== -1;
+                    var matchesFilter = true;
+                    if (filterValue === 'enabled') {
+                        matchesFilter = isEnabled;
+                    } else if (filterValue === 'disabled') {
+                        matchesFilter = !isEnabled;
+                    }
+
+                    if (matchesSearch && matchesFilter) {
+                        $item.removeClass('d-none');
+                        visibleCount++;
+                    } else {
+                        $item.addClass('d-none');
+                    }
+                });
+
+                $('#payment-services-count').text(totalCount + ' services available');
+                $('#payment-enabled-count').text(enabledCount + ' enabled');
+
+                if (visibleCount === 0 && totalCount > 0) {
+                    $('#payment-services-empty-state').removeClass('d-none');
+                } else {
+                    $('#payment-services-empty-state').addClass('d-none');
+                }
+            }
+
+            updatePaymentServicesCountAndFilter();
+
+            $(document).on('keyup input', '#payment-service-search', function() {
+                updatePaymentServicesCountAndFilter();
+            });
+
+            $(document).on('change', '#payment-service-filter', function() {
+                updatePaymentServicesCountAndFilter();
+            });
+
+            $(document).on('change', '#accordionExample input[type="checkbox"]', function() {
+                updatePaymentServicesCountAndFilter();
+            });
+
             setTimeout(function(e) {
                 var checked = $("input[type=radio][name='theme_color']:checked");
                 $('#themefile').val(checked.attr('data-theme'));
