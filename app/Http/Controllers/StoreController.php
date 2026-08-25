@@ -67,20 +67,15 @@ class StoreController extends Controller
     {
         if(\Auth::user()->can('Manage Store')){
             if (\Auth::user()->type == 'super admin') {
-                $usersQuery = User::select(
+                $users = User::select(
                     [
                         'users.*',
                         'stores.is_store_enabled as store_display',
-                        'stores.name as store_name',
-                        \DB::raw('(SELECT SUM(price) FROM orders WHERE orders.user_id = stores.id) as store_revenue')
                     ]
-                )->join('stores', 'stores.id', '=', 'users.current_store')->where('users.created_by', \Auth::user()->creatorId())->where('users.type', '=', 'Owner')->with('currentPlan')->groupBy('users.id');
-                
-                $allUsers = $usersQuery->get();
-                $users = $usersQuery->paginate(20);
-                
+                )->join('stores', 'stores.id', '=', 'users.current_store')->where('users.created_by', \Auth::user()->creatorId())->where('users.type', '=', 'Owner')->with('currentPlan')->groupBy('users.id')->get();
                 $stores = Store::get();
-                return view('admin_store.index', compact('stores', 'users', 'allUsers'));
+                return view('admin_store.index', compact('stores', 'users'));
+
             }
         }
         else{
