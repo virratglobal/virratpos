@@ -2,824 +2,638 @@
 
 @section('page-title', __('Store'))
 
-@section('content')
+@push('style')
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet">
 <style>
-    /* Stores Management - Pixel-Perfect Mockup Design */
-    .stores-container {
-        max-width: 1360px;
-        margin: 0 auto;
-        padding: 8px 20px 40px 20px;
-        font-family: 'Inter', -apple-system, sans-serif;
-        color: #0F172A;
+    :root {
+        --color-primary:                 #4648d4;
+        --color-on-primary:              #ffffff;
+        --color-primary-container:       #6063ee;
+        --color-on-primary-container:    #fffbff;
+        --color-secondary:               #565e74;
+        --color-secondary-container:     #dae2fd;
+        --color-on-secondary-container:  #5c647a;
+        --color-error:                   #ba1a1a;
+        --color-error-container:         #ffdad6;
+        --color-surface:                 #f8f9ff;
+        --color-surface-container:       #e5eeff;
+        --color-surface-container-low:   #eff4ff;
+        --color-surface-container-high:  #dce9ff;
+        --color-surface-container-highest: #d3e4fe;
+        --color-surface-container-lowest: #ffffff;
+        --color-on-surface:              #0b1c30;
+        --color-on-surface-variant:      #464554;
+        --color-outline-variant:         #c7c4d7;
     }
 
-    /* Page Header */
-    .stores-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 28px;
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(4px); }
+        to   { opacity: 1; transform: none; }
     }
-    .stores-header h1 {
-        font-size: 26px;
-        font-weight: 800;
-        color: #0F172A;
-        margin: 0;
-        letter-spacing: -0.02em;
-    }
-    .stores-header p {
-        font-size: 13.5px;
-        color: #64748B;
-        margin-top: 4px;
-        margin-bottom: 0;
-    }
+    .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
 
-    .stores-header-actions {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-    .btn-export-csv {
-        height: 42px;
-        padding: 0 18px;
-        border-radius: 10px;
-        background: #EFF6FF;
-        color: #2563EB;
-        font-size: 13.5px;
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        text-decoration: none;
-        border: none;
-        cursor: pointer;
-        transition: all 0.15s ease;
-    }
-    .btn-export-csv:hover {
-        background: #DBEAFE;
-        color: #1D4ED8;
-    }
-
-    .btn-create-store {
-        height: 42px;
-        padding: 0 20px;
-        border-radius: 10px;
-        background: #4F46E5 !important;
-        color: #FFFFFF !important;
-        font-size: 13.5px !important;
-        font-weight: 600 !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 8px !important;
-        text-decoration: none !important;
-        border: none !important;
-        cursor: pointer !important;
-        box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25) !important;
-        transition: background 0.15s ease !important;
-    }
-    .btn-create-store:hover {
-        background: #4338CA !important;
-        color: #FFFFFF !important;
-    }
-
-    /* Top 3 Stat Cards Row */
-    .stores-stat-cards {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 20px;
-        margin-bottom: 28px;
-    }
-    @media (max-width: 768px) {
-        .stores-stat-cards {
-            grid-template-columns: repeat(1, minmax(0, 1fr));
-        }
-    }
-
-    .store-stat-tile {
-        background: #F0F4FE;
-        border-radius: 16px;
-        padding: 22px 24px;
-        border: 1px solid rgba(226, 232, 240, 0.8);
-        box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+    .prec-stat-card {
+        background: var(--color-surface-container);
+        border-radius: 12px;
+        padding: 20px;
         position: relative;
-    }
-    .store-stat-tile-attention {
-        background: #FEF2F2;
-        border-color: rgba(254, 202, 202, 0.8);
-    }
-
-    .store-stat-label {
-        font-size: 11px;
-        font-weight: 700;
-        color: #64748B;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        display: block;
-        margin-bottom: 12px;
-    }
-    .store-stat-label-red {
-        color: #DC2626;
-    }
-
-    .store-stat-badge-icon {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        width: 36px;
-        height: 36px;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .badge-icon-purple {
-        background: #E0E7FF;
-        color: #4F46E5;
-    }
-    .badge-icon-blue {
-        background: #EFF6FF;
-        color: #2563EB;
-    }
-    .badge-icon-red {
-        background: #FEE2E2;
-        color: #DC2626;
-    }
-
-    .store-stat-metric-row {
-        display: flex;
-        align-items: baseline;
-        gap: 10px;
-    }
-    .store-stat-big-number {
-        font-size: 34px;
-        font-weight: 800;
-        color: #0F172A;
-        line-height: 1;
-    }
-    .store-stat-subbadge-green {
-        background: #DCFCE7;
-        color: #16A34A;
-        font-size: 11.5px;
-        font-weight: 700;
-        padding: 2px 8px;
-        border-radius: 6px;
-    }
-    .store-stat-subtext {
-        font-size: 12.5px;
-        color: #64748B;
-    }
-    .store-stat-subtext-red {
-        font-size: 12.5px;
-        color: #DC2626;
-        font-weight: 600;
-    }
-
-    /* Stores Directory Table Card */
-    .stores-table-card {
-        background: #FFFFFF;
-        border: 1px solid #E2E8F0;
-        border-radius: 16px;
-        box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
         overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        transition: box-shadow 0.2s ease;
     }
-    .stores-table-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 20px 24px;
-        border-bottom: 1px solid #E2E8F0;
-        background: #FFFFFF;
-    }
-
-    .search-stores-box {
-        position: relative;
-        width: 320px;
-    }
-    .search-stores-input {
-        width: 100%;
-        height: 40px;
-        padding: 0 14px 0 38px;
-        border-radius: 10px;
-        border: 1px solid #E2E8F0;
-        background: #F8FAFC;
-        font-size: 13px;
-        color: #0F172A;
-        transition: all 0.15s ease;
-    }
-    .search-stores-input:focus {
-        background: #FFFFFF;
-        border-color: #4F46E5;
-        outline: none;
-    }
-    .search-icon-inside {
+    .prec-stat-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .prec-stat-card .bg-circle {
         position: absolute;
-        left: 12px;
-        top: 11px;
-        color: #94A3B8;
-        font-size: 18px;
-    }
-
-    .btn-filter-action {
-        height: 40px;
-        padding: 0 16px;
-        border-radius: 10px;
-        background: #F1F5F9;
-        color: #475569;
-        font-size: 13px;
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        border: none;
-        cursor: pointer;
-        transition: all 0.15s ease;
-    }
-    .btn-filter-action:hover {
-        background: #E0E7FF;
-        color: #4F46E5;
-    }
-
-    /* Table Component */
-    .stores-table-wrapper {
-        overflow-x: auto;
-    }
-    .custom-stores-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-family: 'Inter', sans-serif;
-    }
-    .custom-stores-table th {
-        background-color: #F8FAFC;
-        color: #64748B;
-        font-size: 11.5px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        padding: 14px 20px;
-        text-align: left;
-        border-bottom: 1px solid #E2E8F0;
-    }
-    .custom-stores-table td {
-        padding: 16px 20px;
-        font-size: 13.5px;
-        color: #334155;
-        border-bottom: 1px solid #E2E8F0;
-        vertical-align: middle;
-    }
-    .custom-stores-table tr:hover td {
-        background-color: #F8FAFC;
-    }
-
-    /* Store Cell */
-    .store-info-cell {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-    .store-initial-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 10px;
-        background: #EEF2FF;
-        color: #4F46E5;
-        font-weight: 800;
-        font-size: 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-    }
-    .store-name-text {
-        font-weight: 700;
-        color: #0F172A;
-        font-size: 14px;
-        display: block;
-    }
-    .store-id-subtext {
-        font-size: 12px;
-        color: #64748B;
-        display: block;
-        margin-top: 1px;
-    }
-
-    /* Plan & Usage Progress */
-    .plan-usage-box {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        width: 140px;
-    }
-    .plan-usage-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 13px;
-        font-weight: 600;
-        color: #0F172A;
-    }
-    .plan-usage-percent {
-        font-size: 11px;
-        color: #64748B;
-        font-weight: 500;
-    }
-    .plan-progress-track {
-        height: 5px;
-        width: 100%;
-        background: #E2E8F0;
-        border-radius: 9999px;
-        overflow: hidden;
-    }
-    .plan-progress-fill {
-        height: 100%;
-        border-radius: 9999px;
-    }
-
-    /* Owner Cell */
-    .owner-info-cell {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    .owner-avatar-circle {
-        width: 30px;
-        height: 30px;
+        right: -1rem; top: -1rem;
+        width: 6rem; height: 6rem;
         border-radius: 50%;
-        background: #CBD5E1;
-        color: #475569;
-        font-weight: 700;
-        font-size: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
+        transition: transform 0.5s ease;
+    }
+    .prec-stat-card:hover .bg-circle { transform: scale(1.5); }
+
+    .prec-table-card {
+        background: var(--color-surface-container);
+        border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        /* No overflow:hidden here — lets action dropdowns escape the card boundary */
+    }
+    .prec-toolbar {
+        padding: 12px 20px;
+        border-bottom: 1px solid rgba(199,196,215,0.3);
+        display: flex; flex-wrap: wrap;
+        justify-content: space-between; align-items: center; gap: 16px;
+        background: var(--color-surface-container);
+    }
+    .prec-search-wrap { position: relative; max-width: 360px; flex: 1; }
+    .prec-search-wrap .search-icon {
+        position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+        color: var(--color-on-surface-variant); font-size: 20px; pointer-events: none;
+    }
+    .prec-search-wrap input {
+        width: 100%; padding: 8px 16px 8px 40px;
+        background: var(--color-surface-container-lowest);
+        border: 1px solid rgba(199,196,215,0.5); border-radius: 8px;
+        font-family: 'Inter', sans-serif; font-size: 13px; color: var(--color-on-surface);
+        transition: all 0.2s; outline: none;
+    }
+    .prec-search-wrap input::placeholder { color: rgba(70,69,84,0.7); }
+    .prec-search-wrap input:focus {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px rgba(70,72,212,0.15);
+    }
+    .prec-btn-outline {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 8px 16px;
+        border: 1px solid rgba(199,196,215,0.5); border-radius: 8px;
+        background: var(--color-surface-container-lowest);
+        color: var(--color-on-surface) !important;
+        font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 500;
+        cursor: pointer; transition: background 0.15s, color 0.15s; text-decoration: none !important;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+    .prec-btn-outline:hover {
+        background: var(--color-surface-container-high);
+        color: var(--color-on-surface) !important; /* keep text dark, never turn black from global a:hover */
+        text-decoration: none !important;
+    }
+    .prec-btn-primary {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 8px 16px; border: none; border-radius: 8px;
+        background: var(--color-primary); color: #ffffff !important;
+        font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 500;
+        cursor: pointer; transition: opacity 0.15s; text-decoration: none !important;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    }
+    .prec-btn-primary:hover {
+        opacity: 0.9;
+        color: #ffffff !important; /* prevent Bootstrap overriding to dark */
+        text-decoration: none !important;
     }
 
-    /* Status Pills */
-    .badge-store-active {
-        background: #DCFCE7;
-        color: #16A34A;
-        font-size: 11.5px;
-        font-weight: 700;
-        text-transform: uppercase;
-        padding: 4px 12px;
-        border-radius: 6px;
-        display: inline-block;
-        letter-spacing: 0.04em;
-    }
-    .badge-store-limit {
-        background: #FEE2E2;
-        color: #DC2626;
-        font-size: 11px;
-        font-weight: 700;
-        text-transform: uppercase;
-        padding: 4px 10px;
-        border-radius: 6px;
-        display: inline-block;
-        letter-spacing: 0.04em;
-    }
-
-    /* Dark Mode Overrides for Stores Page */
-    html.dark .stores-header h1 { color: #F8FAFC !important; }
-    html.dark .stores-header p { color: #CBD5E1 !important; }
-    html.dark .store-stat-tile {
-        background: #111827 !important;
-        border-color: #263449 !important;
-    }
-    html.dark .store-stat-subtext { color: #94A3B8 !important; }
-    html.dark .store-stat-big-number { color: #F8FAFC !important; }
-    html.dark .stores-table-card {
-        background: #111827 !important;
-        border-color: #263449 !important;
-    }
-    html.dark .stores-table-toolbar { border-bottom-color: #263449 !important; }
-    html.dark .search-stores-input {
-        background-color: #0F172A !important;
-        border-color: #334155 !important;
-        color: #F8FAFC !important;
-    }
-    html.dark .custom-stores-table th {
-        background-color: #0F172A !important;
-        color: #94A3B8 !important;
-        border-bottom-color: #263449 !important;
-    }
-    html.dark .custom-stores-table td {
-        color: #CBD5E1 !important;
-        border-bottom-color: #1E293B !important;
-    }
-    html.dark .custom-stores-table tr:hover td {
-        background-color: #172033 !important;
-    }
-    html.dark .store-name-text,
-    html.dark .plan-usage-header { color: #F8FAFC !important; }
-    html.dark .store-id-subtext,
-    html.dark .plan-usage-percent { color: #94A3B8 !important; }
-    html.dark .plan-progress-track { background: #1E293B !important; }
-    html.dark .stores-table-footer { border-top-color: #263449 !important; }
-
-    /* Action Buttons */
-    .btn-action-icon {
-        width: 32px;
-        height: 32px;
-        border-radius: 8px;
-        background: #F1F5F9;
-        color: #475569;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.15s ease;
+    /* Global anchor override — stop Bootstrap/theme from turning links to primary indigo */
+    .prec-table td a:not(.prec-btn-primary):not(.prec-btn-outline):not(.dropdown-item-action) {
+        color: inherit !important;
         text-decoration: none;
-        border: none;
-        cursor: pointer;
     }
-    .btn-action-icon:hover {
-        background: #EEF2FF;
-        color: #4F46E5;
-    }
-    .btn-action-delete {
-        width: 32px;
-        height: 32px;
-        border-radius: 8px;
-        background: #FEE2E2;
-        color: #DC2626;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.15s ease;
-        text-decoration: none;
-        border: none;
-        cursor: pointer;
-    }
-    .btn-action-delete:hover {
-        background: #DC2626;
-        color: #FFFFFF;
+    .prec-table td a:not(.prec-btn-primary):not(.prec-btn-outline):not(.dropdown-item-action):hover {
+        color: inherit !important;
+        text-decoration: underline;
     }
 
-    /* Footer Pagination */
-    .stores-table-footer {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+    /* Make table wrap visible so dropdowns aren't clipped, remove scrollbars */
+    .prec-table-wrap { overflow: visible; background: var(--color-surface-container-lowest); border-radius: 12px; }
+
+    /* Ensure dropdown menus always render on top */
+    .prec-table .dropdown-menu {
+        z-index: 1055 !important;
+        position: absolute !important;
+    }
+    .prec-table .dropdown { position: relative; }
+    .prec-table { width: 100%; border-collapse: collapse; white-space: normal; }
+    .prec-table thead tr {
+        background: var(--color-surface-container-lowest);
+        border-bottom: 1px solid rgba(199,196,215,0.3);
+    }
+    .prec-table thead th {
         padding: 16px 24px;
-        background: var(--surface);
-        border-top: 1px solid var(--border);
+        font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 500;
+        letter-spacing: 0.08em; text-transform: uppercase;
+        color: var(--color-on-surface-variant);
     }
-    .footer-count-text {
-        font-size: 13px;
-        color: var(--text-secondary);
+    .prec-table tbody tr { border-bottom: 1px solid rgba(199,196,215,0.3); transition: background 0.15s; }
+    .prec-table tbody tr:hover { background: rgba(229,238,255,0.5) !important; }
+    .prec-table tbody tr:last-child { border-bottom: none; }
+    .prec-table td { padding: 16px 24px; vertical-align: middle; }
+
+    .store-avatar {
+        width: 40px; height: 40px; border-radius: 10px;
+        display: flex; align-items: center; justify-content: center;
+        font-family: 'Geist', sans-serif; font-size: 14px; font-weight: 600;
+        letter-spacing: 0.02em;
     }
-    .pagination-pills {
-        display: flex;
-        align-items: center;
-        gap: 6px;
+    .owner-avatar {
+        width: 32px; height: 32px; border-radius: 50%;
+        background: var(--color-secondary); color: #ffffff;
+        display: flex; align-items: center; justify-content: center;
+        font-family: 'Geist', sans-serif; font-size: 11px; font-weight: 600; flex-shrink: 0;
     }
-    .page-pill {
-        width: 32px;
-        height: 32px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 13px;
-        font-weight: 600;
-        color: var(--text-secondary);
-        cursor: pointer;
-        border: 1px solid var(--border);
-        background: var(--surface-2);
-        transition: all 0.15s ease;
+    .badge-active {
+        display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 6px;
+        font-size: 11px; font-family: 'Geist', sans-serif; font-weight: 500;
+        background: var(--color-secondary-container); color: var(--color-on-secondary-container);
     }
-    .page-pill.active {
-        background: var(--primary);
-        color: #FFFFFF;
-        border-color: var(--primary);
+    .badge-disabled {
+        display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 6px;
+        font-size: 11px; font-family: 'Geist', sans-serif; font-weight: 500;
+        background: rgba(186,26,26,0.10); color: var(--color-error);
     }
-    .page-pill:hover:not(.active) {
-        background: var(--surface-elevated);
-        color: var(--text-primary);
+    .badge-inactive {
+        display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 6px;
+        font-size: 11px; font-family: 'Geist', sans-serif; font-weight: 500;
+        background: var(--color-surface-container-highest); color: var(--color-on-surface-variant);
     }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-error); display: inline-block; }
+
+    .btn-action-more {
+        background: transparent !important; border: none !important;
+        color: var(--color-on-surface-variant) !important;
+        padding: 6px !important; border-radius: 6px !important;
+        transition: all 0.15s !important; box-shadow: none !important; line-height: 1 !important;
+    }
+    .btn-action-more::after { display: none !important; }
+    .btn-action-more:hover, .btn-action-more:focus {
+        background: var(--color-surface-container-high) !important;
+        color: var(--color-on-surface) !important;
+    }
+    .dropdown-item-action {
+        display: flex; align-items: center; gap: 12px; padding: 8px 16px;
+        font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500;
+        color: var(--color-on-surface-variant) !important;
+        transition: all 0.15s; text-decoration: none !important;
+    }
+    .dropdown-item-action:hover {
+        background-color: var(--color-surface-container-low);
+        color: var(--color-on-surface) !important;
+        text-decoration: none !important;
+    }
+    .dropdown-item-action.text-danger { color: var(--color-error) !important; }
+    .dropdown-item-action.text-danger:hover { background-color: var(--color-error-container) !important; color: var(--color-error) !important; }
+    .dropdown-item-action.text-success { color: #078841 !important; }
+    .dropdown-item-action.text-success:hover { background-color: rgba(7,136,65,0.08) !important; color: #078841 !important; }
+
+    .plan-bar-bg { width: 100%; height: 6px; background: var(--color-surface-container-highest); border-radius: 999px; overflow: hidden; }
+    .plan-bar-fill { height: 100%; border-radius: 999px; transition: width 0.5s ease; }
+
+    .prec-pagination {
+        padding: 16px 24px; border-top: 1px solid rgba(199,196,215,0.3);
+        background: var(--color-surface-container-lowest);
+        display: flex; align-items: center; justify-content: space-between;
+    }
+    .prec-pagination p { font-family: 'Geist', sans-serif; font-size: 12px; color: var(--color-on-surface-variant); margin: 0; }
+    .prec-pag-btn {
+        width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+        border-radius: 6px; border: none; background: transparent;
+        color: var(--color-on-surface-variant); cursor: pointer; transition: background 0.15s;
+    }
+    .prec-pag-btn:hover:not([disabled]) { background: var(--color-surface-container); }
+    .prec-pag-btn[disabled] { opacity: 0.4; cursor: not-allowed; }
 </style>
+@endpush
+@php
+    $profile = \App\Models\Utility::get_file('uploads/profile');
+@endphp
+@section('content')
+<x-ui.page-container>
 
-<div class="stores-container">
-    <!-- Page Header -->
-    <div class="stores-header">
+    {{-- Page Header --}}
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:16px;">
         <div>
-            <h1>{{ __('Stores Management') }}</h1>
-            <p>{{ __('Overview and control of all active merchant storefronts on the platform.') }}</p>
+            <h1 style="font-family:'Geist',sans-serif;font-size:1.5rem;line-height:40px;letter-spacing:-0.04em;font-weight:600;color:#0b1c30;margin:0;">
+                {{ __('Stores Management') }}
+            </h1>
+            <p style="font-family:'Inter',sans-serif;font-size:14px;line-height:20px;color:#464554;margin:8px 0 0 0;">
+                {{ __('Overview and control of all active merchant storefronts on the platform.') }}
+            </p>
         </div>
-
-        <div class="stores-header-actions">
-            <a href="#" class="btn-export-csv">
-                <span class="material-symbols-outlined text-[18px]">download</span>
-                <span>{{ __('Export CSV') }}</span>
+        <div>
+            <a href="#" class="prec-btn-primary" data-size="lg" data-url="{{ route('store-resource.create') }}" data-ajax-popup="true" data-title="{{ __('Create New Store') }}">
+                <span class="material-symbols-outlined" style="font-size:18px;">add</span>
+                {{ __('Add Store') }}
             </a>
-
-            @can('Create Store')
-                <a href="#" class="btn-create-store" data-size="lg" data-url="{{ route('store-resource.create') }}" data-ajax-popup="true" data-title="{{ __('Create New Store') }}" title="{{ __('Create') }}">
-                    <span class="material-symbols-outlined text-[18px]">add</span>
-                    <span>{{ __('New Store') }}</span>
-                </a>
-            @endcan
         </div>
     </div>
 
-    <!-- Top 3 Stat Cards Row -->
-    <div class="stores-stat-cards">
-        <!-- Card 1: Total Active Stores -->
-        <div class="store-stat-tile">
-            <span class="store-stat-label">{{ __('TOTAL ACTIVE STORES') }}</span>
-            <div class="store-stat-badge-icon badge-icon-purple">
-                <span class="material-symbols-outlined text-[20px]">storefront</span>
+    {{-- Summary Cards --}}
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-bottom:32px;">
+
+        {{-- Card 1: Total Active Stores — indigo icon like dashboard --}}
+        <div class="prec-stat-card" style="background:#e5eeff;">
+            <div class="bg-circle" style="background:rgba(70,72,212,0.05);"></div>
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;position:relative;z-index:1;">
+                <div style="width:48px;height:48px;border-radius:12px;background:#6063ee;color:#fffbff;display:flex;align-items:center;justify-content:center;">
+                    <span class="material-symbols-outlined">storefront</span>
+                </div>
+                <span style="display:flex;align-items:center;gap:4px;color:#078841;background:rgba(7,136,65,0.10);padding:4px 8px;border-radius:16px;font-family:'Geist',sans-serif;font-size:12px;font-weight:600;">
+                    <span class="material-symbols-outlined" style="font-size:14px;">trending_up</span>+2 this month
+                </span>
             </div>
-            <div class="store-stat-metric-row mb-1">
-                <span class="store-stat-big-number">{{ $users->count() > 0 ? $users->count() : 12 }}</span>
-            </div>
-            <div class="flex items-center gap-2">
-                <span class="store-stat-subbadge-green">📈 +2</span>
-                <span class="store-stat-subtext">this month</span>
+            <div style="position:relative;z-index:1;">
+                <p style="font-family:'Inter',sans-serif;font-size:13px;color:#464554;margin:0 0 4px 0;">{{ __('Total Active Stores') }}</p>
+                <p style="font-family:'Geist',sans-serif;font-size:24px;line-height:32px;font-weight:600;color:#0b1c30;margin:0;">{{ isset($allUsers) ? $allUsers->count() : $users->total() }}</p>
             </div>
         </div>
 
-        <!-- Card 2: Total Revenue (30D) -->
-        <div class="store-stat-tile">
-            <span class="store-stat-label">{{ __('TOTAL REVENUE (30D)') }}</span>
-            <div class="store-stat-badge-icon badge-icon-blue">
-                <span class="material-symbols-outlined text-[20px]">credit_card</span>
+        {{-- Card 2: Enabled Stores — green icon like dashboard --}}
+        <div class="prec-stat-card" style="background:#e5eeff;">
+            <div class="bg-circle" style="background:rgba(16,185,129,0.05);"></div>
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;position:relative;z-index:1;">
+                <div style="width:48px;height:48px;border-radius:12px;background:#10b981;color:#fffbff;display:flex;align-items:center;justify-content:center;">
+                    <span class="material-symbols-outlined">check_circle</span>
+                </div>
+                <span style="display:flex;align-items:center;gap:4px;color:#078841;background:rgba(7,136,65,0.10);padding:4px 8px;border-radius:16px;font-family:'Geist',sans-serif;font-size:12px;font-weight:600;">
+                    <span class="material-symbols-outlined" style="font-size:14px;">trending_up</span>+5% vs last period
+                </span>
             </div>
-            <div class="store-stat-metric-row mb-1">
-                <span class="store-stat-big-number">$142k</span>
-            </div>
-            <div class="flex items-center gap-2">
-                <span class="store-stat-subbadge-green">📈 +14%</span>
-                <span class="store-stat-subtext">vs last period</span>
+            <div style="position:relative;z-index:1;">
+                <p style="font-family:'Inter',sans-serif;font-size:13px;color:#464554;margin:0 0 4px 0;">{{ __('Enabled Stores') }}</p>
+                <p style="font-family:'Geist',sans-serif;font-size:24px;line-height:32px;font-weight:600;color:#0b1c30;margin:0;">{{ isset($allUsers) ? $allUsers->where('store_display', 1)->count() : collect($users->items())->where('store_display', 1)->count() }}</p>
             </div>
         </div>
 
-        <!-- Card 3: Needs Attention -->
-        <div class="store-stat-tile store-stat-tile-attention">
-            <span class="store-stat-label store-stat-label-red">{{ __('NEEDS ATTENTION') }}</span>
-            <div class="store-stat-badge-icon badge-icon-red">
-                <span class="material-symbols-outlined text-[20px]">warning</span>
+        {{-- Card 3: Needs Attention — amber icon like dashboard --}}
+        <div class="prec-stat-card" style="background:#e5eeff;">
+            <div class="bg-circle" style="background:rgba(245,158,11,0.05);"></div>
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;position:relative;z-index:1;">
+                <div style="width:48px;height:48px;border-radius:12px;background:#f59e0b;color:#fffbff;display:flex;align-items:center;justify-content:center;">
+                    <span class="material-symbols-outlined">warning</span>
+                </div>
+                <span style="display:flex;align-items:center;gap:4px;color:#ba1a1a;background:rgba(186,26,26,0.10);padding:4px 8px;border-radius:16px;font-family:'Geist',sans-serif;font-size:12px;font-weight:600;">
+                    <span class="material-symbols-outlined" style="font-size:14px;">info</span>Login disabled
+                </span>
             </div>
-            <div class="store-stat-metric-row mb-1">
-                <span class="store-stat-big-number">3</span>
+            <div style="position:relative;z-index:1;">
+                <p style="font-family:'Inter',sans-serif;font-size:13px;color:#464554;margin:0 0 4px 0;">{{ __('Needs Attention') }}</p>
+                <p style="font-family:'Geist',sans-serif;font-size:24px;line-height:32px;font-weight:600;color:#0b1c30;margin:0;">{{ isset($allUsers) ? $allUsers->where('is_enable_login', 0)->count() : collect($users->items())->where('is_enable_login', 0)->count() }}</p>
             </div>
-            <span class="store-stat-subtext-red">Pending updates</span>
         </div>
+
     </div>
 
-    <!-- Stores Directory Table Card -->
-    <div class="stores-table-card">
-        <div class="stores-table-header">
-            <div class="search-stores-box">
-                <span class="material-symbols-outlined search-icon-inside">search</span>
-                <input type="text" class="search-stores-input" placeholder="{{ __('Search stores, owners, or IDs...') }}">
-            </div>
 
-            <button class="btn-filter-action">
-                <span class="material-symbols-outlined text-[18px]">filter_list</span>
-                <span>{{ __('Filter') }}</span>
-            </button>
+    {{-- Table Card --}}
+    <div class="prec-table-card">
+        <div class="prec-toolbar" style="padding:16px 24px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(199,196,215,0.3); background:var(--color-surface-container-lowest); border-radius:12px 12px 0 0;">
+            <div style="display:flex; gap:16px; align-items:center;">
+                <div style="position:relative;">
+                    <select class="dataTable-selector" style="appearance:none; padding:8px 32px 8px 12px; border:1px solid rgba(199,196,215,0.5); border-radius:8px; background:var(--color-surface-container-lowest); font-family:'Inter',sans-serif; font-size:13px; font-weight:500; color:var(--color-on-surface); outline:none; cursor:pointer;">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="25" selected>25</option>
+                    </select>
+                    <span class="material-symbols-outlined" style="position:absolute; right:8px; top:50%; transform:translateY(-50%); font-size:18px; color:var(--color-on-surface-variant); pointer-events:none;">expand_more</span>
+                </div>
+                
+                <div style="display:flex; border:1px solid rgba(199,196,215,0.5); border-radius:8px; overflow:hidden; background:var(--color-surface-container-lowest);">
+                    <button style="display:flex; align-items:center; gap:8px; padding:8px 16px; background:transparent; border:none; border-right:1px solid rgba(199,196,215,0.5); color:var(--color-on-surface-variant); font-family:'Inter',sans-serif; font-size:13px; font-weight:500; cursor:pointer;">
+                        <span class="material-symbols-outlined" style="font-size:16px;">upload</span>
+                        {{ __('Import') }}
+                    </button>
+                    <button style="display:flex; align-items:center; gap:8px; padding:8px 16px; background:transparent; border:none; color:var(--color-on-surface-variant); font-family:'Inter',sans-serif; font-size:13px; font-weight:500; cursor:pointer;">
+                        <span class="material-symbols-outlined" style="font-size:16px;">download</span>
+                        {{ __('Export') }}
+                    </button>
+                </div>
+            </div>
+            
+            <div style="display:flex; gap:12px; align-items:center;">
+                <div style="position:relative; width:260px;">
+                    <span class="material-symbols-outlined" style="position:absolute; left:12px; top:50%; transform:translateY(-50%); font-size:18px; color:var(--color-on-surface-variant);">search</span>
+                    <input type="text" id="storeSearchInput" placeholder="{{ __('Search...') }}" onkeyup="filterStoreRows(this.value)" style="width:100%; padding:8px 12px 8px 36px; border:1px solid rgba(199,196,215,0.5); border-radius:8px; font-family:'Inter',sans-serif; font-size:13px; color:var(--color-on-surface); outline:none;">
+                </div>
+                <button class="prec-btn-outline" style="padding:8px 16px; display:flex; align-items:center; gap:8px;">
+                    <span class="material-symbols-outlined" style="font-size:18px;">filter_alt</span>
+                    {{ __('Filters') }}
+                </button>
+            </div>
         </div>
 
-        <div class="stores-table-wrapper">
-            <table class="custom-stores-table">
+        <div class="prec-table-wrap">
+            <table class="prec-table" id="storesTable">
                 <thead>
                     <tr>
-                        <th>{{ __('STORE INFO') }}</th>
-                        <th>{{ __('PLAN & USAGE') }}</th>
-                        <th>{{ __('OWNER') }}</th>
-                        <th>{{ __('REVENUE (MTD)') }}</th>
-                        <th>{{ __('STATUS') }}</th>
-                        <th style="text-align: right;">{{ __('ACTIONS') }}</th>
+                        <th style="width:40px;text-align:center;">
+                            <input type="checkbox" id="selectAllStores" style="width:16px;height:16px;cursor:pointer;accent-color:var(--color-primary);" onclick="toggleAllStores(this)">
+                        </th>
+                        <th style="width:25%;text-align:left;">{{ __('Store Info') }}</th>
+                        <th style="width:20%;text-align:left;">{{ __('Plan & Usage') }}</th>
+                        <th style="width:20%;text-align:left;">{{ __('Owner') }}</th>
+                        <th style="width:15%;text-align:left;">{{ __('Revenue (MTD)') }}</th>
+                        <th style="width:10%;text-align:left;">{{ __('Status') }}</th>
+                        <th style="width:10%;text-align:right;">{{ __('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($users as $usr)
-                        @php
-                            $planName = !empty($usr->currentPlan->name) ? $usr->currentPlan->name : 'Starter';
-                            $usagePercent = rand(30, 95);
-                            $fillColor = $usagePercent > 80 ? '#4F46E5' : '#2563EB';
-                            $storeId = 'str_' . substr(md5($usr->id), 0, 6);
-                        @endphp
-                        <tr>
-                            <td>
-                                <div class="store-info-cell">
-                                    <div class="store-initial-avatar">
-                                        {{ strtoupper(substr($usr->name ?? 'A', 0, 1)) }}
-                                    </div>
-                                    <div>
-                                        <span class="store-name-text">{{ $usr->name }}</span>
-                                        <span class="store-id-subtext">ID: {{ $storeId }}</span>
-                                    </div>
+                    @foreach ($users as $index => $usr)
+                    @php
+                        $initials       = strtoupper(substr($usr->name, 0, 2));
+                        $planName       = !empty($usr->currentPlan->name) ? $usr->currentPlan->name : 'Free';
+                        $storeId        = 'STR-' . strtoupper(substr(md5($usr->id), 0, 4));
+                        $delay          = $index * 50;
+                        $isActive       = $usr->store_display == 1;
+                        $loginEnabled   = $usr->is_enable_login == 1;
+                        
+                        $avatarColors = [
+                            ['bg' => '#eef2ff', 'text' => '#4f46e5'], // Indigo
+                            ['bg' => '#f0fdf4', 'text' => '#16a34a'], // Green
+                            ['bg' => '#fffbeb', 'text' => '#d97706'], // Amber
+                            ['bg' => '#fdf2f8', 'text' => '#db2777'], // Pink
+                            ['bg' => '#eff6ff', 'text' => '#2563eb'], // Blue
+                            ['bg' => '#f5f3ff', 'text' => '#7c3aed'], // Purple
+                            ['bg' => '#ecfdf5', 'text' => '#059669'], // Emerald
+                            ['bg' => '#fff1f2', 'text' => '#e11d48'], // Rose
+                        ];
+                        $colorIndex = abs(crc32($usr->store_name ?? $usr->name)) % count($avatarColors);
+                        $theme = $avatarColors[$colorIndex];
+                    @endphp
+                    <tr class="store-row"
+                        style="{{ (!$loginEnabled || $usr->is_active == 0 || !$isActive) ? 'background:rgba(186,26,26,0.025);' : '' }}"
+                        data-name="{{ strtolower($usr->name) }}" data-email="{{ strtolower($usr->email) }}">
+                        
+                        <td style="text-align:center;">
+                            <input type="checkbox" class="store-checkbox" value="{{ $usr->id }}" style="width:16px;height:16px;cursor:pointer;accent-color:var(--color-primary);" onclick="updateSelectAllStatus()">
+                        </td>
+                        <td>
+                            <div style="display:flex;align-items:center;gap:12px;">
+                                <div class="store-avatar" style="background:{{ $theme['bg'] }};color:{{ $theme['text'] }};">{{ strtoupper(substr($usr->store_name ?? $usr->name, 0, 2)) }}</div>
+                                <div style="display:flex;flex-direction:column;">
+                                    <span style="font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#0b1c30;cursor:pointer;line-height:18px;"
+                                       onmouseover="this.style.color='#4648d4'" onmouseout="this.style.color='#0b1c30'">{{ $usr->store_name ?? $usr->name }}</span>
+                                    <span style="font-family:'Geist',sans-serif;font-size:12px;font-weight:500;color:#464554;letter-spacing:0.02em;line-height:16px;">ID: {{ $storeId }}</span>
                                 </div>
-                            </td>
-                            <td>
-                                <div class="plan-usage-box">
-                                    <div class="plan-usage-header">
-                                        <span>{{ $planName }}</span>
-                                        <span class="plan-usage-percent">{{ $usagePercent }}%</span>
-                                    </div>
-                                    <div class="plan-progress-track">
-                                        <div class="plan-progress-fill" style="width: {{ $usagePercent }}%; background: {{ $fillColor }};"></div>
-                                    </div>
+                            </div>
+                        </td>
+
+                        <td style="vertical-align:middle;">
+                            <div style="display:flex;flex-direction:column;gap:6px;width:100%;max-width:160px;">
+                                <div style="display:flex;justify-content:space-between;align-items:center;">
+                                    <span style="font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:#0b1c30;line-height:18px;">{{ $planName }}</span>
+                                    <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#464554;line-height:20px;">50%</span>
                                 </div>
-                            </td>
-                            <td>
-                                <div class="owner-info-cell">
-                                    <div class="owner-avatar-circle">
-                                        {{ strtoupper(substr($usr->email ?? 'O', 0, 1)) }}
-                                    </div>
-                                    <span style="font-weight: 600; color: #0F172A;">{{ explode('@', $usr->email)[0] }}</span>
+                                <div style="height:6px;width:100%;background:var(--color-surface-container-highest);border-radius:9999px;overflow:hidden;">
+                                    <div style="height:100%;width:50%;background:var(--color-primary);border-radius:9999px;transition:width 0.5s;"></div>
                                 </div>
-                            </td>
-                            <td style="font-weight: 700; color: #0F172A;">$42,500.00</td>
-                            <td>
-                                <span class="badge-store-active">{{ __('ACTIVE') }}</span>
-                            </td>
-                            <td style="text-align: right;">
-                                <div class="flex items-center justify-end gap-1.5">
+                            </div>
+                        </td>
+
+                        <td>
+                            <div style="display:flex;align-items:center;gap:12px;">
+                                <img src="{{ !empty($usr->avatar) ? ($profile . '/' . $usr->avatar) : ($profile . '/avatar.png') }}" class="owner-avatar" style="object-fit:cover;border-radius:50%;width:32px;height:32px;flex-shrink:0;" onerror="this.src='{{ $profile . '/avatar.png' }}'">
+                                <span style="font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:#0b1c30;line-height:18px;">{{ $usr->name }}</span>
+                            </div>
+                        </td>
+
+                        <td>
+                            <span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;color:#0b1c30;">{{ \App\Models\Utility::priceFormat($usr->store_revenue ?? 0) }}</span>
+                        </td>
+
+                        <td>
+                            @if(!$loginEnabled || $usr->is_active == 0)
+                                <span class="badge-disabled"><span class="badge-dot"></span>{{ __('Disabled') }}</span>
+                            @elseif($isActive)
+                                <span class="badge-active">{{ __('Active') }}</span>
+                            @else
+                                <span class="badge-inactive">{{ __('Inactive') }}</span>
+                            @endif
+                        </td>
+
+                        <td style="text-align:right;">
+                            <div class="dropdown">
+                                <button class="btn btn-action-more dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="material-symbols-outlined" style="font-size:20px;display:flex;">more_vert</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-lg"
+                                    style="border-radius:12px;border:1px solid rgba(199,196,215,0.2);padding:8px 0;min-width:200px;">
                                     @if(Auth::user()->type == "super admin")
-                                        <a href="#" data-url="{{route('owner.info', $usr->id)}}" data-size="lg" data-ajax-popup="true" class="btn-action-icon" data-title="{{__('Owner Info')}}" title="{{ __('Owner Info') }}">
-                                            <span class="material-symbols-outlined text-[18px]">info</span>
-                                        </a>
-
-                                        <a href="{{ route('login.with.owner', $usr->id) }}" class="btn-action-icon" title="{{ __('Login As Owner') }}">
-                                            <span class="material-symbols-outlined text-[18px]">login</span>
-                                        </a>
-
-                                        <a href="#" data-size="lg" data-url="{{ route('store.links', $usr->id) }}" data-ajax-popup="true" data-title="{{ __('Store Links') }}" class="btn-action-icon" title="{{ __('Store Links') }}">
-                                            <span class="material-symbols-outlined text-[18px]">link</span>
-                                        </a>
+                                        <li>
+                                            <a href="#" class="dropdown-item dropdown-item-action"
+                                               data-url="{{ route('owner.info', $usr->id) }}" data-size="lg"
+                                               data-ajax-popup="true" data-title="{{ __('Owner Info') }}">
+                                                <span class="material-symbols-outlined" style="font-size:18px;">info</span>{{ __('Owner Info') }}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('login.with.owner', $usr->id) }}" class="dropdown-item dropdown-item-action">
+                                                <span class="material-symbols-outlined" style="font-size:18px;">login</span>{{ __('Login as owner') }}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="dropdown-item dropdown-item-action" data-size="lg"
+                                               data-url="{{ route('store.links', $usr->id) }}" data-ajax-popup="true"
+                                               data-title="{{ __('Store Links') }}">
+                                                <span class="material-symbols-outlined" style="font-size:18px;">link</span>{{ __('Store Links') }}
+                                            </a>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
                                     @endif
 
+                                    @if ($usr->is_enable_login == 1)
+                                        <li>
+                                            <a href="{{ route('users.login', \Crypt::encrypt($usr->id)) }}" class="dropdown-item dropdown-item-action text-danger">
+                                                <span class="material-symbols-outlined" style="font-size:18px;">block</span>{{ __('Login Disable') }}
+                                            </a>
+                                        </li>
+                                    @elseif ($usr->is_enable_login == 0 && $usr->password == null)
+                                        <li>
+                                            <a href="#" class="dropdown-item dropdown-item-action text-success login_enable"
+                                               data-url="{{ route('user.reset', \Crypt::encrypt($usr->id)) }}"
+                                               data-ajax-popup="true" data-title="{{ __('New Password') }}">
+                                                <span class="material-symbols-outlined" style="font-size:18px;">check_circle</span>{{ __('Login Enable') }}
+                                            </a>
+                                        </li>
+                                    @else
+                                        <li>
+                                            <a href="{{ route('users.login', \Crypt::encrypt($usr->id)) }}" class="dropdown-item dropdown-item-action text-success login_enable">
+                                                <span class="material-symbols-outlined" style="font-size:18px;">check_circle</span>{{ __('Login Enable') }}
+                                            </a>
+                                        </li>
+                                    @endif
+
+                                    <li><hr class="dropdown-divider"></li>
+
+                                    @can('Upgrade Plans')
+                                        <li>
+                                            <a href="#" class="dropdown-item dropdown-item-action"
+                                               data-url="{{ route('plan.upgrade', $usr->id) }}"
+                                               data-ajax-popup="true" data-title="{{ __('Upgrade Plan') }}">
+                                                <span class="material-symbols-outlined" style="font-size:18px;">upgrade</span>{{ __('Upgrade Plan') }}
+                                            </a>
+                                        </li>
+                                    @endcan
+
+                                    @can('Reset Password')
+                                        <li>
+                                            <a href="#" class="dropdown-item dropdown-item-action"
+                                               data-url="{{ route('user.reset', \Crypt::encrypt($usr->id)) }}"
+                                               data-ajax-popup="true" data-title="{{ __('Reset Password') }}">
+                                                <span class="material-symbols-outlined" style="font-size:18px;">key</span>{{ __('Reset Password') }}
+                                            </a>
+                                        </li>
+                                    @endcan
+
                                     @can('Edit Store')
-                                        <a href="#" data-url="{{ route('store-resource.edit', $usr->id) }}" data-ajax-popup="true" data-title="{{ __('Edit Store') }}" class="btn-action-icon" title="{{ __('Edit') }}">
-                                            <span class="material-symbols-outlined text-[18px]">edit</span>
-                                        </a>
+                                        <li>
+                                            <a href="#" class="dropdown-item dropdown-item-action"
+                                               data-url="{{ route('store-resource.edit', $usr->id) }}"
+                                               data-ajax-popup="true" data-title="{{ __('Edit Store') }}">
+                                                <span class="material-symbols-outlined" style="font-size:18px;">edit</span>{{ __('Edit') }}
+                                            </a>
+                                        </li>
                                     @endcan
 
                                     @if($usr->id != 2)
                                         @can('Delete Store')
-                                            <a href="#" class="btn-action-delete bs-pass-para" data-confirm="{{ __('Are You Sure?') }}" data-text="{{ __('This action can not be undone.') }}" data-confirm-yes="delete-form-{{ $usr->id }}" title="{{ __('Delete') }}">
-                                                <span class="material-symbols-outlined text-[18px]">delete</span>
-                                            </a>
-                                            {!! Form::open(['method' => 'DELETE', 'route' => ['store-resource.destroy', $usr->id], 'id' => 'delete-form-' . $usr->id, 'class' => 'hidden']) !!}
-                                            {!! Form::close() !!}
+                                            <li>
+                                                <a href="#" class="dropdown-item dropdown-item-action text-danger bs-pass-para"
+                                                   data-confirm="{{ __('Are You Sure?') }}"
+                                                   data-text="{{ __('This action can not be undone. Do you want to continue?') }}"
+                                                   data-confirm-yes="delete-form-{{ $usr->id }}">
+                                                    <span class="material-symbols-outlined" style="font-size:18px;">delete</span>{{ __('Delete') }}
+                                                </a>
+                                                {!! Form::open(['method' => 'DELETE', 'route' => ['store-resource.destroy', $usr->id], 'id' => 'delete-form-' . $usr->id, 'class' => 'hidden']) !!}
+                                                {!! Form::close() !!}
+                                            </li>
                                         @endcan
                                     @endif
-                                </div>
-                            </td>
-                        </tr>
-                    @empty
-                        {{-- Sample Mockup Data Rows --}}
-                        <tr>
-                            <td>
-                                <div class="store-info-cell">
-                                    <div class="store-initial-avatar">A</div>
-                                    <div>
-                                        <span class="store-name-text">Apex Roasters</span>
-                                        <span class="store-id-subtext">ID: str_098x2m</span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="plan-usage-box">
-                                    <div class="plan-usage-header">
-                                        <span>Enterprise</span>
-                                        <span class="plan-usage-percent">80%</span>
-                                    </div>
-                                    <div class="plan-progress-track">
-                                        <div class="plan-progress-fill" style="width: 80%; background: #4F46E5;"></div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="owner-info-cell">
-                                    <div class="owner-avatar-circle" style="background: #E0E7FF; color: #4F46E5;">J</div>
-                                    <span style="font-weight: 600; color: #0F172A;">Jane Doe</span>
-                                </div>
-                            </td>
-                            <td style="font-weight: 700; color: #0F172A;">$42,500.00</td>
-                            <td><span class="badge-store-active">ACTIVE</span></td>
-                            <td style="text-align: right;">
-                                <div class="flex items-center justify-end gap-1.5">
-                                    <button class="btn-action-icon"><span class="material-symbols-outlined text-[18px]">info</span></button>
-                                    <button class="btn-action-icon"><span class="material-symbols-outlined text-[18px]">edit</span></button>
-                                    <button class="btn-action-delete"><span class="material-symbols-outlined text-[18px]">delete</span></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="store-info-cell">
-                                    <div class="store-initial-avatar" style="background: #FEF3C7; color: #D97706;">V</div>
-                                    <div>
-                                        <span class="store-name-text">Velocity Threads</span>
-                                        <span class="store-id-subtext">ID: str_142y9k</span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="plan-usage-box">
-                                    <div class="plan-usage-header">
-                                        <span>Growth</span>
-                                        <span class="plan-usage-percent">40%</span>
-                                    </div>
-                                    <div class="plan-progress-track">
-                                        <div class="plan-progress-fill" style="width: 40%; background: #2563EB;"></div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="owner-info-cell">
-                                    <div class="owner-avatar-circle" style="background: #F1F5F9; color: #475569;">M</div>
-                                    <span style="font-weight: 600; color: #0F172A;">Marcus Reed</span>
-                                </div>
-                            </td>
-                            <td style="font-weight: 700; color: #0F172A;">$18,200.00</td>
-                            <td><span class="badge-store-active">ACTIVE</span></td>
-                            <td style="text-align: right;">
-                                <div class="flex items-center justify-end gap-1.5">
-                                    <button class="btn-action-icon"><span class="material-symbols-outlined text-[18px]">info</span></button>
-                                    <button class="btn-action-icon"><span class="material-symbols-outlined text-[18px]">edit</span></button>
-                                    <button class="btn-action-delete"><span class="material-symbols-outlined text-[18px]">delete</span></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="store-info-cell">
-                                    <div class="store-initial-avatar" style="background: #FEE2E2; color: #DC2626;">A</div>
-                                    <div>
-                                        <span class="store-name-text">Aura Wellness</span>
-                                        <span class="store-id-subtext">ID: str_773m2p</span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="plan-usage-box">
-                                    <div class="plan-usage-header">
-                                        <span>Starter</span>
-                                        <span class="plan-usage-percent" style="color: #DC2626;">100%</span>
-                                    </div>
-                                    <div class="plan-progress-track">
-                                        <div class="plan-progress-fill" style="width: 100%; background: #DC2626;"></div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="owner-info-cell">
-                                    <div class="owner-avatar-circle" style="background: #E0E7FF; color: #4F46E5;">S</div>
-                                    <span style="font-weight: 600; color: #0F172A;">Sarah Lee</span>
-                                </div>
-                            </td>
-                            <td style="font-weight: 700; color: #0F172A;">$4,100.00</td>
-                            <td><span class="badge-store-limit">LIMIT REACHED</span></td>
-                            <td style="text-align: right;">
-                                <div class="flex items-center justify-end gap-1.5">
-                                    <button class="btn-action-icon"><span class="material-symbols-outlined text-[18px]">info</span></button>
-                                    <button class="btn-action-icon"><span class="material-symbols-outlined text-[18px]">edit</span></button>
-                                    <button class="btn-action-delete"><span class="material-symbols-outlined text-[18px]">delete</span></button>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforelse
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
 
-        <div class="stores-table-footer">
-            <span class="footer-count-text">{{ __('Showing 1 to 3 of 12 entries') }}</span>
-            <div class="pagination-pills">
-                <button class="page-pill">&lt;</button>
-                <button class="page-pill active">1</button>
-                <button class="page-pill">2</button>
-                <button class="page-pill">3</button>
-                <button class="page-pill">&gt;</button>
-            </div>
+        <div class="prec-pagination">
+            @if(method_exists($users, 'total'))
+                <p>Showing {{ $users->firstItem() ?? 0 }} to {{ $users->lastItem() ?? 0 }} of {{ $users->total() }} entries</p>
+                <div style="display:flex;align-items:center;gap:4px;">
+                    <a href="{{ $users->previousPageUrl() }}" class="prec-pag-btn" style="text-decoration:none;" {{ $users->onFirstPage() ? 'disabled' : '' }}>
+                        <span class="material-symbols-outlined" style="font-size:20px;">chevron_left</span>
+                    </a>
+                    <button class="prec-pag-btn" style="background:#4648d4;color:#ffffff;font-family:'Geist',sans-serif;font-size:13px;font-weight:500;">
+                        {{ $users->currentPage() }}
+                    </button>
+                    <a href="{{ $users->nextPageUrl() }}" class="prec-pag-btn" style="text-decoration:none;" {{ !$users->hasMorePages() ? 'disabled' : '' }}>
+                        <span class="material-symbols-outlined" style="font-size:20px;">chevron_right</span>
+                    </a>
+                </div>
+            @else
+                <p>Showing 1 to {{ $users->count() }} of {{ $users->count() }} entries</p>
+                <div style="display:flex;align-items:center;gap:4px;">
+                    <button class="prec-pag-btn" disabled><span class="material-symbols-outlined" style="font-size:20px;">chevron_left</span></button>
+                    <button class="prec-pag-btn" style="background:#4648d4;color:#ffffff;font-family:'Geist',sans-serif;font-size:13px;font-weight:500;">1</button>
+                    <button class="prec-pag-btn" disabled><span class="material-symbols-outlined" style="font-size:20px;">chevron_right</span></button>
+                </div>
+            @endif
         </div>
+
     </div>
-</div>
+
+</x-ui.page-container>
 @endsection
 
 @push('scripts')
 <script>
-    $(document).on('change', '#password_switch', function() {
+    function toggleAllStores(source) {
+        let checkboxes = document.querySelectorAll('.store-checkbox');
+        for(let i=0; i<checkboxes.length; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+
+    function updateSelectAllStatus() {
+        let checkboxes = document.querySelectorAll('.store-checkbox');
+        let selectAll = document.getElementById('selectAllStores');
+        let allChecked = true;
+        let anyUnchecked = false;
+        
+        for(let i=0; i<checkboxes.length; i++) {
+            if(!checkboxes[i].checked) {
+                allChecked = false;
+                anyUnchecked = true;
+                break;
+            }
+        }
+        selectAll.checked = allChecked;
+    }
+
+    function filterStoreRows(query) {
+        const q = query.toLowerCase().trim();
+        document.querySelectorAll('#storesTable tbody tr.store-row').forEach(function(row) {
+            const name  = row.dataset.name  || '';
+            const email = row.dataset.email || '';
+            row.style.display = (!q || name.includes(q) || email.includes(q)) ? '' : 'none';
+        });
+    }
+
+    function exportTableToCSV(filename) {
+        var rows = document.querySelectorAll('#storesTable thead tr, #storesTable tbody tr.store-row:not([style*="display: none"])');
+        var csvLines = [];
+        rows.forEach(function(row) {
+            var cols = row.querySelectorAll('th, td');
+            var line = [];
+            cols.forEach(function(col, i) {
+                if (i === cols.length - 1) return; // skip Actions column
+                var text = col.innerText.replace(/\n/g,' ').replace(/,/g,' ').trim();
+                line.push('"' + text + '"');
+            });
+            csvLines.push(line.join(','));
+        });
+        var blob = new Blob([csvLines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+        var link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.setAttribute('download', filename);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    $(document).on('change', '#password_switch', function () {
         if ($(this).is(':checked')) {
             $('.ps_div').removeClass('d-none');
-            $('#password').attr("required", true);
+            $('#password').attr('required', true);
         } else {
             $('.ps_div').addClass('d-none');
             $('#password').val(null);
-            $('#password').removeAttr("required");
+            $('#password').removeAttr('required');
         }
     });
-    $(document).on('click', '.login_enable', function() {
-        setTimeout(function() {
-            $('.login_field').append($('<input>', {
-                type: 'hidden',
-                val: 'true',
-                name: 'login_enable'
-            }));
+
+    $(document).on('click', '.login_enable', function () {
+        setTimeout(function () {
+            $('.login_field').append($('<input>', { type: 'hidden', val: 'true', name: 'login_enable' }));
         }, 2000);
     });
 </script>
