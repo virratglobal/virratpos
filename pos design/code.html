@@ -1,0 +1,616 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>POS Terminal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@400;500;600;700;900&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-highest": "#d3e4fe",
+                      "on-secondary-container": "#5c647a",
+                      "tertiary-fixed-dim": "#ffb783",
+                      "surface-container": "#e5eeff",
+                      "error-container": "#ffdad6",
+                      "inverse-primary": "#c0c1ff",
+                      "outline": "#767586",
+                      "surface-bright": "#f8f9ff",
+                      "outline-variant": "#c7c4d7",
+                      "surface-dim": "#cbdbf5",
+                      "tertiary-fixed": "#ffdcc5",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed-variant": "#2f2ebe",
+                      "inverse-on-surface": "#eaf1ff",
+                      "on-secondary-fixed": "#131b2e",
+                      "on-surface-variant": "#464554",
+                      "on-secondary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "on-tertiary-container": "#fffbff",
+                      "primary-fixed": "#e1e0ff",
+                      "on-background": "#0b1c30",
+                      "on-primary": "#ffffff",
+                      "primary-fixed-dim": "#c0c1ff",
+                      "on-error": "#ffffff",
+                      "tertiary-container": "#b55d00",
+                      "surface-variant": "#d3e4fe",
+                      "secondary-fixed": "#dae2fd",
+                      "on-surface": "#0b1c30",
+                      "tertiary": "#904900",
+                      "surface-container-high": "#dce9ff",
+                      "on-secondary-fixed-variant": "#3f465c",
+                      "surface-tint": "#494bd6",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-fixed-dim": "#bec6e0",
+                      "on-error-container": "#93000a",
+                      "surface": "#f8f9ff",
+                      "secondary-container": "#dae2fd",
+                      "primary": "#4648d4",
+                      "background": "#f8f9ff",
+                      "on-primary-container": "#fffbff",
+                      "primary-container": "#6063ee",
+                      "on-tertiary-fixed-variant": "#703700",
+                      "on-tertiary-fixed": "#301400",
+                      "surface-container-low": "#eff4ff",
+                      "secondary": "#565e74",
+                      "inverse-surface": "#213145",
+                      "on-primary-fixed": "#07006c"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "sidebar-collapsed": "64px",
+                      "container-max": "1440px",
+                      "gutter": "24px",
+                      "sidebar-width": "240px",
+                      "margin-desktop": "32px",
+                      "base": "4px"
+              },
+              "fontFamily": {
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "mono": [
+                              "jetbrainsMono"
+                      ],
+                      "headline-lg": [
+                              "Geist"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Geist"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "display": [
+                              "Geist"
+                      ],
+                      "label-md": [
+                              "Geist"
+                      ]
+              },
+              "fontSize": {
+                      "body-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "mono": [
+                              "13px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display": [
+                              "36px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-md": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+            },
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c7c4d7;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #767586;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-sm h-screen flex flex-col overflow-hidden">
+<!-- TopNavBar -->
+<header class="bg-surface border-b border-outline-variant flex justify-between items-center w-full px-margin-desktop py-2 h-16 shrink-0 z-10 relative shadow-sm">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 text-primary font-headline-md">
+<span class="material-symbols-outlined bg-primary-container text-on-primary-container p-1 rounded-md text-xl" style="font-variation-settings: &quot;FILL&quot; 1;">storefront</span>
+<span class="font-bold">Register</span>
+</div>
+<span class="bg-error-container text-on-error-container px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide flex items-center gap-1 border border-error/20 ml-2">
+<span class="w-1.5 h-1.5 bg-error rounded-full block"></span>
+                CLOSED
+            </span>
+<div class="h-6 w-px bg-outline-variant mx-2"></div>
+<button class="flex flex-col items-start bg-primary-container text-on-primary-container px-3 py-1 rounded-lg border border-primary/20 hover:bg-surface-tint hover:text-white transition-colors">
+<span class="text-[10px] font-semibold uppercase tracking-wider opacity-80">Warehouse</span>
+<div class="flex items-center gap-1 font-label-md font-bold">
+<span class="">Main Warehouse</span>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</div>
+</button>
+<button class="flex flex-col items-start px-3 py-1 rounded-lg border border-outline-variant hover:bg-surface-container transition-colors text-on-surface-variant">
+<div class="flex items-center gap-2 font-label-md">
+<span class="material-symbols-outlined text-sm opacity-70">folder</span>
+<span class="">All Categories</span>
+<span class="material-symbols-outlined text-sm opacity-70">expand_more</span>
+</div>
+</button>
+<button class="flex flex-col items-start px-3 py-1 rounded-lg border border-outline-variant hover:bg-surface-container transition-colors text-on-surface-variant">
+<div class="flex items-center gap-2 font-label-md">
+<span class="material-symbols-outlined text-sm opacity-70">sell</span>
+<span class="">All Brands</span>
+<span class="material-symbols-outlined text-sm opacity-70">expand_more</span>
+</div>
+</button>
+</div>
+<div class="flex items-center gap-3"><div class="flex items-center gap-1 mr-4">
+  <button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors" title="Add Customer">
+    <span class="material-symbols-outlined text-[20px]">person_add</span>
+  </button>
+  <button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors" title="Receipts">
+    <span class="material-symbols-outlined text-[20px]">receipt_long</span>
+  </button>
+  <button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors" title="Undo">
+    <span class="material-symbols-outlined text-[20px]">undo</span>
+  </button>
+  <button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors" title="Settings">
+    <span class="material-symbols-outlined text-[20px]">settings</span>
+  </button>
+  <button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors" title="Language">
+    <span class="material-symbols-outlined text-[20px]">language</span>
+  </button>
+  <button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors" title="Display">
+    <span class="material-symbols-outlined text-[20px]">desktop_windows</span>
+  </button>
+  <button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors" title="Keyboard">
+    <span class="material-symbols-outlined text-[20px]">keyboard</span>
+  </button>
+  <button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors" title="Fullscreen">
+    <span class="material-symbols-outlined text-[20px]">fullscreen</span>
+  </button>
+</div>
+<button class="flex items-center gap-3 px-3 py-1 rounded-lg border border-outline-variant hover:bg-surface-container transition-colors text-on-surface-variant">
+  <div class="w-7 h-7 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center text-[10px] font-bold shrink-0">
+    W
+  </div>
+  <div class="flex flex-col items-start text-left">
+    <span class="text-[10px] font-bold uppercase tracking-wider text-outline">Customer</span>
+    <span class="font-label-md leading-none font-bold text-on-surface">walk-in-customer</span>
+  </div>
+  <span class="material-symbols-outlined text-sm ml-auto opacity-70">expand_more</span>
+</button>
+<div class="h-6 w-px bg-outline-variant mx-1"></div>
+
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center border border-primary/20 ml-2">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">person</span>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 flex overflow-hidden flex-row-reverse">
+<!-- Left Column (Cart) -->
+<section class="bg-surface flex flex-col border-outline-variant shrink-0 border-l w-[480px]">
+<!-- Cart Header -->
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-lowest">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">shopping_cart</span>
+</div>
+<div>
+<h2 class="font-headline-md text-base leading-tight">Current Cart</h2>
+<p class="text-on-surface-variant text-[11px]">0 items</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="text-right">
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">TOTAL</p>
+<p class="font-mono text-lg font-bold leading-none">$ 0.00</p>
+</div>
+<button class="p-2 text-outline hover:text-error hover:bg-error-container rounded-md transition-colors" disabled="">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</div>
+<!-- Cart Items (Empty State) -->
+<div class="flex-1 flex flex-col items-center justify-center p-8 text-center bg-surface">
+<div class="w-20 h-20 bg-surface-container rounded-full flex items-center justify-center text-outline-variant mb-4">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: &quot;wght&quot; 300;">shopping_cart</span>
+</div>
+<h3 class="font-headline-md text-base text-on-surface mb-1">No items added</h3>
+<p class="text-on-surface-variant text-xs">Select products from the right panel</p>
+</div>
+<!-- Cart Footer Inputs -->
+<div class="p-4 border-t border-outline-variant bg-surface-container-lowest flex flex-col gap-4">
+<div class="grid grid-cols-3 gap-3">
+<div>
+<label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-1">Tax %</label>
+<div class="relative">
+<input class="w-full h-8 pl-3 pr-6 rounded-md border-outline-variant bg-surface text-body-sm focus:border-primary focus:ring-1 focus:ring-primary shadow-sm text-right font-mono" type="text" value="0">
+<span class="absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant text-xs">%</span>
+</div>
+</div>
+<div>
+<label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-1">Discount</label>
+<div class="relative">
+<span class="absolute left-2 top-1/2 -translate-y-1/2 text-on-surface-variant text-xs">$</span>
+<input class="w-full h-8 pl-6 pr-3 rounded-md border-outline-variant bg-surface text-body-sm focus:border-primary focus:ring-1 focus:ring-primary shadow-sm text-right font-mono" type="text" value="0">
+</div>
+</div>
+<div>
+<label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-1">Shipping</label>
+<div class="relative">
+<span class="absolute left-2 top-1/2 -translate-y-1/2 text-on-surface-variant text-xs">$</span>
+<input class="w-full h-8 pl-6 pr-3 rounded-md border-outline-variant bg-surface text-body-sm focus:border-primary focus:ring-1 focus:ring-primary shadow-sm text-right font-mono" type="text" value="0">
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2 py-2 border-y border-outline-variant/50">
+<div class="flex justify-between items-center text-xs text-on-surface-variant">
+<span class="">Subtotal</span>
+<span class="font-mono">$ 0.00</span>
+</div>
+<div class="flex justify-between items-center text-xs text-on-surface-variant">
+<span class="">Tax</span>
+<span class="font-mono">$ 0.00</span>
+</div>
+</div>
+<div>
+<label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-1">PROMO CODE</label>
+<div class="flex gap-2">
+<input class="flex-1 h-9 px-3 rounded-md border-outline-variant bg-surface text-body-sm focus:border-primary focus:ring-1 focus:ring-primary shadow-sm font-mono placeholder:font-body-sm" placeholder="Enter code" type="text">
+<button class="h-9 px-4 bg-primary text-white font-label-md rounded-md hover:bg-surface-tint transition-colors shadow-sm">Apply</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Column (Catalog) -->
+<section class="flex-1 flex flex-col bg-surface-bright relative">
+<!-- Search Bar -->
+<div class="p-4 border-b border-outline-variant bg-surface-container-lowest z-10 flex gap-2">
+<div class="relative flex-1">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant material-symbols-outlined text-[20px]">barcode_scanner</span>
+<input class="w-full h-10 pl-10 pr-4 rounded-lg border-outline-variant bg-surface text-body-sm focus:border-primary focus:ring-1 focus:ring-primary shadow-sm w-full" placeholder="Scan/Search Product by Code Or Name" type="text">
+</div>
+<button class="h-10 px-4 bg-surface border border-outline-variant text-on-surface font-label-md rounded-lg hover:bg-surface-container transition-colors shadow-sm flex items-center gap-2 whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px]">document_scanner</span>
+                    Scan
+                </button>
+</div>
+<!-- Product Grid -->
+<div class="flex-1 overflow-y-auto p-4">
+<div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+<!-- Product Card 1 -->
+<div class="bg-surface rounded-xl border border-outline-variant p-3 flex flex-col hover:border-primary/50 hover:shadow-md transition-all cursor-pointer group">
+<div class="h-32 flex items-center justify-center mb-3 bg-surface-container-lowest rounded-lg overflow-hidden relative">
+<img class="object-contain h-full w-full p-2" data-alt="A modern, high-quality photograph of gray running sneakers isolated on a stark white background. Studio lighting highlights the texture of the mesh upper and the sleek, aerodynamic sole design. The image is crisp, minimalist, and perfectly suited for an e-commerce catalog, echoing a clean, professional aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXkRAOXevLOm6l3HlCZzSw2Fo6sKhIcG4YfW2-BC8vpf_juE5rAL9TNb2kCDjtJqpuiqUthrjWgmxlQM1Lc3wXIbMJEm0mO6goIAOM9MnD5r7Jpr0MRd_FNf3j6N689G_kQwwC38mykZOEneb9jE_56xUBBq0UUHgPwAAavNZDciKX8eSABQGJm_qTKfuaWIp3_6YjgHNiyvMmVjDchM9aKP2HwBMY0_DmHmwBleDmobD9KhzsOP0W">
+</div>
+<div class="flex-1 flex flex-col justify-end">
+<h4 class="font-label-md text-sm text-on-surface truncate mb-0.5">Gray Running Sneakers</h4>
+<p class="text-[10px] text-on-surface-variant font-mono uppercase mb-2">SKU DEMO-0020 · 190.00 pc</p>
+<div class="flex justify-between items-end mt-auto">
+<span class="font-mono font-bold text-primary text-base">$ 99.00</span>
+<button class="w-7 h-7 rounded-md bg-surface-container text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-surface rounded-xl border border-outline-variant p-3 flex flex-col hover:border-primary/50 hover:shadow-md transition-all cursor-pointer group">
+<div class="h-32 flex items-center justify-center mb-3 bg-surface-container-lowest rounded-lg overflow-hidden relative">
+<img class="object-contain h-full w-full p-2" data-alt="A vibrant, high-resolution product shot of bright red Nike sneakers isolated against a pure white background. The image features sharp details on the fabric, clear branding, and a dynamic angle that emphasizes speed and modern design. Lighting is even and professional, fitting seamlessly into a clean e-commerce grid interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJ5jYs2PAFDVvqBsy4sCAx2ZsP_G8TJp46n5I1mwnm8BcwRoq1dd8J5csfl31ZEwOjwUJtw5RT5iTFnkOLHHaF6L9OvibSebbhMOG8zmVg-ESBMA58rMHCPQKKDW1hD8IDHpgWbh2RtYm5EfijDqtqlJy60_fcu0weNzLnkSVYdJhwOX8_7F-Mw-rMgM-O0i4I0Rp-F1gzF3-JgGXZwKGUf542HqYxxCavjOArYHhdxuPRzW3_9z2Z">
+</div>
+<div class="flex-1 flex flex-col justify-end">
+<h4 class="font-label-md text-sm text-on-surface truncate mb-0.5">Nike Red Sneakers</h4>
+<p class="text-[10px] text-on-surface-variant font-mono uppercase mb-2">SKU DEMO-0019 · 39.00 pc</p>
+<div class="flex justify-between items-end mt-auto">
+<span class="font-mono font-bold text-primary text-base">$ 109.00</span>
+<button class="w-7 h-7 rounded-md bg-surface-container text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="bg-surface rounded-xl border border-outline-variant p-3 flex flex-col hover:border-primary/50 hover:shadow-md transition-all cursor-pointer group">
+<div class="h-32 flex items-center justify-center mb-3 bg-surface-container-lowest rounded-lg overflow-hidden relative">
+<img class="object-contain h-full w-full p-2" data-alt="A crisp, professional product photo of classic black aviator sunglasses centered on a stark white background. The lenses reflect a subtle, clean studio light, emphasizing the premium quality of the thin metal frames. The aesthetic is highly minimalist, perfectly tailored for a sleek, modern e-commerce platform interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCp6OQB6op0lW61Q1RtSOj91UFYSemLQAxFQmxV9mT4KJnBVyDfeKqSg5txt0-PG1CuZMz_vBf6RT_mg9Ibo9tysEeLpj_cU1udbrKNsQCeNBucXu3frHury0OAIrhEuUxCClXqouJEJNfRCavTw8_-XeS1u9vnt4J4GgxhKqo-OwFyd12BHF5xJDktMeZV-L-0XpPJf6ukFTzdRuCPTC995FMj8RjLouCBecpwQmvcIX9RAJgqdvs8">
+</div>
+<div class="flex-1 flex flex-col justify-end">
+<h4 class="font-label-md text-sm text-on-surface truncate mb-0.5">Classic Sunglasses</h4>
+<p class="text-[10px] text-on-surface-variant font-mono uppercase mb-2">SKU DEMO-0018 · 45.00 pc</p>
+<div class="flex justify-between items-end mt-auto">
+<span class="font-mono font-bold text-primary text-base">$ 45.00</span>
+<button class="w-7 h-7 rounded-md bg-surface-container text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="bg-surface rounded-xl border border-outline-variant p-3 flex flex-col hover:border-primary/50 hover:shadow-md transition-all cursor-pointer group">
+<div class="h-32 flex items-center justify-center mb-3 bg-surface-container-lowest rounded-lg overflow-hidden relative">
+<img class="object-contain h-full w-full p-2" data-alt="A clear, high-contrast image of brown-framed wayfarer-style sunglasses isolated against a brilliant white background. The studio lighting enhances the subtle tortoise-shell pattern on the frames and casts a very soft, diffused drop shadow. The overall composition is clean, functional, and aligns with high-end digital catalog design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5X5zl96zM7HEwV6QEQQHna8tCU4-w-10sODu3s8i1mdUjXXLZwEkFaeTrzSAPsLSeQ0UGlSDgZknqdG7QyL96YM0zdlh3Xe1YJPtqxSJxaxZ1jm-duzcFQvzcbo2PunjpZLrnLem5dq411qGdUZ061EF-E_-ue8oopceSE1pFYVj-M9pduIR6WJytz0NAs4LodhjplzVNY8NUInIxQwPvMwmIiVqGWVIbzU6wQAC_As6S1CzYccFR">
+</div>
+<div class="flex-1 flex flex-col justify-end">
+<h4 class="font-label-md text-sm text-on-surface truncate mb-0.5">Brown Framed Sunglass...</h4>
+<p class="text-[10px] text-on-surface-variant font-mono uppercase mb-2">SKU DEMO-0017 · 92.00 pc</p>
+<div class="flex justify-between items-end mt-auto">
+<span class="font-mono font-bold text-primary text-base">$ 59.00</span>
+<button class="w-7 h-7 rounded-md bg-surface-container text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 5 -->
+<div class="bg-surface rounded-xl border border-outline-variant p-3 flex flex-col hover:border-primary/50 hover:shadow-md transition-all cursor-pointer group">
+<div class="h-32 flex items-center justify-center mb-3 bg-surface-container-lowest rounded-lg overflow-hidden relative">
+<img class="object-contain h-full w-full p-2" data-alt="A sharp, minimalist product shot of Ray-Ban Wayfarer sunglasses with thick black frames, presented on a pure white background. The image is taken from a slight angle to show the iconic frame shape, with professional lighting ensuring no distracting reflections. The visual style is strictly catalog-ready and highly legible for a digital POS system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuABgi_URjVRlLlM913DMVagHCqVQHYTG5ijvxeQvnYKQw23pOcvGvEQ1dD64mRZ0cyhUK70V8g8kCR_NYEUVVvD__Mxzszar-qUaAeBocJzR8lQBHvELHnldj_AGcjolgydQ1BkC89lOw37_s32mJYmQSotQxDsopiO-5aO0TEa8CziB4p7TmSSNm63KLCO4BuO6JepTSDS506zWs6CPCuNA0zZ1aY0I3NGV-X2ROtb4wbUvmsec2gV">
+</div>
+<div class="flex-1 flex flex-col justify-end">
+<h4 class="font-label-md text-sm text-on-surface truncate mb-0.5">Ray-Ban Wayfarer Sungl...</h4>
+<p class="text-[10px] text-on-surface-variant font-mono uppercase mb-2">SKU DEMO-0016 · 95.00 pc</p>
+<div class="flex justify-between items-end mt-auto">
+<span class="font-mono font-bold text-primary text-base">$ 95.00</span>
+<button class="w-7 h-7 rounded-md bg-surface-container text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 6 -->
+<div class="bg-surface rounded-xl border border-outline-variant p-3 flex flex-col hover:border-primary/50 hover:shadow-md transition-all cursor-pointer group">
+<div class="h-32 flex items-center justify-center mb-3 bg-surface-container-lowest rounded-lg overflow-hidden relative">
+<img class="object-contain h-full w-full p-2" data-alt="A vivid, perfectly lit photograph of a single whole pineapple standing upright against a pristine white background. The rough texture of the skin and the spiky green crown are captured in sharp detail. The image style is bright, clean, and typical of premium online grocery interfaces, emphasizing freshness and quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDH65kepryRYYDuI8gyjiNOJnmc2ga3hSMl6K41JJZny8jwfihYALVz_0LYU3gTJeUJ4qKsHzXNC1OUM8so3JOdGgsfkbB1TyYmCpLZYC33Q1q72JBdiZETIVAlsISlVhEtQoLnSyDe5jEl1wg-Zn-rsS29RNsqr6y9MnqJ6E3e3VU5UORc0NY5M7OkA9LutWisW6LPSammiVeHgl14XatnBDqHkbzcpQVLZrTcSG9v48uikIaxC4-5">
+</div>
+<div class="flex-1 flex flex-col justify-end">
+<h4 class="font-label-md text-sm text-on-surface truncate mb-0.5">Pineapple</h4>
+<p class="text-[10px] text-on-surface-variant font-mono uppercase mb-2">SKU DEMO-0015 · 40.00 pc</p>
+<div class="flex justify-between items-end mt-auto">
+<span class="font-mono font-bold text-primary text-base">$ 3.90</span>
+<button class="w-7 h-7 rounded-md bg-surface-container text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 7 -->
+<div class="bg-surface rounded-xl border border-outline-variant p-3 flex flex-col hover:border-primary/50 hover:shadow-md transition-all cursor-pointer group">
+<div class="h-32 flex items-center justify-center mb-3 bg-surface-container-lowest rounded-lg overflow-hidden relative">
+<img class="object-contain h-full w-full p-2" data-alt="A macro-level, highly detailed photograph of a single ripe strawberry, isolated on a stark white backdrop. The tiny seeds and vivid red coloration are perfectly sharp, illuminated by bright, even studio lighting. The aesthetic is clean and appetizing, designed to stand out crisply within a modern white-space-heavy UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPEr4Bb9tbZa5tQxmBtsb6QJ84qYJVGx2vPSM-RtbTmh6VWDSZ5GQjR-GsjitlpwtbKcCmD27JyphIEDDc-sTdCkN5HcIDqW6mWrQrHS2ZJvhWXe76Su9oDGeoPV_uG9PfNSKq4-Wm7Bbwhj3wEKjGd_cZrBxyBz9-ti09MRhVdoPVW_FIe_QSYYjM8w1GpykVHoNcLUzl9MVzh1iJhokinvEYm9kynQoNMvnGVKD4utAC6tgxaAFN">
+</div>
+<div class="flex-1 flex flex-col justify-end">
+<h4 class="font-label-md text-sm text-on-surface truncate mb-0.5">Strawberry (kg)</h4>
+<p class="text-[10px] text-on-surface-variant font-mono uppercase mb-2">SKU DEMO-0014 · 140.00 pc</p>
+<div class="flex justify-between items-end mt-auto">
+<span class="font-mono font-bold text-primary text-base">$ 4.90</span>
+<button class="w-7 h-7 rounded-md bg-surface-container text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 8 -->
+<div class="bg-surface rounded-xl border border-outline-variant p-3 flex flex-col hover:border-primary/50 hover:shadow-md transition-all cursor-pointer group">
+<div class="h-32 flex items-center justify-center mb-3 bg-surface-container-lowest rounded-lg overflow-hidden relative">
+<img class="object-contain h-full w-full p-2" data-alt="A bright, studio-lit photograph of a single, perfectly round orange isolated on a pure white background. The slightly dimpled texture of the bright orange peel is highlighted, with a subtle, naturalistic shadow anchoring it to the surface. The image is optimized for a minimalist digital catalog, ensuring immediate visual recognition." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDi3nNk50LEgHrFzsGvbqMyf9C9RgRYzrS38XaQG4_vk2slwlktHfcIEKgsJPvFSZzpD7x8Udaq8KtDBrArbw_vNjNrs0-TTeWjCcV91W7vlhai4TOU_6G0M7QGaRjHJi1PEoEdHOQMvQ8EfkAz_IPv2C0QafsTBFwdxKVl88Ge3-c6WThob845qFP1bMoFeyV_g4KF-qoAesfcrwTL6LexyRa5_jG9lEfrszYCZf20UU5kipOM8pii">
+</div>
+<div class="flex-1 flex flex-col justify-end">
+<h4 class="font-label-md text-sm text-on-surface truncate mb-0.5">Orange (kg)</h4>
+<p class="text-[10px] text-on-surface-variant font-mono uppercase mb-2">SKU DEMO-0013 · 84.00 pc</p>
+<div class="flex justify-between items-end mt-auto">
+<span class="font-mono font-bold text-primary text-base">$ 2.50</span>
+<button class="w-7 h-7 rounded-md bg-surface-container text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 9 -->
+<div class="bg-surface rounded-xl border border-outline-variant p-3 flex flex-col hover:border-primary/50 hover:shadow-md transition-all cursor-pointer group">
+<div class="h-32 flex items-center justify-center mb-3 bg-surface-container-lowest rounded-lg overflow-hidden relative">
+<img class="object-contain h-full w-full p-2" data-alt="A clear, professional product image of a single bright yellow lemon set against a brilliant white background. The image captures the subtle porous texture of the rind under even, high-key studio lighting. The presentation is distinctly commercial, designed to integrate flawlessly into a modern, light-mode POS interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1yxs5e4PSid-dT-UbNAVOXqh_ajKts2xY5FI7jKI-Y2KI4VOZ8vuOv1RX3D24GjMz9OsSqsTXAjs2kCi4hxqb8PzTbzuOHUk7Hesn_K8R5RoB9SDpbUUmQVqhya9t1jMNTkiYlbQQmNPl1NIS64LdOlpkmTnQ4j2054Qir9KuIZNcWFiRYCbu7KKtos2uPwR4_ZcIBXDciWvhYflnok9Kl4cruDTnZRNtAXSVrKxFarnjQY01foVX">
+</div>
+<div class="flex-1 flex flex-col justify-end">
+<h4 class="font-label-md text-sm text-on-surface truncate mb-0.5">Lemon (kg)</h4>
+<p class="text-[10px] text-on-surface-variant font-mono uppercase mb-2">SKU DEMO-0012 · 103.00 pc</p>
+<div class="flex justify-between items-end mt-auto">
+<span class="font-mono font-bold text-primary text-base">$ 2.20</span>
+<button class="w-7 h-7 rounded-md bg-surface-container text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 10 -->
+<div class="bg-surface rounded-xl border border-outline-variant p-3 flex flex-col hover:border-primary/50 hover:shadow-md transition-all cursor-pointer group">
+<div class="h-32 flex items-center justify-center mb-3 bg-surface-container-lowest rounded-lg overflow-hidden relative">
+<img class="object-contain h-full w-full p-2" data-alt="A clean, high-resolution product photograph of a bunch of yellow bananas isolated on a pristine white background. The lighting is soft but bright, highlighting the smooth texture and natural curve of the fruit without harsh shadows. The style is strictly minimalist, ideal for a contemporary grocery or point-of-sale application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGBRT89iuHLmovnEH0btxaxn2w_HfVSTm_zDp5X5sJF3eIIK2-h4ZaoYfPcfnga5GymjEzJss6PXjJOxR023LhPrce8DlW4Hc_WU4hZBFUZD9IvKFEE6rwesaVPXvO-KsKo15GtgOsRfTVSLnJq-AAKyNFYsbIMCbXYf3u186ykPclD9-PVTb6nSzxBRQiGIjlWl5WP39-yF4_nCQ8FNw8r5oLiRFoDC5MTI3HtPaXsu4WxGTG-AEU">
+</div>
+<div class="flex-1 flex flex-col justify-end">
+<h4 class="font-label-md text-sm text-on-surface truncate mb-0.5">Banana (kg)</h4>
+<p class="text-[10px] text-on-surface-variant font-mono uppercase mb-2">SKU DEMO-0011 · 200.00 pc</p>
+<div class="flex justify-between items-end mt-auto">
+<span class="font-mono font-bold text-primary text-base">$ 1.90</span>
+<button class="w-7 h-7 rounded-md bg-surface-container text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 11 -->
+<div class="bg-surface rounded-xl border border-outline-variant p-3 flex flex-col hover:border-primary/50 hover:shadow-md transition-all cursor-pointer group">
+<div class="h-32 flex items-center justify-center mb-3 bg-surface-container-lowest rounded-lg overflow-hidden relative">
+<img class="object-contain h-full w-full p-2" data-alt="A vivid, detailed image showing two halves of a ripe avocado, one with the pit exposed, placed side-by-side on a pure white background. The creamy green flesh and textured dark skin are sharply focused under bright studio lighting. The aesthetic is clean, modern, and perfectly suited for a high-density digital product grid." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRab_5ZySM6QPlJj5TvTVQS4Lx1HYE2S-ycvSENQqLArnIxq2XGzqVO31pRQSwPnOFBy6vdnLhymJFuuEdFOFUHo5cd604kGNs1R6MSSdag7eqhMMcrOn_Kgu4iItKE7D3NYcRj0X535ZKusYkhd6FKHZzVwQrwDcAdq6RoN80nfDwd_Ok6kksxwUJDQLadEn6hJv89jx4u_ucsqxtxkDQy5RRg4iBVVlbYkZPZVmru3cxXEctWJjB">
+</div>
+<div class="flex-1 flex flex-col justify-end">
+<h4 class="font-label-md text-sm text-on-surface truncate mb-0.5">Avocado (kg)</h4>
+<p class="text-[10px] text-on-surface-variant font-mono uppercase mb-2">SKU DEMO-0010 · 136.00 pc</p>
+<div class="flex justify-between items-end mt-auto">
+<span class="font-mono font-bold text-primary text-base">$ 3.50</span>
+<button class="w-7 h-7 rounded-md bg-surface-container text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 12 -->
+<div class="bg-surface rounded-xl border border-outline-variant p-3 flex flex-col hover:border-primary/50 hover:shadow-md transition-all cursor-pointer group">
+<div class="h-32 flex items-center justify-center mb-3 bg-surface-container-lowest rounded-lg overflow-hidden relative">
+<img class="object-contain h-full w-full p-2" data-alt="A sleek, highly detailed product shot of a black Nikon DSLR camera body with an attached lens, isolated against a stark white background. The studio lighting emphasizes the matte finish of the camera body and the reflections on the lens glass. The visual style is strictly professional and objective, fitting for an electronics e-commerce site." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC78Cfx_lSA47lpDV6DwQC3vNI3_iMN7syYrelCSSUWRD12B6uEQTHr9ugzwH9s62QlEMssAplPhbkB55flN4b6OZCwkslqwYXQhZ0CehglcSd-bu8B0he9G-lpuszg--vw7RxUUKhAkzjZP4kuphEgzfPYNl7dRd_fRea58m7Rdezyc5nKu5gw3R82kKveyWfMxNOWTPB5dZIWzhDQINPSK_-bwGaismaFZLg1LyNm9QwGZyPp5UtU">
+</div>
+<div class="flex-1 flex flex-col justify-end">
+<h4 class="font-label-md text-sm text-on-surface truncate mb-0.5">Nikon DSLR Camera</h4>
+<p class="text-[10px] text-on-surface-variant font-mono uppercase mb-2">SKU DEMO-0009 · 100.00 pc</p>
+<div class="flex justify-between items-end mt-auto">
+<span class="font-mono font-bold text-primary text-base">$ 699.00</span>
+<button class="w-7 h-7 rounded-md bg-surface-container text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="p-2 border-t border-outline-variant bg-surface-container-lowest flex justify-between items-center text-xs">
+<button class="w-8 h-8 rounded border border-outline-variant flex items-center justify-center text-on-surface-variant hover:bg-surface-container transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<div class="text-center">
+<span class="font-label-md">Page 1</span>
+<span class="text-on-surface-variant text-[10px] block">20 products</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 rounded bg-primary text-white font-bold flex items-center justify-center">1</button>
+<button class="w-8 h-8 rounded border border-outline-variant flex items-center justify-center text-on-surface-variant hover:bg-surface-container transition-colors">2</button>
+<button class="w-8 h-8 rounded border border-outline-variant flex items-center justify-center text-on-surface-variant hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar Replacement for POS context -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant flex justify-between items-center px-margin-desktop py-3 shrink-0 z-50">
+<div class="flex items-center gap-4 text-xs">
+<div class="flex items-center gap-1.5 mr-4">
+<div class="w-2 h-2 rounded-full bg-green-500"></div>
+<span class="text-on-surface-variant font-label-md">Online · synced</span>
+</div>
+<!-- Navigation Actions from JSON mapped to POS buttons -->
+<button class="px-4 py-2 flex items-center gap-2 rounded-xl border border-outline-variant text-on-surface-variant hover:bg-surface-container-high transition-all duration-150 font-label-md bg-surface">
+<span class="material-symbols-outlined text-[18px]">home</span>
+                Home
+            </button>
+<button class="px-4 py-2 flex items-center gap-2 rounded-xl border border-outline-variant text-on-surface-variant hover:bg-surface-container-high transition-all duration-150 font-label-md bg-surface">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+                Reset
+            </button>
+<button class="px-4 py-2 flex items-center gap-2 rounded-xl border border-outline-variant text-on-surface-variant hover:bg-surface-container-high transition-all duration-150 font-label-md bg-surface">
+<span class="material-symbols-outlined text-[18px]">history</span>
+                Recent Drafts
+            </button>
+<button class="px-4 py-2 flex items-center gap-2 rounded-xl border border-outline-variant text-on-surface-variant hover:bg-surface-container-high transition-all duration-150 font-label-md bg-surface">
+<span class="material-symbols-outlined text-[18px]">pause_circle</span>
+                Hold
+            </button>
+</div>
+<div class="flex items-center gap-6">
+<div class="text-right">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider block mb-0.5">TOTAL PAYABLE</span>
+<span class="font-mono text-xl font-bold leading-none">$ 0.00</span>
+</div>
+<!-- Primary Action mapped to "Pay Now" logic from Bottom Nav -->
+<button class="bg-primary-container/50 text-on-primary-container px-8 py-3 rounded-xl flex items-center gap-2 font-headline-md text-base hover:bg-primary-container transition-all duration-150 shadow-sm border border-primary/20" disabled="">
+<span class="material-symbols-outlined">payments</span>
+                Pay Now
+            </button>
+</div>
+</footer>
+
+
+
+
+</body></html>

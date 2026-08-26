@@ -57,18 +57,18 @@
     @if (count($products) > 0)
         <x-ui.table>
             <x-slot name="head">
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Product') }}</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Category') }}</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Price') }}</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Quantity') }}</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Status') }}</th>
-                <th scope="col" class="relative px-6 py-3"><span class="sr-only">{{ __('Action') }}</span></th>
+                <th scope="col" class="!px-4 !py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Product') }}</th>
+                <th scope="col" class="!px-4 !py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Category') }}</th>
+                <th scope="col" class="!px-4 !py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Price') }}</th>
+                <th scope="col" class="!px-4 !py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Quantity') }}</th>
+                <th scope="col" class="!px-4 !py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('Status') }}</th>
+                <th scope="col" class="relative !px-4 !py-2"><span class="sr-only">{{ __('Action') }}</span></th>
             </x-slot>
 
             <x-slot name="body">
                 @foreach ($products as $product)
                     <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
+                        <td class="!px-4 !py-2 whitespace-nowrap">
                             <div class="flex items-center">
                                 <div class="flex-shrink-0 h-10 w-10">
                                     <img class="h-10 w-10 rounded-md object-cover border border-gray-200" src="{{ $logo.(isset($product->is_cover) && !empty($product->is_cover) ? $product->is_cover : 'default.jpg') }}" alt="">
@@ -89,24 +89,24 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td class="!px-4 !py-2 whitespace-nowrap text-sm text-gray-500">
                             {{ !empty($product->product_category()) ? $product->product_category() : '-' }}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
+                        <td class="!px-4 !py-2 whitespace-nowrap text-sm text-gray-900 font-medium">
                             @if ($product->enable_product_variant == 'on')
                                 {{ __('In Variant') }}
                             @else
                                 {{ \App\Models\Utility::priceFormat($product->price) }}
                             @endif
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td class="!px-4 !py-2 whitespace-nowrap text-sm text-gray-500">
                             @if ($product->enable_product_variant == 'on')
                                 {{ __('In Variant') }}
                             @else
                                 {{ $product->quantity }}
                             @endif
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
+                        <td class="!px-4 !py-2 whitespace-nowrap">
                             @if ($product->enable_product_variant == 'on')
                                 <x-ui.badge variant="info">{{ __('In Variant') }}</x-ui.badge>
                             @else
@@ -117,7 +117,7 @@
                                 @endif
                             @endif
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <td class="!px-4 !py-2 whitespace-nowrap text-right text-sm font-medium">
                             <div class="flex justify-end space-x-2">
                                 @can('Show Products')
                                     <a href="{{ route('product.show', $product->id) }}" class="text-gray-400 hover:text-primary-600" title="{{ __('View') }}">
@@ -180,4 +180,15 @@
             $("[name='shipping_postalcode']").val($("[name='billing_postalcode']").val());
         })
     </script>
+    <style>
+        .dataTable-top, .dataTable-bottom {
+            padding: 4px 10px !important;
+        }
+        .dataTable-container {
+            margin-bottom: 0 !important;
+        }
+        .dataTable-wrapper {
+            padding-bottom: 0 !important;
+        }
+    </style>
 @endpush

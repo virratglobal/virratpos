@@ -99,4 +99,23 @@ $store_logo=\App\Models\Utility::get_file('uploads/product_image/');
             });
         });
     </script>
+    <style>
+        .dataTable-top, .dataTable-bottom {
+            padding: 4px 10px !important;
+        }
+        .dataTable-container {
+            margin-bottom: 0 !important;
+        }
+        .dataTable-wrapper {
+            padding-bottom: 0 !important;
+        }
+        .dataTable-table > tbody > tr > td,
+        .dataTable-table > tbody > tr > th,
+        .dataTable-table > thead > tr > th {
+            padding: 8px 16px !important; 
+        }
+        .table {
+            margin-bottom: 0 !important;
+        }
+    </style>
 @endpush

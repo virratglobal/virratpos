@@ -5,15 +5,23 @@
 @section('content')
 <x-ui.page-container>
     
-    <x-ui.page-header title="{{ __('Store Analytics') }}">
-        <x-slot name="breadcrumbs">
-            <a href="{{ route('dashboard') }}" class="hover:text-gray-900">{{ __('Home') }}</a>
-            <svg class="flex-shrink-0 mx-2 h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-            </svg>
-            <span class="text-gray-900 font-medium">{{ __('Store Analytics') }}</span>
-        </x-slot>
-    </x-ui.page-header>
+    <!-- Modern Header -->
+    <div class="page-header flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+        <div>
+            <h1 class="text-2xl font-bold text-[#111827] tracking-tight" style="font-family: 'Geist', sans-serif;">
+                {{ __('Store Analytics') }}
+            </h1>
+            <nav class="flex items-center text-[13px] text-[#6B7280] mt-1 space-x-2 font-medium" style="font-family: 'Inter', sans-serif;">
+                <a href="{{ route('dashboard') }}" class="hover:text-indigo-600 transition-colors">{{ __('Home') }}</a>
+                <span class="text-gray-300">/</span>
+                <span class="text-[#111827]">{{ __('Store Analytics') }}</span>
+            </nav>
+        </div>
+        <div class="mt-4 sm:mt-0 flex items-center bg-white border border-[#E8EAF0] rounded-xl shadow-sm px-4 py-2">
+            <i class="ti ti-calendar text-[#6B7280] mr-2 text-[15px]"></i>
+            <span class="text-[13px] font-semibold text-[#111827]">{{ __('Last 15 Days') }}</span>
+        </div>
+    </div>
 
     @php
         $current_store_id = \Auth::user()->current_store;
@@ -21,240 +29,335 @@
         $total_orders = \App\Models\Order::where('user_id', $current_store_id)->count();
         $total_revenue = \App\Models\Order::where('user_id', $current_store_id)->sum('price');
         $conversion_rate = $total_visitors > 0 ? number_format(($total_orders / $total_visitors) * 100, 2) : '0.00';
+        
+        // Order status breakdown for Order Performance Card
+        $order_statuses = \App\Models\Order::select('status', \DB::raw('count(*) as total'))
+                                ->where('user_id', $current_store_id)
+                                ->groupBy('status')
+                                ->get();
+                                
+        // Helper to format average order value safely
+        $aov = $total_orders > 0 ? $total_revenue / $total_orders : 0;
     @endphp
 
     <!-- 1. KPI Cards Row (Grid: 4 cols) -->
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mb-5">
         <!-- KPI Card 1: Visitors -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex items-center justify-between">
-            <div class="space-y-1">
-                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">{{ __('Visitors') }}</p>
-                <h3 class="text-2xl font-bold text-slate-800">{{ number_format($total_visitors) }}</h3>
-                <span class="text-[11px] text-indigo-600 font-medium bg-indigo-50 px-2 py-0.5 rounded-full">{{ __('All time traffic') }}</span>
+        <div class="bg-white rounded-2xl border border-[#E8EAF0] shadow-sm p-5 hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between mb-2">
+                <h3 class="text-[11px] font-semibold text-[#6B7280] uppercase tracking-wider">{{ __('Visitors') }}</h3>
+                <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                    <i class="ti ti-users text-[15px]"></i>
+                </div>
             </div>
-            <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
-                <span class="material-symbols-outlined text-2xl">visibility</span>
-            </div>
+            <h3 class="text-[28px] font-bold text-[#111827] mb-1">{{ number_format($total_visitors) }}</h3>
+            <p class="text-[12px] font-medium text-[#6B7280]">{{ __('Total store visitors') }}</p>
         </div>
 
         <!-- KPI Card 2: Orders -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex items-center justify-between">
-            <div class="space-y-1">
-                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">{{ __('Orders') }}</p>
-                <h3 class="text-2xl font-bold text-slate-800">{{ number_format($total_orders) }}</h3>
-                <span class="text-[11px] text-purple-600 font-medium bg-purple-50 px-2 py-0.5 rounded-full">{{ __('Completed orders') }}</span>
+        <div class="bg-white rounded-2xl border border-[#E8EAF0] shadow-sm p-5 hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between mb-2">
+                <h3 class="text-[11px] font-semibold text-[#6B7280] uppercase tracking-wider">{{ __('Orders') }}</h3>
+                <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                    <i class="ti ti-shopping-cart text-[15px]"></i>
+                </div>
             </div>
-            <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
-                <span class="material-symbols-outlined text-2xl">shopping_bag</span>
-            </div>
+            <h3 class="text-[28px] font-bold text-[#111827] mb-1">{{ number_format($total_orders) }}</h3>
+            <p class="text-[12px] font-medium text-[#6B7280]">{{ __('Completed orders') }}</p>
         </div>
 
         <!-- KPI Card 3: Revenue -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex items-center justify-between">
-            <div class="space-y-1">
-                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">{{ __('Revenue') }}</p>
-                <h3 class="text-2xl font-bold text-slate-800">{{ \App\Models\Utility::priceFormat($total_revenue) }}</h3>
-                <span class="text-[11px] text-blue-600 font-medium bg-blue-50 px-2 py-0.5 rounded-full">{{ __('Gross earnings') }}</span>
+        <div class="bg-white rounded-2xl border border-[#E8EAF0] shadow-sm p-5 hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between mb-2">
+                <h3 class="text-[11px] font-semibold text-[#6B7280] uppercase tracking-wider">{{ __('Revenue') }}</h3>
+                <div class="w-8 h-8 rounded-lg bg-green-50 text-green-600 flex items-center justify-center">
+                    <i class="ti ti-cash text-[15px]"></i>
+                </div>
             </div>
-            <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
-                <span class="material-symbols-outlined text-2xl">payments</span>
-            </div>
+            <h3 class="text-[28px] font-bold text-[#111827] mb-1">{{ \App\Models\Utility::priceFormat($total_revenue) }}</h3>
+            <p class="text-[12px] font-medium text-[#6B7280]">{{ __('Gross revenue') }}</p>
         </div>
 
         <!-- KPI Card 4: Conversion Rate -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex items-center justify-between">
-            <div class="space-y-1">
-                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">{{ __('Conversion Rate') }}</p>
-                <h3 class="text-2xl font-bold text-slate-800">{{ $conversion_rate }}%</h3>
-                <span class="text-[11px] text-rose-600 font-medium bg-rose-50 px-2 py-0.5 rounded-full">{{ __('Visitor conversion') }}</span>
+        <div class="bg-white rounded-2xl border border-[#E8EAF0] shadow-sm p-5 hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between mb-2">
+                <h3 class="text-[11px] font-semibold text-[#6B7280] uppercase tracking-wider">{{ __('Conversion Rate') }}</h3>
+                <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                    <i class="ti ti-trending-up text-[15px]"></i>
+                </div>
             </div>
-            <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
-                <span class="material-symbols-outlined text-2xl">trending_up</span>
-            </div>
+            <h3 class="text-[28px] font-bold text-[#111827] mb-1">{{ $conversion_rate }}%</h3>
+            <p class="text-[12px] font-medium text-[#6B7280]">{{ __('Visitor conversion') }}</p>
         </div>
     </div>
 
-    <!-- 2. Visitors Line Chart (Full Width) -->
-    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-6">
-        <div class="flex items-center justify-between mb-4">
-            <div>
-                <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider">{{ __('Visitor Analytics') }}</h3>
-                <p class="text-2xl font-bold text-slate-800 mt-1">{{ number_format($total_visitors) }} <span class="text-xs font-medium text-slate-400 ml-1">{{ __('Total Visits') }}</span></p>
+    <!-- 2. Row 2: Main Analytics (8 cols) + Visitor Sources (4 cols) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 mb-5">
+        <!-- Store Performance -->
+        <div class="lg:col-span-8 bg-white rounded-2xl border border-[#E8EAF0] shadow-sm p-5 flex flex-col h-[300px]">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-2 shrink-0">
+                <div>
+                    <h2 class="text-[15px] font-bold text-[#111827]">{{ __('Store Performance') }}</h2>
+                    <p class="text-[12px] text-[#6B7280] mt-0.5">{{ __('Visitor trends over the last 15 days') }}</p>
+                </div>
             </div>
-            <div class="text-xs text-slate-400 bg-slate-100 px-2.5 py-1 rounded-lg font-medium">
-                {{ __('Last 15 Days') }}
-            </div>
-        </div>
-        <div id="Analytics" class="w-full"></div>
-    </div>
-
-    <!-- 3. Second Row (Top URLs [4 cols] | Platform [8 cols]) -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
-        
-        <!-- Left: Top URLs (col-span-4) -->
-        <div class="lg:col-span-4 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col overflow-hidden">
-            <div class="p-5 border-b border-slate-100 shrink-0">
-                <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider">{{ __('Top URLs') }}</h3>
-            </div>
-            <div class="flex-grow overflow-x-auto">
-                @if(count($visitor_url) > 0)
-                    <table class="w-full text-left border-collapse text-xs">
-                        <thead>
-                            <tr class="bg-slate-50 border-b border-slate-100 text-slate-500 font-semibold uppercase">
-                                <th class="px-5 py-3">{{ __('URL') }}</th>
-                                <th class="px-5 py-3 text-right">{{ __('Views') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-50">
-                            @foreach ($visitor_url as $url)
-                                <tr class="hover:bg-slate-50 transition-colors">
-                                    <td class="px-5 py-3 text-indigo-600 truncate max-w-[200px]" title="{{ $url->url }}">
-                                        <a href="{{ $url->url }}" target="_blank" class="hover:underline">{{ $url->url }}</a>
-                                    </td>
-                                    <td class="px-5 py-3 text-right font-medium text-slate-700">
-                                        {{ number_format($url->total) }}
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @else
-                    <div class="flex flex-col items-center justify-center py-12 text-center text-slate-400 h-full">
-                        <span class="material-symbols-outlined text-4xl mb-2 text-slate-300">link</span>
-                        <p class="text-sm font-semibold">{{ __('No URL Data Available') }}</p>
-                        <p class="text-xs text-slate-400 max-w-[200px] mt-1">{{ __('Data will appear here once your store receives traffic.') }}</p>
-                    </div>
-                @endif
+            <div class="flex-grow w-full relative">
+                <div id="Analytics" class="w-full h-full"></div>
             </div>
         </div>
 
-        <!-- Right: Platform (col-span-8) -->
-        <div class="lg:col-span-8 bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col">
-            <div class="mb-4 shrink-0">
-                <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider">{{ __('Platform') }}</h3>
+        <!-- Visitor Sources (Platform) -->
+        <div class="lg:col-span-4 bg-white rounded-2xl border border-[#E8EAF0] shadow-sm p-5 flex flex-col h-[300px]">
+            <div class="mb-2 shrink-0">
+                <h3 class="text-[15px] font-bold text-[#111827]">{{ __('Visitor Sources') }}</h3>
+                <p class="text-[12px] text-[#6B7280] mt-0.5">{{ __('Visits by platform') }}</p>
             </div>
-            <div class="flex-grow flex items-center justify-center">
+            <div class="flex-grow flex flex-col justify-center">
                 @if(count($platformarray['data']) > 0)
-                    <div id="user-chart" class="w-full"></div>
+                    <div id="PlatformChart" class="w-full flex justify-center items-center h-[140px]"></div>
+                    <div class="mt-3 grid grid-cols-2 gap-2 px-1 shrink-0">
+                        @foreach(array_slice($platformarray['label'], 0, 4) as $index => $label)
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <span class="w-2.5 h-2.5 rounded-full mr-2" style="background-color: {{ ['#4f46e5', '#818cf8', '#c7d2fe', '#e2e8f0'][$index % 4] }}"></span>
+                                    <span class="text-[12px] text-[#6B7280]">{{ $label }}</span>
+                                </div>
+                                <span class="text-[12px] font-bold text-[#111827]">{{ $platformarray['data'][$index] }}</span>
+                            </div>
+                        @endforeach
+                    </div>
                 @else
-                    <div class="flex flex-col items-center justify-center py-12 text-center text-slate-400 h-full">
-                        <span class="material-symbols-outlined text-4xl mb-2 text-slate-300">bar_chart</span>
-                        <p class="text-sm font-semibold">{{ __('No Platform Data Available') }}</p>
-                        <p class="text-xs text-slate-400 max-w-[200px] mt-1">{{ __('Data will appear here once your store receives traffic.') }}</p>
+                    <div class="flex flex-col items-center justify-center text-center text-[#6B7280] h-full">
+                        <i class="ti ti-chart-donut text-4xl mb-3 text-gray-200"></i>
+                        <p class="text-sm font-semibold text-[#111827]">{{ __('No Source Data') }}</p>
                     </div>
                 @endif
             </div>
         </div>
-
     </div>
 
-    <!-- 4. Third Row (Device [6 cols] | Browser [6 cols]) -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- 3. Row 3: Top URLs (4 cols) + Order Performance (4 cols) + Device Stats (4 cols) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 mb-8">
         
-        <!-- Left: Device -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col">
-            <div class="mb-4 shrink-0">
-                <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider">{{ __('Device') }}</h3>
+        <!-- Left: Top URLs (4 cols) -->
+        <div class="lg:col-span-4 bg-white rounded-2xl border border-[#E8EAF0] shadow-sm flex flex-col h-[300px]">
+            <div class="p-5 pb-2 flex items-center justify-between shrink-0">
+                <h3 class="text-[15px] font-bold text-[#111827]">{{ __('Top Pages') }}</h3>
             </div>
-            <div class="flex-grow flex items-center justify-center">
-                @if(count($devicearray['data']) > 0)
-                    <div id="WebKit" class="w-full"></div>
+            <div class="flex-grow overflow-y-auto custom-scrollbar">
+                @if(count($visitor_url) > 0)
+                    <div class="px-5 py-2 space-y-2">
+                        @foreach ($visitor_url->take(8) as $index => $url)
+                            <div class="flex items-center justify-between group">
+                                <div class="flex items-center">
+                                    <span class="text-[12px] font-bold text-[#6B7280] w-6">{{ sprintf('%02d', $index + 1) }}</span>
+                                    <a href="{{ $url->url }}" target="_blank" class="text-[13px] font-medium text-[#111827] hover:text-indigo-600 truncate max-w-[170px] transition-colors" title="{{ $url->url }}">
+                                        {{ Str::limit(str_replace(env('APP_URL'), '', $url->url) ?: '/', 30) }}
+                                    </a>
+                                </div>
+                                <span class="text-[12px] font-semibold text-[#111827]">{{ number_format($url->total) }} <span class="text-[#6B7280] font-normal ml-0.5">visits</span></span>
+                            </div>
+                        @endforeach
+                    </div>
                 @else
-                    <div class="flex flex-col items-center justify-center py-12 text-center text-slate-400 h-full">
-                        <span class="material-symbols-outlined text-4xl mb-2 text-slate-300">donut_large</span>
-                        <p class="text-sm font-semibold">{{ __('No Device Data Available') }}</p>
-                        <p class="text-xs text-slate-400 max-w-[200px] mt-1">{{ __('Data will appear here once your store receives traffic.') }}</p>
+                    <div class="flex flex-col items-center justify-center text-center text-[#6B7280] h-full p-5">
+                        <i class="ti ti-link text-4xl mb-3 text-gray-200"></i>
+                        <p class="text-[13px] font-semibold text-[#111827]">{{ __('No URL Data') }}</p>
                     </div>
                 @endif
             </div>
         </div>
 
-        <!-- Right: Browser -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col">
-            <div class="mb-4 shrink-0">
-                <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider">{{ __('Browser') }}</h3>
+        <!-- Middle: Order Performance (4 cols) -->
+        <div class="lg:col-span-4 bg-white rounded-2xl border border-[#E8EAF0] shadow-sm flex flex-col h-[300px]">
+            <div class="p-5 pb-3 flex items-center justify-between shrink-0">
+                <h3 class="text-[15px] font-bold text-[#111827]">{{ __('Order Performance') }}</h3>
             </div>
-            <div class="flex-grow flex items-center justify-center">
-                @if(count($browserarray['data']) > 0)
-                    <div id="Safari" class="w-full"></div>
+            <div class="flex-grow px-5 pb-5 flex flex-col">
+                <div class="flex gap-3 mb-4">
+                    <div class="flex-1 bg-[#F7F8FC] p-3 rounded-xl border border-[#E8EAF0]">
+                        <p class="text-[11px] font-medium text-[#6B7280] mb-0.5">{{ __('Total Orders') }}</p>
+                        <h4 class="text-lg font-bold text-[#111827]">{{ number_format($total_orders) }}</h4>
+                    </div>
+                    <div class="flex-1 bg-[#F7F8FC] p-3 rounded-xl border border-[#E8EAF0]">
+                        <p class="text-[11px] font-medium text-[#6B7280] mb-0.5">{{ __('Avg. Order') }}</p>
+                        <h4 class="text-lg font-bold text-[#111827]">{{ \App\Models\Utility::priceFormat($aov) }}</h4>
+                    </div>
+                </div>
+                
+                <div class="mt-1">
+                    @if(count($order_statuses) > 0)
+                        <div class="space-y-3">
+                            @foreach($order_statuses as $status_group)
+                                @php
+                                    $percentage = $total_orders > 0 ? ($status_group->total / $total_orders) * 100 : 0;
+                                    $color = 'bg-indigo-500';
+                                    if(strtolower($status_group->status) == 'completed' || strtolower($status_group->status) == 'delivered') $color = 'bg-[#10b981]';
+                                    if(strtolower($status_group->status) == 'pending') $color = 'bg-[#f59e0b]';
+                                    if(strtolower($status_group->status) == 'cancelled' || strtolower($status_group->status) == 'cancel') $color = 'bg-[#ef4444]';
+                                @endphp
+                                <div>
+                                    <div class="flex justify-between items-center mb-1.5 text-[12px] font-medium">
+                                        <span class="text-[#6B7280] capitalize">{{ $status_group->status }}</span>
+                                        <span class="text-[#111827] font-bold">{{ $status_group->total }}</span>
+                                    </div>
+                                    <div class="w-full bg-[#E8EAF0] rounded-full h-1">
+                                        <div class="{{ $color }} h-1 rounded-full" style="width: {{ $percentage }}%"></div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="text-center text-[#6B7280] py-6">
+                            <i class="ti ti-shopping-cart-x text-3xl mb-2 text-gray-200"></i>
+                            <p class="text-[13px] font-medium text-[#111827]">{{ __('No Orders Yet') }}</p>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Device Stats (4 cols) -->
+        <div class="lg:col-span-4 bg-white rounded-2xl border border-[#E8EAF0] shadow-sm flex flex-col h-[300px]">
+            <div class="p-5 pb-1 flex items-center justify-between shrink-0">
+                <h3 class="text-[15px] font-bold text-[#111827]">{{ __('Device Stats') }}</h3>
+            </div>
+            <div class="flex-grow flex flex-col justify-center px-5 pb-5">
+                @if(count($devicearray['data']) > 0)
+                    <div id="DeviceChart" class="w-full flex justify-center items-center h-[140px]"></div>
+                    <div class="mt-2 grid grid-cols-1 gap-1.5 px-4 shrink-0">
+                        @foreach(array_slice($devicearray['label'], 0, 3) as $index => $label)
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <span class="w-2.5 h-2.5 rounded-full mr-2" style="background-color: {{ ['#4f46e5', '#818cf8', '#c7d2fe'][$index % 3] }}"></span>
+                                    <span class="text-[12px] text-[#6B7280]">{{ $label }}</span>
+                                </div>
+                                @php
+                                    $total_devices = array_sum($devicearray['data']);
+                                    $percent = $total_devices > 0 ? ($devicearray['data'][$index] / $total_devices) * 100 : 0;
+                                @endphp
+                                <span class="text-[12px] font-bold text-[#111827]">{{ number_format($percent, 0) }}%</span>
+                            </div>
+                        @endforeach
+                    </div>
                 @else
-                    <div class="flex flex-col items-center justify-center py-12 text-center text-slate-400 h-full">
-                        <span class="material-symbols-outlined text-4xl mb-2 text-slate-300">browser_updated</span>
-                        <p class="text-sm font-semibold">{{ __('No Browser Data Available') }}</p>
-                        <p class="text-xs text-slate-400 max-w-[200px] mt-1">{{ __('Data will appear here once your store receives traffic.') }}</p>
+                    <div class="flex flex-col items-center justify-center text-center text-[#6B7280] h-full">
+                        <i class="ti ti-devices text-4xl mb-3 text-gray-200"></i>
+                        <p class="text-[13px] font-medium text-[#111827]">{{ __('No Data Available') }}</p>
                     </div>
                 @endif
             </div>
         </div>
 
     </div>
-
 </x-ui.page-container>
 @endsection
 
+@push('style-page')
+<style>
+    /* Neutralize legacy dash-container layout flow bug */
+    .dash-container {
+        position: static !important;
+        top: auto !important;
+        margin-left: 0 !important;
+        min-height: auto !important;
+    }
+    .dash-content {
+        padding: 0 !important;
+    }
+    
+    body {
+        background-color: #F7F8FC !important;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: #E8EAF0;
+        border-radius: 10px;
+    }
+    .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+        background-color: #d1d5db;
+    }
+    /* Make ApexCharts tooltips look premium */
+    .apexcharts-tooltip {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+        border: 1px solid #E8EAF0 !important;
+        border-radius: 8px !important;
+        background: #fff !important;
+    }
+    .apexcharts-tooltip-title {
+        background: #F7F8FC !important;
+        border-bottom: 1px solid #E8EAF0 !important;
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 600 !important;
+        font-size: 11px !important;
+        color: #111827 !important;
+    }
+</style>
+@endpush
+
 @push('script-page')
     <script>
+        // Main Store Performance Chart (Visitors)
         (function () {
             var options = {
                 chart: {
-                    height: 280,
                     type: 'area',
-                    toolbar: {
-                        show: false,
-                    },
+                    height: '100%',
+                    parentHeightOffset: 0,
+                    toolbar: { show: false },
+                    fontFamily: 'Inter, sans-serif'
                 },
-                dataLabels: {
-                    enabled: false
-                },
+                dataLabels: { enabled: false },
                 stroke: {
                     width: 2,
                     curve: 'smooth'
                 },
                 series: [{
-                    name: "{{ __('Referral') }}",
+                    name: "{{ __('Total Visitors') }}",
                     data: {!! json_encode($chartData['data']) !!}
                 }, {
-                    name: "{{ __('Organic Search') }}",
+                    name: "{{ __('Unique Visitors') }}",
                     data: {!! json_encode($chartData['unique_data']) !!}
                 }],
                 xaxis: {
                     categories: {!! json_encode($chartData['label']) !!},
                     labels: {
-                        style: {
-                            colors: '#64748b',
-                            fontSize: '11px',
-                            fontFamily: 'Inter, sans-serif'
-                        }
+                        style: { colors: '#6B7280', fontSize: '10px', fontWeight: 500 },
+                        offsetY: 0
                     },
-                    axisBorder: {
-                        show: false
-                    },
-                    axisTicks: {
-                        show: false
+                    axisBorder: { show: false },
+                    axisTicks: { show: false },
+                    crosshairs: {
+                        stroke: { color: '#E8EAF0', width: 1, dashArray: 4 }
                     }
-                },
-                colors: ['#584ED2', '#818cf8'],
-                grid: {
-                    strokeDashArray: 4,
-                    show: true,
-                    borderColor: '#f1f5f9',
-                },
-                legend: {
-                    show: true,
-                    position: 'top',
-                    horizontalAlign: 'right',
-                    fontSize: '11px',
-                    fontFamily: 'Inter, sans-serif'
                 },
                 yaxis: {
-                    tickAmount: 4,
                     labels: {
-                        style: {
-                            colors: '#64748b',
-                            fontSize: '11px',
-                            fontFamily: 'Inter, sans-serif'
-                        }
+                        style: { colors: '#6B7280', fontSize: '10px', fontWeight: 500 },
+                        offsetX: -10
                     }
+                },
+                colors: ['#4f46e5', '#818cf8'],
+                grid: {
+                    borderColor: '#E8EAF0',
+                    strokeDashArray: 3,
+                    xaxis: { lines: { show: true } },
+                    yaxis: { lines: { show: true } },
+                    padding: { top: 0, right: 0, bottom: 0, left: 10 }
+                },
+                legend: {
+                    position: 'top',
+                    horizontalAlign: 'right',
+                    offsetY: -10,
+                    itemMargin: { horizontal: 10, vertical: 0 },
+                    markers: { width: 6, height: 6, radius: 12 },
+                    fontSize: '11px',
+                    labels: { colors: '#6B7280' }
                 },
                 fill: {
                     type: 'gradient',
@@ -270,123 +373,70 @@
             chart.render();
         })();
 
+        // Platform Donut Chart
         @if(count($platformarray['data']) > 0)
         (function () {
             var options = {
+                series: {!! json_encode($platformarray['data']) !!},
                 chart: {
-                    type: 'bar',
-                    height: 260,
-                    toolbar: {
-                        show: false,
-                    },
+                    type: 'donut',
+                    width: '100%',
+                    height: 140,
+                    fontFamily: 'Inter, sans-serif'
                 },
-                dataLabels: {
-                    enabled: false,
-                },
+                labels: {!! json_encode($platformarray['label']) !!},
+                colors: ['#4f46e5', '#818cf8', '#c7d2fe', '#e2e8f0'],
                 plotOptions: {
-                    bar: {
-                        columnWidth: '35%',
-                        borderRadius: 4
+                    pie: {
+                        donut: {
+                            size: '75%',
+                            labels: {
+                                show: true,
+                                name: { fontSize: '11px', color: '#6B7280', fontWeight: 500 },
+                                value: { fontSize: '20px', color: '#111827', fontWeight: 700 }
+                            }
+                        }
                     }
                 },
-                series: [{
-                    name: "{{ __('Platform') }}",
-                    data: {!! json_encode($platformarray['data']) !!},
-                }],
-                colors: ['#584ED2'],
-                xaxis: {
-                    labels: {
-                        style: {
-                            colors: '#64748b',
-                            fontSize: '11px',
-                            fontFamily: 'Inter, sans-serif'
-                        },
-                    },
-                    axisBorder: {
-                        show: false
-                    },
-                    axisTicks: {
-                        show: false
-                    },
-                    categories: {!! json_encode($platformarray['label']) !!},
-                },
-                yaxis: {
-                    tickAmount: 4,
-                    labels: {
-                        style: {
-                            colors: '#64748b',
-                            fontSize: '11px',
-                            fontFamily: 'Inter, sans-serif'
-                        }
-                    },
-                },
-                grid: {
-                    strokeDashArray: 4,
-                    show: true,
-                    borderColor: '#f1f5f9',
-                }
+                dataLabels: { enabled: false },
+                stroke: { width: 0 },
+                legend: { show: false } // Legend is built in HTML
             };
-            var chart = new ApexCharts(document.querySelector("#user-chart"), options);
+            var chart = new ApexCharts(document.querySelector("#PlatformChart"), options);
             chart.render();
         })();
         @endif
 
+        // Device Donut Chart
         @if(count($devicearray['data']) > 0)
         (function () {
             var options = {
                 series: {!! json_encode($devicearray['data']) !!},
                 chart: {
-                    height: 260,
                     type: 'donut',
-                    width: '100%'
+                    width: '100%',
+                    height: 140,
+                    fontFamily: 'Inter, sans-serif'
                 },
-                colors: ["#584ED2", "#818cf8", "#a5b4fc", "#cbd5e1", "#e2e8f0"],
                 labels: {!! json_encode($devicearray['label']) !!},
-                legend: {
-                    position: 'bottom',
-                    fontSize: '11px',
-                    fontFamily: 'Inter, sans-serif'
-                },
-                responsive: [{
-                    breakpoint: 480,
-                    options: {
-                        chart: {
-                            height: 220
+                colors: ['#4f46e5', '#818cf8', '#c7d2fe'],
+                plotOptions: {
+                    pie: {
+                        donut: {
+                            size: '75%',
+                            labels: {
+                                show: true,
+                                name: { fontSize: '11px', color: '#6B7280', fontWeight: 500 },
+                                value: { fontSize: '20px', color: '#111827', fontWeight: 700 }
+                            }
                         }
                     }
-                }]
-            };
-            var chart = new ApexCharts(document.querySelector("#WebKit"), options);
-            chart.render();
-        })();
-        @endif
-
-        @if(count($browserarray['data']) > 0)
-        (function () {
-            var options = {
-                series: {!! json_encode($browserarray['data']) !!},
-                chart: {
-                    height: 260,
-                    type: 'donut',
-                    width: '100%'
                 },
-                colors: ["#584ED2", "#818cf8", "#a5b4fc", "#cbd5e1", "#e2e8f0"],
-                labels: {!! json_encode($browserarray['label']) !!},
-                legend: {
-                    position: 'bottom',
-                    fontSize: '11px',
-                    fontFamily: 'Inter, sans-serif'
-                },
-                responsive: [{
-                    breakpoint: 480,
-                    options: {
-                        chart: {
-                            height: 220
-                        }
-                    }
-                }]
+                dataLabels: { enabled: false },
+                stroke: { width: 0 },
+                legend: { show: false } // Legend is built in HTML
             };
-            var chart = new ApexCharts(document.querySelector("#Safari"), options);
+            var chart = new ApexCharts(document.querySelector("#DeviceChart"), options);
             chart.render();
         })();
         @endif
