@@ -16,12 +16,10 @@
 {{-- Header: fixed, floating, matching Stitch design --}}
 <header class="fixed z-40 flex items-center justify-between px-4 lg:px-6 sg-header transition-all duration-300 ease-in-out" style="
     height: 64px;
-    background: rgba(255, 255, 255, 0.65);
-    backdrop-filter: blur(28px) saturate(180%);
-    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    background: #ffffff;
     border-radius: 12px;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 8px 24px rgba(0, 0, 0, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+    border: 1px solid rgba(199,196,215,0.1);
 ">
     {{-- Left: Mobile menu button + Search --}}
     <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
